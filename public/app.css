@@ -1,0 +1,31 @@
+.view {
+    background: url("/slides/06.png")no-repeat center center;
+    background-size: cover;
+}
+
+.navbar {
+    background: rgb(132,235,173);
+    background: linear-gradient(90deg, rgba(132,235,173,1) 10%, rgba(110,182,207,1) 29%, rgba(109,146,255,1) 92%);
+}
+
+.footer-grad {
+    background: rgb(132,235,173);
+    background: linear-gradient(90deg, rgba(132,235,173,1) 10%, rgba(110,182,207,1) 29%, rgba(109,146,255,1) 92%);
+}
+
+.top-nav-collapse {
+    background-color: #4285F4;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        background-color: #4285F4;
+    }
+}
+
+html,
+body,
+header,
+.view {
+    height: 100%;
+}
