@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('username'); // Mojang Username
-            $table->date('dob');
+            $table->string('username')->nullable(); // Mojang Username
+            $table->date('dob')->nullable();
             $table->ipAddress('originalIP');
             $table->string('password');
             $table->rememberToken();
