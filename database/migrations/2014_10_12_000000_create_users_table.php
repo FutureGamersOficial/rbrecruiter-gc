@@ -15,9 +15,13 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid'); // Mojang UUID
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('username'); // Mojang Username
+            $table->date('dob');
+            $table->ipAddress('originalIP');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
