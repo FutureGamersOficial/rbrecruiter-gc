@@ -64,10 +64,10 @@
                       <a class="nav-link" href="#">Application Status</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#">Sign-in</a>
+                      <a class="nav-link" href="login">Sign-in</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#">Register</a>
+                      <a class="nav-link" href="register">Register</a>
                   </li>
               </ul>
           </div>

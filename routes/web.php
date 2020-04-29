@@ -12,8 +12,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/','HomeController@index');
-
 Route::post('/form/contact', 'ContactController@create')
     ->name('sendSubmission');
+
+
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::get('/dashboard', 'DashboardController@index');
+
+});
+
+//Route::get('/dashboard/login', '');
+
