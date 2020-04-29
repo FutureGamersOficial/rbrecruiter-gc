@@ -22,7 +22,7 @@ class CreateProfilesTable extends Migration
                 'gravatar' // Email profile
             ]);
             $table->text('socialLinks');
-            $table->bigIncrements('userID');
+            $table->bigInteger('userID')->unsigned();
             $table->timestamps();
 
             $table->foreign('userID')->references('id')->on('users')->onDelete('cascade');

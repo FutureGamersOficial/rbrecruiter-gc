@@ -20,8 +20,8 @@ class CreateApplicationsTable extends Migration
          */
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('applicantUserID'); // 1-1
-            $table->bigIncrements('applicantFormResponseID'); // 1-*
+            $table->bigInteger('applicantUserID')->unsigned(); // 1-1
+            $table->bigInteger('applicantFormResponseID')->unsigned(); // 1-*
             $table->enum('applicationStatus', [
                 'STAGE_SUBMITTED',
                 'STAGE_PEERAPPROVAL',

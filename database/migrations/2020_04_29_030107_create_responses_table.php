@@ -15,7 +15,7 @@ class CreateResponsesTable extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('responseFormID');
+            $table->bigInteger('responseFormID')->unsigned();
             $table->longText('responseData');
             $table->timestamps();
         });
