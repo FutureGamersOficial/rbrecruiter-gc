@@ -15,7 +15,7 @@ class CreateStaffProfilesTable extends Migration
     {
         Schema::create('staff_profiles', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('userID');
+            $table->bigInteger('userID')->unsigned();
             $table->dateTime('approvalDate');
             $table->dateTime('terminationDate')->nullable();
             $table->dateTime('resignationDate')->nullable();
