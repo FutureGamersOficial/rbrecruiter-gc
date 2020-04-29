@@ -29,7 +29,7 @@ class CreateAppointmentsTable extends Migration
                'SCHEDULED',
                'CONCLUDED'
             ])->default('SCHEDULED');
-            $table->text('meetingNotes');
+            $table->text('meetingNotes')->nullable();
             $table->timestamps();
         });
     }

@@ -15,7 +15,14 @@ class CreateVotesTable extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('userID')->unsigned();
+            $table->enum('allowedVoteType', [
+                'VOTE_DENY',
+                'VOTE_APPROVE'
+            ]);
             $table->timestamps();
+
+            $table->foreign('userID')->references('id')->on('users');
         });
     }
 

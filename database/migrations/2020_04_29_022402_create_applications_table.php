@@ -28,7 +28,7 @@ class CreateApplicationsTable extends Migration
                 'STAGE_INTERVIEW',
                 'APPROVED',
                 'DENIED'
-            ]);
+            ])->default('STAGE_SUBMITTED');
             $table->timestamps();
         });
     }
