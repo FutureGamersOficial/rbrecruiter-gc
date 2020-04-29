@@ -33,6 +33,6 @@ class VotesHasApplication extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('votes_has_application');
     }
 }
