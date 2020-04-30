@@ -23,6 +23,12 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/dashboard', 'DashboardController@index');
 
+    Route::group(['prefix' => '/applications'], function (){
+
+        Route::get('/pending', 'ApplicationController@showPendingUserApplications');
+
+    });
+
 });
 
 //Route::get('/dashboard/login', '');

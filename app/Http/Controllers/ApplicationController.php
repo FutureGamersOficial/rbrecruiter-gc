@@ -6,5 +6,10 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
-    //
+
+    public function showPendingUserApplications()
+    {
+        return view('dashboard.user.applications');
+    }
+
 }
