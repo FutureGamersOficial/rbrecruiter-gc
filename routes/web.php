@@ -25,7 +25,8 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => '/applications'], function (){
 
-        Route::get('/pending', 'ApplicationController@showPendingUserApplications');
+        Route::get('/pending', 'ApplicationController@showPendingUserApps');
+        Route::get('/denied', 'ApplicationController@showDeniedUserApps');
 
     });
 

@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 class ApplicationController extends Controller
 {
 
-    public function showPendingUserApplications()
+    public function showPendingUserApps()
     {
         return view('dashboard.user.applications');
+    }
+
+    public function showDeniedUserApps()
+    {
+        return view('dashboard.user.deniedapplications');
     }
 
 }
