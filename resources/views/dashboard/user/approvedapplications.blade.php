@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-    <h4>My Account / Denied Applications</h4>
+    <h4>My Account / Approved Applications</h4>
 
 @stop
 
@@ -14,11 +14,11 @@
 
         <div class="col">
 
-            <div class="callout callout-danger">
-                <h5>Info on denied applications</h5>
+            <div class="callout callout-success">
+                <h5>Info on approved applications</h5>
 
-                <p>Please note that all applications listed on this page have been denied by the staff team / applications team.</p>
-                <p>The system will only let you apply every thirty days. Your previous applications will be kept for your reference, but you can always delete them here.</p>
+                <p>Your approved applications will appear here. Approved applicants will be promoted and notified automatically by the system.</p>
+                <p>Moderators will be able to review other applications.</p>
             </div>
 
         </div>
@@ -42,7 +42,7 @@
                             <th style="width: 10px">#</th>
                             <th>Applicant</th>
                             <th>Application Date</th>
-                            <th>Denial Date</th>
+                            <th>Approval Date</th>
                             <th>Status</th>
                             <th style="width: 40px">Actions</th>
                         </tr>
@@ -53,11 +53,10 @@
                             <td>Jonathan Smith</td>
                             <td>2020-04-28</td>
                             <td>2020-04-30</td>
-                            <td><span class="badge bg-danger">Denied</span></td>
+                            <td><span class="badge bg-success">Approved</span></td>
                             <td>
 
                                 <button type="button" class="btn btn-success btn-sm">View</button>
-                                <button type="button" class="btn btn-danger btn-sm">Delete</button>
 
                             </td>
                         </tr>
@@ -70,8 +69,8 @@
                 <div class="card-footer">
 
                     <button type="button" class="btn btn-default mr-2">Back</button>
-                    <button type="button" class="btn btn-info mr-2">Approved Applications</button>
-                    <button type="button" class="btn btn-info mr-2">Active Applications</button>
+                    <button type="button" class="btn btn-info mr-2" onclick="window.location.href='{{route('userDeniedApps')}}'">Denied Applications</button>
+                    <button type="button" class="btn btn-info mr-2" onclick="window.location.href='{{route('userPendingApps')}}'">Active Applications</button>
 
                 </div>
             </div>

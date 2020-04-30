@@ -17,4 +17,9 @@ class ApplicationController extends Controller
         return view('dashboard.user.deniedapplications');
     }
 
+    public function showApprovedApps()
+    {
+        return view('dashboard.user.approvedapplications');
+    }
+
 }

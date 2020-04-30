@@ -21,12 +21,20 @@ Route::post('/form/contact', 'ContactController@create')
 
 Route::group(['middleware' => 'auth'], function(){
 
-    Route::get('/dashboard', 'DashboardController@index');
-
     Route::group(['prefix' => '/applications'], function (){
 
-        Route::get('/pending', 'ApplicationController@showPendingUserApps');
-        Route::get('/denied', 'ApplicationController@showDeniedUserApps');
+        Route::get('/pending', 'ApplicationController@showPendingUserApps')
+            ->name('userPendingApps');
+        Route::get('/denied', 'ApplicationController@showDeniedUserApps')
+            ->name('userDeniedApps');
+        Route::get('/approved', 'ApplicationController@showApprovedApps')
+            ->name('userApprovedApps');
+
+    });
+
+    Route::group(['prefix' => '/profile'], function (){
+
+        Route::get('/settings', 'ProfileController@index');
 
     });
 
