@@ -44,11 +44,6 @@
   box-sizing: border-box;
 }
 
-.view {
-    background: url("/slides/06.png")no-repeat center center;
-    background-size: cover;
-}
-
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -4530,11 +4525,6 @@ input[type=button].btn-block {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-}
-
-.navbar-style {
-    background: rgb(132,235,173);
-    background: linear-gradient(90deg, rgba(132,235,173,1) 10%, rgba(110,182,207,1) 29%, rgba(109,146,255,1) 92%);
 }
 
 .navbar .container,

@@ -22,4 +22,9 @@ class ApplicationController extends Controller
         return view('dashboard.user.approvedapplications');
     }
 
+    public function showAllPendingApps()
+    {
+        return view('dashboard.appmanagement.outstandingapps');
+    }
+
 }

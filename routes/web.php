@@ -38,6 +38,12 @@ Route::group(['middleware' => 'auth'], function(){
 
     });
 
+    Route::group(['prefix' => '/applications'], function (){
+
+        Route::get('/staff/outstanding', 'ApplicationController@showAllPendingApps');
+
+    });
+
 });
 
 //Route::get('/dashboard/login', '');
