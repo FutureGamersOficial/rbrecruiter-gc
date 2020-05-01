@@ -40,7 +40,11 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => '/applications'], function (){
 
-        Route::get('/staff/outstanding', 'ApplicationController@showAllPendingApps');
+        Route::get('/staff/outstanding', 'ApplicationController@showAllPendingApps')
+            ->name('staffPendingApps');
+
+        Route::get('/staff/peer-review', 'ApplicationController@showPeerReview')
+            ->name('peerReview');
 
     });
 

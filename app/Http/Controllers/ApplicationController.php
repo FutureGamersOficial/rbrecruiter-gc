@@ -27,4 +27,8 @@ class ApplicationController extends Controller
         return view('dashboard.appmanagement.outstandingapps');
     }
 
+    public function showPeerReview()
+    {
+        return view('dashboard.appmanagement.peerreview');
+    }
 }
