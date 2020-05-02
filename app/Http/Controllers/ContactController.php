@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp;
+use Illuminate\Support\Facades\Http;
 
 class ContactController extends Controller
 {
 
     public function create(Request $request)
     {
-        // TODO: use service provider instead
-        $client = new GuzzleHttp\Client();
-
         $name = $request->name;
         $email = $request->email;
         $subject = $request->subject;
@@ -20,13 +18,12 @@ class ContactController extends Controller
 
         $challenge = $request->input('captcha');
 
-        $verifyrequest = $client->request('POST', config('recaptcha.verify.apiurl'), [
-            'form_params' => [
-                'secret' => config('recaptcha.keys.secret'),
-                'response' => $challenge,
-                'remoteip' => $_SERVER['REMOTE_ADDR']
-            ]
+        $verifyrequest = Http::asForm()->post(config('recaptcha.verify.apiurl'), [
+            'secret' => config('recaptcha.keys.secret'),
+            'response' => $challenge,
+            'remoteip' => $_SERVER['REMOTE_ADDR']
         ]);
+
         $response = json_decode($verifyrequest->getBody(), true);
 
         if (!$response['success'])
