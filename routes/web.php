@@ -21,6 +21,8 @@ Route::post('/form/contact', 'ContactController@create')
 
 Route::group(['middleware' => 'auth'], function(){
 
+    Route::get('/dashboard', 'DashboardController@index');
+
     Route::group(['prefix' => '/applications'], function (){
 
         Route::get('/pending', 'ApplicationController@showPendingUserApps')
@@ -45,6 +47,9 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::get('/staff/peer-review', 'ApplicationController@showPeerReview')
             ->name('peerReview');
+
+        Route::get('/staff/pending-interview', 'ApplicationController@showPendingInterview')
+            ->name('pendingInterview');
 
     });
 

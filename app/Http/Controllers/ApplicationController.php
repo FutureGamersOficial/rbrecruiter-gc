@@ -31,4 +31,9 @@ class ApplicationController extends Controller
     {
         return view('dashboard.appmanagement.peerreview');
     }
+
+    public function showPendingInterview()
+    {
+        return view('dashboard.appmanagement.interview');
+    }
 }

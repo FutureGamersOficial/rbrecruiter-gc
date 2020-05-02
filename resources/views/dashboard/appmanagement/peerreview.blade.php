@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-    <h4>My Account / Peer Review</h4>
+    <h4>Application Management / Peer Review</h4>
 
 @stop
 

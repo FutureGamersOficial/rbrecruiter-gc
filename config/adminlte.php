@@ -250,7 +250,7 @@ return [
         ],
         [
             'text' => 'Interview Queue',
-            'url' => '/application/staff/pending-interview',
+            'url' => '/applications/staff/pending-interview',
             'icon' => 'fas fa-fw fa-microphone-alt'
         ],
         'Administration',
