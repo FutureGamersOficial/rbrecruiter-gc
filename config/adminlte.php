@@ -244,14 +244,14 @@ return [
             'icon' => 'far fa-folder-open'
         ],
         [
-            'text' => 'Peer Approval Queue',
-            'url' => '/applications/staff/peer-review',
-            'icon' => 'fas fa-fw fa-search'
-        ],
-        [
             'text' => 'Interview Queue',
             'url' => '/applications/staff/pending-interview',
             'icon' => 'fas fa-fw fa-microphone-alt'
+        ],
+        [
+            'text' => 'Peer Approval Queue',
+            'url' => '/applications/staff/peer-review',
+            'icon' => 'fas fa-fw fa-search'
         ],
         'Administration',
         [

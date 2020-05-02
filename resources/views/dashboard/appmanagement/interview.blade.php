@@ -45,7 +45,101 @@
 
         <div class="col">
 
+            <div class="card">
 
+               <div class="card-header">
+                   <div class="card-title"><h3>Schedule Interviews</h3></div>
+               </div>
+
+                <div class="card-body">
+
+                    <table class="table" style="white-space: nowrap">
+
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Interviewee</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>1</td>
+                                <td>Jonathan Smith</td>
+                                <td><span class="badge badge-warning">Awaiting Interview</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> View</button>
+                                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-clock"></i> Schedule</button>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col">
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title"><h3>My Upcoming Interviews</h3></div>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table" style="white-space: nowrap">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+                                <th>Interviewee</th>
+                                <th>Status</th>
+                                <th>Time & Date</th>
+                                <th>Location</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <td>April Smith</td>
+                                <td><span class="badge badge-success"><i class="fa fa-check"></i> Scheduled</span></td>
+                                <td>2020-05-04 12:20</td>
+                                <td>Discord</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> View Details</button>
+                                    <button type="button" class="btn btn-sm btn-danger"><i class="fas fa-ban"></i> Cancel Interview</button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
 
         </div>
 
