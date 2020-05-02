@@ -26,6 +26,7 @@ class CreateApplicationsTable extends Migration
                 'STAGE_SUBMITTED',
                 'STAGE_PEERAPPROVAL',
                 'STAGE_INTERVIEW',
+                'STAGE_INTERVIEW_SCHEDULED',
                 'APPROVED',
                 'DENIED'
             ])->default('STAGE_SUBMITTED');

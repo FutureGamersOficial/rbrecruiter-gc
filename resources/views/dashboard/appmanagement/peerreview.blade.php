@@ -65,7 +65,7 @@
                                 <td><span class="badge badge-warning">Under Review</span></td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm"><i class="far fa-clipboard"></i> Review</button>
-                                    <button type="button" class="btn btn-success btn-sm"><i class="fas fa-user-check"></i> Vote: Next Stage</button>
+                                    <button type="button" class="btn btn-success btn-sm"><i class="fas fa-user-check"></i> Vote: Approve</button>
                                     <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-user-times"></i> Vote: Deny</button>
                                 </td>
 

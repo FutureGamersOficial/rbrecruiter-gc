@@ -256,29 +256,8 @@ return [
         'Administration',
         [
             'text' => 'Staff Members',
-            'url' => 'fas fa-fw fa-users',
-            'submenu' => [
-                [
-                    'text' => 'Active Members',
-                    'url' => '/hr/staff',
-                    'icon' => 'fas fa-fw fa-business-time'
-                ],
-                [
-                    'text' => 'Former Members',
-                    'url' => '/hr/staff/former',
-                    'icon' => 'fas fa-fw fa-user-clock'
-                ],
-                [
-                    'text' => 'Member Notes',
-                    'url' => '/hr/staff/notes',
-                    'icon' => 'far fa-address-card'
-                ],
-                [
-                    'text' => 'Terminated Members',
-                    'url' => '/hr/staff/terminated',
-                    'icon' => 'fas fa-fw fa-user-slash'
-                ]
-            ]
+            'icon' => 'fas fa-fw fa-users',
+            'url' => '/hr/staff-members'
         ],
         [    // players who haven't been promoted yet
             'text' => 'Registered Players',

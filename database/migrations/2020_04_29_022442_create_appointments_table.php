@@ -27,9 +27,10 @@ class CreateAppointmentsTable extends Migration
             ]);
             $table->enum('appointmentStatus', [
                'SCHEDULED',
-               'CONCLUDED'
+               'CONCLUDED' // TODO: Review whether this status is necessary
             ])->default('SCHEDULED');
-            $table->text('meetingNotes')->nullable();
+            $table->boolean('userAccepted')->default(false);
+            $table->longText('meetingNotes')->nullable();
             $table->timestamps();
         });
     }
