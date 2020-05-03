@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => '/hr'], function (){
 
-        Route::get('staff-members');
+        Route::get('staff-members', 'UserController@showStaffMembers');
 
     });
 
