@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Applications')
+@section('title', 'Raspberry Network | Staff Members')
 
 @section('content_header')
 
@@ -172,7 +172,7 @@
 
               <div class="card-footer">
 
-                  <button type="button" class="btn btn-outline-primary">See Registered Players (Applicant Pool)</button>
+                  <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route("registeredPlayerList")}}'">See Registered Players (Applicant Pool)</button>
 
               </div>
 

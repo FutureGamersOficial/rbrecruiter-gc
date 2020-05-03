@@ -14,6 +14,6 @@ class UserController extends Controller
 
     public function showPlayers()
     {
-
+        return view('dashboard.administration.players');
     }
 }

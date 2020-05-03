@@ -55,7 +55,11 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => '/hr'], function (){
 
-        Route::get('staff-members', 'UserController@showStaffMembers');
+        Route::get('staff-members', 'UserController@showStaffMembers')
+            ->name('staffMemberList');
+
+        Route::get('players', 'UserController@showPlayers')
+            ->name('registeredPlayerList');
 
     });
 
