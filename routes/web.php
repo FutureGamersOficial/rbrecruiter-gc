@@ -63,6 +63,14 @@ Route::group(['middleware' => 'auth'], function(){
 
     });
 
+    Route::group(['prefix' => 'admin'], function (){
+
+        Route::resource('positions', 'VacancyController');
+
+        Route::resource('forms', 'FormController');
+
+    });
+
 });
 
 //Route::get('/dashboard/login', '');

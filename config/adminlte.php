@@ -274,11 +274,6 @@ return [
                     'url' => '/admin/positions'
                 ],
                 [
-                    'text' => 'Add Open Position',
-                    'icon' => 'fas fa-fw fa-align-justify',
-                    'url' => '/admin/positions/add'
-                ],
-                [
                     'text' => 'Manage Forms',
                     'icon' => 'fab fa-wpforms',
                     'url' => '/admin/forms'
