@@ -356,6 +356,17 @@ return [
             ],
         ],
         [
+            'name' => 'FormBuilder',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '/js/formbuilder.js'
+                ]
+            ]
+        ],
+        [
             'name' => 'Select2',
             'active' => false,
             'files' => [
