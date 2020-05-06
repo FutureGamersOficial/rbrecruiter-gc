@@ -274,9 +274,20 @@ return [
                     'url' => '/admin/positions'
                 ],
                 [
-                    'text' => 'Manage Forms',
+                    'text' => 'Forms',
                     'icon' => 'fab fa-wpforms',
-                    'url' => '/admin/forms'
+                    'submenu' => [
+                        [
+                            'text' => 'All forms',
+                            'icon' => 'far fa-list-alt',
+                            'url' => '/admin/forms'
+                        ],
+                        [
+                            'text' => 'Form Builder',
+                            'icon' => 'fas fa-fw fa-hammer',
+                            'url' => '/admin/forms/builder'
+                        ]
+                    ]
                 ]
             ]
         ],
@@ -336,7 +347,7 @@ return [
     'plugins' => [
         [
             'name' => 'Datatables',
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -420,5 +431,21 @@ return [
                 ],
             ],
         ],
+        [
+            'name' => 'Toastr',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js'
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css'
+                ]
+            ]
+        ]
     ],
 ];

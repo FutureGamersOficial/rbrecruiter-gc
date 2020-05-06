@@ -8,6 +8,28 @@
 
 @stop
 
+@section('js')
+
+    @if (session()->has('success'))
+
+        <script>
+            toastr.success("{{session('success')}}")
+        </script>
+
+    @elseif(session()->has('error'))
+
+        @foreach(session('error') as $error)
+
+            <script>
+                toastr.error("{{$error}}")
+            </script>
+
+        @endforeach
+
+    @endif
+
+@stop
+
 @section('content')
 
     <div class="row">
@@ -41,6 +63,7 @@
                 <div class="card-footer text-center">
 
                     <button onclick="save()" type="button" class="btn btn-success">Save Form</button>
+                    <button type="button" class="btn btn-info">Form List</button>
 
                 </div>
 

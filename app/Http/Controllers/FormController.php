@@ -11,7 +11,12 @@ class FormController extends Controller
 
     public function index()
     {
-        return view('dashboard.administration.forms');
+
+    }
+
+    public function showFormBuilder()
+    {
+        return view('dashboard.administration.formbuilder');
     }
 
     public function saveForm(Request $request)
@@ -54,11 +59,11 @@ class FormController extends Controller
                 ]
             );
 
-            $request->session()->flash('sucesss', 'Form created! You can now link this form to a vacancy.');
+            $request->session()->flash('success', 'Form created! You can now link this form to a vacancy.');
             return redirect()->back();
         }
 
-        $request->session()->flash('errors', $validation->errors());
+        $request->session()->flash('errors', $validation->errors()->getMessages());
         return redirect()->back();
     }
 
