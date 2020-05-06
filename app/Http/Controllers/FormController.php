@@ -11,7 +11,8 @@ class FormController extends Controller
 
     public function index()
     {
-
+        return view('dashboard.administration.forms')
+            ->with('forms', Form::all());
     }
 
     public function showFormBuilder()
@@ -60,11 +61,30 @@ class FormController extends Controller
             );
 
             $request->session()->flash('success', 'Form created! You can now link this form to a vacancy.');
-            return redirect()->back();
+            return redirect()->to(route('showForms'));
         }
 
         $request->session()->flash('errors', $validation->errors()->getMessages());
         return redirect()->back();
+    }
+
+    public function destroy(Request $request, $id)
+    {
+
+        $form = Form::find($id);
+
+        // TODO: Check if form is linked to vacancies before allowing deletion
+        if (!is_null($form))
+        {
+            $form->delete();
+
+            $request->session()->flash('success', 'Form deleted successfully.');
+            return redirect()->back();
+        }
+
+        $request->session()->flash('error', 'The form you\'re trying to delete does not exist.');
+        return redirect()->back();
+
     }
 
 }

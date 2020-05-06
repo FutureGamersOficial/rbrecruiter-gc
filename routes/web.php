@@ -73,6 +73,9 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('forms/save', 'FormController@saveForm')
             ->name('saveForm');
 
+        Route::delete('forms/destroy/{id}', 'FormController@destroy')
+            ->name('destroyForm');
+
         Route::get('forms', 'FormController@index')
             ->name('showForms');
 

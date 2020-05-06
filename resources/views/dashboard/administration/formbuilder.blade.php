@@ -21,7 +21,7 @@
         @foreach(session('error') as $error)
 
             <script>
-                toastr.error("{{$error}}")
+                toastr.error("{{session('error')}}")
             </script>
 
         @endforeach
@@ -53,17 +53,13 @@
 
                     </form>
 
-                    <div class="mt-4">
-                        <input type="button" value="New Field" class="add btn btn-success" id="add" />
-                    </div>
-
-
                 </div>
 
                 <div class="card-footer text-center">
 
                     <button onclick="save()" type="button" class="btn btn-success">Save Form</button>
-                    <button type="button" class="btn btn-info">Form List</button>
+                    <input type="button" value="New Field" class="add btn btn-info ml-3" id="add" />
+
 
                 </div>
 

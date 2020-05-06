@@ -78,7 +78,7 @@
 
                 <div class="card-footer">
 
-                    <button type="button" class="btn btn-outline-primary">MANAGE APPLICATION FORMS</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showForms')}}'">MANAGE APPLICATION FORMS</button>
 
                 </div>
 
