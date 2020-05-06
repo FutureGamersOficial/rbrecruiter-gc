@@ -23,7 +23,10 @@
                         @csrf
 
                         <fieldset id="buildyourform">
-                            <legend>Form Builder</legend>
+                            <legend class="text-center">Form Builder</legend>
+
+                            <input type="text" name="formName" class="form-control mb-5" placeholder="Name your form..." required>
+
                         </fieldset>
 
                     </form>
