@@ -18,9 +18,15 @@
 
                 <div class="card-body">
 
-                    <fieldset id="buildyourform">
-                        <legend>Form Builder</legend>
-                    </fieldset>
+                    <form id="formbuilder" action="{{route('saveForm')}}" method="POST">
+
+                        @csrf
+
+                        <fieldset id="buildyourform">
+                            <legend>Form Builder</legend>
+                        </fieldset>
+
+                    </form>
 
                     <div class="mt-4">
                         <input type="button" value="New Field" class="add btn btn-success" id="add" />
@@ -31,7 +37,7 @@
 
                 <div class="card-footer text-center">
 
-                    <button type="button" class="btn btn-success">Save Form</button>
+                    <button onclick="save()" type="button" class="btn btn-success">Save Form</button>
 
                 </div>
 

@@ -67,7 +67,11 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::resource('positions', 'VacancyController');
 
-        Route::resource('forms', 'FormController');
+        Route::get('forms', 'FormController@index')
+            ->name('showFormBuilder');
+
+        Route::post('forms/save', 'FormController@saveForm')
+            ->name('saveForm');
 
     });
 

@@ -12,4 +12,9 @@ class FormController extends Controller
         return view('dashboard.administration.forms');
     }
 
+    public function saveForm(Request $request)
+    {
+        dd($request->all());
+    }
+
 }
