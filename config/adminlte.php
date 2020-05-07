@@ -446,6 +446,17 @@ return [
                     'location' => 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css'
                 ]
             ]
+        ],
+        [
+            'name' => 'GlobalTooltip',
+            'active' => 'true',
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '/js/globaltooltip.js'
+                ]
+            ]
         ]
     ],
 ];

@@ -65,7 +65,16 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => 'admin'], function (){
 
-        Route::resource('positions', 'VacancyController');
+        Route::get('positions', 'VacancyController@index')
+            ->name('showPositions');
+
+        Route::post('positions/save', 'VacancyController@store')
+            ->name('savePosition');
+
+
+        Route::patch('positions/availability/{status}/{id}', 'VacancyController@updatePositionAvailability')
+            ->name('updatePositionAvailability');
+
 
         Route::get('forms/builder', 'FormController@showFormBuilder')
             ->name('showFormBuilder');

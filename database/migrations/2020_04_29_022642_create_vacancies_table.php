@@ -22,6 +22,8 @@ class CreateVacanciesTable extends Migration
             $table->bigInteger('vacancyFormID')->unsigned();
             $table->integer('vacancyCount')->default(3);
             $table->timestamps();
+
+            $table->foreign('vacancyFormID')->references('id')->on('forms');
         });
     }
 

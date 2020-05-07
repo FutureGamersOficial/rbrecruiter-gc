@@ -13,4 +13,9 @@ class Form extends Model
         'formStatus'
 
     ];
+
+    public function vacancy()
+    {
+        return $this->hasMany('App\Vacancy', 'vacancyFormID');
+    }
 }
