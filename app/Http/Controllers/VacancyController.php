@@ -6,6 +6,7 @@ use App\Form;
 use App\Http\Requests\VacancyRequest;
 use App\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class VacancyController extends Controller
 {
@@ -28,6 +29,7 @@ class VacancyController extends Controller
 
                 'vacancyName' => $request->vacancyName,
                 'vacancyDescription' => $request->vacancyDescription,
+                'vacancySlug' => Str::slug($request->vacancyName),
                 'permissionGroupName' => $request->permissionGroup,
                 'discordRoleID' => $request->discordRole,
                 'vacancyFormID' => $request->vacancyFormID,

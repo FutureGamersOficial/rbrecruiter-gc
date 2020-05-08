@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Vacancy;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
@@ -35,5 +36,27 @@ class ApplicationController extends Controller
     public function showPendingInterview()
     {
         return view('dashboard.appmanagement.interview');
+    }
+
+    public function renderApplicationForm(Request $request, $vacancySlug)
+    {
+        $vacancyWithForm = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
+
+        if (!$vacancyWithForm->isEmpty())
+        {
+
+            return view('dashboard.application-rendering.apply')
+                ->with([
+
+                    'vacancy' => $vacancyWithForm->first(),
+                    'preprocessedForm' => json_decode($vacancyWithForm->first()->forms->formStructure, true)
+
+                ]);
+        }
+        else
+        {
+            abort(404, 'We\'re ssssorry, but the application form you\'re looking for could not be found.');
+        }
+
     }
 }

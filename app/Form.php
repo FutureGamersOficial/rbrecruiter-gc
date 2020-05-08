@@ -16,6 +16,6 @@ class Form extends Model
 
     public function vacancy()
     {
-        return $this->hasMany('App\Vacancy', 'vacancyFormID');
+        return $this->hasMany('App\Vacancy');
     }
 }

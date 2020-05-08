@@ -16,13 +16,14 @@ class Vacancy extends Model
         'discordRoleID',
         'vacancyFormID',
         'vacancyCount',
-        'vacancyStatus'
+        'vacancyStatus',
+        'vacancySlug'
 
     ];
 
     public function forms()
     {
-        return $this->belongsTo('App\Form');
+        return $this->belongsTo('App\Form', 'vacancyFormID', 'id');
     }
 
     public function open()

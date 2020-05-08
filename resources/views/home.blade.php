@@ -30,7 +30,11 @@
                               <div class="card-header text-center">
 
                                   <h4 class="card-title">{{$position->vacancyName}}</h4>
-
+                                  @if ($position->vacancyCount == 1)
+                                      <p class="card-subtitle">There is <span class="badge badge-success">{{$position->vacancyCount}}</span> open position!</p>
+                                  @else
+                                      <p class="card-subtitle">There are <span class="badge badge-success">{{$position->vacancyCount}}</span> open positions!</p>
+                                  @endif
 
 
                               </div>
@@ -45,8 +49,7 @@
 
                               <div class="card-footer text-center">
 
-                                  <button type="button" class="btn btn-success">Apply</button>
-                                  <button type="button" class="btn btn-info">Learn More</button>
+                                  <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">Apply</button>
 
                               </div>
 

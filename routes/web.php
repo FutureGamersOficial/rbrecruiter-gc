@@ -32,15 +32,6 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/approved', 'ApplicationController@showApprovedApps')
             ->name('userApprovedApps');
 
-    });
-
-    Route::group(['prefix' => '/profile'], function (){
-
-        Route::get('/settings', 'ProfileController@index');
-
-    });
-
-    Route::group(['prefix' => '/applications'], function (){
 
         Route::get('/staff/outstanding', 'ApplicationController@showAllPendingApps')
             ->name('staffPendingApps');
@@ -51,7 +42,22 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/staff/pending-interview', 'ApplicationController@showPendingInterview')
             ->name('pendingInterview');
 
+
     });
+
+    Route::group(['prefix' => 'apply'], function (){
+
+        Route::get('positions/{vacancySlug}', 'ApplicationController@renderApplicationForm')
+            ->name('renderApplicationForm');
+
+    });
+
+    Route::group(['prefix' => '/profile'], function (){
+
+        Route::get('/settings', 'ProfileController@index');
+
+    });
+
 
     Route::group(['prefix' => '/hr'], function (){
 
