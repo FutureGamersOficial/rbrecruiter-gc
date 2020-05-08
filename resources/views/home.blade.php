@@ -19,86 +19,75 @@
 
           <div class="row mt-5 mb-5">
 
-              <div class="col">
+              @if (!$positions->isEmpty())
 
-                  <div class="card">
+                  @foreach($positions as $position)
 
-                      <div class="card-header text-center">
+                      <div class="col-md-4">
 
-                          <h4 class="card-title">Helper</h4>
+                          <div class="card">
+
+                              <div class="card-header text-center">
+
+                                  <h4 class="card-title">{{$position->vacancyName}}</h4>
 
 
 
-                      </div>
+                              </div>
 
-                      <div class="card-body text-center">
+                              <div class="card-body text-center">
 
-                          <p class="card-text">
-                              Helpers are the basic building block of every network. They help keep things clean and organised, and report to Chat Moderators.
-                          </p>
+                                  <p class="card-text">
+                                      {{$position->vacancyDescription}}
+                                  </p>
 
-                      </div>
+                              </div>
 
-                      <div class="card-footer text-center">
+                              <div class="card-footer text-center">
 
-                          <button type="button" class="btn btn-success">Apply</button>
-                          <button type="button" class="btn btn-info">Learn More</button>
+                                  <button type="button" class="btn btn-success">Apply</button>
+                                  <button type="button" class="btn btn-info">Learn More</button>
 
-                      </div>
+                              </div>
 
-                  </div>
-
-              </div>
-
-              <div class="col">
-
-                  <div class="card">
-
-                      <div class="card-header text-center">
-                          <h3 class="card-title">Moderator</h3>
-                      </div>
-
-                      <div class="card-body text-center">
-
-                          <p class="card-text">Moderators keep the network clean from cheaters, spam accounts, and abusive users. Their tasks include monitoring the anti-cheat logs, responding to reports and helping users.</p>
+                          </div>
 
                       </div>
 
-                      <div class="card-footer text-center">
+                  @endforeach
 
-                          <button type="button" class="btn btn-success">Apply</button>
-                          <button type="button" class="btn btn-info">Learn More</button>
+              @else
 
-                      </div>
+                  <div class="col-md-4 offset-md-4">
 
-                  </div>
+                      <div class="card">
 
-              </div>
+                          <div class="card-header">
 
-              <div class="col">
+                              <div class="card-title"><h4>Applications Closed</h4></div>
 
-                  <div class="card">
+                          </div>
 
-                      <div class="card-header text-center">
-                          <h3 class="card-title">Chat Moderator</h3>
-                      </div>
+                          <div class="card-body">
 
-                      <div class="card-body text-center">
+                              <div class="alert alert-info">
 
-                          <p class="card-text">Chat Moderators' primary goal is monitoring the in-game chat, Discord Channels, and engaging with the community, relieving Moderators of this duty.</p>
+                                  <p><b>Hello there!</b></p>
+                                  <p>
+                                      We are currently not hiring any new staff members at the moment. If you'd like to apply, check out our Discord's
+                                      announcement channel for news when a new position opens.
+                                      Our application cycle usually lasts two weeks, so if you're seeing this, it's because it finished, and new one will begin soon.
+                                  </p>
 
-                      </div>
+                              </div>
 
-                      <div class="card-footer text-center">
-
-                          <button type="button" class="btn btn-success">Apply</button>
-                          <button type="button" class="btn btn-info">Learn More</button>
+                          </div>
 
                       </div>
 
                   </div>
 
-              </div>
+              @endif
 
           </div>
 

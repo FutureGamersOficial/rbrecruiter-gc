@@ -174,7 +174,7 @@
 
                                     <td>{{$vacancy->id}}</td>
                                     <td>{{$vacancy->vacancyName}}</td>
-                                    <td>{{$vacancy->vacancyDescription}}</td>
+                                    <td>{{substr($vacancy->vacancyDescription, 0, 20)}}...</td>
                                     <td><span class="badge badge-success">{{$vacancy->discordRoleID}}</span></td>
                                     <td><span class="badge badge-success">{{$vacancy->permissionGroupName}}</span></td>
                                     <td>{{$vacancy->vacancyCount}}</td>
