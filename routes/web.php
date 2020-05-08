@@ -50,6 +50,9 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('positions/{vacancySlug}', 'ApplicationController@renderApplicationForm')
             ->name('renderApplicationForm');
 
+        Route::post('positions/{vacancySlug}/submit', 'ApplicationController@saveApplicationAnswers')
+            ->name('saveApplicationForm');
+
     });
 
     Route::group(['prefix' => '/profile'], function (){

@@ -6,6 +6,24 @@
     <h1>My Account / Apply / {{$vacancy->vacancyName}} Application</h1>
 @stop
 
+@section('js')
+
+    @if (session()->has('success'))
+
+        <script>
+            toastr.success("{{session('success')}}")
+        </script>
+
+    @elseif(session()->has('error'))
+
+        <script>
+            toastr.error("{{session('error')}}")
+        </script>
+
+    @endif
+
+@stop
+
 @section('content')
 
     <div class="modal fade" tabindex="-1" id="confirm" role="dialog" aria-labelledby="modalConfirmLabel" aria-hidden="true">
@@ -24,7 +42,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success"><i class="fas fa-check-double"></i> Accept & Send</button>
+                    <button type="button" class="btn btn-success" onclick="document.getElementById('submitApplicationForm').submit()"><i class="fas fa-check-double"></i> Accept & Send</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Review</button>
                 </div>
             </div>
@@ -65,38 +83,42 @@
 
                 <div class="card-body">
 
-                    @foreach($preprocessedForm['fields'] as $fieldName => $field)
+                   <form action="{{route('saveApplicationForm', ['vacancySlug' => $vacancy->vacancySlug])}}" method="POST" id="submitApplicationForm">
+                       @csrf
+                       @foreach($preprocessedForm['fields'] as $fieldName => $field)
 
-                        @switch ($field['type'])
+                           @switch ($field['type'])
 
-                            @case('textarea')
+                               @case('textarea')
 
-                                <div class="form-group mt-2 mb-2">
+                               <div class="form-group mt-2 mb-2">
 
-                                    <label for="{{$fieldName}}">{{$field['title']}}</label>
-                                    <textarea class="form-control" rows="7" name="{{$fieldName}}" id="{{$fieldName}}">
+                                   <label for="{{$fieldName}}">{{$field['title']}}</label>
+                                   <textarea class="form-control" rows="7" name="{{$fieldName}}" id="{{$fieldName}}">
 
                                      </textarea>
 
-                                </div>
+                               </div>
 
-                            @break
+                               @break
 
-                            @case('textbox')
+                               @case('textbox')
 
-                                <div class="form-group mt-2 mb-2">
+                               <div class="form-group mt-2 mb-2">
 
-                                    <label for="{{$fieldName}}">{{$field['title']}}</label>
-                                    <input type="text" name="{{$fieldName}}" id="{{$fieldName}}" class="form-control">
+                                   <label for="{{$fieldName}}">{{$field['title']}}</label>
+                                   <input type="text" name="{{$fieldName}}" id="{{$fieldName}}" class="form-control">
 
 
-                                </div>
+                               </div>
 
-                            @break
+                               @break
 
-                            @endswitch
+                           @endswitch
 
-                    @endforeach
+                       @endforeach
+
+                   </form>
 
                 </div>
 
