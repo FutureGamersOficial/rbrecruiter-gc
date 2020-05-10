@@ -40,4 +40,16 @@
         </div>
     </div>
 
+    <div class="row">
+
+        <div class="col">
+            <div class="alert alert-info">
+
+                <p>Your current application eligibility status: <span class="badge badge-warning">{{($isEligibleForApplication) ? 'Eligibile' : 'Ineligible' }}</span></p>
+
+            </div>
+        </div>
+
+    </div>
+
 @stop

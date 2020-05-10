@@ -48,8 +48,16 @@
                               </div>
 
                               <div class="card-footer text-center">
+                                  @auth
+                                      <button {{($isEligibleForApplication) ? '' : 'disabled'}} type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">Apply</button>
+                                      @if(!$isEligibleForApplication)
+                                          <span class="badge-warning badge"><i class="fa fa-info"></i> Ineligible ({{$eligibilityDaysRemaining}} days remaining)</span>
+                                      @endif
+                                  @endauth
 
-                                  <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">Apply</button>
+                                  @guest
+                                          <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">Apply</button>
+                                      @endguest
 
                               </div>
 

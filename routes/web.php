@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-Route::get('/','HomeController@index');
+Route::get('/','HomeController@index')->middleware('eligibility');
 Route::post('/form/contact', 'ContactController@create')
     ->name('sendSubmission');
 
 
 Route::group(['middleware' => 'auth'], function(){
 
-    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/dashboard', 'DashboardController@index')->middleware('eligibility');
 
     Route::group(['prefix' => '/applications'], function (){
 
@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     });
 
-    Route::group(['prefix' => 'apply'], function (){
+    Route::group(['prefix' => 'apply', 'middleware' => ['eligibility']], function (){
 
         Route::get('positions/{vacancySlug}', 'ApplicationController@renderApplicationForm')
             ->name('renderApplicationForm');
