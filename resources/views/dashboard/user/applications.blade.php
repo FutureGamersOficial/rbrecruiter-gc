@@ -39,6 +39,18 @@
                 <p>If an interview is scheduled, you'll need to open your application here and confirm the time, date, and location assigned for you.</p>
             </div>
 
+            <div class="alert alert-info">
+                <b><i class="fa fa-info-circle"></i> Account Standing</b>
+
+                <p>Your account is currently <b>{{($isEligibleForApplication) ? 'eligible' : 'not eligible'}}</b> for application.</p>
+
+                @if (!$isEligibleForApplication)
+                    <p>As of today, there are <b>{{$eligibilityDaysRemaining}} days</b> remaining until you're permitted to submit another application.</p>
+                @endif
+
+                <i class="text-sm">Powered by Carbon</i>
+            </div>
+
         </div>
 
     </div>
@@ -60,25 +72,59 @@
                             <th style="width: 10px">#</th>
                             <th>Applicant</th>
                             <th>Application Date</th>
-                            <th>Updated On</th>
+                            <th>Last Acted On</th>
                             <th style="width: 40px">Status</th>
                             <th style="width: 40px">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1.</td>
-                            <td>Jonathan Smith</td>
-                            <td>2020-04-28</td>
-                            <td>2020-04-29</td>
-                            <td><span class="badge bg-success">Approved</span></td>
-                            <td>
 
-                                <button type="button" class="btn btn-success btn-sm">View</button>
-                                <button type="button" class="btn btn-danger btn-sm">Withdraw</button>
+                            @foreach ($applications as $application)
 
-                            </td>
-                        </tr>
+                                <tr>
+                                    <td>{{$application->id}}</td>
+                                    <td>{{Auth::user()->name}}</td>
+                                    <td>{{$application->created_at}}</td>
+                                    <td>{{$application->updated_at}}</td>
+                                    <td>
+                                        @switch($application->applicationStatus)
+
+                                            @case('STAGE_SUBMITTED')
+                                            <span class="badge badge-success"><i class="fas fa-paper-plane"></i> Submitted</span>
+                                            @break
+
+                                            @case('STAGE_PEERAPPROVAL')
+                                            <span class="badge badge-warning"><i class="fas fa-users"></i> Peer Approval</span>
+                                            @break
+
+                                            @case('STAGE_INTERVIEW')
+                                            <span class="badge badge-info"><i class="fa fa-microphone-alt"></i> Interview</span>
+                                            @break
+
+                                            @case('STAGE_INTERVIEW_SCHEDULED')
+                                            <span class="badge badge-warning"><i class="fa fa-clock"></i> Interview Scheduled</span>
+                                            @break
+
+                                            @case('APPROVED')
+                                            <span class="badge badge-success"><i class="fa fa-check-double"></i> Approved</span>
+                                            @break
+
+                                            @case('DENIED')
+                                            <span class="badge badge-danger"><i class="fa fa-ban"></i> <b>Denied</b></span>
+                                            @break
+
+                                            @default
+                                            <span class="badge badge-danger"><i class="fa fa-question"></i> Unknown</span>
+                                        @endswitch
+                                    </td>
+
+                                    <td>
+                                        <button type="button" class="btn btn-success"><i class="fa fa-eye"></i> View</button>
+                                    </td>
+                                </tr>
+
+                            @endforeach
+
                         </tbody>
                     </table>
 
@@ -88,8 +134,6 @@
                 <div class="card-footer">
 
                     <button type="button" class="btn btn-default mr-2">Back</button>
-                    <button type="button" class="btn btn-info mr-2">Approved Applications</button>
-                    <button type="button" class="btn btn-info mr-2">Denied Applications</button>
 
                 </div>
             </div>

@@ -13,20 +13,13 @@ use Illuminate\Support\Facades\Validator;
 class ApplicationController extends Controller
 {
 
-    public function showPendingUserApps()
+    public function showUserApps()
     {
-        return view('dashboard.user.applications');
+
+        return view('dashboard.user.applications')
+            ->with('applications', Auth::user()->applications);
     }
 
-    public function showDeniedUserApps()
-    {
-        return view('dashboard.user.deniedapplications');
-    }
-
-    public function showApprovedApps()
-    {
-        return view('dashboard.user.approvedapplications');
-    }
 
     public function showAllPendingApps()
     {

@@ -214,19 +214,9 @@ return [
             'icon'  => 'fas fa-fw fa-list-ul',
             'submenu' => [
                 [
-                    'text' => 'Under Review',
+                    'text' => 'Current Applications',
                     'icon' => 'fas fa-fw fa-check-double',
-                    'url' => '/applications/pending'
-                ],
-                [
-                    'text' => 'Denied',
-                    'icon' => 'fas fa-fw fa-times',
-                    'url' => '/applications/denied'
-                ],
-                [
-                    'text' => 'Approved',
-                    'icon' => 'fas fa-fw fa-user-check',
-                    'url' => '/applications/approved'
+                    'url' => '/applications/current'
                 ]
             ]
 

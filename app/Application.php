@@ -13,4 +13,9 @@ class Application extends Model
         'applicantStatus'
 
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'applicantUserID', 'id');
+    }
 }

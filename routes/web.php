@@ -21,16 +21,15 @@ Route::post('/form/contact', 'ContactController@create')
 
 Route::group(['middleware' => 'auth'], function(){
 
-    Route::get('/dashboard', 'DashboardController@index')->middleware('eligibility');
+    Route::get('/dashboard', 'DashboardController@index')
+        ->name('dashboard')
+        ->middleware('eligibility');
 
     Route::group(['prefix' => '/applications'], function (){
 
-        Route::get('/pending', 'ApplicationController@showPendingUserApps')
-            ->name('userPendingApps');
-        Route::get('/denied', 'ApplicationController@showDeniedUserApps')
-            ->name('userDeniedApps');
-        Route::get('/approved', 'ApplicationController@showApprovedApps')
-            ->name('userApprovedApps');
+        Route::get('/current', 'ApplicationController@showUserApps')
+            ->name('showUserApps')
+            ->middleware('eligibility');
 
 
         Route::get('/staff/outstanding', 'ApplicationController@showAllPendingApps')
