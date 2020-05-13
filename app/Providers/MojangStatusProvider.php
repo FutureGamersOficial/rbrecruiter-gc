@@ -27,7 +27,7 @@ class MojangStatusProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        // TODO: (IMPORTANT) Switch this to Middleware
         if (!Cache::has('mojang_status'))
         {
             Log::info("Mojang Status Provider: Mojang Status not found in the cache; Sending new request.");

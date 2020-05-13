@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Application', 'applicantUserID', 'id');
     }
+
+    public function profile()
+    {
+        return $this->hasOne('App\Profile', 'userID', 'id');
+    }
 }

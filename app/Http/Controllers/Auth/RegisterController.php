@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Profile;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use function GuzzleHttp\Psr7\str;
 
 class RegisterController extends Controller
 {
@@ -50,6 +52,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'uuid' => ['required', 'string', 'unique:users', 'min:32', 'max:32'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -64,11 +67,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        $user = User::create([
+            'uuid' => $data['uuid'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'originalIP' => request()->ip()
         ]);
+
+        Profile::create([
+
+            'profileShortBio' => 'Write a one-liner about you here!',
+            'profileAboutMe' => 'Tell us a bit about you.',
+            'socialLinks' => '{}',
+            'userID' => $user->id
+
+        ]);
+
+        return $user;
     }
 }

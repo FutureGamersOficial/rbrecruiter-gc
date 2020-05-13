@@ -15,17 +15,20 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('profileShortBio');
-            $table->text('profileAboutMe');
+            $table->string('profileShortBio')->nullable();
+            $table->text('profileAboutMe')->nullable();
             $table->enum('avatarPreference', [
                 'crafatar', // Mojang Profile
                 'gravatar' // Email profile
-            ]);
-            $table->text('socialLinks');
+            ])->default('gravatar');
+            $table->text('socialLinks')->nullable();
             $table->bigInteger('userID')->unsigned();
             $table->timestamps();
 
-            $table->foreign('userID')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('userID')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

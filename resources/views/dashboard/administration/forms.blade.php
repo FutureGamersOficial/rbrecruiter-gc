@@ -10,20 +10,7 @@
 
 @section('js')
 
-    @if (session()->has('success'))
-
-        <script>
-            toastr.success("{{session('success')}}")
-        </script>
-
-    @elseif(session()->has('error'))
-
-        <script>
-            toastr.error("{{session('error')}}")
-        </script>
-
-
-    @endif
+    <x-global-errors></x-global-errors>
 
 @stop
 

@@ -208,7 +208,7 @@ return [
     */
 
     'menu' => [
-        'My Account',
+        'Applications',
         [
             'text' => 'My Applications',
             'icon'  => 'fas fa-fw fa-list-ul',
@@ -218,7 +218,7 @@ return [
                     'icon' => 'fas fa-fw fa-check-double',
                     'url' => '/applications/current'
                 ]
-            ]
+            ],
 
         ],
         'My Profile',
@@ -226,6 +226,11 @@ return [
             'text' => 'Profile Settings',
             'url' => '/profile/settings',
             'icon' => 'fas fa-fw fa-cog'
+        ],
+        [
+            'text' => 'My Account Settings',
+            'icon' => 'fas fa-user-circle',
+            'url' => '/profile/settings/account'
         ],
         'Application Management',
         [

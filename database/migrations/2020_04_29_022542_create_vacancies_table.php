@@ -19,7 +19,7 @@ class CreateVacanciesTable extends Migration
             $table->longText('vacancyDescription');
             $table->string('permissionGroupName');
             $table->string('discordRoleID');
-            $table->bigInteger('vacancyFormID')->unsigned();
+            $table->unsignedBigInteger('vacancyFormID');
             $table->integer('vacancyCount')->default(3);
             $table->timestamps();
 

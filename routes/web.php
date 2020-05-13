@@ -12,9 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
 
-Route::get('/','HomeController@index')->middleware('eligibility');
+Route::group(['prefix' => 'auth', 'middleware' => ['usernameUUID']], function (){
+
+    Auth::routes();
+
+});
+
+Route::get('/','HomeController@index')
+    ->middleware('eligibility');
+
 Route::post('/form/contact', 'ContactController@create')
     ->name('sendSubmission');
 
@@ -56,7 +63,26 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => '/profile'], function (){
 
-        Route::get('/settings', 'ProfileController@index');
+        Route::get('/settings', 'ProfileController@showProfile')
+            ->name('showProfileSettings');
+
+        Route::patch('/settings/save', 'ProfileController@saveProfile')
+            ->name('saveProfileSettings');
+
+
+
+        Route::get('/settings/account', 'UserController@showAccount')
+            ->name('showAccountSettings');
+
+
+        Route::patch('/settings/account/change-password', 'UserController@changePassword')
+            ->name('changePassword');
+
+        Route::patch('/settings/account/change-email', 'UserController@changeEmail')
+            ->name('changeEmail');
+
+        Route::post('/settings/account/flush-sessions', 'UserController@flushSessions')
+            ->name('flushSessions');
 
     });
 

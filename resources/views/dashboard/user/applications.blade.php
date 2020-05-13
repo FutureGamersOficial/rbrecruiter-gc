@@ -66,18 +66,20 @@
                 <!-- /.card-header -->
                 <div class="card-body p-0"> <!-- move to dedi css -->
 
-                    <table class="table" style="white-space: nowrap">
-                        <thead>
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Applicant</th>
-                            <th>Application Date</th>
-                            <th>Last Acted On</th>
-                            <th style="width: 40px">Status</th>
-                            <th style="width: 40px">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    @if (!$applications->isEmpty())
+
+                        <table class="table" style="white-space: nowrap">
+                            <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Applicant</th>
+                                <th>Application Date</th>
+                                <th>Last Acted On</th>
+                                <th style="width: 40px">Status</th>
+                                <th style="width: 40px">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
                             @foreach ($applications as $application)
 
@@ -125,9 +127,17 @@
 
                             @endforeach
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
 
+                    @else
+
+                        <div class="alert alert-warning">
+                            <p><i class="fa fa-info-circle"></i> <b>Nothing to show</b></p>
+                            <p>You currently have no applications to display. If you're eligible, you may apply once every month.</p>
+                        </div>
+
+                    @endif
                 </div>
                 <!-- /.card-body -->
 
