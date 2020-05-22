@@ -167,17 +167,17 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/dashboard',
 
-    'logout_url' => 'logout',
+    'logout_url' => '/auth/logout',
 
-    'login_url' => 'login',
+    'login_url' => '/auth/login',
 
-    'register_url' => 'register',
+    'register_url' => '/auth/register',
 
-    'password_reset_url' => 'password/reset',
+    'password_reset_url' => '/auth/password/reset',
 
-    'password_email_url' => 'password/email',
+    'password_email_url' => '/auth/password/email',
 
     'profile_url' => false,
 
@@ -216,7 +216,7 @@ return [
                 [
                     'text' => 'Current Applications',
                     'icon' => 'fas fa-fw fa-check-double',
-                    'url' => '/applications/current'
+                    'url' => '/applications/my-applications'
                 ]
             ],
 
@@ -444,12 +444,23 @@ return [
         ],
         [
             'name' => 'GlobalTooltip',
-            'active' => 'true',
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '/js/globaltooltip.js'
+                ]
+            ]
+        ],
+        [
+            'name' => 'DatePickApp',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '/js/datepick.js'
                 ]
             ]
         ]

@@ -65,12 +65,12 @@
                             <label for="minecraftUsername" class="col-md-4 col-form-label text-md-right">Minecraft Username</label>
 
                             <div class="col-md-6">
-                                <input type="text" id="minecraftUsername" name="uuid" class="form-control" required>
+                                <input type="text" id="minecraftUsername" name="uuid" class="form-control @error('uuid') is-invalid @enderror" required>
 
                                 @error('uuid')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                                </span>
                                 @enderror
                             </div>
                         </div>

@@ -62,21 +62,21 @@
             <ul class="navbar-nav ml-auto float-right">
                 @guest
                     <li class="nav-item">
-                        <button class="btn btn-info" type="button" onclick="window.location.href='login'"><i class="fas fa-sign-in-alt"></i> Sign-in</button>
+                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('login')}}'"><i class="fas fa-sign-in-alt"></i> Sign-in</button>
                     </li>
 
                     <li class="nav-item">
-                        <button class="btn btn-info" type="button" onclick="window.location.href='register'"><i class="fas fa-plus"></i> Sign-up</button>
+                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('register')}}'"><i class="fas fa-plus"></i> Sign-up</button>
                     </li>
                 @endguest
 
                 @auth
                     <li class="nav-item">
-                        <button type="button" class="btn btn-info" onclick="window.location.href='dashboard'">Dashboard</button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='{{route('dashboard')}}'">Dashboard</button>
                     </li>
 
                     <li class="nav-item">
-                        <form method="POST" action="logout">
+                        <form method="POST" action="{{route('logout')}}">
                             @csrf
                             <button type="submit" class="btn btn-danger"><i class="fa fa-power-off"></i> Sign-out</button>
                         </form>

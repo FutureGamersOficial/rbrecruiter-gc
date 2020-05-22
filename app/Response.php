@@ -11,4 +11,19 @@ class Response extends Model
         'associatedVacancyID',
         'responseData'
     ];
+
+    public function form()
+    {
+        return $this->hasOne('App\Form', 'id', 'responseFormID');
+    }
+
+    public function application()
+    {
+        return $this->belongsTo('App\Application', 'applicantFormResponseID', 'id');
+    }
+
+    public function vacancy()
+    {
+        return $this->hasOne('App\Vacancy', 'id', 'associatedVacancyID');
+    }
 }

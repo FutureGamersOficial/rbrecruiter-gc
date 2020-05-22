@@ -31,6 +31,7 @@
         "@fullcalendar/timegrid": "^4.4.0",
         "@fullcalendar/timeline": "^4.4.0",
         "chart.js": "^2.9.3",
+        "flatpickr": "^4.6.3",
         "locale-js": "^1.1.1",
         "moment": "^2.25.0"
     }

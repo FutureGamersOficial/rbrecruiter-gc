@@ -14,8 +14,13 @@ class Form extends Model
 
     ];
 
-    public function vacancy()
+    public function vacancies()
     {
-        return $this->hasMany('App\Vacancy');
+        return $this->hasMany('vacancies', 'vacancyFormID', 'id');
+    }
+
+    public function responses()
+    {
+        return $this->belongsTo('App\Response', 'id', 'id');
     }
 }

@@ -20,6 +20,17 @@
     <div class="row">
 
         <div class="col">
+            <div class="callout callout-info">
+                <p>Seeing no applications? Check with an Administrator to make sure that there are available open positions.</p>
+                <p>Advertising on relevant forums made for this purpose is also a good idea.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col">
 
             <div class="card">
 
@@ -31,68 +42,61 @@
 
                 <div class="card-body">
 
-                    <table class="table" style="white-space: nowrap">
+                    @if (!$applications->isEmpty())
+                        <table class="table" style="white-space: nowrap">
 
-                        <thead>
+                            <thead>
 
                             <tr>
                                 <th>#</th>
                                 <th>Applicant Name</th>
                                 <th>Status</th>
-                                <th>Applied On</th>
+                                <th>Application Date</th>
+                                <th>Last Updated</th>
                                 <th>Actions</th>
                             </tr>
 
-                        </thead>
+                            </thead>
 
-                        <tbody>
+                            <tbody>
 
-                            <tr>
+                            @foreach($applications as $application)
 
-                                <td>1</td>
-                                <td>Jonathan Smith</td>
-                                <td><span class="badge badge-info">Under Review</span></td>
-                                <td>2020-04-20</td>
-                                <td>
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fas fa-clipboard-check"></i> Review</button>
-                                    <button type="button" class="btn btn-warning btn-sm"><i class="fas fa-dumpster-fire"></i> Spam</button>
-                                </td>
+                                <tr>
 
-                            </tr>
+                                    <td>{{$application->id}}</td>
+                                    <td>{{$application->user->name}}</td>
+                                    <td><span class="badge badge-warning">{{($application->applicationStatus == 'STAGE_SUBMITTED') ? 'Outstanding' : 'Unknown Status'}}</span></td>
+                                    <td>{{$application->created_at}}</td>
+                                    <td>{{$application->updated_at}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{route('showUserApp', ['id' => $application->id])}}'"><i class="fas fa-clipboard-check"></i> Review</button>
+                                    </td>
 
-                        </tbody>
+                                </tr>
 
-                    </table>
+                            @endforeach
+
+                            </tbody>
+
+                        </table>
+                    @else
+
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i><b> There are no pending applications</b>
+                            <p>It seems like no one new has applied yet. Checkout the interview and approval queues for applications that might have moved up the ladder by now.</p>
+                        </div>
+
+                    @endif
 
                 </div>
 
                 <div class="card-footer text-center">
 
-                    <button type="button" class="btn btn-success" onclick="window.location.href='{{route('peerReview')}}'">View Approval Queue</button>
+                    <button type="button" class="btn btn-success" onclick="window.location.href='{{route('pendingInterview')}}'">View Interview Queue</button>
 
                 </div>
 
-            </div>
-
-        </div>
-
-        <div class="col">
-
-            <div class="card card-info">
-                <div class="card-header">
-                    <h3 class="card-title">Applications at a Glance</h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body" style="display: block;">
-                    <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                        <canvas id="appOverviewChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 456px;" width="456" height="250" class="chartjs-render-monitor"></canvas>
-                    </div>
-                </div>
-                <!-- /.card-body -->
             </div>
 
         </div>

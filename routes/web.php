@@ -34,10 +34,15 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['prefix' => '/applications'], function (){
 
-        Route::get('/current', 'ApplicationController@showUserApps')
+        Route::get('/my-applications', 'ApplicationController@showUserApps')
             ->name('showUserApps')
             ->middleware('eligibility');
 
+        Route::get('/view/{id}', 'ApplicationController@showUserApp')
+            ->name('showUserApp');
+
+        Route::patch('/update/{id}/{newStatus}', 'ApplicationController@updateApplicationStatus')
+            ->name('updateApplicationStatus');
 
         Route::get('/staff/outstanding', 'ApplicationController@showAllPendingApps')
             ->name('staffPendingApps');
@@ -48,6 +53,16 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/staff/pending-interview', 'ApplicationController@showPendingInterview')
             ->name('pendingInterview');
 
+
+    });
+
+    Route::group(['prefix' => 'appointments'], function (){
+
+        Route::post('schedule/appointments/{applicationID}', 'AppointmentController@saveAppointment')
+            ->name('scheduleAppointment');
+
+        Route::patch('update/appointments/{applicationID}/{status}', 'AppointmentController@updateAppointment')
+            ->name('updateAppointment');
 
     });
 

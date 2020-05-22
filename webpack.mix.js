@@ -19,8 +19,9 @@ mix.styles([
     'node_modules/@fullcalendar/daygrid/main.css',
     'node_modules/@fullcalendar/timeline/main.css',
     'node_modules/@fullcalendar/timegrid/main.css',
-    'node_modules/@fullcalendar/list/main.css'
-], 'public/css/fullcalendar.css');
+    'node_modules/@fullcalendar/list/main.css',
+    'node_modules/flatpickr/dist/flatpickr.min.css'
+], 'public/css/mixed.css');
 
 mix.webpackConfig({
     stats: {

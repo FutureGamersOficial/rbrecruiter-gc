@@ -11,6 +11,16 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import flatpickr from "flatpickr";
+
+
+
+flatpickr("#appointmentDateTime", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    static: false
+});
+
 
 window.Vue = require('vue');
 

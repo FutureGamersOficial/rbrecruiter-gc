@@ -16,7 +16,7 @@
 
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>3</h3>
+                    <h3>{{$applications->count()}}</h3>
                     <p>Pending Interviews</p>
                 </div>
                 <div class="icon">
@@ -30,7 +30,7 @@
 
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>4</h3>
+                    <h3>{{$finishedCount}}</h3>
                     <p>Finished Interviews</p>
                 </div>
                 <div class="icon">
@@ -53,9 +53,11 @@
 
                 <div class="card-body">
 
-                    <table class="table" style="white-space: nowrap">
+                    @if (!$applications->isEmpty())
 
-                        <thead>
+                        <table class="table" style="white-space: nowrap">
+
+                            <thead>
 
                             <tr>
                                 <th>#</th>
@@ -64,25 +66,37 @@
                                 <th>Actions</th>
                             </tr>
 
-                        </thead>
+                            </thead>
 
-                        <tbody>
+                            <tbody>
 
-                            <tr>
+                            @foreach($applications as $application)
 
-                                <td>1</td>
-                                <td>Jonathan Smith</td>
-                                <td><span class="badge badge-warning">Awaiting Interview</span></td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> View</button>
-                                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-clock"></i> Schedule</button>
-                                </td>
+                                <tr>
+                                    <td>{{$application->id}}</td>
+                                    <td>{{$application->user->name}}</td>
+                                    <td><span class="badge-warning badge">{{($application->applicationStatus == 'STAGE_INTERVIEW') ? 'Pending Interview' : 'Unknown Status'}}</span></td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showUserApp', ['id' => $application->id])}}'"><i class="fa fa-eye"></i> View</button>
+                                        <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-clock"></i> Schedule</button>
+                                    </td>
+                                </tr>
 
-                            </tr>
+                            @endforeach
 
-                        </tbody>
+                            </tbody>
 
-                    </table>
+                        </table>
+
+                    @else
+
+                        <div class="alert alert-danger">
+
+                            <b><i class="fa fa-exclamation-triangle"></i> No Applications Pending Interview</b>
+                            <p>There are no applications that have been moved up to the Interview stage. Please check the outstanding queue.</p>
+                        </div>
+
+                    @endif
 
                 </div>
 
@@ -102,9 +116,10 @@
 
                 <div class="card-body">
 
-                    <table class="table" style="white-space: nowrap">
+                    @if (!$upcomingApplications->isEmpty())
+                        <table class="table" style="white-space: nowrap">
 
-                        <thead>
+                            <thead>
 
                             <tr>
 
@@ -117,29 +132,53 @@
 
                             </tr>
 
-                        </thead>
+                            </thead>
 
-                        <tbody>
+                            <tbody>
 
-                            <tr>
-                                <td>1</td>
-                                <td>April Smith</td>
-                                <td><span class="badge badge-success"><i class="fa fa-check"></i> Scheduled</span></td>
-                                <td>2020-05-04 12:20</td>
-                                <td>Discord</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> View Details</button>
-                                    <button type="button" class="btn btn-sm btn-danger"><i class="fas fa-ban"></i> Cancel Interview</button>
-                                </td>
-                            </tr>
+                            @foreach($upcomingApplications as $upcomingApp)
 
-                        </tbody>
+                                <tr>
+                                    <td>{{$upcomingApp->id}}</td>
+                                    <td>{{$upcomingApp->user->name}}</td>
+                                    <td><span class="badge badge-success"><i class="fa fa-check"></i> {{ucfirst(strtolower($upcomingApp->appointment->appointmentStatus))}}</span></td>
+                                    <td>{{$upcomingApp->appointment->appointmentDate}}</td>
+                                    <td><span class="badge badge-success"><i class="fa fa-check"></i> {{ucfirst(strtolower($upcomingApp->appointment->appointmentLocation))}}</span></td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showUserApp', ['id' => $upcomingApp->id])}}'"><i class="fa fa-eye"></i> View Details</button>
+                                    </td>
+                                </tr>
 
-                    </table>
+                            @endforeach
+
+                            </tbody>
+
+                        </table>
+
+                    @else
+
+                        <x-alert alert-type="danger">
+                            <p><i class="fa fa-exclamation-triangle"></i><b>There are no upcoming interviews</b></p>
+
+                            Please check other queues down in the application process. Applicants here may have already been interviewed.
+                        </x-alert>
+
+                    @endif
 
                 </div>
 
             </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mr-5">
+
+        <div class="col text-center">
+
+            <button type="button" class="btn btn-success mr-3" onclick="window.location.href='{{route('staffPendingApps')}}'">View Outstanding Queue</button>
+            <button type="button" class="btn btn-success mr-3" onclick="window.location.href='{{route('peerReview')}}'">View Approval Queue</button>
 
         </div>
 

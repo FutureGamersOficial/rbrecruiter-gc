@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use App\Response;
 use App\Vacancy;
@@ -20,20 +21,81 @@ class ApplicationController extends Controller
             ->with('applications', Auth::user()->applications);
     }
 
+    public function showUserApp(Request $request, $applicationID)
+    {
+        $application = Application::find($applicationID);
+
+        if (!is_null($application))
+        {
+            return view('dashboard.user.viewapp')
+                ->with(
+                    [
+                        'application' => $application,
+                        'structuredResponses' => json_decode($application->response->responseData, true),
+                        'formStructure' => $application->response->form,
+                        'vacancy' => $application->response->vacancy
+                    ]
+                );
+        }
+        else
+        {
+            $request->session()->flash('error', 'The application you requested could not be found.');
+        }
+
+        return redirect()->back();
+    }
+
 
     public function showAllPendingApps()
     {
-        return view('dashboard.appmanagement.outstandingapps');
+        return view('dashboard.appmanagement.outstandingapps')
+            ->with('applications', Application::where('applicationStatus', 'STAGE_SUBMITTED')->get());
+    }
+
+
+    public function showPendingInterview()
+    {
+        $applications = Application::with('appointment', 'user')->get();
+        $count = 0;
+
+        $pendingInterviews = collect([]);
+        $upcomingInterviews = collect([]);
+
+
+        foreach ($applications as $application)
+        {
+            if (!is_null($application->appointment) && $application->appointment->appointmentStatus == 'CONCLUDED')
+            {
+                $count =+ 1;
+            }
+
+            switch ($application->applicationStatus)
+            {
+                case 'STAGE_INTERVIEW':
+                    $upcomingInterviews->push($application);
+
+                    break;
+
+                case 'STAGE_INTERVIEW_SCHEDULED':
+                    $pendingInterviews->push($application);
+
+                    break;
+            }
+
+        }
+
+        return view('dashboard.appmanagement.interview')
+            ->with([
+                'finishedCount' => $count,
+                'applications' => $pendingInterviews,
+                'upcomingApplications' => $upcomingInterviews
+            ]);
     }
 
     public function showPeerReview()
     {
-        return view('dashboard.appmanagement.peerreview');
-    }
-
-    public function showPendingInterview()
-    {
-        return view('dashboard.appmanagement.interview');
+        return view('dashboard.appmanagement.peerreview')
+            ->with('applications', Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get());
     }
 
     public function renderApplicationForm(Request $request, $vacancySlug)
@@ -108,13 +170,46 @@ class ApplicationController extends Controller
             Log::info('Submitted application for user ' . Auth::user()->name . ' with response ID' . $response->id);
 
             $request->session()->flash('success', 'Thank you for your application! It will be reviewed as soon as possible.');
-            return redirect()->to(route('userPendingApps'));
+            return redirect()->to(route('showUserApps'));
         }
         else
         {
             Log::warning('Application form for ' . Auth::user()->name . ' contained errors, resetting!');
             $request->session()->flash('error', 'There are one or more errors in your application. Please make sure none of your fields are empty, since they are all required.');
 
+        }
+
+        return redirect()->back();
+    }
+
+    public function updateApplicationStatus(Request $request, $applicationID, $newStatus)
+    {
+        $application = Application::find($applicationID);
+
+        if (!is_null($application))
+        {
+            switch ($newStatus)
+            {
+                case 'deny':
+
+                    Log::info('User ' . Auth::user()->name . ' has denied application ID ' . $application->id);
+                    $request->session()->flash('success', 'Application denied.');
+                    $application->setStatus('DENIED');
+                    break;
+
+                case 'interview':
+                    Log::info('User ' . Auth::user()->name . ' has moved application ID ' . $application->id . 'to interview stage');
+                    $request->session()->flash('success', 'Application moved to interview stage! (:');
+                    $application->setStatus('STAGE_INTERVIEW');
+                    break;
+
+                default:
+                    $request->session()->flash('error', 'There are no suitable statuses to update to. Do not mess with the URL.');
+            }
+        }
+        else
+        {
+            $request->session()->flash('The application you\'re trying to update does not exist.');
         }
 
         return redirect()->back();
