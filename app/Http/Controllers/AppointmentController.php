@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Http\Requests\SaveNotesRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Appointment;
@@ -84,5 +85,24 @@ class AppointmentController extends Controller
         return redirect()->back();
     }
 
+    // also updates
+    public function saveNotes(SaveNotesRequest $request, $applicationID)
+    {
+        $application = Application::find($applicationID);
+
+        if (!is_null($application))
+        {
+            $application->appointment->meetingNotes = $request->noteText;
+            $application->appointment->save();
+
+            $request->session()->flash('success', 'Meeting notes have been saved.');
+        }
+        else
+        {
+            $request->session()->flash('error', 'Sanity check failed: There\'s no appointment to save notes to!');
+        }
+
+        return redirect()->back();
+    }
 
 }

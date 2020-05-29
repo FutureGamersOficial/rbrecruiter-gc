@@ -294,6 +294,11 @@ return [
                     'text' => 'Global Notification Settings',
                     'icon' => 'far fa-bell',
                     'url' => '/admin/notifications'
+                ],
+                [
+                    'text' => 'Developer Tools',
+                    'icon' => 'fas fa-code',
+                    'url' => '/admin/devtools'
                 ]
             ]
         ],

@@ -20,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
             OnUserRegistration::class
         ],
+        'App\Events\ApplicationApprovedEvent' => [
+            'App\Listeners\PromoteUser'
+        ],
+        'App\Events\ApplicationDeniedEvent' => [
+            'App\Listeners\DenyUser'
+        ]
     ];
 
     /**
@@ -29,6 +35,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         parent::boot();
 
         //

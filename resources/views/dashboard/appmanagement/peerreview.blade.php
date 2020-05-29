@@ -67,8 +67,6 @@
                                 <td><span class="badge badge-warning">{{($application->applicationStatus == 'STAGE_PEERAPPROVAL') ? 'Peer Review' : 'Unknown'}}</span></td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='{{route('showUserApp', ['id' => $application->id])}}'"><i class="far fa-clipboard"></i> Review</button>
-                                    <button type="button" class="btn btn-success btn-sm"><i class="fas fa-user-check"></i> Vote: Approve</button>
-                                    <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-user-times"></i> Vote: Deny</button>
                                 </td>
 
                             @endforeach

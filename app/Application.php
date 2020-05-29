@@ -14,6 +14,7 @@ class Application extends Model
 
     ];
 
+
     public function user()
     {
         return $this->belongsTo('App\User', 'applicantUserID', 'id');
@@ -29,10 +30,16 @@ class Application extends Model
         return $this->hasOne('App\Appointment', 'applicationID', 'id');
     }
 
+    public function votes()
+    {
+        return $this->belongsToMany('App\Vote', 'votes_has_application');
+    }
+
     public function setStatus($status)
     {
         return $this->update([
             'applicationStatus' => $status
         ]);
+
     }
 }

@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::group(['prefix' => 'auth', 'middleware' => ['usernameUUID']], function (){
 
     Auth::routes();
@@ -38,8 +37,13 @@ Route::group(['middleware' => 'auth'], function(){
             ->name('showUserApps')
             ->middleware('eligibility');
 
+
         Route::get('/view/{id}', 'ApplicationController@showUserApp')
             ->name('showUserApp');
+
+        Route::patch('/notes/save/{applicationID}', 'AppointmentController@saveNotes')
+            ->name('saveNotes');
+
 
         Route::patch('/update/{id}/{newStatus}', 'ApplicationController@updateApplicationStatus')
             ->name('updateApplicationStatus');
@@ -52,6 +56,10 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::get('/staff/pending-interview', 'ApplicationController@showPendingInterview')
             ->name('pendingInterview');
+
+
+        Route::post('{id}/staff/vote', 'VoteController@vote')
+            ->name('voteApplication');
 
 
     });
@@ -136,6 +144,14 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::get('forms', 'FormController@index')
             ->name('showForms');
+
+
+        Route::get('devtools', 'DevToolsController@index')
+            ->name('devTools');
+
+        // we could use route model binding
+        Route::post('devtools/vote-evaluation/force', 'DevToolsController@forceVoteCount')
+            ->name('devToolsForceVoteCount');
 
     });
 

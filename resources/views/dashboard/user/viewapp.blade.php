@@ -22,9 +22,29 @@
     <script type="text/javascript" src="/js/app.js"></script>
     <x-global-errors></x-global-errors>
 
+    @if (!$canVote)
+        <script>
+            toastr.info('You cannot vote on this application anymore.', 'Warning')
+        </script>
+    @endif
+
 @stop
 
 @section('content')
+
+        <x-modal id="notes" modal-label="notes" modal-title="Shared Notepad" include-close-button="true">
+
+            <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['applicationID' => $application->id])}}">
+                @csrf
+                @method('PATCH')
+                <textarea name="noteText" rows="5" class="form-control">{{$application->appointment->meetingNotes ?? 'There are no notes yet. Add some!'}}</textarea>
+            </form>
+            <p class="text-muted text-sm">Last updated @ {{$application->appointment->updated_at}}</p>
+
+            <x-slot name="modalFooter">
+                <button type="button" class="btn btn-success" onclick="document.getElementById('meetingNotes').submit()"><i class="far fa-paper-plane"></i> Save & Close</button>
+            </x-slot>
+        </x-modal>
 
         <x-modal id="denyApplication" modal-label="denyApplicationLabel" modal-title="Please confirm" include-close-button="true">
 
@@ -246,7 +266,8 @@
                                 </form>
                                 <button class="btn btn-warning mr-3">View Meeting Notes</button>
 
-                                <button class="btn btn-danger mr-3">Cancel Interview</button>
+                                <!-- Show to users only -->
+                                <button class="btn btn-success mr-3">Accept Meeting</button>
                             </x-slot>
 
                         </x-card>
@@ -270,10 +291,22 @@
 
                     <x-slot name="cardFooter">
 
-                        <button type="button" class="btn btn-sm btn-warning">Vote: Approve Applicant</button>
-                        <button type="button" class="btn btn-sm btn-warning">Vote: Deny Applicant</button>
+                        @if($canVote)
 
-                        <button type="button" class="btn btn-sm btn-warning ml-5">Meeting Notes</button>
+                            <form class="d-inline-block" method="POST" action="{{route('voteApplication', ['id' => $application->id])}}">
+                                @csrf
+                                <input type="hidden" name="voteType" value="VOTE_APPROVE">
+                                <button type="submit" class="btn btn-sm btn-warning">Vote: Approve Applicant</button>
+                            </form>
+                            <form class="d-inline-block" method="POST" action="{{route('voteApplication', ['id' => $application->id])}}">
+                                @csrf
+                                <input type="hidden" name="voteType" value="VOTE_DENY">
+                                <button type="submit" class="btn btn-sm btn-warning">Vote: Deny Applicant</button>
+                            </form>
+
+                        @endif
+
+                        <button type="button" class="btn btn-sm btn-warning {{($canVote) ? 'ml-5' : ''}}" onclick="$('#notes').modal('show')">Meeting Notes</button>
                     </x-slot>
 
                 </x-card>

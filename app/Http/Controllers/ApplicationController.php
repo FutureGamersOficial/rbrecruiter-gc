@@ -13,6 +13,22 @@ use Illuminate\Support\Facades\Validator;
 
 class ApplicationController extends Controller
 {
+    private function canVote($votes)
+    {
+        $allvotes = collect([]);
+
+        foreach ($votes as $vote)
+        {
+            if ($vote->userID == Auth::user()->id)
+            {
+                Log::debug('Match');
+                $allvotes->push($vote);
+
+            }
+        }
+
+        return $allvotes->count() == 1;
+    }
 
     public function showUserApps()
     {
@@ -33,7 +49,8 @@ class ApplicationController extends Controller
                         'application' => $application,
                         'structuredResponses' => json_decode($application->response->responseData, true),
                         'formStructure' => $application->response->form,
-                        'vacancy' => $application->response->vacancy
+                        'vacancy' => $application->response->vacancy,
+                        'canVote'  => $this->canVote($application->votes)
                     ]
                 );
         }
@@ -96,6 +113,7 @@ class ApplicationController extends Controller
     {
         return view('dashboard.appmanagement.peerreview')
             ->with('applications', Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get());
+
     }
 
     public function renderApplicationForm(Request $request, $vacancySlug)
