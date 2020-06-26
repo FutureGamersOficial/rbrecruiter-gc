@@ -5,23 +5,117 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChangeEmailRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\FlushSessionsRequest;
+use App\Http\Requests\DeleteUserRequest;
+use App\Http\Requests\SearchPlayerRequest;
+use App\Http\Requests\UpdateUserRequest;
+
 use App\User;
+use App\Ban;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Facades\UUID;
+use App\Notifications\EmailChanged;
+use App\Notifications\ChangedPassword;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
 
     public function showStaffMembers()
     {
-        return view('dashboard.administration.staff-members');
+
+        $staffRoles = [
+            'reviewer',
+            'hiringManager',
+            'admin'
+        ]; // TODO: Un-hardcode this, move to config/roles.php
+
+        if (Auth::user()->can('admin.stafflist'))
+        {
+            $users = User::with('roles')->get();
+            $staffMembers = collect([]);
+
+            foreach($users as $user)
+            {
+                if (empty($user->roles))
+                {
+                    Log::debug($user->role->name);
+                    Log::debug('Staff list: User without role detected; Ignoring');
+                    continue;
+                }
+
+                foreach($user->roles as $role)
+                {
+                    if (in_array($role->name, $staffRoles))
+                    {
+                        $staffMembers->push($user);
+                        continue 2; // Skip directly to the next user instead of comparing more roles for the current user
+                    }
+                }
+            }
+
+            return view('dashboard.administration.staff-members')
+                ->with([
+                    'users' => $staffMembers
+                ]);
+        }
+
+        abort(403, 'Forbidden');
     }
 
     public function showPlayers()
     {
-        return view('dashboard.administration.players');
+        $users = User::with('roles')->get();
+        $players = collect([]);
+
+        foreach($users as $user)
+        {
+            // TODO: Might be problematic if we don't check if the role is user
+            if (count($user->roles) == 1)
+            {
+                $players->push($user);
+            }
+        }
+
+        if (Auth::user()->can('admin.userlist'))
+        {
+            return view('dashboard.administration.players')
+                ->with([
+                    'users' => $players,
+                    'bannedUserCount' => Ban::all()->count()
+                ]);
+        }
+
+        abort(403, 'Forbidden');
+    }
+
+
+    public function showPlayersLike(SearchPlayerRequest $request)
+    {
+        $searchTerm = $request->searchTerm;
+
+        $matchingUsers = User::query()
+            ->where('name', 'LIKE', "%{$searchTerm}%")
+            ->orWhere('email', 'LIKE', "%{$searchTerm}%")
+            ->get();
+
+        if (!$matchingUsers->isEmpty())
+        {   $request->session()->flash('success', 'There were ' . $matchingUsers->count() . ' user(s) matching your search.');
+
+            return view('dashboard.administration.players')
+            ->with([
+                'users' => $matchingUsers,
+                'bannedUserCount' => Ban::all()->count()
+            ]);
+        }
+        else
+        {
+            $request->session()->flash('error', 'Your search term did not return any results.');
+            return redirect(route('registeredPlayerList'));
+        }
     }
 
     public function showAccount()
@@ -62,9 +156,9 @@ class UserController extends Controller
                 'userID' => $user->id,
                 'timestamp' => now()
             ]);
-            Auth::logout();
+            $user->notify(new ChangedPassword());
 
-            // After logout, the user gets caught by the auth filter, and it automatically redirects back to the previous page
+            Auth::logout();
             return redirect()->back();
         }
 
@@ -84,6 +178,7 @@ class UserController extends Controller
                 'userID' => $user->id,
                 'timestamp' => now()
             ]);
+            $user->notify(new EmailChanged());
 
             $request->session()->flash('success', 'Your email address has been changed!');
         }
@@ -94,5 +189,89 @@ class UserController extends Controller
 
         return redirect()->back();
 
+    }
+
+
+
+    public function delete(DeleteUserRequest $request, User $user)
+    {
+        if ($request->confirmPrompt == 'DELETE ACCOUNT')
+        {
+            $user->delete();
+            $request->session()->flash('success','User deleted successfully. PII has been erased.');
+        }
+        else
+        {
+            $request->session()->flash('error', 'Wrong confirmation text! Try again.');
+        }
+
+
+        return redirect()->route('registeredPlayerList');
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+
+      // Mass update would not be possible here without extra code, making route model binding useless
+      $user->email = $request->email;
+      $user->name = $request->name;
+      $user->uuid = $request->uuid;
+
+      $existingRoles = Role::all()
+        ->pluck('name')
+        ->all();
+
+      $roleDiff = array_diff($existingRoles, $request->roles);
+
+      // Adds roles that were selected. Removes roles that aren't selected if the user has them.
+      foreach($roleDiff as $deselectedRole)
+      {
+        if ($user->hasRole($deselectedRole) && $deselectedRole !== 'user')
+        {
+          $user->removeRole($deselectedRole);
+        }
+      }
+
+      foreach($request->roles as $role)
+      {
+        if (!$user->hasRole($role))
+        {
+          $user->assignRole($role);
+        }
+
+      }
+
+      $user->save();
+      $request->session()->flash('success', 'User updated successfully!');
+
+      return redirect()->back();
+
+    }
+
+    public function terminate(Request $request, User $user)
+    {
+        $this->authorize('terminate', Auth::user());
+
+        if (!$user->isStaffMember() || $user->is(Auth::user()))
+        {
+            $request->session()->flash('error', 'You cannot terminate this user.');
+            return redirect()->back();
+        }
+
+        foreach ($user->roles as $role)
+        {
+          if ($role->name == 'user')
+          {
+            continue;
+          }
+
+          $user->removeRole($role->name);
+        }
+
+        Log::info('User ' . $user->name . ' has just been demoted.');
+        $request->session()->flash('success', 'User terminated successfully.');
+
+        //TODO: Dispatch event
+        return redirect()->back();
     }
 }

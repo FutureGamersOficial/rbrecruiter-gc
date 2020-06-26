@@ -15,6 +15,8 @@ class Application extends Model
     ];
 
 
+
+
     public function user()
     {
         return $this->belongsTo('App\User', 'applicantUserID', 'id');
@@ -33,6 +35,12 @@ class Application extends Model
     public function votes()
     {
         return $this->belongsToMany('App\Vote', 'votes_has_application');
+    }
+
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment', 'applicationID', 'id');
     }
 
     public function setStatus($status)

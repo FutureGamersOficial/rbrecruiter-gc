@@ -31,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-
+        Route::model('user', \App\User::class);
         parent::boot();
     }
 

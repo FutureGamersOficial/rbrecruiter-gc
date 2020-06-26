@@ -5,15 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileSave;
 use Illuminate\Support\Facades\Log;
 use App\Profile;
+use App\User;
+use App\Facades\IP;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
     public function showProfile()
     {
 
-        $socialMediaProfiles = json_decode(Auth::user()->profile->socialLinks, true);
+        $socialLinks = Auth::user()->profile->socialLinks ?? "[]";
+        $socialMediaProfiles = json_decode($socialLinks, true);
 
         return view('dashboard.user.profile.userprofile')
             ->with([
@@ -26,11 +31,56 @@ class ProfileController extends Controller
 
     }
 
+    // Route model binding
+    public function showSingleProfile(Request $request, User $user)
+    {
+
+        $socialMediaProfiles = json_decode($user->profile->socialLinks, true);
+        $createdDate = Carbon::parse($user->created_at);
+
+        $systemRoles = Role::all()->pluck('name')->all();
+        $userRoles = $user->roles->pluck('name')->all();
+
+        $roleList = [];
+
+
+        foreach($systemRoles as $role)
+        {
+          if (in_array($role, $userRoles))
+          {
+            $roleList[$role] = true;
+          }
+          else
+          {
+            $roleList[$role] = false;
+          }
+        }
+
+        if (Auth::user()->is($user) || Auth::user()->can('profiles.view.others'))
+        {
+            return view('dashboard.user.profile.displayprofile')
+                ->with([
+                    'profile' => $user->profile,
+                    'github' => $socialMediaProfiles['links']['github'] ?? 'UpdateMe',
+                    'twitter' => $socialMediaProfiles['links']['twitter'] ?? 'UpdateMe',
+                    'insta' => $socialMediaProfiles['links']['insta'] ?? 'UpdateMe',
+                    'discord' => $socialMediaProfiles['links']['discord'] ?? 'UpdateMe#12345',
+                    'since' => $createdDate->englishMonth . " " . $createdDate->year,
+                    'ipInfo' => IP::lookup($user->originalIP),
+                    'roles' => $roleList
+                ]);
+        }
+        else
+        {
+            abort(403, 'You cannot view someone else\'s profile.');
+        }
+
+    }
+
     public function saveProfile(ProfileSave $request)
     {
-        // TODO: Implement profile security policy for logged in users
-
-        $profile = Profile::find(Auth::user()->id);
+        // TODO: Switch to route model binding
+        $profile = User::find(Auth::user()->id)->profile;
         $social = [];
 
         if (!is_null($profile))
@@ -57,7 +107,7 @@ class ProfileController extends Controller
             $profile->avatarPreference = $avatarPref;
             $profile->socialLinks = json_encode($social);
 
-            $profile->save();
+            $newProfile = $profile->save();
 
             $request->session()->flash('success', 'Profile settings saved successfully.');
 

@@ -56,6 +56,12 @@
                     <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
 
                     <p class="text-muted text-center">{{$profile->profileShortBio}}</p>
+
+                    <div class="text-center">
+
+                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showSingleProfile', ['user' => Auth::user()->id])}}'"><i class="fas fa-eye"></i></button>
+
+                    </div>
                 </div>
 
                 <div class="card-footer text-center">

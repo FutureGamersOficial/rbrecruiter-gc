@@ -31,6 +31,10 @@ class CreateApplicationsTable extends Migration
                 'DENIED'
             ])->default('STAGE_SUBMITTED');
             $table->timestamps();
+
+            $table->foreign('applicantUserID')
+                ->references('id')
+                ->on('users');
         });
     }
 

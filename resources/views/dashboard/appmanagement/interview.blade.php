@@ -141,9 +141,15 @@
                                 <tr>
                                     <td>{{$upcomingApp->id}}</td>
                                     <td>{{$upcomingApp->user->name}}</td>
-                                    <td><span class="badge badge-success"><i class="fa fa-check"></i> {{ucfirst(strtolower($upcomingApp->appointment->appointmentStatus))}}</span></td>
-                                    <td>{{$upcomingApp->appointment->appointmentDate}}</td>
-                                    <td><span class="badge badge-success"><i class="fa fa-check"></i> {{ucfirst(strtolower($upcomingApp->appointment->appointmentLocation))}}</span></td>
+                                    @if (is_null($upcomingApp->appointment))
+                                        <td><span class="badge badge-warning"><i class="fa fa-question-circle"></i>Pending Schedule</span></td>
+                                        <td>None yet</td>
+                                        <td><span class="badge badge-warning"><i class="fa fa-question-circle"></i>Pending Schedule</span></td>
+                                    @else
+                                        <td><span class="badge badge-success"><i class="fa fa-check"></i> {{ucfirst(strtolower($upcomingApp->appointment->appointmentStatus))}}</span></td>
+                                        <td>{{$upcomingApp->appointment->appointmentDate}}</td>
+                                        <td><span class="badge badge-success"><i class="fa fa-check"></i> {{ucfirst(strtolower($upcomingApp->appointment->appointmentLocation))}}</span></td>
+                                    @endif
                                     <td>
                                         <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showUserApp', ['id' => $upcomingApp->id])}}'"><i class="fa fa-eye"></i> View Details</button>
                                     </td>

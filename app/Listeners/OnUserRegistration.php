@@ -7,6 +7,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
+use App\User;
+use App\Notifications\NewUser;
+
 class OnUserRegistration
 {
     /**
@@ -29,5 +32,13 @@ class OnUserRegistration
     {
         // TODO: Send push notification to online admins via browser (w/ pusher)
         Log::info('User ' . $event->user->name . ' has just registered for an account.');
+
+        foreach(User::all() as $user)
+        {
+            if ($user->hasRole('admin'))
+            {
+                $user->notify(new NewUser($event->user));
+            }
+        }
     }
 }

@@ -7,6 +7,8 @@ use App\Http\Requests\SaveNotesRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Appointment;
+use App\Notifications\ApplicationMoved;
+use App\Notifications\AppointmentScheduled;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -47,7 +49,8 @@ class AppointmentController extends Controller
                 'datetime' => $appointmentDate->toDateTimeString(),
                 'scheduled' => now()
             ]);
-
+            
+            $app->user->notify(new AppointmentScheduled($appointment));
             $request->session()->flash('success', 'Appointment successfully scheduled @ ' . $appointmentDate->toDateTimeString());
 
         }
@@ -70,10 +73,12 @@ class AppointmentController extends Controller
 
         if (!is_null($application))
         {
+          // NOTE: This is a little confusing, refactor
             $application->appointment->appointmentStatus = (in_array($status, $validStatuses)) ? strtoupper($status) : 'SCHEDULED';
             $application->appointment->save();
 
             $application->setStatus('STAGE_PEERAPPROVAL');
+            $application->user->notify(new ApplicationMoved());
 
             $request->session()->flash('success', 'Interview finished! Staff members can now vote on it.');
         }

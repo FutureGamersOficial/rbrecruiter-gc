@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\ApplicationDeniedEvent;
+use App\Notifications\ApplicationDenied;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
@@ -30,6 +31,7 @@ class DenyUser
         $event->application->setStatus('DENIED');
         Log::info('User ' . $event->application->user->name . ' just had their application denied.');
 
-        // Also dispatch other notifications
+        $event->application->user->notify(new ApplicationDenied($event->application));
+
     }
 }

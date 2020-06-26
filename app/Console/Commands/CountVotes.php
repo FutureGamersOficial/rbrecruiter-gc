@@ -96,6 +96,9 @@ class CountVotes extends Command
                     $this->info('✓ Dispatched promotion event for applicant ' . $application->user->name);
                     if (!$this->option('dryrun'))
                     {
+                        $application->response->vacancy->vacancyCount -= 1;
+                        $application->response->vacancy->save();
+
                         event(new ApplicationApprovedEvent(Application::find($application->id)));
                     }
                     else

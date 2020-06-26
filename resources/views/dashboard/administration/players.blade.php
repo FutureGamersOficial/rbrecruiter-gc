@@ -8,6 +8,12 @@
 
 @stop
 
+@section('js')
+
+    <x-global-errors></x-global-errors>
+
+@stop
+
 @section('content')
 
     <div class="row">
@@ -15,7 +21,7 @@
         <div class="col">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>11</h3>
+                    <h3>{{$users->count()}}</h3>
 
                     <p>Registered Players</p>
                 </div>
@@ -29,7 +35,7 @@
 
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>200</h3>
+                    <h3>{{$bannedUserCount}}</h3>
 
                     <p>Total Banned Players</p>
                 </div>
@@ -40,6 +46,7 @@
 
         </div>
     </div>
+I
 
     <div class="row">
 
@@ -53,10 +60,10 @@
 
                 <div class="card-body">
 
-                    <form name="search">
-
+                    <form name="search" method="POST" action="{{route('searchRegisteredPLayerList')}}">
+                        @csrf
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Username or UUID, etc...">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Username/email search">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="fa fa-search"></i>
@@ -101,7 +108,7 @@
               </div>
 
               <div class="card-body">
-
+                @if (!$users->isEmpty())
                   <table class="table table-borderless table-active">
 
                       <thead>
@@ -117,21 +124,41 @@
 
                       <tbody>
 
-                          <tr>
-                              <td>1</td>
-                              <td>Notch</td>
-                              <td>069a79f4-44e9-4726-a5be-fca90e38aaf5</td>
-                              <td><span class="badge badge-success">Active</span></td>
-                              <td>2020-02-10</td>
-                              <td>
-                                  <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> View Record</button>
+                          @foreach($users as $user)
+                            
+                            <tr>
+                                <td>{{$user->id}}</td>
+                                <td>{{UUID::toUsername($user->uuid)}}</td>
+                                <td>{{$user->uuid}}</td>
+                                <td>
+                                    @if ($user->isBanned())
+                                        <span class="badge badge-danger"><i class="fa fa-ban"></i> Banned</span>
+                                    @else
+                                        <span class="badge badge-success">Active</span>
+                                    @endif
+                                </td>
+                                <td>{{$user->created_at}}</td>
+                                <td>
+                                  <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showSingleProfile', ['user' => $user->id])}}'"><i class="fa fa-eye"></i></button>
                               </td>
-                          </tr>
+                            </tr>
+
+                          @endforeach
 
                       </tbody>
 
                   </table>
+                @else
+                    <div class="alert alert-secondary">
+                    
+                        <i class="fas fa-question"></i><span> There are no registered players!</span>
+                        <p>
+                            Registered players are those without a staff role in the team management application.
+                            There may be other users registered in the platform, but they won't be displayed here.
+                        </p>
 
+                    </div>
+                @endif
               </div>
 
               <div class="card-footer">

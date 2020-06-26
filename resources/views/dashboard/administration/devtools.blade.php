@@ -44,8 +44,8 @@
 
             <div class="alert alert-warning">
 
-                <i class="fa fa-exclamation-triangle"></i> <b>Warning: Do not use these options if you don't know what you're doing, even if you have access to this page.</b>
-
+                <i class="fa fa-exclamation-triangle"></i> <b>Warning</b>
+                <p>Do not use these options if you don't know what you're doing, even if you have access to this page.</p>
             </div>
 
         </div>
@@ -60,11 +60,11 @@
                 <x-slot name="cardHeader">
 
                 </x-slot>
-
-                    <button type="button" class="btn btn-danger" onclick="$('#confirmForceEventDispatch').modal('show')">Force Vote Evaluation</button>
+                    <button type="button" class="btn btn-danger" onclick="$('#confirmForceEventDispatch').modal('show')">Override Vote Evaluation</button>
+                    <button type="button" class="btn btn-warning ml-3">Artisan: Evaluate Votes Now</button>
 
                 <x-slot name="cardFooter">
-
+                    <p class="text-muted"> This panel may be also used to completely override the vote system in stalemate scenarios.</p>
                 </x-slot>
             </x-card>
 

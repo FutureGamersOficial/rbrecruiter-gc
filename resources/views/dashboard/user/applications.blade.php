@@ -10,19 +10,7 @@
 
 @section('js')
 
-    @if (session()->has('success'))
-
-        <script>
-            toastr.success("{{session('success')}}")
-        </script>
-
-    @elseif(session()->has('error'))
-
-        <script>
-            toastr.error("{{session('error')}}")
-        </script>
-
-    @endif
+    <x-global-errors></x-global-errors>
 
 @stop
 
@@ -121,7 +109,7 @@
                                     </td>
 
                                     <td>
-                                        <button type="button" class="btn btn-success"><i class="fa fa-eye"></i> View</button>
+                                        <button type="button" class="btn btn-success" onclick="window.location.href='{{route('showUserApp', ['id' => $application->id])}}'"><i class="fa fa-eye"></i> View</button>
                                     </td>
                                 </tr>
 

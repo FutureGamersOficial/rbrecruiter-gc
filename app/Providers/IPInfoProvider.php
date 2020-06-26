@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use App;
+
+class IPInfoProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        App::bind('ipInformationFacade', function(){
+
+            return new App\CustomFacades\IP();
+
+        });
+    }
+}

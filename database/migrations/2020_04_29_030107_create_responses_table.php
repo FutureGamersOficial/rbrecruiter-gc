@@ -18,6 +18,12 @@ class CreateResponsesTable extends Migration
             $table->bigInteger('responseFormID')->unsigned();
             $table->longText('responseData');
             $table->timestamps();
+
+            // A better way would be to link responses directly to vacancies, that subsquently have a form
+            $table->foreign('responseFormID')
+                ->references('id')
+                ->on('forms');
+
         });
     }
 

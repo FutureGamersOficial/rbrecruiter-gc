@@ -16,6 +16,7 @@ class Appointment extends Model
 
     public function application()
     {
+      // FIXME: Possible bug here, where laravel looks for the wrong column in the applications table.
         return $this->belongsTo('App\Application', 'id', 'applicationID');
     }
 

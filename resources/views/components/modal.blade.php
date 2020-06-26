@@ -1,6 +1,6 @@
 <!-- Smile, breathe, and go slowly. - Thich Nhat Hanh -->
 
-<div class="modal fade" id="{{$id}}" role="dialog" aria-labelledby="{{$modalLabel}}" aria-hidden="true">
+<div class="modal fade" tabindex="-1" id="{{$id}}" role="dialog" aria-labelledby="{{$modalLabel}}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

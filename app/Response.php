@@ -12,6 +12,7 @@ class Response extends Model
         'responseData'
     ];
 
+
     public function form()
     {
         return $this->hasOne('App\Form', 'id', 'responseFormID');

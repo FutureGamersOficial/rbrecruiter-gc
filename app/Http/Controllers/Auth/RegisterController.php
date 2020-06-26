@@ -43,6 +43,21 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        $users = User::where('originalIP', \request()->ip())->get();
+
+        foreach($users as $user)
+        {
+            if ($user && $user->isBanned())
+            {
+                abort(403, 'You do not have permission to access this page.');
+            }
+        }
+
+        return view('auth.register');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -78,15 +93,10 @@ class RegisterController extends Controller
             'originalIP' => request()->ip()
         ]);
 
-        Profile::create([
+        // It's not the registration controller's concern to create a profile for the user,
+        // so this code has been moved to it's respective observer, following the separation of concerns pattern.
 
-            'profileShortBio' => 'Write a one-liner about you here!',
-            'profileAboutMe' => 'Tell us a bit about you.',
-            'socialLinks' => '{}',
-            'userID' => $user->id
-
-        ]);
-
+        $user->assignRole('user');
         return $user;
     }
 }

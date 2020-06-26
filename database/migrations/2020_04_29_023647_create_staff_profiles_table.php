@@ -21,6 +21,10 @@ class CreateStaffProfilesTable extends Migration
             $table->dateTime('resignationDate')->nullable();
             $table->text('memberNotes')->nullable();
             $table->timestamps();
+
+            $table->foreign('userID')
+                ->references('id')
+                ->on('users');
         });
     }
 

@@ -32,6 +32,10 @@ class CreateAppointmentsTable extends Migration
             $table->boolean('userAccepted')->default(false);
             $table->longText('meetingNotes')->nullable();
             $table->timestamps();
+
+            $table->foreign('applicationID')
+                ->references('id')
+                ->on('applications');
         });
     }
 

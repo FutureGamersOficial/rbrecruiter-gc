@@ -22,7 +22,9 @@ class CreateVotesTable extends Migration
             ]);
             $table->timestamps();
 
-            $table->foreign('userID')->references('id')->on('users');
+            $table->foreign('userID')
+                ->references('id')
+                ->on('users');
         });
     }
 

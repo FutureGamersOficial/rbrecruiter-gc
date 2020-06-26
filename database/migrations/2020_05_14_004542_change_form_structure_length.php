@@ -25,8 +25,5 @@ class ChangeFormStructureLength extends Migration
      */
     public function down()
     {
-        Schema::table('forms', function (Blueprint $schema){
-            $schema->string('formStructure')->change();
-        });
     }
 }

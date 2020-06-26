@@ -23,7 +23,10 @@ class CreateVacanciesTable extends Migration
             $table->integer('vacancyCount')->default(3);
             $table->timestamps();
 
-            $table->foreign('vacancyFormID')->references('id')->on('forms');
+            $table->foreign('vacancyFormID')
+                ->references('id')
+                ->on('forms');
+
         });
     }
 

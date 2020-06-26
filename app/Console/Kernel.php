@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Jobs\CleanBans;
 
 class Kernel extends ConsoleKernel
 {
@@ -27,7 +28,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         $schedule->command('vote:evaluate')
-            ->everyFiveMinutes();
+            ->daily();
+        // Production value: Every day
+
+        $schedule->job(new CleanBans)
+            ->daily();
         // Production value: Every day
     }
 

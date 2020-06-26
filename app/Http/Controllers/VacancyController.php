@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Form;
 use App\Http\Requests\VacancyRequest;
 use App\Vacancy;
+use App\User;
+use App\Form;
+
+use App\Notifications\VacancyClosed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -68,6 +71,13 @@ class VacancyController extends Controller
                     $vacancy->close();
                     $message = "Position successfully closed!";
 
+                    foreach(User::all() as $user)
+                    {
+                      if ($user->isStaffMember())
+                      {
+                        $user->notify(new VacancyClosed($vacancy));
+                      }
+                    }
                     break;
 
                 default:

@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\ApplicationApprovedEvent;
 use App\StaffProfile;
+use App\Notifications\ApplicationApproved;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -37,11 +38,15 @@ class PromoteUser
             'memberNotes' => 'Approved by staff members. Welcome them to the team!'
         ]);
 
+        $event->application->user->assignRole('reviewer');
+
         Log::info('User ' . $event->application->user->name . ' has just been promoted!', [
             'newRank' => $event->application->response->vacancy->permissionGroupName,
             'staffProfileID' => $staffProfile->id
         ]);
-        // TODO: Dispatch alert email and notifications for the user and staff members
+
+        $event->application->user->notify(new ApplicationApproved($event->application));
+        // note: Also notify staff
         // TODO: Also assign new app role based on the permission group name
 
     }

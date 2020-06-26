@@ -25,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\ApplicationDeniedEvent' => [
             'App\Listeners\DenyUser'
+        ],
+        'App\Events\UserBannedEvent' => [
+            'App\Listeners\OnUserBanned'
         ]
     ];
 

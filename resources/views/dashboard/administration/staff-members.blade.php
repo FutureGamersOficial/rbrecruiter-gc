@@ -15,7 +15,7 @@
         <div class="col">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>11</h3>
+                    <h3>{{$users->count()}}</h3>
 
                     <p>Active Staff Members</p>
                 </div>
@@ -24,68 +24,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="col">
-
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>2</h3>
-
-                    <p>Former Staff Members</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-users"></i>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col">
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>1</h3>
-
-                    <p>Terminated Staff Member(s)</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-user-alt-slash"></i>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row">
-
-        <div class="col-md-4 offset-md-4">
-
-            <div class="card">
-
-                <div class="card-header">
-                    <div class="card-title"><h4><i class="fas fa-search"></i>Search Active Members</h4></div>
-                </div>
-
-                <div class="card-body">
-
-                    <form name="search">
-
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for names, email addresses, etc...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
 
 
@@ -109,7 +47,7 @@
                       <tr>
                           <th>#</th>
                           <th>Full Name</th>
-                          <th>IGN</th>
+                          <th>UUID</th>
                           <th>Rank</th>
                           <th>Status</th>
                           <th>Join Date</th>
@@ -119,51 +57,27 @@
 
                       <tbody>
 
-                      <tr>
-                          <td>1</td>
-                          <td>Monica Smith</td>
-                          <td>mssmith223</td>
-                          <td><span class="badge badge-success">Moderator</span></td>
-                          <td><span class="badge badge-success">Active</span></td>
-                          <td>2020-02-10</td>
-                          <td>
-                              <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Staff Record</button>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>2</td>
-                          <td>Zak Unknown</td>
-                          <td>Skeppy</td>
-                          <td><span class="badge badge-info">Helper</span></td>
-                          <td><span class="badge badge-success">Active</span></td>
-                          <td>2020-02-10</td>
-                          <td>
-                              <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Staff Record</button>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>3</td>
-                          <td>John Doe</td>
-                          <td>kjj192</td>
-                          <td><span class="badge badge-danger">Admin</span></td>
-                          <td><span class="badge badge-success">Active</span></td>
-                          <td>2020-02-10</td>
-                          <td>
-                              <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Staff Record</button>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>4</td>
-                          <td>Angela Smith</td>
-                          <td>kkrapsody1221</td>
-                          <td><span class="badge badge-success">Moderator</span></td>
-                          <td><span class="badge badge-success">Active</span></td>
-                          <td>2020-02-10</td>
-                          <td>
-                              <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Staff Record</button>
-                          </td>
-                      </tr>
+                      @foreach($users as $user)
 
+                        <tr>
+                            <td>1</td>
+                            <td>{{$user->name}}</td>
+                            <td>{{UUID::toUsername($user->uuid)}}</td>
+                            <td>
+                                @foreach($user->roles as $role)
+                                    <span class="badge badge-info badge-sm">{{$role->name}}</span>
+                                @endforeach
+                            </td>
+                            <td><span class="badge badge-success">Active</span></td>
+                            <td>{{$user->created_at}}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-success mr-2" onclick="window.location.href='{{route('showSingleProfile', ['user' => $user->id])}}'"><i class="fa fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-warning mr-2"><i class="fas fa-pencil-alt"></i></button>
+                            </td>
+                        </tr>
+
+                      @endforeach
+                      
                       </tbody>
 
                   </table>

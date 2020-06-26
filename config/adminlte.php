@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => 'RaspberryNet Staff',
+    'logo_img' => 'https://www.raspberrypi.org/app/uploads/2020/05/Raspberry-Pi-OS-downloads-image-150x150-1.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'Raspberry Network Staff Temporary Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -208,10 +208,14 @@ return [
     */
 
     'menu' => [
-        'Applications',
+        [
+            'header' => 'Applications',
+            'can' => 'applications.view.own'
+        ],
         [
             'text' => 'My Applications',
             'icon'  => 'fas fa-fw fa-list-ul',
+            'can' => 'applications.view.own',
             'submenu' => [
                 [
                     'text' => 'Current Applications',
@@ -232,36 +236,54 @@ return [
             'icon' => 'fas fa-user-circle',
             'url' => '/profile/settings/account'
         ],
-        'Application Management',
+        [
+            'header' => 'Application Management',
+            'can' => ['applications.view.all', 'applications.vote']
+        ],
         [
             'text' => 'Outstanding Applications',
             'url' => '/applications/staff/outstanding',
-            'icon' => 'far fa-folder-open'
+            'icon' => 'far fa-folder-open',
+            'can' => 'applications.view.all'
         ],
         [
             'text' => 'Interview Queue',
             'url' => '/applications/staff/pending-interview',
-            'icon' => 'fas fa-fw fa-microphone-alt'
+            'icon' => 'fas fa-fw fa-microphone-alt',
+            'can' => 'applications.view.all'
         ],
         [
             'text' => 'Peer Approval Queue',
             'url' => '/applications/staff/peer-review',
-            'icon' => 'fas fa-fw fa-search'
+            'icon' => 'fas fa-fw fa-search',
+            'can' => 'applications.view.all'
         ],
-        'Administration',
+        [
+            'header' => 'Administration',
+            'can' => [ // may need to be modified
+                'admin.hiring.*',
+                'admin.userlist',
+                'admin.stafflist',
+                'admin.hiring.*',
+                'admin.notificationsettings.*'
+            ]
+        ],
         [
             'text' => 'Staff Members',
             'icon' => 'fas fa-fw fa-users',
-            'url' => '/hr/staff-members'
+            'url' => '/hr/staff-members',
+            'can' => 'admin.stafflist'
         ],
         [    // players who haven't been promoted yet
             'text' => 'Registered Players',
             'icon' => 'fas fa-fw fa-user-friends',
-            'url' => '/hr/players'
+            'url' => '/hr/players',
+            'can' => 'admin.userlist'
         ],
         [
           'text' => 'Hiring Management',
           'icon' => 'far fa-calendar-plus',
+            'can' => 'admin.hiring.*',
             'submenu' => [
                 [
                     'text' => 'Open Positions',
@@ -289,23 +311,27 @@ return [
         [
             'text' => 'App Settings',
             'icon' => 'fas fa-fw fa-cog',
+            'can' => 'admin.notificationsettings',
             'submenu' => [
                 [
                     'text' => 'Global Notification Settings',
                     'icon' => 'far fa-bell',
-                    'url' => '/admin/notifications'
+                    'url' => '/admin/notifications',
+                    'can' => 'admin.notificationsettings.edit'
                 ],
                 [
                     'text' => 'Developer Tools',
                     'icon' => 'fas fa-code',
-                    'url' => '/admin/devtools'
-                ]
+                    'url' => '/admin/devtools',
+                    'can' => 'admin.developertools.use'
+                 ]
             ]
         ],
         [
-            'text' => 'Activity Logs',
-            'url' => '/admin/logs',
-            'icon' => 'fas fa-clipboard-list'
+            'text' => 'System Logs',
+            'url' => '/admin/maintenance/system-logs',
+            'icon' => 'fas fa-clipboard-list',
+            'can' => 'admin.maintenance.logs.view'
         ]
     ],
 

@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Application;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
+
 use App\Response;
 use App\Vacancy;
+use App\User;
+
+use App\Events\ApplicationDeniedEvent;
+use App\Notifications\NewApplicant;
+use App\Notifications\ApplicationMoved;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
@@ -21,14 +28,14 @@ class ApplicationController extends Controller
         {
             if ($vote->userID == Auth::user()->id)
             {
-                Log::debug('Match');
                 $allvotes->push($vote);
-
             }
         }
 
-        return $allvotes->count() == 1;
+        return ($allvotes->count() == 1) ? false : true;
     }
+
+
 
     public function showUserApps()
     {
@@ -37,9 +44,14 @@ class ApplicationController extends Controller
             ->with('applications', Auth::user()->applications);
     }
 
+
+
+
     public function showUserApp(Request $request, $applicationID)
     {
         $application = Application::find($applicationID);
+
+        $this->authorize('view', $application);
 
         if (!is_null($application))
         {
@@ -47,6 +59,7 @@ class ApplicationController extends Controller
                 ->with(
                     [
                         'application' => $application,
+                        'comments' => $application->comments,
                         'structuredResponses' => json_decode($application->response->responseData, true),
                         'formStructure' => $application->response->form,
                         'vacancy' => $application->response->vacancy,
@@ -63,11 +76,16 @@ class ApplicationController extends Controller
     }
 
 
+
+
     public function showAllPendingApps()
     {
         return view('dashboard.appmanagement.outstandingapps')
             ->with('applications', Application::where('applicationStatus', 'STAGE_SUBMITTED')->get());
     }
+
+
+
 
 
     public function showPendingInterview()
@@ -109,6 +127,8 @@ class ApplicationController extends Controller
             ]);
     }
 
+
+
     public function showPeerReview()
     {
         return view('dashboard.appmanagement.peerreview')
@@ -116,11 +136,16 @@ class ApplicationController extends Controller
 
     }
 
+
+
     public function renderApplicationForm(Request $request, $vacancySlug)
     {
+        // FIXME: Get rid of references to first(), this is a wonky query
         $vacancyWithForm = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
 
-        if (!$vacancyWithForm->isEmpty())
+        $firstVacancy = $vacancyWithForm->first();
+
+        if (!$vacancyWithForm->isEmpty() && $firstVacancy->vacancyCount !== 0 && $firstVacancy->vacancyStatus == 'OPEN')
         {
 
             return view('dashboard.application-rendering.apply')
@@ -133,14 +158,24 @@ class ApplicationController extends Controller
         }
         else
         {
-            abort(404, 'We\'re ssssorry, but the application form you\'re looking for could not be found.');
+            abort(404, 'The application you\'re looking for could not be found or it is currently unavailable.');
         }
 
     }
 
+
+
     public function saveApplicationAnswers(Request $request, $vacancySlug)
     {
         $vacancy = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
+
+        if ($vacancy->first()->vacancyCount == 0 || $vacancy->first()->vacancyStatus !== 'OPEN')
+        {
+
+          $request->session()->flash('error', 'This application is unavailable.');
+          return redirect()->back();
+
+        }
 
         Log::info('Processing new application!');
 
@@ -179,13 +214,21 @@ class ApplicationController extends Controller
 
             Log::info('Registered form response for user ' . Auth::user()->name . ' for vacancy ' . $vacancy->first()->vacancyName);
 
-            Application::create([
+            $application = Application::create([
                 'applicantUserID' => Auth::user()->id,
                 'applicantFormResponseID' => $response->id,
                 'applicationStatus' => 'STAGE_SUBMITTED',
             ]);
 
             Log::info('Submitted application for user ' . Auth::user()->name . ' with response ID' . $response->id);
+
+            foreach(User::all() as $user)
+            {
+              if ($user->hasRole('admin'))
+              {
+                $user->notify((new NewApplicant($application, $vacancy->first()))->delay(now()->addSeconds(10)));
+              }
+            }
 
             $request->session()->flash('success', 'Thank you for your application! It will be reviewed as soon as possible.');
             return redirect()->to(route('showUserApps'));
@@ -210,15 +253,15 @@ class ApplicationController extends Controller
             {
                 case 'deny':
 
-                    Log::info('User ' . Auth::user()->name . ' has denied application ID ' . $application->id);
-                    $request->session()->flash('success', 'Application denied.');
-                    $application->setStatus('DENIED');
+                    event(new ApplicationDeniedEvent($application));
                     break;
 
                 case 'interview':
                     Log::info('User ' . Auth::user()->name . ' has moved application ID ' . $application->id . 'to interview stage');
                     $request->session()->flash('success', 'Application moved to interview stage! (:');
                     $application->setStatus('STAGE_INTERVIEW');
+
+                    $application->user->notify(new ApplicationMoved());
                     break;
 
                 default:

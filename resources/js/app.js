@@ -7,10 +7,6 @@
 require('chart.js');
 require('./bootstrap');
 
-import { Calendar } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
 import flatpickr from "flatpickr";
 
 
@@ -21,6 +17,32 @@ flatpickr("#appointmentDateTime", {
     static: false
 });
 
+$("#banAccountTrigger").on("click", function(event){
+
+    $("#banAccountModal").modal('show');
+
+});
+
+$("#durationDropdown").dropdown();
+
+$(".dropdown-menu a").on("click", function(e){
+
+    $(".duration-btn").text(this.innerHTML);
+    $("#operator").val(this.innerHTML);
+
+});
+
+$("#banAccountButton").on("click", function(){
+    $("#banAccountForm").submit();
+});
+
+$("#comment").keyup(function(){
+    $("#charcount").text($("#comment").val().length);
+});
+
+$("#submitComment").on('click', function(){
+    $("#newComment").submit();
+});
 
 window.Vue = require('vue');
 

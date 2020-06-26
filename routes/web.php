@@ -25,7 +25,7 @@ Route::post('/form/contact', 'ContactController@create')
     ->name('sendSubmission');
 
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => ['auth', 'forcelogout']], function(){
 
     Route::get('/dashboard', 'DashboardController@index')
         ->name('dashboard')
@@ -40,6 +40,13 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::get('/view/{id}', 'ApplicationController@showUserApp')
             ->name('showUserApp');
+
+        Route::post('/{application}/comments', 'CommentController@insert')
+            ->name('addApplicationComment');
+
+        Route::delete('/comments/{comment}/delete', 'CommentController@delete')
+            ->name('deleteApplicationComment');
+
 
         Route::patch('/notes/save/{applicationID}', 'AppointmentController@saveNotes')
             ->name('saveNotes');
@@ -92,6 +99,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::patch('/settings/save', 'ProfileController@saveProfile')
             ->name('saveProfileSettings');
 
+        Route::get('user/{user}', 'ProfileController@showSingleProfile')
+            ->name('showSingleProfile');
 
 
         Route::get('/settings/account', 'UserController@showAccount')
@@ -118,9 +127,29 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('players', 'UserController@showPlayers')
             ->name('registeredPlayerList');
 
+        Route::post('players/search', 'UserController@showPlayersLike')
+            ->name('searchRegisteredPLayerList');
+
+        Route::patch('staff-members/terminate/{user}', 'UserController@terminate')
+            ->name('terminateStaffMember');
+
     });
 
     Route::group(['prefix' => 'admin'], function (){
+
+        Route::post('players/ban/{user}', 'BanController@insert')
+            ->name('banUser');
+
+        Route::delete('players/unban/{user}', 'BanController@delete')
+            ->name('unbanUser');
+
+        Route::delete('players/delete/{user}', 'UserController@delete')
+            ->name('deleteUser');
+
+         Route::patch('players/update/{user}', 'UserController@update')
+            ->name('updateUser');
+
+
 
         Route::get('positions', 'VacancyController@index')
             ->name('showPositions');
@@ -158,4 +187,3 @@ Route::group(['middleware' => 'auth'], function(){
 });
 
 //Route::get('/dashboard/login', '');
-

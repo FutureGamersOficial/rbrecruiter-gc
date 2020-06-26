@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="/css/mixed.css">
     <link rel="stylesheet" href="/css/viewapplication.css">
+    <link rel="stylesheet" href="/css/comments.css">
     <!-- TODO: Move to Mix + Webpack  -->
 
 
@@ -21,8 +22,7 @@
 
     <script type="text/javascript" src="/js/app.js"></script>
     <x-global-errors></x-global-errors>
-
-    @if (!$canVote)
+    @if (!$canVote && Auth::user()->can('applications.vote') && $application->applicationStatus == 'STAGE_PEERAPPROVAL')
         <script>
             toastr.info('You cannot vote on this application anymore.', 'Warning')
         </script>
@@ -32,37 +32,48 @@
 
 @section('content')
 
-        <x-modal id="notes" modal-label="notes" modal-title="Shared Notepad" include-close-button="true">
+        @if (!is_null($application->appointment))
 
-            <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['applicationID' => $application->id])}}">
-                @csrf
-                @method('PATCH')
-                <textarea name="noteText" rows="5" class="form-control">{{$application->appointment->meetingNotes ?? 'There are no notes yet. Add some!'}}</textarea>
-            </form>
-            <p class="text-muted text-sm">Last updated @ {{$application->appointment->updated_at}}</p>
+            @canany('applications.view.all', 'appointments.*')
 
-            <x-slot name="modalFooter">
-                <button type="button" class="btn btn-success" onclick="document.getElementById('meetingNotes').submit()"><i class="far fa-paper-plane"></i> Save & Close</button>
-            </x-slot>
-        </x-modal>
+                <x-modal id="notes" modal-label="notes" modal-title="Shared Notepad" include-close-button="true">
 
-        <x-modal id="denyApplication" modal-label="denyApplicationLabel" modal-title="Please confirm" include-close-button="true">
+                    <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['applicationID' => $application->id])}}">
+                        @csrf
+                        @method('PATCH')
+                        <textarea name="noteText" rows="5" class="form-control">{{$application->appointment->meetingNotes ?? 'There are no notes yet. Add some!'}}</textarea>
+                    </form>
+                    <p class="text-muted text-sm">Last updated @ {{$application->appointment->updated_at}}</p>
 
-            <p>Are you sure you want to deny this application? Please keep in mind that this user will only be allowed to apply 30 days after their first application.</p>
-            <p class="text-muted">This action cannot be undone.</p>
+                    <x-slot name="modalFooter">
+                        <button type="button" class="btn btn-success" onclick="document.getElementById('meetingNotes').submit()"><i class="far fa-paper-plane"></i> Save & Close</button>
+                    </x-slot>
+                </x-modal>
 
-            <x-slot name="modalFooter">
+            @endcanany
+        @endif
 
-                <form id="updateApplication" action="{{route('updateApplicationStatus', ['id' => $application->id, 'newStatus' => 'deny'])}}" method="POST">
-                    @csrf
-                    @method('PATCH')
-                    <button type="submit" class="btn btn-danger">Confirm: Deny Applicant</button>
-                </form>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        @role('hiringManager')
 
-            </x-slot>
+            <x-modal id="denyApplication" modal-label="denyApplicationLabel" modal-title="Please confirm" include-close-button="true">
 
-        </x-modal>
+                <p>Are you sure you want to deny this application? Please keep in mind that this user will only be allowed to apply 30 days after their first application.</p>
+                <p class="text-muted">This action cannot be undone.</p>
+
+                <x-slot name="modalFooter">
+
+                    <form id="updateApplication" action="{{route('updateApplicationStatus', ['id' => $application->id, 'newStatus' => 'deny'])}}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-danger">Confirm: Deny Applicant</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </x-slot>
+
+            </x-modal>
+
+        @endhasrole
 
 
     <div class="row">
@@ -91,6 +102,7 @@
 
         </div>
 
+        <!-- TODO: Simplify logic by using switches, as well as a single Gate check -->
         <div class="col">
 
             <div class="row">
@@ -106,7 +118,9 @@
                         <div class="card-body">
 
                             <p><b>Applicant Name: </b> <span class="badge badge-primary">{{$application->user->name}}</span></p>
-                            <p><b>Applicant IP Address:</b> <span class="badge badge-primary">{{$application->user->originalIP}}</span></p>
+                            @if (Auth::user()->hasRole('hiringManager'))
+                                <p><b>Applicant IP Address:</b> <span class="badge badge-primary">{{$application->user->originalIP}}</span></p>
+                            @endif
                             <p><b>Applied On:</b> <span class="badge badge-primary">{{$application->created_at}}</span></p>
                             <p><b>Last acted on:</b><span class="badge badge-primary">{{$application->updated_at}}</span></p>
                             <p><b>Applying for:</b> <span class="badge badge-primary">{{$vacancy->vacancyName}}</span></p>
@@ -155,7 +169,7 @@
 
                 <div class="col">
 
-                    @if ($application->applicationStatus == 'STAGE_SUBMITTED')
+                    @if ($application->applicationStatus == 'STAGE_SUBMITTED' && Auth::user()->hasRole('hiringManager'))
 
                         <div class="card bg-gray">
                             <div class="card-header bg-gradient-gray">
@@ -192,7 +206,7 @@
 
             </div>
 
-            @if ($application->applicationStatus == 'STAGE_INTERVIEW')
+            @if ($application->applicationStatus == 'STAGE_INTERVIEW' && Auth::user()->hasRole('hiringManager'))
 
                 <div class="row">
 
@@ -259,15 +273,18 @@
 
                             <x-slot name="cardFooter">
 
-                                <form class="footer-button" action="{{route('updateAppointment', ['applicationID' => $application->id, 'status' => 'concluded'])}}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn btn-success">Finish Meeting</button>
-                                </form>
-                                <button class="btn btn-warning mr-3">View Meeting Notes</button>
+                                @can('appointments.schedule.edit')
+                                    <form style="white-space: nowrap;display:inline-block" class="footer-button" action="{{route('updateAppointment', ['applicationID' => $application->id, 'status' => 'concluded'])}}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-success">Finish Meeting</button>
+                                    </form>
+                                @endcan
 
-                                <!-- Show to users only -->
-                                <button class="btn btn-success mr-3">Accept Meeting</button>
+                                @can('applications.vote')
+                                    <button class="btn btn-warning mr-3" onclick="$('#notes').modal('show')">View Meeting Notes</button>
+                                @endcan
+
                             </x-slot>
 
                         </x-card>
@@ -278,7 +295,7 @@
 
             @endif
 
-            @if ($application->applicationStatus = 'STAGE_PEERAPPROVAL')
+            @if ($application->applicationStatus == 'STAGE_PEERAPPROVAL' && Auth::user()->can('applications.vote'))
 
                 <x-card id="peerApproval" card-title="Vote on this Application" footer-style="text-center">
 
@@ -313,19 +330,162 @@
 
             @endif
 
-            <div class="row">
+            @can('applications.view.all')
 
-                <div class="col text-center">
+                <div class="row">
 
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('staffPendingApps')}}'">View more Applications</button>
+                    <div class="col text-center">
+
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('staffPendingApps')}}'">View more Applications</button>
+
+                    </div>
 
                 </div>
 
-            </div>
+            @endcan
 
         </div>
 
     </div>
 
+    @hasanyrole('reviewer|hiringManager|admin')
+      @if (!Auth::user()->is($application->user))
+        <div class="row mb-3 mt-2">
+
+            <h3>Comments ({{$comments->count()}})</h3>
+
+        </div>
+
+        <div class="row">
+    
+            <div class="col">
+                
+                @if ($comments->isEmpty())
+
+                    <div class="alert alert-warning">
+                        <i class="fas fa-question"></i> <b>Such wow, much empty</b>
+
+
+                        <p>There are no comments here! Comments are only visible to staff members. Be the first to share your input!</p>
+                        <p>Commenting may help with decision-making when time comes to vote for an application.</p>
+
+                    </div>
+                @endif
+
+            </div>
+
+        </div>
+
+
+                @if (!$comments->isEmpty())
+                    
+                        @foreach($comments as $comment)
+                          <div class="row mt-3 mb-3">  
+                            <div class="col-md-2">
+          
+                                <div class="text-center">
+                                    @if($application->user->avatarPreference == 'gravatar')
+                                        <img class="profile-user-img img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($comment->user->email)}}" alt="User profile picture">
+                                    @else
+                                        <img class="profile-user-img img-fluid img-circle" src="https://crafatar.com/avatars/{{$comment->user->uuid}}" alt="User profile picture">
+                                    @endif
+                                </div>
+
+                            </div>
+
+                            <div class="card comment">
+                            
+                                <div class="card-header comment-header">
+
+                                    <h1 class="commenter">{{$comment->user->name}} &#9679; {{Carbon\Carbon::parse($comment->created_at)->diffForHumans()}}</h3>
+                                
+                                </div>
+
+
+                                <div class="card-body">
+                            
+                                    {{$comment->text}}
+
+                                </div>
+
+                                @if(Auth::user()->is($comment->user) || Auth::user()->hasRole('admin'))
+                                
+                                    <div class="card-footer comment-footer">
+                                
+                                        <form method="POST" id="deleteComment" action="{{route('deleteApplicationComment', ['comment' => $comment->id])}}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></button>
+
+                                        </form>
+
+                                    </div>
+
+                                @endif
+
+                            </div>
+                          </div>
+
+                        @endforeach
+                @endif
+
+            <!-- display comments here -->
+
+        <div class="row mt-5">
+
+          <div class="col-md-2">
+          
+            <div class="text-center">
+                @if($application->user->avatarPreference == 'gravatar')
+                    <img class="profile-user-img img-fluid img-circle" src="https://gravatar.com/avatar/{{md5(Auth::user()->email)}}" alt="User profile picture">
+                @else
+                    <img class="profile-user-img img-fluid img-circle" src="https://crafatar.com/avatars/{{Auth::user()->uuid}}" alt="User profile picture">
+                @endif
+            </div>
+
+          </div>    
+
+          <div class="col">
+            <div class="card border-top border-bottom">
+            
+                <div class="card-body">
+                
+                    <form id="newComment" method="POST" action="{{route('addApplicationComment', ['application' => $application->id])}}">
+                
+                        @csrf
+
+                        <textarea id="comment" name="comment" class="form-control" id="commentText"></textarea>
+
+                    </form>
+
+                    <div class="row">
+                    
+                        <div class="col text-left">
+                            <p class="text-sm text-muted">Commenting as {{Auth::user()->name}}</p>
+                        </div>
+
+
+                        <div class="col text-right">
+                        
+                            <p class="text-sm text-muted"><span id="charcount">0</span>/600 max characters</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer text-right">
+                
+                    <button type="button" id="submitComment" class="btn btn-sm btn-secondary">Post</button>
+
+                </div>
+
+            </div>
+         </div>
+
+        </div>
+      @endif
+    @endhasanyrole
 
 @endsection
