@@ -209,6 +209,11 @@ return [
 
     'menu' => [
         [
+          'text' => 'Home',
+          'icon' => 'fas fa-home',
+          'url' => 'dashboard'
+        ],
+        [
             'header' => 'Applications',
             'can' => 'applications.view.own'
         ],
@@ -494,6 +499,22 @@ return [
                     'location' => '/js/datepick.js'
                 ]
             ]
+        ],
+        [
+          'name' => 'Fullcalendar',
+          'active' => true,
+          'files' => [
+            [
+              'type' => 'js',
+              'asset' => false,
+              'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.min.js',
+            ],
+            [
+              'type' => 'css',
+              'asset' => false,
+              'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.min.css'
+            ]
+          ]
         ]
     ],
 ];
