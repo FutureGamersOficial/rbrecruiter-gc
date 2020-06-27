@@ -163,15 +163,9 @@
           <div class="row">
 
               <div class="col text-center">
-
-                  <div class="card">
-
 											<p>
 												Join the team today and help out network grow and prosper!
 											</p>
-
-									</div>
-
 							</div>
 
 
