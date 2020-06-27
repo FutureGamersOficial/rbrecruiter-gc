@@ -18,7 +18,7 @@ class HomeController extends Controller
         // TODO: Relationships for Applications, Users and Responses
         // Also prevent apps if user already has one in the space of 30d
         // Display apps in the relevant menus
-
+        
         $positions = DB::table('vacancies')
                         ->where('vacancyStatus', 'OPEN')
                         ->where('vacancyCount', '!=', 0)

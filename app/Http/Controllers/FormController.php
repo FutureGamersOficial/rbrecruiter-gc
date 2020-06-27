@@ -5,23 +5,30 @@ namespace App\Http\Controllers;
 use App\Form;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
 {
 
     public function index()
     {
+        $forms = Form::all();
+        $this->authorize('viewAny', Form::class);
+
         return view('dashboard.administration.forms')
-            ->with('forms', Form::all());
+            ->with('forms', $forms);
     }
 
     public function showFormBuilder()
     {
+        $this->authorize('viewFormbuilder', Form::class);
         return view('dashboard.administration.formbuilder');
     }
 
     public function saveForm(Request $request)
     {
+
+        $this->authorize('create', Form::class);
 
         $formFields = $request->all();
 
@@ -72,6 +79,7 @@ class FormController extends Controller
     {
 
         $form = Form::find($id);
+        $this->authorize('delete', $form);
 
         // TODO: Check if form is linked to vacancies before allowing deletion
         if (!is_null($form))

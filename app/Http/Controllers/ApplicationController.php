@@ -80,6 +80,8 @@ class ApplicationController extends Controller
 
     public function showAllPendingApps()
     {
+        $this->authorize('viewAny', Application::class);
+
         return view('dashboard.appmanagement.outstandingapps')
             ->with('applications', Application::where('applicationStatus', 'STAGE_SUBMITTED')->get());
     }
@@ -90,6 +92,7 @@ class ApplicationController extends Controller
 
     public function showPendingInterview()
     {
+        $this->authorize('viewAny', Application::class);
         $applications = Application::with('appointment', 'user')->get();
         $count = 0;
 
@@ -131,6 +134,7 @@ class ApplicationController extends Controller
 
     public function showPeerReview()
     {
+        $this->authorize('viewAny', Application::class);
         return view('dashboard.appmanagement.peerreview')
             ->with('applications', Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get());
 
@@ -246,6 +250,7 @@ class ApplicationController extends Controller
     public function updateApplicationStatus(Request $request, $applicationID, $newStatus)
     {
         $application = Application::find($applicationID);
+        $this->authorize('update', Application::class);
 
         if (!is_null($application))
         {

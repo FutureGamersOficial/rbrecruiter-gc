@@ -10,11 +10,13 @@ use App\Form;
 use App\Notifications\VacancyClosed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class VacancyController extends Controller
 {
     public function index()
     {
+      $this->authorize('viewAny', Vacancy::class);
         return view('dashboard.administration.positions')
             ->with([
                 'forms' => Form::all(),
@@ -24,6 +26,7 @@ class VacancyController extends Controller
 
     public function store(VacancyRequest $request)
     {
+        $this->authorize('create', Vacancy::class);
         $form = Form::find($request->vacancyFormID);
 
         if (!is_null($form))
@@ -53,7 +56,9 @@ class VacancyController extends Controller
 
     public function updatePositionAvailability(Request $request, $status, $id)
     {
+
         $vacancy = Vacancy::find($id);
+        $this->authorize('update', $vacancy);
 
         if (!is_null($vacancy))
         {

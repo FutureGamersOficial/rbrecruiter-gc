@@ -63,7 +63,7 @@ I
                     <form name="search" method="POST" action="{{route('searchRegisteredPLayerList')}}">
                         @csrf
                         <div class="input-group">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="Username/email search">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Full/partial email search">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="fa fa-search"></i>
@@ -116,6 +116,7 @@ I
                           <th>#</th>
                           <th>IGN</th>
                           <th>UUID</th>
+                          <th>Email</th>
                           <th>Status</th>
                           <th>Registration Date</th>
                           <th>Actions</th>
@@ -125,11 +126,12 @@ I
                       <tbody>
 
                           @foreach($users as $user)
-                            
+
                             <tr>
                                 <td>{{$user->id}}</td>
                                 <td>{{UUID::toUsername($user->uuid)}}</td>
                                 <td>{{$user->uuid}}</td>
+                                <td>{{ $user->email }}</td>
                                 <td>
                                     @if ($user->isBanned())
                                         <span class="badge badge-danger"><i class="fa fa-ban"></i> Banned</span>
@@ -150,7 +152,7 @@ I
                   </table>
                 @else
                     <div class="alert alert-secondary">
-                    
+
                         <i class="fas fa-question"></i><span> There are no registered players!</span>
                         <p>
                             Registered players are those without a staff role in the team management application.

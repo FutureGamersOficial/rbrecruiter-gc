@@ -14,6 +14,14 @@ use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
+
+  public function index()
+  {
+
+    return view('dashboard.user.directory')
+          ->with('users', User::with('profile', 'bans')->paginate(9));
+  }
+
     public function showProfile()
     {
 

@@ -49,6 +49,7 @@
                           <th>Full Name</th>
                           <th>UUID</th>
                           <th>Rank</th>
+                          <th>Email</th>
                           <th>Status</th>
                           <th>Join Date</th>
                           <th>Actions</th>
@@ -60,7 +61,7 @@
                       @foreach($users as $user)
 
                         <tr>
-                            <td>1</td>
+                            <td>{{ $user->id }}</td>
                             <td>{{$user->name}}</td>
                             <td>{{UUID::toUsername($user->uuid)}}</td>
                             <td>
@@ -68,16 +69,16 @@
                                     <span class="badge badge-info badge-sm">{{$role->name}}</span>
                                 @endforeach
                             </td>
+                            <td>{{ $user->email }}</td>
                             <td><span class="badge badge-success">Active</span></td>
                             <td>{{$user->created_at}}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-success mr-2" onclick="window.location.href='{{route('showSingleProfile', ['user' => $user->id])}}'"><i class="fa fa-eye"></i></button>
-                                <button type="button" class="btn btn-sm btn-warning mr-2"><i class="fas fa-pencil-alt"></i></button>
                             </td>
                         </tr>
 
                       @endforeach
-                      
+
                       </tbody>
 
                   </table>

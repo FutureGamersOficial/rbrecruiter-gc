@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-    <h4>Profile</h4>
+    <h4>Users / Profile / {{ $profile->user->name }}</h4>
 
 @stop
 

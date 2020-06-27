@@ -28,6 +28,8 @@ class AppointmentController extends Controller
     {
         // Unrelated TODO: change if's in application page to a switch statement, & have the row encompass it
 
+        $this->authorize('create', Appointment::class);
+
         $app = Application::find($applicationID);
 
         if (!is_null($app))
@@ -49,7 +51,7 @@ class AppointmentController extends Controller
                 'datetime' => $appointmentDate->toDateTimeString(),
                 'scheduled' => now()
             ]);
-            
+
             $app->user->notify(new AppointmentScheduled($appointment));
             $request->session()->flash('success', 'Appointment successfully scheduled @ ' . $appointmentDate->toDateTimeString());
 
@@ -64,6 +66,9 @@ class AppointmentController extends Controller
 
     public function updateAppointment(Request $request, $applicationID, $status)
     {
+
+      $this->authorize('update', Appointment::class);
+
         $application = Application::find($applicationID);
         $validStatuses = [
           'SCHEDULED',

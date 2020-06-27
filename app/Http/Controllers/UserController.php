@@ -24,50 +24,48 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
 
+
     public function showStaffMembers()
     {
+        $this->authorize('viewStaff', User::class);
 
         $staffRoles = [
             'reviewer',
             'hiringManager',
             'admin'
         ]; // TODO: Un-hardcode this, move to config/roles.php
+        $users = User::with('roles')->get();
+        $staffMembers = collect([]);
 
-        if (Auth::user()->can('admin.stafflist'))
+        foreach($users as $user)
         {
-            $users = User::with('roles')->get();
-            $staffMembers = collect([]);
-
-            foreach($users as $user)
+            if (empty($user->roles))
             {
-                if (empty($user->roles))
-                {
-                    Log::debug($user->role->name);
-                    Log::debug('Staff list: User without role detected; Ignoring');
-                    continue;
-                }
-
-                foreach($user->roles as $role)
-                {
-                    if (in_array($role->name, $staffRoles))
-                    {
-                        $staffMembers->push($user);
-                        continue 2; // Skip directly to the next user instead of comparing more roles for the current user
-                    }
-                }
+                Log::debug($user->role->name);
+                Log::debug('Staff list: User without role detected; Ignoring');
+                continue;
             }
 
-            return view('dashboard.administration.staff-members')
-                ->with([
-                    'users' => $staffMembers
-                ]);
+            foreach($user->roles as $role)
+            {
+                if (in_array($role->name, $staffRoles))
+                {
+                    $staffMembers->push($user);
+                    continue 2; // Skip directly to the next user instead of comparing more roles for the current user
+                }
+            }
         }
 
-        abort(403, 'Forbidden');
+        return view('dashboard.administration.staff-members')
+            ->with([
+                'users' => $staffMembers
+            ]);
     }
 
     public function showPlayers()
     {
+        $this->authorize('viewPlayers', User::class);
+
         $users = User::with('roles')->get();
         $players = collect([]);
 
@@ -80,23 +78,19 @@ class UserController extends Controller
             }
         }
 
-        if (Auth::user()->can('admin.userlist'))
-        {
-            return view('dashboard.administration.players')
-                ->with([
-                    'users' => $players,
-                    'bannedUserCount' => Ban::all()->count()
-                ]);
-        }
-
-        abort(403, 'Forbidden');
+        return view('dashboard.administration.players')
+            ->with([
+                'users' => $players,
+                'bannedUserCount' => Ban::all()->count()
+            ]);
     }
 
 
     public function showPlayersLike(SearchPlayerRequest $request)
     {
-        $searchTerm = $request->searchTerm;
+        $this->authorize('viewPlayers', User::class);
 
+        $searchTerm = $request->searchTerm;
         $matchingUsers = User::query()
             ->where('name', 'LIKE', "%{$searchTerm}%")
             ->orWhere('email', 'LIKE', "%{$searchTerm}%")
@@ -250,7 +244,7 @@ class UserController extends Controller
 
     public function terminate(Request $request, User $user)
     {
-        $this->authorize('terminate', Auth::user());
+        $this->authorize('terminate', User::class);
 
         if (!$user->isStaffMember() || $user->is(Auth::user()))
         {

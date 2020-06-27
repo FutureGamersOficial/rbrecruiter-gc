@@ -21,8 +21,8 @@ class CommentController extends Controller
 
     public function insert(NewCommentRequest $request, Application $application)
     {
-        // Type hinting makes laravel automatically validate everything
-
+        $this->authorize('create', Comment::class);
+        
         $comment = Comment::create([
             'authorID' => Auth::user()->id,
             'applicationID' => $application->id,
@@ -53,13 +53,10 @@ class CommentController extends Controller
 
     public function delete(Request $request, Comment $comment)
     {
-        if (Auth::user()->is($comment->user) || Auth::user()->hasRole('admin'))
-        {
-            $comment->delete();
-            $request->session()->flash('success', 'Comment deleted!');
-        }
+        $this->authorize('delete', $comment);
 
-        $request->session()->flash('error', 'You do not have permission to delete this comment!');
+        $comment->delete();
+        $request->session()->flash('success', 'Comment deleted!');
 
         return redirect()->back();
 

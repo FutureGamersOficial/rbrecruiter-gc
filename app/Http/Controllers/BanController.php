@@ -76,6 +76,9 @@ class BanController extends Controller
 
     public function delete(Request $request, User $user)
     {
+
+        $this->authorize('delete', $user->bans);
+
         if (!is_null($user->bans))
         {
             $user->bans->delete();

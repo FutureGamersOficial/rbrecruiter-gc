@@ -16,6 +16,7 @@ class VoteController extends Controller
     public function vote(VoteRequest $voteRequest, $applicationID)
     {
         $application = Application::find($applicationID);
+        $this->authorize('create', Vote::class);
 
         if (!is_null($application))
         {

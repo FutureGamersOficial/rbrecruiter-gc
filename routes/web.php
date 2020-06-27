@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
         ->name('dashboard')
         ->middleware('eligibility');
 
+    Route::get('users/directory', 'ProfileController@index')
+          ->name('directory');
+
     Route::group(['prefix' => '/applications'], function (){
 
         Route::get('/my-applications', 'ApplicationController@showUserApps')

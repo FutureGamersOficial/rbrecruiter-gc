@@ -214,6 +214,12 @@ return [
           'url' => 'dashboard'
         ],
         [
+          'text' => 'Directory',
+          'icon' => 'fas fa-users',
+          'url' => 'users/directory',
+          'can' => 'profiles.view.others'
+        ],
+        [
             'header' => 'Applications',
             'can' => 'applications.view.own'
         ],
