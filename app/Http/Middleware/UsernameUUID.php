@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Facades\UUID;
 use Illuminate\Support\Facades\Http;
 
 class UsernameUUID
@@ -19,13 +20,8 @@ class UsernameUUID
         $input = $request->all();
         if (isset($input['uuid']))
         {
-            // TODO: Switch to custom Facade
             $username = $input['uuid'];
-
-            $conversionRequest = Http::get(config('general.urls.mojang.api') . '/users/profiles/minecraft/' . $username)->body();
-            $decodedConversionRequest = json_decode($conversionRequest, true);
-
-            $input['uuid'] = $decodedConversionRequest['id'];
+            $input['uuid'] = UUID::toUUID($username);
 
             $request->replace($input);
         }
