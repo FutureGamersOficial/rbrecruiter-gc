@@ -166,69 +166,14 @@
 
                   <div class="card">
 
-                      <!-- Card content -->
-                      <div class="card-body text-center">
+											<p>
+												Join the team today and help out network grow and prosper!
+											</p>
 
-                          <!-- Title -->
-                          <img src="https://crafatar.com/avatars/6102256a-bd28-4dd7-b68e-4c96ef313734" class="img-fluid mb-3" alt="miguel456's avatar">
+									</div>
 
-                          <h4 class="card-title text-center"><a>miguel456</a></h4>
-                          <!-- Text -->
-                          <p class="card-text">Network Owner / Web Developer</p>
+							</div>
 
-                      </div>
-
-                      <div class="card-footer">
-
-                          <button type="button" class="btn btn-info">More Info</button>
-
-                      </div>
-
-                  </div>
-
-              </div>
-
-              <div class="col text-center">
-
-                    <div class="card">
-
-
-                        <div class="card-body">
-                            <h4 class="card-title">Moderator</h4>
-                            <p class="card-text">Open Position!</p>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <button type="button" class="btn btn-success">Apply</button>
-
-                        </div>
-
-                    </div>
-
-              </div>
-
-              <div class="col text-center">
-
-                  <div class="card">
-
-                      <div class="card-body">
-                          <h4 class="card-title">Helper</h4>
-
-                          <p class="card-text">Open Position!</p>
-
-                      </div>
-
-                      <div class="card-footer">
-
-                          <button type="button" class="btn btn-success">Apply</button>
-
-                      </div>
-
-                  </div>
-
-              </div>
 
           </div>
 
