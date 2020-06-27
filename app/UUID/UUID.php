@@ -19,7 +19,7 @@ class UUID
             throw new \LogicException('Argument username for ' . __METHOD__ . ' cannot be null!');
         }
 
-        $response = json_decode(Http::post(config('general.urls.mojang.api') . '/profiles/minecraft', [
+        $response = json_decode(Http::post(trim(config('general.urls.mojang.api')) . '/profiles/minecraft', [
             $username
         ])->body(), true);
 
@@ -38,7 +38,7 @@ class UUID
        $shortUUID = substr($uuid, 0, 8);
        $username = Cache::remember('uuid_' . $shortUUID, now()->addDays(30), function() use ($shortUUID, $uuid) {
 
-            $response = json_decode(Http::get(config('general.urls.mojang.session') . '/session/minecraft/profile/' . $uuid)->body(), true);
+            $response = json_decode(Http::get(trim(config('general.urls.mojang.session')) . '/session/minecraft/profile/' . $uuid)->body(), true);
 
             Log::debug('Caching ' . $shortUUID . 'for thirty days');
             return $response['name'];
