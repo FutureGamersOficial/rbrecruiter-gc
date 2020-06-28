@@ -45,7 +45,7 @@ class FormPolicy
      */
     public function create(User $user)
     {
-        return $this->user->can('admin.hiring.forms');
+        return $user->can('admin.hiring.forms');
     }
 
     /**
@@ -69,7 +69,7 @@ class FormPolicy
      */
     public function delete(User $user, Form $form)
     {
-        return $this->user->can('admin.hiring.forms');
+        return $user->can('admin.hiring.forms');
     }
 
     /**
