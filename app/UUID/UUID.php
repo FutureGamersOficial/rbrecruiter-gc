@@ -23,7 +23,13 @@ class UUID
             $username
         ])->body(), true);
 
-        return $response[0]['id'];
+        if (isset($response[0]))
+        {
+          return $response[0]['id'];
+
+        }
+
+        throw new \InvalidArgumentException("You must supply a valid, premium Minecraft account to sign up.");
     }
 
     // Note: Caching could simply be assigning the username to it's UUID, however, to make this work, we'd need to loop over all cache items, which would be slighly ineffective

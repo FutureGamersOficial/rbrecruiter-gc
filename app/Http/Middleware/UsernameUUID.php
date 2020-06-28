@@ -20,8 +20,18 @@ class UsernameUUID
         $input = $request->all();
         if (isset($input['uuid']))
         {
-            $username = $input['uuid'];
-            $input['uuid'] = UUID::toUUID($username);
+            try
+            {
+              $username = $input['uuid'];
+              $input['uuid'] = UUID::toUUID($username);
+            }
+            catch(\InvalidArgumentException $iae)
+            {
+                report($iae);
+
+                $request->session()->flash('error', $iae->getMessage());
+                return redirect(route('register'));
+            }
 
             $request->replace($input);
         }

@@ -1,9 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+
+<x-global-errors></x-global-errors>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+            @if (session()->has('error'))
+                <div class="alert alert-danger">
+                  <i class="fas fa-exclamation"></i><b> Please verify your submission</b>
+                  <p>
+                    {{ session('error') }}
+                  </p>
+                </div>
+            @endif
+
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
