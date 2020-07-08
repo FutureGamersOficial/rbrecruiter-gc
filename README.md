@@ -1,79 +1,99 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Raspberry Teams - The Simple Staff Application Manager v 0.1.0
+## The quick and pain-free staff application manager (for Minecraft)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Wish you had a better application managemet strategy? Well, then Raspberry Teams is for you! It was originally designed and developed for internal use, but sharing is caring! After noticing a worrying lack of "human resources" management systems on SpigotMC's resources section (There was only one outdated/unsupported project), I've decided to take it up into my own terms and start working on it.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# Features (not exhaustive)
+ - Beautiful (customizable in future releases) landing page for your application management center; It displays all available staff ranks
+ - Contact form on landing page for those un-registerd users
+ - User registration/authentication system; Users will be sent to the authentication flow to complete their application, if not logged in
+ - Candidate tracking system - Applicants will be tracked from start to finish.
+ - Peer approval system - Have all your staff members vote on applications and decide whether they should be accepted (this is overridable)
+ - Interview scheduling (simple) - Schedule interviews with your candidates and automatically notify them!
+   - Interview notes: Every staff member is able to add and edit interview notes (how the interview went, etc)
+ - Application comments: Finally no more having to go to a private Discord channel just to comment on a single application. Comments are organised neatly for every application! This should help in the decision process of voting for an application.
+ - User profiles - Fill out your profile for others to better find you
+ - User directory - Public profile directory for everyone
+ - Staff rank management - Add/remove ranks on demand, that users will be able to apply to
+ - Simple form builder - Create your application forms easily!
+ - Termination - Has a staff member met their untimely demise? Terminate them. This will strip their permissions and roles.
+ - Controllable permissions - Every user has permissions! Control who has access to what (You can skip the application process and add staff members directly here).
+ - Ban system - Having trouble with pesky spammers? Ban them! This will publicly shame their profile and keep them from signing up or logging in.
+ - Notifications: Notifies slack and email primarily
+ 
+ And many more features!
+ 
+# Roadmap
+ 
+Many other features are currently planned for this app, such as:
+  - Discord role management (approved applicants)
+  - Luckperms/PEX integration - For now, you'll have to promote users manually in-game
+  - Flexibility - This app is built on a flexible concept! It will be able to be used for other purposes other than MC staff members.
+  - Customisable front page (**priority**)
+  - Auto provisioning - Sign up on a website and get your instance of Raspberry Teams up and running in no time
+  - Suggestions accepted!
+  
+  
+# Technical overview
 
-## Learning Laravel
+Tech stack:
+ - [Laravel 7](https://laravel.com/)
+ - Eloquent ORM
+ - AdminLTE / Bootstrap 4
+ - jQuery / Plain Javascript
+ - vueJS (in the future)
+ 
+# Operating System Requirements
+ 
+ Currently, this application is only supported on Linux environments (Ubuntu 20.04 or derivatives are recommended).
+ 
+# Software Requirements
+ - ``composer`` (min version: 1.8.4)
+ - ``npm`` (tested w/ v 5.8.0)
+ - ``php`` (required PHP 7 or newer - lower versions unsupported!)
+ 
+ # PHP Extension Requirements
+ 
+ - JSON
+ - Curl (highly recommended)
+ 
+ 
+ # Installation
+ 
+ Make sure all prerequisites are installed. Afterwards, clone this repository, make ``install.sh``executable and run it.
+ Note that this script will change the database credentials to Vagrant's defaults, so if you're not using Vagrant, make sure to edit the ``.env`` file with your database settings.
+ 
+ # Configuration
+ 
+ This app requires other configuration parameters:
+  - Google Recaptcha - [create captcha key pair](https://www.google.com/recaptcha/admin/create)
+  - IP Geolocation API Key - [get your key here](https://ipgeolocation.io/signup.html)
+  - SMTP Server and Email account (for email notifications)
+  - Slack integration webhook URL (create an application in Slack Dev Center - Check webhook docs)
+  
+  These configuration settings are fairly self explanatory, but here's a list of what you need to fill on the ``.env`` file:
+  
+ ``RECAPTCHA_SITE_KEY``
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+``RECAPTCHA_PRIVATE_KEY``
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+``IPGEO_API_KEY``
 
-## Laravel Sponsors
+``MAIL_PORT``
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+``MAIL_HOST``
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+``MAIL_USERNAME``
 
-## Contributing
+``MAIL_PASSWORD``
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+And the database settings, located at the top.
+This process will be later streamlined with a web installer.
 
-## Code of Conduct
+# Bug reports
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Please report any bugs you find to the issues section here! It'd be immensely helpful. PRs are also accepted.
