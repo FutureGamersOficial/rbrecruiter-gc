@@ -115,13 +115,13 @@ class Install extends Command
                   'value' => $value
               ]);
            }
+           $this->call('config:cache');
 
            $this->info('>> Saved configuration settings!');
            $this->info('>> Preparing database...');
 
            $this->call('migrate');
            $this->call('db:seed');
-           $this->call('config:cache');
 
            touch($basePath . '/INSTALLED');
 
