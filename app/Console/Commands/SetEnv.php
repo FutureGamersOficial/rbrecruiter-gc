@@ -42,18 +42,38 @@ class SetEnv extends Command
       $value = $this->argument('value');
       $originalValue = env($key);
 
+      if (is_null($originalValue))
+      {
+         // Attempt to silently fix issue
+         $this->callSilent('cache:clear');
+         $originalValue = env($key);
+
+         // Still fails? Let the user know
+         if (is_null($originalValue))
+         {
+           $this->error('[!!] Cannot update requested configuration value! This is a known Laravel issue. If you report a bug, keep that in mind.');
+
+           return false;
+         }
+      }
+
       if (file_exists($path))
       {
           $file = file_get_contents($path);
           $newConfig = str_replace($key . '=' . $originalValue, $key . '=' . $value, $file);
 
-    
           file_put_contents(
             $path,
             $newConfig
           );
 
       }
+      else
+      {
+        $this->error('Cannot update a file that doesn\'t exist! Please create .env first.');
+        return false;
+      }
+
 
       $this->info('>> Changed value! It may now be accessed via env() or config() if there\'s a file for it.');
     }
