@@ -24,11 +24,11 @@ Wish you had a better application managemet strategy? Well, then Raspberry Teams
  - Controllable permissions - Every user has permissions! Control who has access to what (You can skip the application process and add staff members directly here).
  - Ban system - Having trouble with pesky spammers? Ban them! This will publicly shame their profile and keep them from signing up or logging in.
  - Notifications: Notifies slack and email primarily
- 
+
  And many more features!
- 
+
 # Roadmap
- 
+
 Many other features are currently planned for this app, such as:
   - Discord role management (approved applicants)
   - Luckperms/PEX integration - For now, you'll have to promote users manually in-game
@@ -36,8 +36,8 @@ Many other features are currently planned for this app, such as:
   - Customisable front page (**priority**)
   - Auto provisioning - Sign up on a website and get your instance of Raspberry Teams up and running in no time
   - Suggestions accepted!
-  
-  
+
+
 # Technical overview
 
 Tech stack:
@@ -46,53 +46,29 @@ Tech stack:
  - AdminLTE / Bootstrap 4
  - jQuery / Plain Javascript
  - vueJS (in the future)
- 
+
 # Operating System Requirements
- 
+
  Currently, this application is only supported on Linux environments (Ubuntu 20.04 or derivatives are recommended).
- 
+
 # Software Requirements
  - ``composer`` (min version: 1.8.4)
  - ``npm`` (tested w/ v 5.8.0)
  - ``php`` (required PHP 7 or newer - lower versions unsupported!)
- 
+
  # PHP Extension Requirements
- 
+
  - JSON
  - Curl (highly recommended)
- 
- 
+
+
  # Installation
- 
+
  Make sure all prerequisites are installed. Afterwards, clone this repository, make ``install.sh``executable and run it.
- Note that this script will change the database credentials to Vagrant's defaults, so if you're not using Vagrant, make sure to edit the ``.env`` file with your database settings.
- 
+
  # Configuration
- 
- This app requires other configuration parameters:
-  - Google Recaptcha - [create captcha key pair](https://www.google.com/recaptcha/admin/create)
-  - IP Geolocation API Key - [get your key here](https://ipgeolocation.io/signup.html)
-  - SMTP Server and Email account (for email notifications)
-  - Slack integration webhook URL (create an application in Slack Dev Center - Check webhook docs)
-  
-  These configuration settings are fairly self explanatory, but here's a list of what you need to fill on the ``.env`` file:
-  
- ``RECAPTCHA_SITE_KEY``
-
-``RECAPTCHA_PRIVATE_KEY``
-
-``IPGEO_API_KEY``
-
-``MAIL_PORT``
-
-``MAIL_HOST``
-
-``MAIL_USERNAME``
-
-``MAIL_PASSWORD``
-
-And the database settings, located at the top.
-This process will be later streamlined with a web installer.
+Configuration is currently done via the installer. Alternatively, you may also edit the ``.env`` file directly.
+This process will be moved to the browser later.
 
 # Bug reports
 
