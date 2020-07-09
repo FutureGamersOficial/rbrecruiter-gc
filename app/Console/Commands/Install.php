@@ -54,34 +54,23 @@ class Install extends Command
            copy($basePath . '/.env.example', $basePath . '/.env');
            $this->call('key:generate');
 
-
-           // Command stack
-           $npm = new Process(['/usr/bin/env npm install'], $basePath);
-           $npmBuild = new Process(['/usr/bin/env npm run dev'], $basePath);
-
-
            $this->info('>> Installing and preparing dependencies. This may take a while, depending on your computer.');
-           $progress = $this->output->createProgressBar(3);
 
-           try
-           {
-             $npm->mustRun();
-             $progress->advance();
+           $npmOut = 0;
+           $npmBuildOut = 0;
 
-             $npmBuild->mustRun();
-             $progress->advance();
-           }
-           catch(ProcessFailedException $pfe)
+           exec('cd ' . $basePath . ' && npm install', null, $npmOut);
+           exec('cd ' . $basePath . '&& npm run dev', null, $npmBuildOut);
+
+
+           if($npmOut !== 0 && $npmBuildOut !== 0)
            {
-             $this->error('[!] One or more errors have ocurred whilst attempting to install dependencies. This is the error message: ' . $pfe->getMessage());
+             $this->error('[!] One or more errors have ocurred whilst attempting to install dependencies.');
              $this->error('[!] It is recommended to run this command again, and report a bug if it keeps happening.');
 
              return false;
            }
-           finally
-           {
-             $progress->finish();
-           }
+
 
 
            $settings = [];
