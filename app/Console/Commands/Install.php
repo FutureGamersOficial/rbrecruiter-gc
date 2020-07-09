@@ -4,8 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
 class Install extends Command
 {
@@ -52,81 +50,69 @@ class Install extends Command
            ]);
 
            copy($basePath . '/.env.example', $basePath . '/.env');
-           Artisan::call('key:generate');
-
-
-           // Command stack
-           $composer = new Process('composer install', $basePath);
-           $npm = new Process('npm install', $basePath);
-           $npmBuild = new Process('npm run dev', $basePath);
-
+           $this->call('key:generate');
 
            $this->info('>> Installing and preparing dependencies. This may take a while, depending on your computer.');
-           $progress = $this->output->createProgressBar(3);
 
-           try
-           {
-        
-             $npm->mustRun();
-             $progress->advance();
+           $npmOut = 0;
+           $npmMessages = [];
 
-             $npmBuild->mustRun();
-             $progress->advance();
-           }
-           catch(ProcessFailedException $pfe)
+           $npmBuildOut = 0;
+           $npmBuildMessages = [];
+
+           exec('cd ' . $basePath . ' && npm install --silent', $npmBuildOut, $npmOut);
+           exec('cd ' . $basePath . '&& npm run dev --silent', $npmBuildMessages, $npmBuildOut);
+
+
+           if($npmOut !== 0 && $npmBuildOut !== 0)
            {
-             $this->error('[!] One or more errors have ocurred whilst attempting to install dependencies. This is the error message: ' . $pfe->getMessage());
+             $this->error('[!] One or more errors have ocurred whilst attempting to install dependencies.');
              $this->error('[!] It is recommended to run this command again, and report a bug if it keeps happening.');
 
              return false;
            }
-           finally
-           {
-             $progress->finish();
-           }
+
 
 
            $settings = [];
 
            $this->info('>> Configuring application - We\'re going to ask a few questions here!');
-           $this->info('>> Questions with a value in brackets are optional and you may leave them empty to use it');
-
            do
            {
                $this->info('== Database Settings (1/6) ==');
 
-               $settings['DB_USERNAME'] = $this->ask('Database username [root]: ') ?? 'root';
-               $settings['DB_PASSWORD'] = $this->secret('Database password (Input won\'t be seen): ');
-               $settings['DB_DATABASE'] = $this->ask('Database name: ');
-               $settings['DB_PORT'] = $this->ask('Database port [3306]: ') ?? 3306;
-               $settings['DB_HOST'] = $this->ask('Database hostname [localhost]: ') ?? 'localhost';
+               $settings['DB_USERNAME'] = $this->ask('Database username');
+               $settings['DB_PASSWORD'] = $this->secret('Database password (Input won\'t be seen)');
+               $settings['DB_DATABASE'] = $this->ask('Database name');
+               $settings['DB_PORT'] = $this->ask('Database port');
+               $settings['DB_HOST'] = $this->ask('Database hostname');
 
                $this->info('== Antispam Settings (2/6) (Recaptcha v2) ==');
-               $settings['RECAPTCHA_SITE_KEY'] = $this->ask('Site key: ');
-               $settings['RECAPTCHA_PRIVATE_KEY'] = $this->ask('Private site key: ');
+               $settings['RECAPTCHA_SITE_KEY'] = $this->ask('Site key');
+               $settings['RECAPTCHA_PRIVATE_KEY'] = $this->ask('Private site key');
 
                $this->info('== IP Geolocation Settings (3/6) (refer to README.md) ==');
-               $settings['APIGEO_API_KEY'] = $this->ask('API Key: ');
+               $settings['APIGEO_API_KEY'] = $this->ask('API Key');
 
                $this->info('== Notification Settings (4/6) (Email) ==');
-               $settings['MAIL_USERNAME'] = $this->ask('SMTP Username: ');
-               $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen): ');
-               $settings['MAIL_PORT'] = $this->ask('SMTP Server Port [25]: ') ?? 25;
-               $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname: ');
+               $settings['MAIL_USERNAME'] = $this->ask('SMTP Username');
+               $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen)');
+               $settings['MAIL_PORT'] = $this->ask('SMTP Server Port');
+               $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname');
 
                $this->info('== Notification Settings (5/6) (Slack) ==');
-               $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL:  ');
+               $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL');
 
                $this->info('== Web Settings (6/6) ==');
-               $settings['APP_URL'] = $this->ask('Application\'s URL [http://localhost]: ') ?? 'http://localhost';
+               $settings['APP_URL'] = $this->ask('Application\'s URL');
 
            } while(!$this->confirm('Are you sure you want to save these settings? You can always go back and try again.'));
 
            foreach($settings as $keyname => $value)
            {
               $this->callSilent('environment:modify', [
-                  'key' => $keyname,
-                  'value' => $value
+                  $keyname,
+                  $value
               ]);
            }
 
