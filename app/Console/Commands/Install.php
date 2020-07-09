@@ -77,17 +77,15 @@ class Install extends Command
            $settings = [];
 
            $this->info('>> Configuring application - We\'re going to ask a few questions here!');
-           $this->info('>> Questions with a value in brackets are optional and you may leave them empty to use it');
-
            do
            {
                $this->info('== Database Settings (1/6) ==');
 
-               $settings['DB_USERNAME'] = $this->ask('Database username [root]') ?? 'root';
+               $settings['DB_USERNAME'] = $this->ask('Database username');
                $settings['DB_PASSWORD'] = $this->secret('Database password (Input won\'t be seen)');
                $settings['DB_DATABASE'] = $this->ask('Database name');
-               $settings['DB_PORT'] = $this->ask('Database port [3306]') ?? 3306;
-               $settings['DB_HOST'] = $this->ask('Database hostname [localhost]') ?? 'localhost';
+               $settings['DB_PORT'] = $this->ask('Database port');
+               $settings['DB_HOST'] = $this->ask('Database hostname');
 
                $this->info('== Antispam Settings (2/6) (Recaptcha v2) ==');
                $settings['RECAPTCHA_SITE_KEY'] = $this->ask('Site key');
@@ -98,15 +96,15 @@ class Install extends Command
 
                $this->info('== Notification Settings (4/6) (Email) ==');
                $settings['MAIL_USERNAME'] = $this->ask('SMTP Username');
-               $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen): ');
-               $settings['MAIL_PORT'] = $this->ask('SMTP Server Port [25]') ?? 25;
+               $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen)');
+               $settings['MAIL_PORT'] = $this->ask('SMTP Server Port');
                $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname');
 
                $this->info('== Notification Settings (5/6) (Slack) ==');
                $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL');
 
                $this->info('== Web Settings (6/6) ==');
-               $settings['APP_URL'] = $this->ask('Application\'s URL [http://localhost]') ?? 'http://localhost';
+               $settings['APP_URL'] = $this->ask('Application\'s URL');
 
            } while(!$this->confirm('Are you sure you want to save these settings? You can always go back and try again.'));
 
