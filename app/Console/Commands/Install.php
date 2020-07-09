@@ -55,10 +55,13 @@ class Install extends Command
            $this->info('>> Installing and preparing dependencies. This may take a while, depending on your computer.');
 
            $npmOut = 0;
-           $npmBuildOut = 0;
+           $npmMessages = [];
 
-           exec('cd ' . $basePath . ' && npm install', null, $npmOut);
-           exec('cd ' . $basePath . '&& npm run dev', null, $npmBuildOut);
+           $npmBuildOut = 0;
+           $npmBuildMessages = [];
+
+           exec('cd ' . $basePath . ' && npm install', $npmBuildOut, $npmOut);
+           exec('cd ' . $basePath . '&& npm run dev', $npmBuildMessages, $npmBuildOut);
 
 
            if($npmOut !== 0 && $npmBuildOut !== 0)
