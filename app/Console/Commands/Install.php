@@ -111,8 +111,8 @@ class Install extends Command
            foreach($settings as $keyname => $value)
            {
               $this->callSilent('environment:modify', [
-                  $keyname,
-                  $value
+                  'key' => $keyname,
+                  'value' => $value
               ]);
            }
 
