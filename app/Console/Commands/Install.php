@@ -47,6 +47,9 @@ class Install extends Command
 
            $this->info('[!! Welcome to Rasberry Teams !!]');
            $this->info('>> Installing...');
+           $this->call('down', [
+             '--message' => 'Down for maintenance. We\'ll be right back!'
+           ]);
 
            copy($basePath . '/.env.example', $basePath . '/.env');
            Artisan::call('key:generate');
@@ -58,7 +61,7 @@ class Install extends Command
            $npmBuild = new Process('npm run dev', $basePath);
 
 
-           $this->info('>> Installing and preparing dependencies...');
+           $this->info('>> Installing and preparing dependencies. This may take a while, depending on your computer.');
            $progress = $this->output->createProgressBar(3);
 
            try
@@ -137,6 +140,8 @@ class Install extends Command
            $this->call('config:cache');
 
            touch($basePath . '/INSTALLED');
+           
+           $this->call('up');
            $this->info('>> All done! Visit ' . $baseURL . ' to start using your brand new installation of Raspberry Teams!');
 
         }
