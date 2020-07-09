@@ -60,8 +60,8 @@ class Install extends Command
            $npmBuildOut = 0;
            $npmBuildMessages = [];
 
-           exec('cd ' . $basePath . ' && npm install', $npmBuildOut, $npmOut);
-           exec('cd ' . $basePath . '&& npm run dev', $npmBuildMessages, $npmBuildOut);
+           exec('cd ' . $basePath . ' && npm install --silent', $npmBuildOut, $npmOut);
+           exec('cd ' . $basePath . '&& npm run dev --silent', $npmBuildMessages, $npmBuildOut);
 
 
            if($npmOut !== 0 && $npmBuildOut !== 0)
@@ -83,30 +83,30 @@ class Install extends Command
            {
                $this->info('== Database Settings (1/6) ==');
 
-               $settings['DB_USERNAME'] = $this->ask('Database username [root]: ') ?? 'root';
-               $settings['DB_PASSWORD'] = $this->secret('Database password (Input won\'t be seen): ');
-               $settings['DB_DATABASE'] = $this->ask('Database name: ');
-               $settings['DB_PORT'] = $this->ask('Database port [3306]: ') ?? 3306;
-               $settings['DB_HOST'] = $this->ask('Database hostname [localhost]: ') ?? 'localhost';
+               $settings['DB_USERNAME'] = $this->ask('Database username [root]') ?? 'root';
+               $settings['DB_PASSWORD'] = $this->secret('Database password (Input won\'t be seen)');
+               $settings['DB_DATABASE'] = $this->ask('Database name');
+               $settings['DB_PORT'] = $this->ask('Database port [3306]') ?? 3306;
+               $settings['DB_HOST'] = $this->ask('Database hostname [localhost]') ?? 'localhost';
 
                $this->info('== Antispam Settings (2/6) (Recaptcha v2) ==');
-               $settings['RECAPTCHA_SITE_KEY'] = $this->ask('Site key: ');
-               $settings['RECAPTCHA_PRIVATE_KEY'] = $this->ask('Private site key: ');
+               $settings['RECAPTCHA_SITE_KEY'] = $this->ask('Site key');
+               $settings['RECAPTCHA_PRIVATE_KEY'] = $this->ask('Private site key');
 
                $this->info('== IP Geolocation Settings (3/6) (refer to README.md) ==');
-               $settings['APIGEO_API_KEY'] = $this->ask('API Key: ');
+               $settings['APIGEO_API_KEY'] = $this->ask('API Key');
 
                $this->info('== Notification Settings (4/6) (Email) ==');
-               $settings['MAIL_USERNAME'] = $this->ask('SMTP Username: ');
+               $settings['MAIL_USERNAME'] = $this->ask('SMTP Username');
                $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen): ');
-               $settings['MAIL_PORT'] = $this->ask('SMTP Server Port [25]: ') ?? 25;
-               $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname: ');
+               $settings['MAIL_PORT'] = $this->ask('SMTP Server Port [25]') ?? 25;
+               $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname');
 
                $this->info('== Notification Settings (5/6) (Slack) ==');
-               $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL:  ');
+               $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL');
 
                $this->info('== Web Settings (6/6) ==');
-               $settings['APP_URL'] = $this->ask('Application\'s URL [http://localhost]: ') ?? 'http://localhost';
+               $settings['APP_URL'] = $this->ask('Application\'s URL [http://localhost]') ?? 'http://localhost';
 
            } while(!$this->confirm('Are you sure you want to save these settings? You can always go back and try again.'));
 
