@@ -59,12 +59,18 @@ class Install extends Command
 
 
            $this->info('>> Installing and preparing dependencies...');
+           $progress = $this->output->createProgressBar(3);
 
            try
            {
              $composer->mustRun();
+             $progress->advance();
+
              $npm->mustRun();
+             $progress->advance();
+
              $npmBuild->mustRun();
+             $progress->advance();
            }
            catch(ProcessFailedException $pfe)
            {
@@ -73,6 +79,11 @@ class Install extends Command
 
              return false;
            }
+           finally
+           {
+             $progress->finish();
+           }
+
 
            $settings = [];
 
