@@ -79,6 +79,7 @@ class Install extends Command
            $this->info('>> Configuring application - We\'re going to ask a few questions here!');
            do
            {
+               $this->call('config:clear');
                $this->info('== Database Settings (1/6) ==');
 
                $settings['DB_USERNAME'] = $this->ask('Database username');
