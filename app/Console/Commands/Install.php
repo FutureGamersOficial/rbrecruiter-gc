@@ -52,7 +52,7 @@ class Install extends Command
            ]);
 
            copy($basePath . '/.env.example', $basePath . '/.env');
-           Artisan::call('key:generate');
+           $this->call('key:generate');
 
 
            // Command stack
@@ -66,7 +66,6 @@ class Install extends Command
 
            try
            {
-        
              $npm->mustRun();
              $progress->advance();
 
