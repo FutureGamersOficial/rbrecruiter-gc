@@ -66,9 +66,7 @@ class Install extends Command
 
            try
            {
-             $composer->mustRun();
-             $progress->advance();
-
+        
              $npm->mustRun();
              $progress->advance();
 
@@ -140,7 +138,7 @@ class Install extends Command
            $this->call('config:cache');
 
            touch($basePath . '/INSTALLED');
-           
+
            $this->call('up');
            $this->info('>> All done! Visit ' . $baseURL . ' to start using your brand new installation of Raspberry Teams!');
 
