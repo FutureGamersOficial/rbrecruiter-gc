@@ -56,8 +56,8 @@ class Install extends Command
 
 
            // Command stack
-           $npm = new Process(['npm install', ''], $basePath);
-           $npmBuild = new Process(['npm run dev', ''], $basePath);
+           $npm = new Process(['npm install', '--silent'], $basePath);
+           $npmBuild = new Process(['npm run dev', '--silent'], $basePath);
 
 
            $this->info('>> Installing and preparing dependencies. This may take a while, depending on your computer.');
