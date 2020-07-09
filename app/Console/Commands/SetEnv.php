@@ -32,20 +32,27 @@ class SetEnv extends Command
 
     /**
      * Execute the console command.
-     * @see https://stackoverflow.com/a/50965881/11540218
      * @return mixed
      */
     public function handle()
     {
       $path = base_path('/.env');
-      $name = $this->argument('key');
+      $key = $this->argument('key');
+
       $value = $this->argument('value');
+      $originalValue = env($key);
 
       if (file_exists($path))
       {
-        file_put_contents($path, str_replace(
-            $name . '=' . env($name), $name . '=' . $value, file_get_contents($path)
-        ));
+          $file = file_get_contents($path);
+          $newConfig = str_replace($key . '=' . $originalValue, $key . '=' . $value, $file);
+
+    
+          file_put_contents(
+            $path,
+            $newConfig
+          );
+
       }
 
       $this->info('>> Changed value! It may now be accessed via env() or config() if there\'s a file for it.');
