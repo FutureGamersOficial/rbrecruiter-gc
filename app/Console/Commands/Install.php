@@ -92,7 +92,7 @@ class Install extends Command
                $settings['RECAPTCHA_PRIVATE_KEY'] = $this->ask('Private site key');
 
                $this->info('== IP Geolocation Settings (3/6) (refer to README.md) ==');
-               $settings['APIGEO_API_KEY'] = $this->ask('API Key');
+               $settings['IPGEO_API_KEY'] = $this->ask('API Key');
 
                $this->info('== Notification Settings (4/6) (Email) ==');
                $settings['MAIL_USERNAME'] = $this->ask('SMTP Username');
