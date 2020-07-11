@@ -119,13 +119,14 @@ class Install extends Command
            $this->info('>> Saved configuration settings!');
            $this->info('>> Preparing database...');
 
+           $this->callSilent('config:cache');
            $this->call('migrate');
            $this->call('db:seed');
 
            touch($basePath . '/INSTALLED');
 
            $this->call('up');
-           $this->info('>> All done! Visit ' . $baseURL . ' to start using your brand new installation of Raspberry Teams!');
+           $this->info('>> All done! Visit ' . $basePath . ' to start using your brand new installation of Raspberry Teams!');
 
         }
         else

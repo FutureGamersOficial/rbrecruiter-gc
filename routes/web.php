@@ -40,7 +40,6 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
             ->name('showUserApps')
             ->middleware('eligibility');
 
-
         Route::get('/view/{id}', 'ApplicationController@showUserApp')
             ->name('showUserApp');
 
@@ -58,14 +57,22 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
         Route::patch('/update/{id}/{newStatus}', 'ApplicationController@updateApplicationStatus')
             ->name('updateApplicationStatus');
 
+
+        Route::get('/staff/all', 'ApplicationController@showAllApps')
+            ->name('allApplications');
+
+
         Route::get('/staff/outstanding', 'ApplicationController@showAllPendingApps')
             ->name('staffPendingApps');
+
 
         Route::get('/staff/peer-review', 'ApplicationController@showPeerReview')
             ->name('peerReview');
 
+
         Route::get('/staff/pending-interview', 'ApplicationController@showPendingInterview')
             ->name('pendingInterview');
+
 
 
         Route::post('{id}/staff/vote', 'VoteController@vote')

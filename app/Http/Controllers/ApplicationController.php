@@ -45,10 +45,9 @@ class ApplicationController extends Controller
     }
 
 
-
-
     public function showUserApp(Request $request, $applicationID)
     {
+      // TODO: Inject it instead (do this where there is no injection, not just here)
         $application = Application::find($applicationID);
 
         $this->authorize('view', $application);
@@ -77,6 +76,12 @@ class ApplicationController extends Controller
 
 
 
+    public function showAllApps()
+    {
+        return view('dashboard.appmanagement.all')
+          ->with('applications', Application::paginate(6));
+    }
+
 
     public function showAllPendingApps()
     {
@@ -85,9 +90,6 @@ class ApplicationController extends Controller
         return view('dashboard.appmanagement.outstandingapps')
             ->with('applications', Application::where('applicationStatus', 'STAGE_SUBMITTED')->get());
     }
-
-
-
 
 
     public function showPendingInterview()

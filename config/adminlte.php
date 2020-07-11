@@ -252,6 +252,12 @@ return [
             'can' => ['applications.view.all', 'applications.vote']
         ],
         [
+          'text' => 'All applications',
+          'url' => 'applications/staff/all',
+          'icon' => 'fas fa-list-ol',
+          'can' => 'applications.view.all'
+        ],
+        [
             'text' => 'Outstanding Applications',
             'url' => '/applications/staff/outstanding',
             'icon' => 'far fa-folder-open',
@@ -521,6 +527,7 @@ return [
               'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.min.css'
             ]
           ]
-        ]
+        ],
+
     ],
 ];
