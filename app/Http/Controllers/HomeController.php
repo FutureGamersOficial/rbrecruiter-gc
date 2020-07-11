@@ -15,15 +15,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // TODO: Relationships for Applications, Users and Responses
-        // Also prevent apps if user already has one in the space of 30d
-        // Display apps in the relevant menus
-        
-        $positions = DB::table('vacancies')
-                        ->where('vacancyStatus', 'OPEN')
-                        ->where('vacancyCount', '!=', 0)
-                        ->get();
 
+        $positions = Vacancy::where('vacancyStatus', 'OPEN')
+                            ->where('vacancyCount', '<>', 0)
+                            ->get();
+
+      
         return view('home')
             ->with('positions', $positions);
     }

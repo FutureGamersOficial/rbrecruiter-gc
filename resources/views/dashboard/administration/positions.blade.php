@@ -34,6 +34,7 @@
 
 @section('content')
 
+    <!-- todo: switch to modal component -->
     <div class="modal fade" tabindex="-1" id="newVacancyForm" role="dialog" aria-labelledby="modalFormLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -188,12 +189,15 @@
                                     @endif
                                     <td>{{$vacancy->created_at}}</td>
                                     <td>
+
+                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{ route('editPosition', ['position' => $vacancy->id]) }}'"><i class="fas fa-edit"></i></button>
+
                                         @if ($vacancy->vacancyStatus == 'OPEN')
 
                                             <form action="{{route('updatePositionAvailability', ['status' => 'close', 'id' => $vacancy->id])}}" method="POST" id="closePosition">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Close</button>
+                                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i></button>
                                             </form>
 
                                         @else
@@ -201,7 +205,7 @@
                                             <form action="{{route('updatePositionAvailability', ['status' => 'open', 'id' => $vacancy->id])}}" method="POST" id="openPosition">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Open</button>
+                                                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i></button>
                                             </form>
 
                                         @endif

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use GrahamCampbell\Markdown\Facades\Markdown;
+
+
 class Vacancy extends Model
 {
     public $fillable = [
@@ -21,6 +24,26 @@ class Vacancy extends Model
         'vacancySlug'
 
     ];
+
+
+    /**
+    * Get the HTML variant of the vacancyFullDescription attribute.
+    *
+    * @param string $value The original value
+    * @return string
+    */
+    public function getVacancyFullDescriptionAttribute($value)
+    {
+        if (!is_null($value))
+        {
+          return Markdown::convertToHTML($value);
+        }
+        else
+        {
+          return null;
+        }
+    }
+
 
     public function forms()
     {

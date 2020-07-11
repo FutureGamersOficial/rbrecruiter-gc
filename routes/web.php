@@ -168,6 +168,13 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
             ->name('savePosition');
 
 
+        Route::get('positions/edit/{position}', 'VacancyController@edit')
+            ->name('editPosition');
+
+        Route::patch('positions/update/{position}', 'VacancyController@update')
+            ->name('updatePosition');
+
+
         Route::patch('positions/availability/{status}/{id}', 'VacancyController@updatePositionAvailability')
             ->name('updatePositionAvailability');
 

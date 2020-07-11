@@ -53,7 +53,7 @@ class VacancyPolicy
      */
     public function update(User $user, Vacancy $vacancy)
     {
-        return $user->hasRole('admin', 'hiringManager');
+        return $user->hasAnyRole('admin', 'hiringManager');
     }
 
     /**

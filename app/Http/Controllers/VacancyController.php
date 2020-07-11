@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VacancyRequest;
+use App\Http\Requests\VacancyEditRequest;
+
 use App\Vacancy;
 use App\User;
 use App\Form;
 
 use App\Notifications\VacancyClosed;
-use GrahamCampbell\Markdown\Facades\Markdown;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -34,11 +35,16 @@ class VacancyController extends Controller
 
         if (!is_null($form))
         {
+          /* note: since we can't convert HTML back to Markdown, we'll have to do the converting when the user requests a page,
+          * and leave the database with Markdown only so it can be used and edited everywhere.
+          * for several vacancies, this would require looping through all of them and replacing MD with HTML, which is obviously not the most clean solution;
+          * however, the Model can be configured to return MD instead of HTML on that specific field saving us from looping.
+          */
             Vacancy::create([
 
                 'vacancyName' => $request->vacancyName,
                 'vacancyDescription' => $request->vacancyDescription,
-                'vacancyFullDescription' => Markdown::convertToHTML($request->vacancyFullDescription),
+                'vacancyFullDescription' => $request->vacancyFullDescription,
                 'vacancySlug' => Str::slug($request->vacancyName),
                 'permissionGroupName' => $request->permissionGroup,
                 'discordRoleID' => $request->discordRole,
@@ -103,6 +109,29 @@ class VacancyController extends Controller
 
         $request->session()->flash($type, $message);
         return redirect()->back();
+    }
+
+
+    public function edit(Request $request, Vacancy $position)
+    {
+        return view('dashboard.administration.editposition')
+               ->with('vacancy', $position);
+    }
+
+
+
+    public function update(VacancyEditRequest $request, Vacancy $position)
+    {
+
+      $position->vacancyFullDescription = $request->vacancyFullDescription;
+      $position->vacancyDescription = $request->vacancyDescription;
+      $position->vacancyCount = $request->vacancyCount;
+
+      $position->save();
+
+      $request->session()->flash('success', 'Vacancy successfully updated.');
+      return redirect()->back();
+
     }
 
 }
