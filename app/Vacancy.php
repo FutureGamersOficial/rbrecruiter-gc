@@ -13,6 +13,7 @@ class Vacancy extends Model
         'permissionGroupName',
         'vacancyName',
         'vacancyDescription',
+        'vacancyFullDescription',
         'discordRoleID',
         'vacancyFormID',
         'vacancyCount',

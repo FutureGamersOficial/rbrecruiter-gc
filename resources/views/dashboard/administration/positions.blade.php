@@ -55,6 +55,9 @@
                             <label for="vacancyDescription">Vacancy Description</label>
                             <input type="text" id="vacancyDescription" name="vacancyDescription" class="form-control">
 
+                            <label for="vacancyFullDescription">Vacancy Details</label>
+                            <textarea name="vacancyFullDescription" class="form-control" rel="txtTooltip" title="Add things like admission requirements, rank resposibilities and roles, and anything else you feel is necessary" data-toggle="tooltip" data-placement="bottom"></textarea>
+                            <span class="right text-muted"><i class="fab fa-markdown"></i> Markdown supported</span>
                             <div class="row mt-3">
 
                                 <div class="col">

@@ -164,7 +164,9 @@ return [
 
         /*
          * Package Service Providers...
+
          */
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -230,7 +232,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'UUID' => App\Facades\UUID::class,
-        'IP' => App\Facades\IP::class
+        'IP' => App\Facades\IP::class,
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
 
     ],
 

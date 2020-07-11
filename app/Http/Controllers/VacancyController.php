@@ -8,9 +8,12 @@ use App\User;
 use App\Form;
 
 use App\Notifications\VacancyClosed;
+use GrahamCampbell\Markdown\Facades\Markdown;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+
 
 class VacancyController extends Controller
 {
@@ -35,6 +38,7 @@ class VacancyController extends Controller
 
                 'vacancyName' => $request->vacancyName,
                 'vacancyDescription' => $request->vacancyDescription,
+                'vacancyFullDescription' => Markdown::convertToHTML($request->vacancyFullDescription),
                 'vacancySlug' => Str::slug($request->vacancyName),
                 'permissionGroupName' => $request->permissionGroup,
                 'discordRoleID' => $request->discordRole,

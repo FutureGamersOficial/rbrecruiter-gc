@@ -2,6 +2,42 @@
 
 @section('content')
 
+	@if(!$positions->isEmpty())
+
+		<!-- todo: details component -->
+
+
+		@foreach($positions as $position)
+
+				<x-modal id="{{ $position->vacancySlug . '-details' }}" modal-label="{{ $position->vacancySlug . '-details-label' }}" modal-title="Opening details" include-close-button="true">
+
+					@if (is_null($position->vacancyFullDescription))
+
+						<div class="alert alert-warning">
+
+							<h3><i class="fas fa-question-circle"></i> There don't seem to be any details</h3>
+							<p>
+								This opening does not have any details yet.
+							</p>
+
+						</div>
+					@else
+
+						{!! $position->vacancyFullDescription !!}
+						<p class="text-sm text-muted">
+							Last updated @ {{ $position->updated_at }}
+						</p>
+					@endif
+
+					<x-slot name="modalFooter"></x-slot>
+
+				</x-modal>
+
+		@endforeach
+
+
+	@endif
+
 	<!--Main Layout-->
 	<main class="py-5">
 
@@ -57,6 +93,7 @@
 
                                   @guest
                                           <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">Apply</button>
+																					<button type="button" class="btn btn-info" onclick="$('#{{ $position->vacancySlug }}-details').modal('show')">Learn more</button>
                                       @endguest
 
                               </div>

@@ -14,6 +14,38 @@
 
 @section('content')
 
+    @if (!$vacancies->isEmpty())
+
+      @foreach($vacancies as $vacancy)
+
+          <x-modal id="{{ $vacancy->vacancySlug . '-details' }}" modal-label="{{ $vacancy->vacancySlug . '-details-label' }}" modal-title="Vacancy details" include-close-button="true">
+
+            @if (is_null($vacancy->vacancyFullDescription))
+
+              <div class="alert alert-warning">
+
+                <h3><i class="fas fa-question-circle"></i> There don't seem to be any details</h3>
+                <p>
+                  This vacancy does not have any details yet.
+                </p>
+
+              </div>
+            @else
+
+              {!! $vacancy->vacancyFullDescription !!}
+              <p class="text-sm text-muted">
+                Last updated @ {{ $vacancy->updated_at }}
+              </p>
+            @endif
+
+            <x-slot name="modalFooter"></x-slot>
+
+          </x-modal>
+
+      @endforeach
+
+    @endif
+
     <div class="row mt-5">
 
       <div class="col">
@@ -190,7 +222,7 @@
                 <div class="card-footer text-center">
 
                     <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='{{ route('renderApplicationForm', ['vacancySlug' => $vacancy->vacancySlug]) }}'">Apply</button>
-                    <button type="button" class="btn btn-warning btn-sm">Learn More</button>
+                    <button type="button" class="btn btn-warning btn-sm" onclick="$('#{{ $vacancy->vacancySlug }}-details').modal('show')">Learn More</button>
 
                 </div>
               </div>

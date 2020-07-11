@@ -26,6 +26,7 @@ class VacancyRequest extends FormRequest
         return [
             'vacancyName' => 'required|string',
             'vacancyDescription' => 'required|string',
+            'vacancyFullDescription' => 'nullable|string',
             'permissionGroup' => 'required|string',
             'discordRole' => 'required|string',
             'vacancyCount' => 'required|integer',
