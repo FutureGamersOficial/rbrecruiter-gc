@@ -4,7 +4,11 @@
 
 @section('content_header')
 
-    <h4>Administration / Open Positions</h4>
+    @if (Auth::user()->hasAnyRole('admin', 'hiringManager'))
+      <h4>Administration / Open Positions</h4>
+    @else
+      <h4>Application Access Denied</h4>
+    @endif
 
 @stop
 
@@ -33,7 +37,7 @@
 @stop
 
 @section('content')
-
+ @if (Auth::user()->hasAnyRole('admin', 'hiringManager'))
     <!-- todo: switch to modal component -->
     <div class="modal fade" tabindex="-1" id="newVacancyForm" role="dialog" aria-labelledby="modalFormLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -157,9 +161,8 @@
                             <thead>
 
                             <tr>
-                                <th>#</th>
-                                <th>Vacancy Name</th>
-                                <th>Vacancy Description</th>
+                                <th>Name</th>
+                                <th>Description</th>
                                 <th>Discord Role ID</th>
                                 <th>Perm. Group Name</th>
                                 <th>Open Slots</th>
@@ -175,8 +178,6 @@
                             @foreach($vacancies as $vacancy)
 
                                 <tr>
-
-                                    <td>{{$vacancy->id}}</td>
                                     <td>{{$vacancy->vacancyName}}</td>
                                     <td>{{substr($vacancy->vacancyDescription, 0, 20)}}...</td>
                                     <td><span class="badge badge-success">{{$vacancy->discordRoleID}}</span></td>
@@ -194,7 +195,7 @@
 
                                         @if ($vacancy->vacancyStatus == 'OPEN')
 
-                                            <form action="{{route('updatePositionAvailability', ['status' => 'close', 'id' => $vacancy->id])}}" method="POST" id="closePosition">
+                                            <form action="{{route('updatePositionAvailability', ['status' => 'close', 'id' => $vacancy->id])}}" method="POST" id="closePosition" style="display: inline">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i></button>
@@ -202,7 +203,7 @@
 
                                         @else
 
-                                            <form action="{{route('updatePositionAvailability', ['status' => 'open', 'id' => $vacancy->id])}}" method="POST" id="openPosition">
+                                            <form action="{{route('updatePositionAvailability', ['status' => 'open', 'id' => $vacancy->id])}}" method="POST" id="openPosition" style="display: inline">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i></button>
@@ -239,5 +240,7 @@
         </div>
 
     </div>
-
+ @else
+   <x-no-permission type="danger"></x-no-permission>
+ @endif
 @stop

@@ -57,6 +57,9 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
         Route::patch('/update/{id}/{newStatus}', 'ApplicationController@updateApplicationStatus')
             ->name('updateApplicationStatus');
 
+        Route::delete('{application}/delete', 'ApplicationController@delete')
+            ->name('deleteApplication');
+
 
         Route::get('/staff/all', 'ApplicationController@showAllApps')
             ->name('allApplications');

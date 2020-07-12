@@ -11,12 +11,37 @@
 @section('js')
 
     <script type="text/javascript" src="/js/app.js"></script>
+    <x-global-errors></x-global-errors>
 
 @stop
 
 @section('content')
 
 
+  @foreach($applications as $application)
+
+    <x-modal id="deletionConfirmationModal-{{ $application->id }}" modal-label="deletion-{{ $application->id }}" modal-title="Are you sure?" include-close-button="true">
+
+      <h4><i class="fas fa-exclamation-triangle"></i> Really delete this?</h3>
+      <p>
+        This action is <b>IRREVERSBILE.</b>
+      </p>
+      <p>Comments, appointments and any votes attached to this application WILL be deleted too. Please make sure this application really needs to be deleted.</p>
+
+      <x-slot name="modalFooter">
+
+        <form method="POST" action="{{ route('deleteApplication', ['application' => $application->id]) }}">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-danger"><i class="fas fa-check-double"></i> Confirm</button>
+
+        </form>
+
+      </x-slot>
+
+    </x-modal>
+
+  @endforeach
 
   <div class="row">
 
@@ -167,6 +192,7 @@
                             <td>{{ $application->created_at }}</td>
                             <td>
                               <button type="button" class="btn btn-success btn-sm" onclick="window.location.href='{{ route('showUserApp', ['id' => $application->id]) }}'"><i class="fas fa-eye"></i> View</button>
+                              <button type="button" class="btn btn-danger btn-sm ml-2" onclick="$('#deletionConfirmationModal-{{ $application->id }}').modal('show')"><i class="fa fa-trash"></i> Delete</button>
                             </td>
                           </tr>
 

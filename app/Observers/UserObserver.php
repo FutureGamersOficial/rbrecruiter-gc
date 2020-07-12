@@ -48,30 +48,7 @@ class UserObserver
             Log::debug('RIC: Now trying to delete applications and responses...');
             foreach($applications as $application)
             {
-                $application->response()->delete();
-                $votes = $application->votes;
-
-                foreach ($votes as $vote)
-                {
-                    Log::debug('RIC: Deleting and detaching vote ' . $vote->id);
-                    $vote->application()->detach($application->id);
-                    $vote->delete();
-                }
-
-                if (!is_null($application->appointment))
-                {
-                    Log::debug('RIC: Deleting appointment!');
-                    $application->appointment()->delete();
-                }
-
-                if (!$application->comments->isEmpty())
-                {
-                    Log::debug('RIC: Deleting comments!');
-                    foreach($application->comments as $comment)
-                    {
-                        $comment->delete();
-                    }
-                }
+                // code moved to Application observer, where it gets rid of attached elements individually
                 Log::debug('RIC: Deleting application ' . $application->id);
                 $application->delete();
 

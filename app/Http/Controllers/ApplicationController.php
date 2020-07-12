@@ -282,4 +282,16 @@ class ApplicationController extends Controller
 
         return redirect()->back();
     }
+
+    public function delete(Request $request, Application $application)
+    {
+
+      $this->authorize('delete', $application);
+      $application->delete(); // observers will run, cleaning it up
+
+      $request->session()->flash('success', 'Application deleted. Comments, appointments and responses have also been deleted.');
+      return redirect()->back();
+      
+    }
+
 }

@@ -45,4 +45,11 @@ class ApplicationPolicy
     {
         return $user->hasAnyRole('admin', 'hiringManager');
     }
+
+    public function delete(User $user, Application $application)
+    {
+
+      return $user->hasRole('admin');
+
+    }
 }
