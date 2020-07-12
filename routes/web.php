@@ -194,6 +194,9 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
         Route::get('forms', 'FormController@index')
             ->name('showForms');
 
+        Route::get('forms/preview/{form}', 'FormController@preview')
+            ->name('previewForm');
+            
 
         Route::get('devtools', 'DevToolsController@index')
             ->name('devTools');

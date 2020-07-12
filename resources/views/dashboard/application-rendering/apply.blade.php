@@ -93,38 +93,10 @@
 
                         <form action="{{route('saveApplicationForm', ['vacancySlug' => $vacancy->vacancySlug])}}" method="POST" id="submitApplicationForm">
                             @csrf
-                            @foreach($preprocessedForm['fields'] as $fieldName => $field)
 
-                                @switch ($field['type'])
+                            @component('components.form', ['form' => $preprocessedForm, 'disableFields' => false])
 
-                                    @case('textarea')
-
-                                    <div class="form-group mt-2 mb-2">
-
-                                        <label for="{{$fieldName}}">{{$field['title']}}</label>
-                                        <textarea class="form-control" rows="7" name="{{$fieldName}}" id="{{$fieldName}}">
-
-                                     </textarea>
-
-                                    </div>
-
-                                    @break
-
-                                    @case('textbox')
-
-                                    <div class="form-group mt-2 mb-2">
-
-                                        <label for="{{$fieldName}}">{{$field['title']}}</label>
-                                        <input type="text" name="{{$fieldName}}" id="{{$fieldName}}" class="form-control">
-
-
-                                    </div>
-
-                                    @break
-
-                                @endswitch
-
-                            @endforeach
+                            @endcomponent
 
                         </form>
 

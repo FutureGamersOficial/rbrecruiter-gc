@@ -59,7 +59,7 @@
 
                                             <button type="submit" class="btn btn-sm btn-danger mr-2"><i class="fa fa-trash"></i> Delete</button>
                                         </form>
-                                        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Preview</button>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{ route('previewForm', ['form' => $form->id]) }}'"><i class="fa fa-eye"></i> Preview</button>
                                     </td>
                                 </tr>
 

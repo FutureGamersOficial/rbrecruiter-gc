@@ -87,7 +87,7 @@ class FormController extends Controller
         {
            $deletable = false;
         }
-        
+
         if ($deletable)
         {
           $form->delete();
@@ -101,6 +101,13 @@ class FormController extends Controller
 
         return redirect()->back();
 
+    }
+
+    public function preview(Request $request, Form $form)
+    {
+        return view('dashboard.administration.formpreview')
+          ->with('form', json_decode($form->formStructure, true))
+          ->with('title', $form->formName);
     }
 
 }
