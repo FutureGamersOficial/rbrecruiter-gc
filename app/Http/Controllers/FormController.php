@@ -80,17 +80,25 @@ class FormController extends Controller
 
         $form = Form::find($id);
         $this->authorize('delete', $form);
+        $deletable = true;
 
-        // TODO: Check if form is linked to vacancies before allowing deletion
-        if (!is_null($form))
+
+        if (!is_null($form) && !is_null($form->vacancies) && $form->vacancies->count() !== 0 || !is_null($form->responses))
         {
-            $form->delete();
+           $deletable = false;
+        }
+        
+        if ($deletable)
+        {
+          $form->delete();
 
-            $request->session()->flash('success', 'Form deleted successfully.');
-            return redirect()->back();
+          $request->session()->flash('success', 'Form deleted successfully.');
+        }
+        else
+        {
+          $request->session()->flash('error', 'You cannot delete this form because it\'s tied to one or more applications and ranks, or because it doesn\'t exist.');
         }
 
-        $request->session()->flash('error', 'The form you\'re trying to delete does not exist.');
         return redirect()->back();
 
     }
