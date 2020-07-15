@@ -57,7 +57,7 @@ class FormPolicy
      */
     public function update(User $user, Form $form)
     {
-        // unused
+        return $user->can('admin.hiring.forms');
     }
 
     /**

@@ -66,8 +66,8 @@
 
         <div class="card-footer text-center">
 
-          <button type="button" class="btn btn-success ml-2" onlick="window.location.href='{{ route('showForms') }}'"><i class="fas fa-chevron-left"></i> Go back</button>
-          <button type="button" class="btn btn-warning ml-2"><i class="far fa-edit"></i> Edit</button>
+          <button type="button" class="btn btn-success ml-2" onclick="window.location.href='{{ route('showForms') }}'"><i class="fas fa-chevron-left"></i> Go back</button>
+          <button type="button" class="btn btn-warning ml-2" onclick="window.location.href='{{ route('editForm', ['form' => $formID]) }}'"><i class="far fa-edit"></i> Edit</button>
         </div>
 
       </div>

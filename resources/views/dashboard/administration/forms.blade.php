@@ -38,6 +38,7 @@
                                 <th>#</th>
                                 <th>Form Title</th>
                                 <th>Created On</th>
+                                <th>Updated On</th>
                                 <th>Actions</th>
                             </tr>
 
@@ -51,6 +52,7 @@
                                     <td>{{$form->id}}</td>
                                     <td>{{$form->formName}}</td>
                                     <td>{{$form->created_at}}</td>
+                                    <td>{{ $form->updated_at }}</td>
                                     <td>
                                         <form  style="display: inline-block; white-space: nowrap" action="{{route('destroyForm', ['id' => $form->id])}}" method="POST">
 

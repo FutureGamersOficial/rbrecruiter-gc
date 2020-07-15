@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
+use ContextAwareValidator;
+
 class FormController extends Controller
 {
 
@@ -29,39 +31,17 @@ class FormController extends Controller
     {
 
         $this->authorize('create', Form::class);
+        $fields = $request->all();
 
-        $formFields = $request->all();
+        $contextValidation = ContextAwareValidator::getValidator($fields, true, true);
 
-        $formStructure = [];
-        $excludedNames = [
-            '_token',
-            'formName' // It's added outside the loop. Not excluding causes unwanted duplication.
-        ];
-        $validator = [
-            'formName' => 'required|string|max:100'
-        ];
-
-        foreach ($formFields as $fieldName => $field)
+        if (!$contextValidation->get('validator')->fails())
         {
-            if(!in_array($fieldName, $excludedNames))
-            {
-                $validator[$fieldName . ".0"] = 'required|string';
-                $validator[$fieldName . ".1"] = 'required|string';
-
-                $formStructure['fields'][$fieldName]['title'] = $field[0];
-                $formStructure['fields'][$fieldName]['type'] = $field[1];
-            }
-        }
-
-        $validation = Validator::make($formFields, $validator);
-
-        if (!$validation->fails())
-        {
-            $storableFormStructure = json_encode($formStructure);
+            $storableFormStructure = $contextValidation->get('structure');
 
             Form::create(
                 [
-                    'formName' => $formFields['formName'],
+                    'formName' => $fields['formName'],
                     'formStructure' => $storableFormStructure,
                     'formStatus' => 'ACTIVE'
                 ]
@@ -71,7 +51,7 @@ class FormController extends Controller
             return redirect()->to(route('showForms'));
         }
 
-        $request->session()->flash('errors', $validation->errors()->getMessages());
+        $request->session()->flash('errors', $contextValidation->get('validator')->errors()->getMessages());
         return redirect()->back();
     }
 
@@ -107,7 +87,41 @@ class FormController extends Controller
     {
         return view('dashboard.administration.formpreview')
           ->with('form', json_decode($form->formStructure, true))
-          ->with('title', $form->formName);
+          ->with('title', $form->formName)
+          ->with('formID', $form->id);
+    }
+
+    public function edit(Request $request, Form $form)
+    {
+       return view('dashboard.administration.editform')
+        ->with('formStructure', json_decode($form->formStructure, true))
+        ->with('title', $form->formName)
+        ->with('formID', $form->id);
+    }
+
+    public function update(Request $request, Form $form)
+    {
+      $contextValidation = ContextAwareValidator::getValidator($request->all(), true);
+      $this->authorize('update', $form);
+
+
+      if (!$contextValidation->get('validator')->fails())
+      {
+          // Add the new structure into the form. New, subsquent fields will be identified by the "new" prefix
+          // This prefix doesn't actually change the app's behavior when it receives applications.
+          // Additionally, old applications won't of course display new and updated fields, because we can't travel into the past and get data for them
+          $form->formStructure = $contextValidation->get('structure');
+          $form->save();
+
+          $request->session()->flash('success', 'Hooray! Your form was updated. New applications for it\'s vacancy will use it.');
+      }
+      else
+      {
+        $request->session()->flash('errors', $contextValidation->get('validator')->errors()->getMessages());
+      }
+
+      return redirect()->to(route('previewForm', ['form' => $form->id]));
+
     }
 
 }

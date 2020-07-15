@@ -75,6 +75,18 @@
 
         @endhasrole
 
+    <div class="row">
+
+      <div class="col">
+
+        <div class="alert alert-warning alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Reminder:</strong> If this form has been updated, new fields and updated questions will not show up here!
+        </div>
+
+      </div>
+
+    </div>
 
     <div class="row">
 
@@ -357,9 +369,9 @@
         </div>
 
         <div class="row">
-    
+
             <div class="col">
-                
+
                 @if ($comments->isEmpty())
 
                     <div class="alert alert-warning">
@@ -378,11 +390,11 @@
 
 
                 @if (!$comments->isEmpty())
-                    
+
                         @foreach($comments as $comment)
-                          <div class="row mt-3 mb-3">  
+                          <div class="row mt-3 mb-3">
                             <div class="col-md-2">
-          
+
                                 <div class="text-center">
                                     @if($application->user->avatarPreference == 'gravatar')
                                         <img class="profile-user-img img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($comment->user->email)}}" alt="User profile picture">
@@ -394,24 +406,24 @@
                             </div>
 
                             <div class="card comment">
-                            
+
                                 <div class="card-header comment-header">
 
                                     <h1 class="commenter">{{$comment->user->name}} &#9679; {{Carbon\Carbon::parse($comment->created_at)->diffForHumans()}}</h3>
-                                
+
                                 </div>
 
 
                                 <div class="card-body">
-                            
+
                                     {{$comment->text}}
 
                                 </div>
 
                                 @if(Auth::user()->is($comment->user) || Auth::user()->hasRole('admin'))
-                                
+
                                     <div class="card-footer comment-footer">
-                                
+
                                         <form method="POST" id="deleteComment" action="{{route('deleteApplicationComment', ['comment' => $comment->id])}}">
                                             @csrf
                                             @method('DELETE')
@@ -434,7 +446,7 @@
         <div class="row mt-5">
 
           <div class="col-md-2">
-          
+
             <div class="text-center">
                 @if($application->user->avatarPreference == 'gravatar')
                     <img class="profile-user-img img-fluid img-circle" src="https://gravatar.com/avatar/{{md5(Auth::user()->email)}}" alt="User profile picture">
@@ -443,15 +455,15 @@
                 @endif
             </div>
 
-          </div>    
+          </div>
 
           <div class="col">
             <div class="card border-top border-bottom">
-            
+
                 <div class="card-body">
-                
+
                     <form id="newComment" method="POST" action="{{route('addApplicationComment', ['application' => $application->id])}}">
-                
+
                         @csrf
 
                         <textarea id="comment" name="comment" class="form-control" id="commentText"></textarea>
@@ -459,14 +471,14 @@
                     </form>
 
                     <div class="row">
-                    
+
                         <div class="col text-left">
                             <p class="text-sm text-muted">Commenting as {{Auth::user()->name}}</p>
                         </div>
 
 
                         <div class="col text-right">
-                        
+
                             <p class="text-sm text-muted"><span id="charcount">0</span>/600 max characters</p>
 
                         </div>
@@ -476,7 +488,7 @@
                 </div>
 
                 <div class="card-footer text-right">
-                
+
                     <button type="button" id="submitComment" class="btn btn-sm btn-secondary">Post</button>
 
                 </div>

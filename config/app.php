@@ -175,6 +175,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\UUIDConversionProvider::class,
         App\Providers\IPInfoProvider::class,
+        App\Providers\ContextAwareValidatorProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
@@ -234,6 +235,7 @@ return [
         'UUID' => App\Facades\UUID::class,
         'IP' => App\Facades\IP::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+        'ContextAwareValidator' => App\Facades\ContextAwareValidation::class
 
     ],
 

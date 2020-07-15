@@ -1,3 +1,4 @@
+// TODO: Add cleaner and less verbose solution found in formeditor.js
 $(document).ready(function() {
     $("#add").click(function() {
         var lastField = $("#buildyourform div:last");
