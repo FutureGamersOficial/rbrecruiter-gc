@@ -96,7 +96,7 @@
                         <h5>Welcome to our team management center!</h5>
                         <br>
                         <p>Here, you can apply for open staff member positions, view your application status, and manage your profile. </p>
-                        <p>Sign up with Twitch or Email to continue.</p>
+                        <p>Sign up with Email to continue.</p>
                     </div>
                 </div>
             </div>

@@ -59,7 +59,7 @@
 
                       <div class="col-md-4">
 
-                          <div class="card">
+                          <div class="card mt-3">
 
                               <div class="card-header text-center">
 
