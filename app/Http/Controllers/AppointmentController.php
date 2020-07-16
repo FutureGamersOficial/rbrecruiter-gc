@@ -67,13 +67,15 @@ class AppointmentController extends Controller
     public function updateAppointment(Request $request, $applicationID, $status)
     {
 
-      $this->authorize('update', Appointment::class);
 
         $application = Application::find($applicationID);
         $validStatuses = [
           'SCHEDULED',
           'CONCLUDED'
         ];
+
+        $this->authorize('update', $application->appointment);
+
 
 
         if (!is_null($application))
