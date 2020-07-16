@@ -24,6 +24,12 @@ class UserPolicy
         return $authUser->is($user) || $authUser->hasRole('admin');
     }
 
+    // This refers to the admin tools that let staff update more information than users themselves can
+    public function adminEdit(User $authUser, User $user)
+    {
+      return $authUser->hasRole('admin') && $authUser->isNot($user);
+    }
+
     public function viewStaff(User $user)
     {
         return $user->can('admin.stafflist');
@@ -37,5 +43,10 @@ class UserPolicy
     public function terminate(User $authUser)
     {
        return $authUser->hasRole('admin');
+    }
+
+    public function delete(User $authUser, User $subject)
+    {
+      return $authUser->hasRole('admin') && $authUser->isNot($subject);
     }
 }

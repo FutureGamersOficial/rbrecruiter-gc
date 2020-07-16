@@ -6,24 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Comment;
-use App\Application;
+use Illuminate\Support\Collection;
 
-class NewComment extends Notification implements ShouldQueue
+class NewContact extends Notification
 {
     use Queueable;
 
-
-    protected $application;
+    public $message;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Comment $comment, Application $application)
+    public function __construct(Collection $message)
     {
-        $this->application = $application;
+        $this->message = $message;
     }
 
     /**
@@ -45,13 +43,24 @@ class NewComment extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name') . ' - New comment')
-                    ->line('Someone has just posted a new comment on an application you follow.')
-                    ->line('You\'re receiving this email because you\'ve voted/commented on this application.')
-                    ->action('Check it out', url(route('showUserApp', ['application' => $this->application->id])))
-                    ->line('Thank you!');
+        if ($this->message->has([
+          'message',
+          'ip',
+          'email'
+        ]))
+        {
+          return (new MailMessage)
+                      ->line('We\'ve received a new contact form submission in the StaffManagement app center.')
+                      ->line('This is what they sent: ')
+                      ->line('')
+                      ->line($this->message->get('message'))
+                      ->line('')
+                      ->line('This message was received from ' . $this->message->get('ip') . ' and submitted by ' . $this->message->get('email') . '.')
+                      ->action('Sign in', url(route('login')))
+                      ->line('Thank you!');
+        }
+
+        throw new \InvalidArgumentException("Invalid arguments supplied to NewContact!");
     }
 
     /**

@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
             ->name('showUserApps')
             ->middleware('eligibility');
 
-        Route::get('/view/{id}', 'ApplicationController@showUserApp')
+        Route::get('/view/{application}', 'ApplicationController@showUserApp')
             ->name('showUserApp');
 
         Route::post('/{application}/comments', 'CommentController@insert')
@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
             ->name('saveNotes');
 
 
-        Route::patch('/update/{id}/{newStatus}', 'ApplicationController@updateApplicationStatus')
+        Route::patch('/update/{application}/{newStatus}', 'ApplicationController@updateApplicationStatus')
             ->name('updateApplicationStatus');
 
         Route::delete('{application}/delete', 'ApplicationController@delete')
@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
 
 
 
-        Route::post('{id}/staff/vote', 'VoteController@vote')
+        Route::post('{application}/staff/vote', 'VoteController@vote')
             ->name('voteApplication');
 
 
@@ -86,10 +86,10 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
 
     Route::group(['prefix' => 'appointments'], function (){
 
-        Route::post('schedule/appointments/{applicationID}', 'AppointmentController@saveAppointment')
+        Route::post('schedule/appointments/{application}', 'AppointmentController@saveAppointment')
             ->name('scheduleAppointment');
 
-        Route::patch('update/appointments/{applicationID}/{status}', 'AppointmentController@updateAppointment')
+        Route::patch('update/appointments/{application}/{status}', 'AppointmentController@updateAppointment')
             ->name('updateAppointment');
 
     });
@@ -156,6 +156,8 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
         Route::delete('players/unban/{user}', 'BanController@delete')
             ->name('unbanUser');
 
+
+
         Route::delete('players/delete/{user}', 'UserController@delete')
             ->name('deleteUser');
 
@@ -178,7 +180,7 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
             ->name('updatePosition');
 
 
-        Route::patch('positions/availability/{status}/{id}', 'VacancyController@updatePositionAvailability')
+        Route::patch('positions/availability/{status}/{vacancy}', 'VacancyController@updatePositionAvailability')
             ->name('updatePositionAvailability');
 
 
@@ -214,5 +216,3 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
     });
 
 });
-
-//Route::get('/dashboard/login', '');

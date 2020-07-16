@@ -7,6 +7,29 @@ use Illuminate\Support\Collection;
 
 class ContextAwareValidator
 {
+
+    /**
+    * The excludedNames array will make the validator ignore any of these names when including names into the rules.
+    * @var array
+    */
+    private $excludedNames = [
+      '_token',
+      '_method',
+      'formName'
+    ];
+
+
+    /**
+    * Utility wrapper for json_encode.
+    *
+    * @param array $value The array to be converted.
+    * @return string The JSON representation of $value
+    */
+    private function encode(array $value) : string
+    {
+      return json_encode($value);
+    }
+
     /**
     *  The getValidator() method will take an array of fields from the request body, iterates through them,
     *  and dynamically adds validation rules for them. Depending on parameters, it may or may not generate
@@ -30,12 +53,6 @@ class ContextAwareValidator
         $formStructure = [];
         $validator = [];
 
-        $excludedNames = [
-            '_token',
-            '_method',
-            'formName'
-        ];
-
           if ($includeFormName)
           {
             $validator['formName'] = 'required|string|max:100';
@@ -43,7 +60,7 @@ class ContextAwareValidator
 
           foreach ($fields as $fieldName => $field)
           {
-              if(!in_array($fieldName, $excludedNames))
+              if(!in_array($fieldName, $this->excludedNames))
               {
                   $validator[$fieldName . ".0"] = 'required|string';
                   $validator[$fieldName . ".1"] = 'required|string';
@@ -62,10 +79,59 @@ class ContextAwareValidator
           return ($generateStructure) ?
             collect([
               'validator' => $validatorInstance,
-              'structure' => json_encode($formStructure)
+              'structure' => $this->encode($formStructure)
             ])
             : $validatorInstance;
 
+
+    }
+
+    /**
+    * The getResponseValidator method is similar to the getValidator method; It basically takes
+    * an array of fields from a previous form (that probably went through the other method) and adds validation
+    * to the field names.
+    *
+    * Also generates the storable response structure if you tell it to.
+    *
+    * @param array $fields The received fields
+    * @param array $formStructure The form structure - You must supply this if you want the response structure
+    * @param bool  $generateResponseStructure Whether to generate the response structure
+    * @return Validator|Collection A collection or a validator, depending on the args. Will return validatior if only fields are supplied.
+    */
+    public function getResponseValidator(array $fields, array $formStructure = [], bool $generateResponseStructure = true)
+    {
+
+      $responseStructure = [];
+      $validator = [];
+
+      if (empty($formStructure) && $generateResponseStructure)
+      {
+        throw new \InvalidArgumentException('Illegal combination of arguments supplied! Please check the method\'s documentation.');
+      }
+
+      foreach($fields as $fieldName => $value)
+      {
+          if(!in_array($fieldName, $this->excludedNames))
+          {
+              $validator[$fieldName] = 'required|string';
+
+              if ($generateResponseStructure)
+              {
+                $responseStructure['responses'][$fieldName]['type'] = $formStructure['fields'][$fieldName]['type'] ?? 'Unavailable';
+                $responseStructure['responses'][$fieldName]['title'] = $formStructure['fields'][$fieldName]['title'];
+                $responseStructure['responses'][$fieldName]['response'] = $value;
+              }
+          }
+      }
+
+      $validatorInstance = Validator::make($fields, $validator);
+
+      return ($generateResponseStructure) ?
+        collect([
+          'validator' => $validatorInstance,
+          'responseStructure' => $this->encode($responseStructure)
+        ])
+        : $validatorInstance;
 
     }
 

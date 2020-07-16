@@ -195,7 +195,7 @@
 
                                         @if ($vacancy->vacancyStatus == 'OPEN')
 
-                                            <form action="{{route('updatePositionAvailability', ['status' => 'close', 'id' => $vacancy->id])}}" method="POST" id="closePosition" style="display: inline">
+                                            <form action="{{route('updatePositionAvailability', ['status' => 'close', 'vacancy' => $vacancy->id])}}" method="POST" id="closePosition" style="display: inline">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i></button>
@@ -203,7 +203,7 @@
 
                                         @else
 
-                                            <form action="{{route('updatePositionAvailability', ['status' => 'open', 'id' => $vacancy->id])}}" method="POST" id="openPosition" style="display: inline">
+                                            <form action="{{route('updatePositionAvailability', ['status' => 'open', 'vacancy' => $vacancy->id])}}" method="POST" id="openPosition" style="display: inline">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i></button>

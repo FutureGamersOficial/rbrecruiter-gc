@@ -15,11 +15,7 @@ class BanController extends Controller
     public function insert(BanUserRequest $request, User $user)
     {
 
-        if ($user->is(Auth::user()))
-        {
-            $request->session()->flash('error', 'You can\'t ban yourself!');
-            return redirect()->back();
-        }
+        $this->authorize('create', Ban::class);
 
         if (is_null($user->bans))
         {

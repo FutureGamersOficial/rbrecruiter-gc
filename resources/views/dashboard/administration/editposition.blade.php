@@ -133,7 +133,7 @@
 
           @if($vacancy->vacancyStatus == 'OPEN')
 
-            <form method="POST" action="{{ route('updatePositionAvailability', ['id' => $vacancy->id, 'status' => 'close']) }}" style="display: inline">
+            <form method="POST" action="{{ route('updatePositionAvailability', ['vacancy' => $vacancy->id, 'status' => 'close']) }}" style="display: inline">
               @method('PATCH')
               @csrf
               <button type="submit" class="ml-4 btn btn-danger"><i class="fas fa-ban"></i> Close Position</button>

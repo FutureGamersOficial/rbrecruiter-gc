@@ -52,7 +52,7 @@ class ApplicationDenied extends Notification implements ShouldQueue
                     ->line('Your most recent application has been denied.')
                     ->line('Our review team denies applications for several reasons, including poor answers.')
                     ->line('Please review your application and try again in 30 days.')
-                    ->action('Review application', url(route('showUserApp', ['id' => $this->application->id])))
+                    ->action('Review application', url(route('showUserApp', ['application' => $this->application->id])))
                     ->line('Better luck next time!');
     }
 

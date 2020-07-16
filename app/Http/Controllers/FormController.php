@@ -55,10 +55,8 @@ class FormController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Form $form)
     {
-
-        $form = Form::find($id);
         $this->authorize('delete', $form);
         $deletable = true;
 
@@ -85,6 +83,8 @@ class FormController extends Controller
 
     public function preview(Request $request, Form $form)
     {
+        $this->authorize('viewAny', Form::class);
+
         return view('dashboard.administration.formpreview')
           ->with('form', json_decode($form->formStructure, true))
           ->with('title', $form->formName)
@@ -93,6 +93,8 @@ class FormController extends Controller
 
     public function edit(Request $request, Form $form)
     {
+       $this->authorize('update', $form);
+
        return view('dashboard.administration.editform')
         ->with('formStructure', json_decode($form->formStructure, true))
         ->with('title', $form->formName)
@@ -101,6 +103,8 @@ class FormController extends Controller
 
     public function update(Request $request, Form $form)
     {
+      $this->authorize('update', $form);
+
       $contextValidation = ContextAwareValidator::getValidator($request->all(), true);
       $this->authorize('update', $form);
 

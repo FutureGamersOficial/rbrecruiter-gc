@@ -189,6 +189,9 @@ class UserController extends Controller
 
     public function delete(DeleteUserRequest $request, User $user)
     {
+
+        $this->authorize('delete', $user);
+
         if ($request->confirmPrompt == 'DELETE ACCOUNT')
         {
             $user->delete();
@@ -205,6 +208,8 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
+
+      $this->authorize('adminEdit', $user);
 
       // Mass update would not be possible here without extra code, making route model binding useless
       $user->email = $request->email;

@@ -87,7 +87,6 @@ class ProfileController extends Controller
 
     public function saveProfile(ProfileSave $request)
     {
-        // TODO: Switch to route model binding
         $profile = User::find(Auth::user()->id)->profile;
         $social = [];
 
@@ -119,19 +118,6 @@ class ProfileController extends Controller
 
             $request->session()->flash('success', 'Profile settings saved successfully.');
 
-        }
-        else
-        {
-            $gm = 'Guru Meditation #' . rand(0, 1000);
-            Log::alert('[GURU MEDITATION]: Could not find profile for authenticated user ' . Auth::user()->name . 'whilst trying to update it! Please verify that profiles are being created automatically during signup.',
-            [
-                'uuid' => Auth::user()->uuid,
-                'timestamp' => now(),
-                'route' => $request->route()->getName(),
-                'gmcode' => $gm // If this error is reported, the GM code, denoting a severe error, will help us find this entry in the logs
-
-            ]);
-            $request->session()->flash('error', 'A technical error has occurred whilst trying to save your profile. Incident details have been recorded. Please report this incident to administrators with the following case number:  ' . $gm);
         }
 
         return redirect()->back();

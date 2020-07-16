@@ -70,7 +70,7 @@
                                     <td>{{$application->created_at}}</td>
                                     <td>{{$application->updated_at}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{route('showUserApp', ['id' => $application->id])}}'"><i class="fas fa-clipboard-check"></i> Review</button>
+                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fas fa-clipboard-check"></i> Review</button>
                                     </td>
 
                                 </tr>

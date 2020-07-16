@@ -54,7 +54,7 @@
                                     <td>{{$form->created_at}}</td>
                                     <td>{{ $form->updated_at }}</td>
                                     <td>
-                                        <form  style="display: inline-block; white-space: nowrap" action="{{route('destroyForm', ['id' => $form->id])}}" method="POST">
+                                        <form  style="display: inline-block; white-space: nowrap" action="{{route('destroyForm', ['form' => $form->id])}}" method="POST">
 
                                             @method('DELETE')
                                             @csrf

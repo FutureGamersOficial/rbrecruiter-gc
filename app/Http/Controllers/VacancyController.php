@@ -64,10 +64,9 @@ class VacancyController extends Controller
 
     }
 
-    public function updatePositionAvailability(Request $request, $status, $id)
+    public function updatePositionAvailability(Request $request, $status, Vacancy $vacancy)
     {
 
-        $vacancy = Vacancy::find($id);
         $this->authorize('update', $vacancy);
 
         if (!is_null($vacancy))

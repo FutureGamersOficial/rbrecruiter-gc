@@ -38,7 +38,7 @@
 
                 <x-modal id="notes" modal-label="notes" modal-title="Shared Notepad" include-close-button="true">
 
-                    <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['applicationID' => $application->id])}}">
+                    <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['application' => $application->id])}}">
                         @csrf
                         @method('PATCH')
                         <textarea name="noteText" rows="5" class="form-control">{{$application->appointment->meetingNotes ?? 'There are no notes yet. Add some!'}}</textarea>
@@ -62,7 +62,7 @@
 
                 <x-slot name="modalFooter">
 
-                    <form id="updateApplication" action="{{route('updateApplicationStatus', ['id' => $application->id, 'newStatus' => 'deny'])}}" method="POST">
+                    <form id="updateApplication" action="{{route('updateApplicationStatus', ['application' => $application->id, 'newStatus' => 'deny'])}}" method="POST">
                         @csrf
                         @method('PATCH')
                         <button type="submit" class="btn btn-danger">Confirm: Deny Applicant</button>
@@ -200,7 +200,7 @@
                                     </div>
 
                                     <div class="col">
-                                        <form method="POST" action="{{route('updateApplicationStatus', ['id' => $application->id, 'newStatus' => 'interview'])}}">
+                                        <form method="POST" action="{{route('updateApplicationStatus', ['application' => $application->id, 'newStatus' => 'interview'])}}">
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-success" {{($application->applicationStatus == 'DENIED') ? 'disabled' : ''}}><i class="fas fa-arrow-right" ></i> Move to next stage</button>
@@ -230,7 +230,7 @@
 
                             </x-slot>
 
-                            <form id="scheduleAppointment" action="{{route('scheduleAppointment', ['applicationID' => $application->id])}}" method="POST">
+                            <form id="scheduleAppointment" action="{{route('scheduleAppointment', ['application' => $application->id])}}" method="POST">
 
                                 @csrf
 
@@ -286,7 +286,7 @@
                             <x-slot name="cardFooter">
 
                                 @can('appointments.schedule.edit')
-                                    <form style="white-space: nowrap;display:inline-block" class="footer-button" action="{{route('updateAppointment', ['applicationID' => $application->id, 'status' => 'concluded'])}}" method="POST">
+                                    <form style="white-space: nowrap;display:inline-block" class="footer-button" action="{{route('updateAppointment', ['application' => $application->id, 'status' => 'concluded'])}}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" class="btn btn-success">Finish Meeting</button>
@@ -322,12 +322,12 @@
 
                         @if($canVote)
 
-                            <form class="d-inline-block" method="POST" action="{{route('voteApplication', ['id' => $application->id])}}">
+                            <form class="d-inline-block" method="POST" action="{{route('voteApplication', ['application' => $application->id])}}">
                                 @csrf
                                 <input type="hidden" name="voteType" value="VOTE_APPROVE">
                                 <button type="submit" class="btn btn-sm btn-warning">Vote: Approve Applicant</button>
                             </form>
-                            <form class="d-inline-block" method="POST" action="{{route('voteApplication', ['id' => $application->id])}}">
+                            <form class="d-inline-block" method="POST" action="{{route('voteApplication', ['application' => $application->id])}}">
                                 @csrf
                                 <input type="hidden" name="voteType" value="VOTE_DENY">
                                 <button type="submit" class="btn btn-sm btn-warning">Vote: Deny Applicant</button>

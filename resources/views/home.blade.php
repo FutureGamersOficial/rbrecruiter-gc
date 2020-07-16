@@ -270,7 +270,7 @@
 
                           <div class="md-form">
 
-                              <textarea rows="3" name="message" id="message" class="md-textarea form-control"></textarea>
+                              <textarea rows="3" name="msg" id="message" class="md-textarea form-control"></textarea>
 
                           </div>
 

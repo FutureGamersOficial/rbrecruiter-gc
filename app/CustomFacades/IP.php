@@ -16,11 +16,6 @@ class IP
     public function lookup(string $IP): object
     {
 
-      if (empty($IP))
-      {
-        throw new LogicException(__METHOD__ . 'is missing parameter IP!');
-      }
-
       $params = [
           'apiKey' => config('general.keys.ipapi.apikey'),
           'ip' => $IP

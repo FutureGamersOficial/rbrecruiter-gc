@@ -77,7 +77,7 @@
                                     <td>{{$application->user->name}}</td>
                                     <td><span class="badge-warning badge">{{($application->applicationStatus == 'STAGE_INTERVIEW') ? 'Pending Interview' : 'Unknown Status'}}</span></td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showUserApp', ['id' => $application->id])}}'"><i class="fa fa-eye"></i> View</button>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fa fa-eye"></i> View</button>
                                         <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-clock"></i> Schedule</button>
                                     </td>
                                 </tr>
@@ -151,7 +151,7 @@
                                         <td><span class="badge badge-success"><i class="fa fa-check"></i> {{ucfirst(strtolower($upcomingApp->appointment->appointmentLocation))}}</span></td>
                                     @endif
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showUserApp', ['id' => $upcomingApp->id])}}'"><i class="fa fa-eye"></i> View Details</button>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showUserApp', ['application' => $upcomingApp->id])}}'"><i class="fa fa-eye"></i> View Details</button>
                                     </td>
                                 </tr>
 

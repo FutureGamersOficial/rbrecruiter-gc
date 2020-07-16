@@ -55,7 +55,7 @@ class NewApplicant extends Notification implements ShouldQueue
                     ->subject(config('app.name') . ' - New application')
                     ->line('Someone has just applied for a position. Check it out!')
                     ->line('You are receiving this because you\'re a staff member at ' . config('app.name') . '.')
-                    ->action('View Application', url(route('showUserApp', ['id' => $this->application->id])))
+                    ->action('View Application', url(route('showUserApp', ['application' => $this->application->id])))
                     ->line('Thank you!');
     }
 
@@ -67,7 +67,7 @@ class NewApplicant extends Notification implements ShouldQueue
         $vacancyDetails['name'] = $this->vacancy->vacancyName;
         $vacancyDetails['slots'] = $this->vacancy->vacancyCount;
 
-        $url = route('showUserApp', ['id' => $this->application->id]);
+        $url = route('showUserApp', ['application' => $this->application->id]);
         $applicant = $this->application->user->name;
 
         return (new SlackMessage)

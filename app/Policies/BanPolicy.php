@@ -41,7 +41,7 @@ class BanPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole('admin') && $user->isNot(Auth::user());
     }
 
     /**
@@ -53,7 +53,7 @@ class BanPolicy
      */
     public function update(User $user, Ban $ban)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**

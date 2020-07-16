@@ -191,7 +191,7 @@
                             </td>
                             <td>{{ $application->created_at }}</td>
                             <td>
-                              <button type="button" class="btn btn-success btn-sm" onclick="window.location.href='{{ route('showUserApp', ['id' => $application->id]) }}'"><i class="fas fa-eye"></i> View</button>
+                              <button type="button" class="btn btn-success btn-sm" onclick="window.location.href='{{ route('showUserApp', ['application' => $application->id]) }}'"><i class="fas fa-eye"></i> View</button>
                               <button type="button" class="btn btn-danger btn-sm ml-2" onclick="$('#deletionConfirmationModal-{{ $application->id }}').modal('show')"><i class="fa fa-trash"></i> Delete</button>
                             </td>
                           </tr>

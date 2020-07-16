@@ -22,7 +22,7 @@ class CommentController extends Controller
     public function insert(NewCommentRequest $request, Application $application)
     {
         $this->authorize('create', Comment::class);
-        
+
         $comment = Comment::create([
             'authorID' => Auth::user()->id,
             'applicationID' => $application->id,
@@ -31,14 +31,6 @@ class CommentController extends Controller
 
         if ($comment)
         {
-
-            foreach (User::all() as $user)
-            {
-              if ($user->isStaffMember())
-              {
-                $user->notify(new NewComment($comment, $application));
-              }
-            }
 
             $request->session()->flash('success', 'Comment posted! (:');
         }

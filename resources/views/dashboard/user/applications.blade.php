@@ -109,7 +109,7 @@
                                     </td>
 
                                     <td>
-                                        <button type="button" class="btn btn-success" onclick="window.location.href='{{route('showUserApp', ['id' => $application->id])}}'"><i class="fa fa-eye"></i> View</button>
+                                        <button type="button" class="btn btn-success" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fa fa-eye"></i> View</button>
                                     </td>
                                 </tr>
 

@@ -18,8 +18,11 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
+use ContextAwareValidator;
+
 class ApplicationController extends Controller
 {
+
     private function canVote($votes)
     {
         $allvotes = collect([]);
@@ -45,11 +48,8 @@ class ApplicationController extends Controller
     }
 
 
-    public function showUserApp(Request $request, $applicationID)
+    public function showUserApp(Request $request, Application $application)
     {
-      // TODO: Inject it instead (do this where there is no injection, not just here)
-        $application = Application::find($applicationID);
-
         $this->authorize('view', $application);
 
         if (!is_null($application))
@@ -78,6 +78,8 @@ class ApplicationController extends Controller
 
     public function showAllApps()
     {
+        $this->authorize('viewAny', Application::class);
+
         return view('dashboard.appmanagement.all')
           ->with('applications', Application::paginate(6));
     }
@@ -186,36 +188,16 @@ class ApplicationController extends Controller
         Log::info('Processing new application!');
 
         $formStructure = json_decode($vacancy->first()->forms->formStructure, true);
-        $responseStructure = [];
-
-        $excludedNames = [
-            '_token',
-        ];
-
-        $validator = [];
-
-        foreach($request->all() as $fieldName => $value)
-        {
-            if(!in_array($fieldName, $excludedNames))
-            {
-                $validator[$fieldName] = 'required|string';
-
-                $responseStructure['responses'][$fieldName]['type'] = $formStructure['fields'][$fieldName]['type'] ?? 'Unavailable';
-                $responseStructure['responses'][$fieldName]['title'] = $formStructure['fields'][$fieldName]['title'];
-                $responseStructure['responses'][$fieldName]['response'] = $value;
-            }
-        }
+        $responseValidation = ContextAwareValidator::getResponseValidator($request->all(), $formStructure);
 
         Log::info('Built response & validator structure!');
 
-        $validation = Validator::make($request->all(), $validator);
-
-        if (!$validation->fails())
+        if (!$responseValidation->get('validator')->fails())
         {
             $response = Response::create([
                 'responseFormID' => $vacancy->first()->forms->id,
                 'associatedVacancyID' => $vacancy->first()->id, // Since a form can be used by multiple vacancies, we can only know which specific vacancy this response ties to by using a vacancy ID
-                'responseData' => json_encode($responseStructure)
+                'responseData' => $responseValidation->get('responseStructure')
             ]);
 
             Log::info('Registered form response for user ' . Auth::user()->name . ' for vacancy ' . $vacancy->first()->vacancyName);
@@ -249,35 +231,27 @@ class ApplicationController extends Controller
         return redirect()->back();
     }
 
-    public function updateApplicationStatus(Request $request, $applicationID, $newStatus)
+    public function updateApplicationStatus(Request $request, $application, $newStatus)
     {
-        $application = Application::find($applicationID);
         $this->authorize('update', Application::class);
 
-        if (!is_null($application))
+        switch ($newStatus)
         {
-            switch ($newStatus)
-            {
-                case 'deny':
+            case 'deny':
 
-                    event(new ApplicationDeniedEvent($application));
-                    break;
+                event(new ApplicationDeniedEvent($application));
+                break;
 
-                case 'interview':
-                    Log::info('User ' . Auth::user()->name . ' has moved application ID ' . $application->id . 'to interview stage');
-                    $request->session()->flash('success', 'Application moved to interview stage! (:');
-                    $application->setStatus('STAGE_INTERVIEW');
+            case 'interview':
+                Log::info('User ' . Auth::user()->name . ' has moved application ID ' . $application->id . 'to interview stage');
+                $request->session()->flash('success', 'Application moved to interview stage! (:');
+                $application->setStatus('STAGE_INTERVIEW');
 
-                    $application->user->notify(new ApplicationMoved());
-                    break;
+                $application->user->notify(new ApplicationMoved());
+                break;
 
-                default:
-                    $request->session()->flash('error', 'There are no suitable statuses to update to. Do not mess with the URL.');
-            }
-        }
-        else
-        {
-            $request->session()->flash('The application you\'re trying to update does not exist.');
+            default:
+                $request->session()->flash('error', 'There are no suitable statuses to update to. Do not mess with the URL.');
         }
 
         return redirect()->back();
@@ -291,7 +265,7 @@ class ApplicationController extends Controller
 
       $request->session()->flash('success', 'Application deleted. Comments, appointments and responses have also been deleted.');
       return redirect()->back();
-      
+
     }
 
 }
