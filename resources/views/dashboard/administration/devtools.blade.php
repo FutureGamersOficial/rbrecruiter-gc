@@ -73,3 +73,7 @@
     </div>
 
 @stop
+
+@section('footer')
+    @include('breadcrumbs.dashboard.footer')
+@stop

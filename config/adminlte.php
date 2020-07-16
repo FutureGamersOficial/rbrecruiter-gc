@@ -527,7 +527,6 @@ return [
               'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.min.css'
             ]
           ]
-        ],
-
+        ],  
     ],
 ];

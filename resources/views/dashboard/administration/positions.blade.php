@@ -244,3 +244,7 @@
    <x-no-permission type="danger"></x-no-permission>
  @endif
 @stop
+
+@section('footer')
+    @include('breadcrumbs.dashboard.footer')
+@stop
