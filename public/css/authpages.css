@@ -1,0 +1,6 @@
+/* overrides customizations for the AdminLTE auth pages */
+
+.login-page, .register-page  {
+  background-image: url('/img/authbg.jpg') !important;
+  background-size: cover !important;
+}
