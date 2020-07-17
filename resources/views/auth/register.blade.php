@@ -14,6 +14,27 @@
                 <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo">{{ config('adminlte.logo') }}
               </div>
               <p class="login-card-description">Register a new account</p>
+              <div class="alert alert-warning alert-dismissible">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <p><b>Basic password security</b></p>
+                  <p>For your security, we implement strict password policies. It's also advisable to let your password manager or browser generate and save passwords for you (if it's a private device).</p>
+
+                  <p>Passwords must be a combination of: </p>
+                  <ul>
+                    <li>
+                      A minimum of 6 characters;
+                    </li>
+                    <li>
+                      At least 3 uppercase characters;
+                    </li>
+                    <li>
+                      At least 3 numbers;
+                    </li>
+                    <li>
+                      Any number of special characters.
+                    </li>
+                  </ul>
+              </div>
               <form action="{{ route('register') }}" method="POST" id="registerForm">
                   @csrf
                   <div class="form-group">
