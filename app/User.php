@@ -68,16 +68,22 @@ class User extends Authenticatable
     }
 
 
-
     public function isBanned()
     {
         return !$this->bans()->get()->isEmpty();
     }
 
 
+
+
     public function isStaffMember()
     {
         return $this->hasAnyRole('reviewer', 'admin', 'hiringManager');
+    }
+
+    public function has2FA()
+    {
+        return !is_null($this->twofa_secret);
     }
 
 

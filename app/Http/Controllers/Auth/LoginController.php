@@ -44,7 +44,7 @@ class LoginController extends Controller
 
     // We can't customise the error message, since that would imply overriding the login method, which is large.
     // Also, the user should never know that they're banned.
-    public function attemptLogin(Request $request) 
+    public function attemptLogin(Request $request)
     {
         $user = User::where('email', $request->email)->first();
 
@@ -60,9 +60,9 @@ class LoginController extends Controller
                 return $this->originalAttemptLogin($request);
             }
         }
-        
+
         return $this->originalAttemptLogin($request);
-        
+
     }
 
 

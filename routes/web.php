@@ -16,6 +16,9 @@ Route::group(['prefix' => 'auth', 'middleware' => ['usernameUUID']], function ()
 
     Auth::routes();
 
+    Route::post('/twofa/authenticate', 'Auth\TwofaController@verify2FA')
+      ->name('verify2FA');
+
 });
 
 Route::get('/','HomeController@index')
@@ -25,7 +28,7 @@ Route::post('/form/contact', 'ContactController@create')
     ->name('sendSubmission');
 
 
-Route::group(['middleware' => ['auth', 'forcelogout']], function(){
+Route::group(['middleware' => ['auth', 'forcelogout', '2fa']], function(){
 
     Route::get('/dashboard', 'DashboardController@index')
         ->name('dashboard')
@@ -128,6 +131,12 @@ Route::group(['middleware' => ['auth', 'forcelogout']], function(){
 
         Route::post('/settings/account/flush-sessions', 'UserController@flushSessions')
             ->name('flushSessions');
+
+        Route::patch('/settings/account/twofa/enable', 'UserController@add2FASecret')
+            ->name('enable2FA');
+
+        Route::patch('/settings/account/twofa/disable', 'UserController@remove2FASecret')
+            ->name('disable2FA');
 
     });
 

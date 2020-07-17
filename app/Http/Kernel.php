@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'eligibility' => \App\Http\Middleware\ApplicationEligibility::class,
         'usernameUUID' => \App\Http\Middleware\UsernameUUID::class,
-        'forcelogout' => \App\Http\Middleware\ForceLogoutMiddleware::class
+        'forcelogout' => \App\Http\Middleware\ForceLogoutMiddleware::class,
+        '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
     ];
 }

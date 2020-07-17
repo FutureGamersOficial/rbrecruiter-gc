@@ -18,7 +18,7 @@
 
 		@yield('content')
 
-        @include('breadcrumbs.footer')
+    @include('breadcrumbs.footer')
 
 	</body>
 

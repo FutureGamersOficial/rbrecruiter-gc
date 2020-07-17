@@ -19,6 +19,92 @@
 @stop
 
 @section('content')
+
+    @if (!Auth::user()->has2FA())
+
+
+      <x-modal id="twoFactorAuthModal" modal-label="2faLabel" modal-title="Two-factor Authentication" include-close-button="true">
+
+        <h3><i class="fas fa-user-shield"></i> We're glad you decided to increase your account's security!</h3>
+
+        <p><b>Supported apps you can install:</b></p>
+        <ul>
+          <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en"><i class="fab fa-google-play"></i> Google Authenticator</a></li>
+        </ul>
+
+        <p>Scan the <i>QR code</i> below with your preferred app, and then copy the code here.</p>
+
+
+        <div class="row">
+          <div class="col-3 offset-3">
+            <div class="qr-code-container text-center">
+
+                <img src="{{ $twofaQRCode }}" alt="2FA Security key" />
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+
+            <form method="POST" action="{{ route('enable2FA') }}" id="enable2Fa">
+              @csrf
+              @method('PATCH')
+              <label for="otp">One-time code</label>
+              <input type="text" id="otp" name="otp" class="form-control" />
+
+            </form>
+
+          </div>
+
+        </div>
+
+
+
+        <x-slot name="modalFooter">
+
+          <button type="button" class="btn btn-success" onclick="$('#enable2Fa').submit()"><i class="fas fa-key"></i> Enable 2FA</button>
+
+        </x-slot>
+
+      </x-modal>
+
+    @endif
+
+    @if (Auth::user()->has2FA())
+
+      <x-modal id="remove2FA" modal-label="remove2FALabel" modal-title="Remove Two-Factor Authentication" include-close-button="true">
+
+        <p><i class="fas fa-exclamation-triangle"></i> <b>Are you sure?</b> Removing two-factor authentication will reduce the security of your account.</p>
+
+        <form action="{{ route('disable2FA') }}" method="POST" id="disable2FA">
+          @csrf
+          @method('PATCH')
+          <label for="currentPassword">Confirm your password to continue</label>
+          <input id="currentPassword" type="password" name="currentPassword" class="form-control" required />
+          <p class="text-sm text-muted">To prevent unauthorized changes, a password is always required for sensitive operations.</p>
+
+          <div class="form-group mt-2">
+
+            <label for="consent">"I understand the possible consequences of disabling two factor authentication"</label>
+            <span><i>Click to confirm  </i> </span><input type="checkbox" name="consent" id="consent" required />
+
+          </div>
+
+        </form>
+
+        <x-slot name="modalFooter">
+
+          <button type="button" class="btn btn-danger" onclick="$('#disable2FA').submit()"><i class="fa fa-trash"></i> Remove 2FA</button>
+
+        </x-slot>
+
+      </x-modal>
+
+    @endif
+
     <div class="modal fade" tabindex="-1" id="authenticationForm" role="dialog" aria-labelledby="authenticationFormLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -116,8 +202,16 @@
                     </div>
                     <div class="tab-pane fade p-3" id="twofa" role="tabpanel" aria-labelledby="twofaTab">
                         <h5 class="card-title">Two-factor Authentication</h5>
-                        <p class="card-text"><b>This feature is not yet available.</b> Support for Google Authenticator, Authy, Microsoft Authenticator and other compatible apps is coming soon, as well as fingerprint login for android devices.</p>
-                        <button type="button" class="btn btn-primary" disabled>Enable 2FA</button>
+                        <br />
+                        @if (Auth::user()->has2FA())
+                            <p><b>Hooray!</b> 2FA is setup correctly for your account. A code will be asked each time you login.</p>
+                            <button type="button" class="btn btn-danger" onclick="$('#remove2FA').modal('show')"><i class="fa fa-ban"></i> Disable 2FA (not recommended)</button>
+                        @else
+                            <p class="card-text"><b>Two-factor auth is available for your account.</b> Enabling this security option greatly increases your account's security in case your password ever gets stolen.</p>
+                            <button type="button" class="btn btn-primary" onclick="$('#twoFactorAuthModal').modal('show')">Enable 2FA</button>
+
+                        @endif
+
                     </div>
                     <div class="tab-pane fade p-3" id="sessions" role="tabpanel" aria-labelledby="sessionsTab">
                         <h5 class="card-title">Session Manager</h5>

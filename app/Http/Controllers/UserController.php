@@ -8,6 +8,8 @@ use App\Http\Requests\FlushSessionsRequest;
 use App\Http\Requests\DeleteUserRequest;
 use App\Http\Requests\SearchPlayerRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\Add2FASecretRequest;
+use App\Http\Requests\Remove2FASecretRequest;
 
 use App\User;
 use App\Ban;
@@ -20,6 +22,8 @@ use App\Facades\UUID;
 use App\Notifications\EmailChanged;
 use App\Notifications\ChangedPassword;
 use Spatie\Permission\Models\Role;
+
+use Google2FA;
 
 class UserController extends Controller
 {
@@ -112,10 +116,32 @@ class UserController extends Controller
         }
     }
 
-    public function showAccount()
+    public function showAccount(Request $request)
     {
+        $QRCode = null;
+
+        if (!$request->user()->has2FA())
+        {
+            if ($request->session()->has('twofaAttemptFailed'))
+            {
+                $twoFactorSecret = $request->session()->get('current2FA');
+            }
+            else
+            {
+                $twoFactorSecret = Google2FA::generateSecretKey(32, '');
+                $request->session()->put('current2FA', $twoFactorSecret);
+            }
+
+            $QRCode = Google2FA::getQRCodeInline(
+              config('app.name'),
+              $request->user()->email,
+              $twoFactorSecret
+            );
+        }
+
         return view('dashboard.user.profile.useraccount')
-            ->with('ip', request()->ip());
+            ->with('ip', request()->ip())
+            ->with('twofaQRCode', $QRCode);
     }
 
 
@@ -247,10 +273,67 @@ class UserController extends Controller
 
     }
 
+    public function add2FASecret(Add2FASecretRequest $request)
+    {
+        $currentSecret = $request->session()->get('current2FA');
+        $isValid = Google2FA::verifyKey($currentSecret, $request->otp);
+
+        if ($isValid)
+        {
+           $request->user()->twofa_secret = $currentSecret;
+           $request->user()->save();
+
+           Log::warning('SECURITY: User activated two-factor authentication', [
+             'initiator' => $request->user()->email,
+             'ip' => $request->ip()
+           ]);
+
+           Google2FA::login();
+
+           Log::warning('SECURITY: Started two factor session automatically', [
+             'initiator' => $request->user()->email,
+             'ip' => $request->ip()
+           ]);
+
+           $request->session()->forget('current2FA');
+
+           if ($request->session()->has('twofaAttemptFailed'))
+              $request->session()->forget('twofaAttemptFailed');
+
+
+           $request->session()->flash('success', '2FA succesfully enabled! You\'ll now be prompted for an OTP each time you log in.');
+        }
+        else
+        {
+          $request->session()->flash('error', 'Incorrect code. Please reopen the 2FA settings panel and try again.');
+          $request->session()->put('twofaAttemptFailed', true);
+        }
+
+        return redirect()->back();
+    }
+
+    public function remove2FASecret(Remove2FASecretRequest $request)
+    {
+        Log::warning('SECURITY: Disabling two factor authentication (user initiated)', [
+          'initiator' => $request->user()->email,
+          'ip' => $request->ip()
+        ]);
+
+        $request->user()->twofa_secret = null;
+        $request->user()->save();
+
+        $request->session()->flash('success', 'Two-factor authentication disabled.');
+        return redirect()->back();
+    }
+
+
+
+
     public function terminate(Request $request, User $user)
     {
         $this->authorize('terminate', User::class);
 
+        // TODO: move logic to policy
         if (!$user->isStaffMember() || $user->is(Auth::user()))
         {
             $request->session()->flash('error', 'You cannot terminate this user.');
