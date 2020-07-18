@@ -22,7 +22,7 @@
                   <p>Passwords must be a combination of: </p>
                   <ul>
                     <li>
-                      A minimum of 6 characters;
+                      A minimum of 10 characters;
                     </li>
                     <li>
                       At least 3 uppercase characters;

@@ -70,7 +70,7 @@ class RegisterController extends Controller
             'uuid' => ['required', 'string', 'unique:users', 'min:32', 'max:32'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+            'password' => ['required', 'string', 'min:10', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
         ], [
             'uuid.required' => 'Please enter a valid (and Premium) Minecraft username! We do not support cracked users.'
         ]);
