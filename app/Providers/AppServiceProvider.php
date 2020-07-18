@@ -33,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
 
         Schema::defaultStringLength(191);
         User::observe(UserObserver::class);
+
+        $this->app['request']->server->set('HTTPS', $this->app->environment() != 'local');
     }
 }
