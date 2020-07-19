@@ -199,7 +199,7 @@ Route::group(['middleware' => ['auth', 'forcelogout', '2fa']], function(){
         Route::post('forms/save', 'FormController@saveForm')
             ->name('saveForm');
 
-        Route::delete('forms/destroy/{id}', 'FormController@destroy')
+        Route::delete('forms/destroy/{form}', 'FormController@destroy')
             ->name('destroyForm');
 
         Route::get('forms', 'FormController@index')
