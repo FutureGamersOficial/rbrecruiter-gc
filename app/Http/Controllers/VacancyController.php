@@ -120,7 +120,7 @@ class VacancyController extends Controller
 
 
 
-    public function update(VacancyEditRequest $request, Vacancy $position)
+    public function update(VacancyEditRequest $request, Vacancy $vacancy)
     {
       $this->authorize('update', $vacancy);
 
