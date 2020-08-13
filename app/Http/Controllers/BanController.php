@@ -24,34 +24,38 @@ class BanController extends Controller
             $duration = strtolower($request->durationOperator);
             $durationOperand = $request->durationOperand;
 
+            $expiryDate = now();
 
             if (!empty($duration))
             {
-                $expiryDate = now();
-
                 switch($duration)
                 {
                     case 'days':
-                        $expiryDate->addDays($duration);
+                        $expiryDate->addDays($durationOperand);
                         break;
 
                     case 'weeks':
-                        $expiryDate->addWeeks($duration);
+                        $expiryDate->addWeeks($durationOperand);
                         break;
 
                     case 'months':
-                        $expiryDate->addMonths($duration);
+                        $expiryDate->addMonths($durationOperand);
                         break;
 
                     case 'years':
-                        $expiryDate->addYears($duration);
+                        $expiryDate->addYears($durationOperand);
                         break;
                 }
+            }
+            else
+            {
+                // Essentially permanent
+                $expiryDate->addYears(100);
             }
 
             $ban = Ban::create([
                 'userID' => $user->id,
-                'reason' => $request->reason,
+                'reason' => $reason,
                 'bannedUntil' => $expiryDate->toDateTimeString() ?? null,
                 'userAgent' => "Unknown",
                 'authorUserID' => Auth::user()->id

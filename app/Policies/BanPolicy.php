@@ -5,6 +5,8 @@ namespace App\Policies;
 use App\Ban;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class BanPolicy
 {
@@ -41,7 +43,13 @@ class BanPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('admin') && $user->isNot(Auth::user());
+        Log::debug("Authorization check started", [
+            'requiredRoles' => 'admin',
+            'currentRoles' => $user->roles(),
+            'hasRequiredRole' => $user->hasRole('admin'),
+            'isCurrentUser' => Auth::user()->is($user)
+        ]);
+        return $user->hasRole('admin') && Auth::user()->isNot($user);
     }
 
     /**

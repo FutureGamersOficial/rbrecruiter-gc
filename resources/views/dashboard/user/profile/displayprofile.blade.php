@@ -44,10 +44,10 @@
                @csrf
 
                 <label for="reason">Reason</label>
-                <input type="string" name="reason" id="reason" class="form-control" placeholder="e.g. Spamming">
+                <input type="text" name="reason" id="reason" class="form-control" placeholder="e.g. Spamming">
 
                 <div class="input-group">
-                <input type="text" class="form-control" name="durationOperand" aria-label="Punishment duration">
+                <input type="text" class="form-control" name="durationOperator" aria-label="Punishment duration">
                 <div class="input-group-append">
                     <button id="durationDropdown" class="btn btn-outline-secondary dropdown-toggle duration-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Duration</button>
                     <div class="dropdown-menu">
@@ -61,7 +61,7 @@
                 </div>
                 <p class="text-muted text-sm">Leave empty for a permanent ban</p>
 
-                <input id="operator" type="hidden" value="" name="durationOperator" class="duration-operator-fld">
+                <input id="operator" type="hidden" value="" name="durationOperand" class="duration-operator-fld">
 
             </form>
 
