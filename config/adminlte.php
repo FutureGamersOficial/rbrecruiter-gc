@@ -331,10 +331,10 @@ return [
             'can' => 'admin.notificationsettings',
             'submenu' => [
                 [
-                    'text' => 'Global Notification Settings',
-                    'icon' => 'far fa-bell',
-                    'url' => '/admin/notifications',
-                    'can' => 'admin.notificationsettings.edit'
+                    'text' => 'Global Application Settings',
+                    'icon' => 'fas fa-cogs',
+                    'url' => '/admin/settings',
+                    'can' => 'admin.settings.view'
                 ],
                 [
                     'text' => 'Developer Tools',

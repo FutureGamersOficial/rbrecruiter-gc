@@ -159,6 +159,12 @@ Route::group(['middleware' => ['auth', 'forcelogout', '2fa']], function(){
 
     Route::group(['prefix' => 'admin'], function (){
 
+        Route::get('settings', 'OptionsController@index')
+            ->name('showSettings');
+
+        Route::get('settings/save', 'OptionsController@saveSettings')
+            ->name('saveSettings');
+
         Route::post('players/ban/{user}', 'BanController@insert')
             ->name('banUser');
 
