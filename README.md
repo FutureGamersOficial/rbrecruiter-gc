@@ -1,10 +1,10 @@
 # Raspberry Teams - The Simple Staff Application Manager v 0.1.0
-## The quick and pain-free staff application manager (for Minecraft)
+## The quick and pain-free staff application manager
 
 Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
 
 
-Wish you had a better application managemet strategy? Well, then Raspberry Teams is for you! It was originally designed and developed for internal use, but sharing is caring! After noticing a worrying lack of "human resources" management systems on SpigotMC's resources section (There was only one outdated/unsupported project), I've decided to take it up into my own terms and start working on it.
+Wish you had a better application managemet strategy? Well, then Raspberry Teams is for you! It was originally designed and developed for internal use for a gameserver network, but sharing is caring!
 
 
 # Features (not exhaustive)
@@ -60,7 +60,7 @@ Tech stack:
 
  - JSON
  - Curl (highly recommended)
-
+ - Image Magick (imagick) for 2FA support
 
  # Installation
 
