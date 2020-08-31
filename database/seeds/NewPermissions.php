@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class NewPermissions extends Seeder
 {
@@ -11,7 +13,7 @@ class NewPermissions extends Seeder
      */
     public function run()
     {
-        $developer = \Spatie\Permission\Models\Role::create([
+        $developer = Role::create([
            'name' => 'developer'
         ]);
 

@@ -180,6 +180,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         \App\Providers\MojangStatusProvider::class,
+        \App\Providers\OptionsProvider::class
 
     ],
 
@@ -235,7 +236,8 @@ return [
         'UUID' => App\Facades\UUID::class,
         'IP' => App\Facades\IP::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
-        'ContextAwareValidator' => App\Facades\ContextAwareValidation::class
+        'ContextAwareValidator' => App\Facades\ContextAwareValidation::class,
+        'Settings' => App\Facades\Options::class
 
     ],
 

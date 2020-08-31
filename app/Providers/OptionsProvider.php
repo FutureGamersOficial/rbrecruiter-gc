@@ -24,7 +24,7 @@ class OptionsProvider extends ServiceProvider
      */
     public function boot()
     {
-        App::bind('sm-options', function (){
+        App::bind('smOptions', function (){
             return new App\Helpers\Options();
         });
     }

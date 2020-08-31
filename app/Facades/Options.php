@@ -8,6 +8,6 @@ class Options extends Facade
 {
     public static function getFacadeAccessor()
     {
-        return 'sm-options';
+        return 'smOptions';
     }
 }
