@@ -5,6 +5,7 @@ namespace App\Helpers;
 
 use App\Options as Option;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class Options
 {
@@ -15,6 +16,7 @@ class Options
 
         if (is_null($value))
         {
+            Log::info('Option ' . $option . 'not found in cache, refreshing from database');
             $value = Option::where('option_name', $option)->first();
             if (is_null($value))
                 throw new \Exception('This option does not exist.');
@@ -59,9 +61,18 @@ class Options
             $dbOptionInstance = Option::find($dbOption->first()->id);
             Cache::forget($option);
 
+            Log::warning('Changing db configuration option', [
+                'old_value' => $dbOptionInstance->option_value,
+                'new_value' => $newValue
+            ]);
 
             $dbOptionInstance->option_value = $newValue;
             $dbOptionInstance->save();
+
+            Log::warning('New db configuration option saved',
+            [
+                'option' => $dbOptionInstance->option_value
+            ]);
 
             Cache::put('option_name', $newValue, now()->addDay());
         }

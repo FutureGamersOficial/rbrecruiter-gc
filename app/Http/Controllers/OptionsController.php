@@ -40,9 +40,8 @@ class OptionsController extends Controller
                }
                catch(\Exception $ex)
                {
-                   // Silently ignore, because the only way this would happen is if someone manipulates the page,
-                   // and obviously we can't save arbitrary option values even if the user has permission to do so.
-                   continue;
+                   $request->session()->flash('error', 'An error occurred while trying to save settings: ' . $ex->getMessage());
+                   exit;
                }
            }
 
