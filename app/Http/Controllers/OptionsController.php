@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Options;
+use App\Facades\Options;
 use App\Options as Option;
 
 use Illuminate\Http\Request;
