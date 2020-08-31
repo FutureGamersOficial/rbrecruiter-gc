@@ -7,15 +7,15 @@
 		<!-- todo: details component -->
 
 		@foreach($positions as $position)
-				<x-modal id="{{ $position->vacancySlug . '-details' }}" modal-label="{{ $position->vacancySlug . '-details-label' }}" modal-title="Opening details" include-close-button="true">
+				<x-modal id="{{ $position->vacancySlug . '-details' }}" modal-label="{{ $position->vacancySlug . '-details-label' }}" modal-title="{{__('messages.details_m_title')}}" include-close-button="true">
 
 					@if (is_null($position->vacancyFullDescription))
 
 						<div class="alert alert-warning">
 
-							<h3><i class="fas fa-question-circle"></i> There don't seem to be any details</h3>
+							<h3><i class="fas fa-question-circle"></i> {{__('messages.opening_nodetails')}}</h3>
 							<p>
-								This opening does not have any details yet.
+								{{__('messages.opening_nodetails_exp')}}
 							</p>
 
 						</div>
@@ -23,7 +23,7 @@
 
 						{!! $position->vacancyFullDescription !!}
 						<p class="text-sm text-muted">
-							Last updated @ {{ $position->updated_at }}
+							{{__('messages.last_updated')}} @ {{ $position->updated_at }}
 						</p>
 					@endif
 
@@ -45,7 +45,7 @@
 
               <div class="col text-center">
 
-                  <h3>Open Positions</h3>
+                  <h3>{{__('messages.open_positions')}}</h3>
 
               </div>
 
@@ -64,11 +64,7 @@
                               <div class="card-header text-center">
 
                                   <h4 class="card-title">{{$position->vacancyName}}</h4>
-                                  @if ($position->vacancyCount == 1)
-                                      <p class="card-subtitle">There is <span class="badge badge-success">{{$position->vacancyCount}}</span> open position!</p>
-                                  @else
-                                      <p class="card-subtitle">There are <span class="badge badge-success">{{$position->vacancyCount}}</span> open positions!</p>
-                                  @endif
+                                  <p class="card-subtitle">{{trans_choice('messages.open_position_count', $position->vacancyCount)}}</p>
 
 
                               </div>
@@ -83,16 +79,16 @@
 
                               <div class="card-footer text-center">
                                   @auth
-                                      <button {{($isEligibleForApplication) ? '' : 'disabled'}} type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">Apply</button>
+                                      <button {{($isEligibleForApplication) ? '' : 'disabled'}} type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('messages.txt_apply')}}</button>
                                       @if(!$isEligibleForApplication)
-                                          <span class="badge-warning badge"><i class="fa fa-info"></i> Ineligible ({{$eligibilityDaysRemaining}} days remaining)</span>
+                                          <span class="badge-warning badge"><i class="fa fa-info"></i> {{__('messages.ineligible_days_remaining', ['days' => $elegibilityDaysRemaining])}}</span>
                                       @endif
                                   @endauth
 
                                   @guest
-                                          <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">Apply</button>
-																					<button type="button" class="btn btn-info" onclick="$('#{{ $position->vacancySlug }}-details').modal('show')">Learn more</button>
-                                      @endguest
+                                          <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('messages.txt_apply')}}</button>
+                                          <button type="button" class="btn btn-info" onclick="$('#{{ $position->vacancySlug }}-details').modal('show')">{{__('messages.txt_learn_more')}}</button>
+                                  @endguest
 
                               </div>
 
@@ -110,7 +106,7 @@
 
                           <div class="card-header">
 
-                              <div class="card-title"><h4>Applications Closed</h4></div>
+                              <div class="card-title"><h4>{{__('messages.application_closed')}}</h4></div>
 
                           </div>
 
@@ -118,11 +114,9 @@
 
                               <div class="alert alert-info">
 
-                                  <p><b>Hello there!</b></p>
+                                  <p><b>{{__('messages.application_closed_intro')}}</b></p>
                                   <p>
-                                      We are currently not hiring any new staff members at the moment. If you'd like to apply, check out our Discord's
-                                      announcement channel for news when a new position opens.
-                                      Our application cycle usually lasts two weeks, so if you're seeing this, it's because it finished, and new one will begin soon.
+                                      {{__('messages.application_closed_intro_line2')}}
                                   </p>
 
                               </div>
@@ -141,7 +135,7 @@
 
               <div class="col text-center">
 
-                  <h3>Where you'll work</h3>
+                  <h3>{{__('messages.where_work')}}</h3>
 
               </div>
 
@@ -174,11 +168,11 @@
                   </div>
                   <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
+                      <span class="sr-only">{{__('pagination.previous')}}</span>
                   </a>
                   <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
                       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
+                      <span class="sr-only">{{__('pagination.next')}}</span>
                   </a>
               </div>
 
@@ -189,7 +183,7 @@
 
               <div class="col text-center">
 
-                  <h3>Join The Team</h3>
+                  <h3>{{__('messages.join_team')}}</h3>
 
               </div>
 
@@ -199,7 +193,7 @@
 
               <div class="col text-center">
 											<p>
-												Join the team today and help out network grow and prosper!
+												 {{__('messages.join_team_cta')}}
 											</p>
 							</div>
 
@@ -210,8 +204,8 @@
 
               <div class="col">
 
-                  <h3>Any questions? Leave a message!</h3>
-                  <p class="text-muted">*This is not an application form. Any applications sent here will be ignored.</p>
+                  <h3>{{__('messages.contact_cta')}}</h3>
+                  <p class="text-muted">{{__('messages.contact_disclaimer')}}</p>
 
 
               </div>
@@ -236,7 +230,7 @@
                               <div class="md-form">
 
                                   <input type="text" name="name" class="form-control" id="firstName">
-                                  <label for="firstName">Name</label>
+                                  <label for="firstName">{{__('messages.contactlabel_name')}}</label>
 
                               </div>
                           </div>
@@ -246,7 +240,7 @@
                               <div class="md-form">
 
                                   <input type="email" name="email" class="form-control" id="email">
-                                  <label for="email">E-mail</label>
+                                  <label for="email">{{__('messages.contactlabel_email')}}</label>
 
                               </div>
 
@@ -260,7 +254,7 @@
                           <div class="md-form">
 
                               <input type="text" name="subject" id="subject" class="form-control">
-                              <label for="subject">Subject (ex. Suggestion)</label>
+                              <label for="subject">{{__('messages.contactlabel_subject')}}</label>
 
                           </div>
 
@@ -296,7 +290,7 @@
                     <!-- align: deprecated cheap hack, but quick -->
                   <div align="center" class="g-recaptcha pb-3" data-callback="gcallback" data-sitekey="{{config('recaptcha.keys.sitekey')}}"></div>
 
-                  <button type="button" class="btn btn-info" onclick="document.getElementById('contactForm').submit()">Send</button>
+                  <button type="button" class="btn btn-info" onclick="document.getElementById('contactForm').submit()">{{__('messages.contactlabel_send')}}</button>
 
               </div>
 

@@ -10,7 +10,7 @@
     <meta name="tags" content="minecraft, minecraft server staff, minecraft staff, minecraft servers">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{config('app.name')}} | Home</title>
+    <title>{{config('app.name')}} | {{__('messages.home')}}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Google Fonts -->
@@ -52,7 +52,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link " href="{{config('app.sitehomepage')}}">Homepage</a>
+                    <a class="nav-link " href="{{config('app.sitehomepage')}}">{{__('messages.homepagetxt')}}</a>
                 </li>
             </ul>
         </div>
@@ -60,23 +60,23 @@
             <ul class="navbar-nav ml-auto float-right">
                 @guest
                     <li class="nav-item">
-                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('login')}}'"><i class="fas fa-sign-in-alt"></i> Sign-in</button>
+                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('login')}}'"><i class="fas fa-sign-in-alt"></i> {{__('messages.login')}}</button>
                     </li>
 
                     <li class="nav-item">
-                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('register')}}'"><i class="fas fa-plus"></i> Sign-up</button>
+                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('register')}}'"><i class="fas fa-plus"></i> {{__('messages.register')}}</button>
                     </li>
                 @endguest
 
                 @auth
                     <li class="nav-item">
-                        <button type="button" class="btn btn-info" onclick="window.location.href='{{route('dashboard')}}'">Dashboard</button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='{{route('dashboard')}}'">{{__('messages.dashboard')}}</button>
                     </li>
 
                     <li class="nav-item">
                         <form method="POST" action="{{route('logout')}}">
                             @csrf
-                            <button type="submit" class="btn btn-danger"><i class="fa fa-power-off"></i> Sign-out</button>
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-power-off"></i>{{__('messages.logout')}}</button>
                         </form>
                     </li>
                 @endauth
@@ -91,10 +91,10 @@
                 <div class="container text-center white-text">
                     <div class="white-text text-center wow fadeInUp">
                         <h2>{{config('app.name')}}</h2>
-                        <h5>Welcome to our team management center!</h5>
+                        <h5> {{__('messages.homepage_welcome')}}</h5>
                         <br>
-                        <p>Here, you can apply for open staff member positions, view your application status, and manage your profile. </p>
-                        <p>Sign up with Email to continue.</p>
+                        <p>{{__('messages.homepage_explainer_line1')}}</p>
+                        <p>{{__('messages.homepage_explainer_line2')}}</p>
                     </div>
                 </div>
             </div>
