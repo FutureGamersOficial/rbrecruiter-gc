@@ -21,7 +21,7 @@ class OptionsController extends Controller
         $options = Option::all();
 
 
-        return view('dashboard.administration.positions')
+        return view('dashboard.administration.settings')
             ->with('options', $options);
     }
 
