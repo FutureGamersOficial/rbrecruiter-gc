@@ -10,6 +10,7 @@
     <meta name="tags" content="minecraft, minecraft server staff, minecraft staff, minecraft servers">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>{{config('app.name')}} | Home</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Google Fonts -->
@@ -43,7 +44,7 @@
 <header>
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#"><strong>Raspberry Network</strong></a>
+        <a class="navbar-brand" href="#"><strong>{{config('app.name')}}</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -51,10 +52,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link " href="#">Homepage</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Ban Appeals</a>
+                    <a class="nav-link " href="{{config('app.sitehomepage')}}">Homepage</a>
                 </li>
             </ul>
         </div>
@@ -92,7 +90,7 @@
             <div class="mask rgba-black-light flex-center">
                 <div class="container text-center white-text">
                     <div class="white-text text-center wow fadeInUp">
-                        <h2>Raspberry Network Application Center</h2>
+                        <h2>{{config('app.name')}}</h2>
                         <h5>Welcome to our team management center!</h5>
                         <br>
                         <p>Here, you can apply for open staff member positions, view your application status, and manage your profile. </p>

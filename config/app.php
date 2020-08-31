@@ -15,6 +15,19 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Homepage
+    |--------------------------------------------------------------------------
+    |
+    | This value is the application's homepage.
+    | If you have a main website other than this application itself, you can link it here.
+    | It will be used exclusively on the "Homepage" header menu.
+    |
+    */
+    'sitehomepage' => env('APP_SITEHOMEPAGE', 'https://google.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
