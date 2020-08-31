@@ -44,9 +44,9 @@
                 <div class="card-body">
                     <form name="settings" id="settings" method="post" action="{{route('saveSettings')}}">
                         @foreach($options as $option)
-                            <div class="form-group">
-                                <label for="{{$option->option_name}}">{{$option->friendly_name}}</label>
+                            <div class="form-group form-check">
                                 <input type="checkbox" name="{{$option->option_name}}" id="{{$option->option_name}}" class="form-check-input" {{ ($option->option_value == 1) ? 'checked' : '' }}>
+                                <label for="{{$option->option_name}}">{{$option->friendly_name}}</label>
                             </div>
                         @endforeach
                     </form>
