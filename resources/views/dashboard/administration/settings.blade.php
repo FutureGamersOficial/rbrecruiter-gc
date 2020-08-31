@@ -43,6 +43,7 @@
 
                 <div class="card-body">
                     <form name="settings" id="settings" method="post" action="{{route('saveSettings')}}">
+                        @csrf
                         @foreach($options as $option)
                             <div class="form-group form-check">
                                 <!-- Unchecked checkbox hack: This only works for serverside languages that process the last duplicate element, since the browser sends both the hidden and checkbox values. -->
