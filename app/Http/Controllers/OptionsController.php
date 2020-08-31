@@ -27,7 +27,7 @@ class OptionsController extends Controller
 
    public function saveSettings(Request $request)
    {
-       if (Auth::user()->hasPermission('admin.settings.edit'))
+       if (Auth::user()->can('admin.settings.edit'))
        {
            foreach($request->all() as $optionName => $option)
            {
