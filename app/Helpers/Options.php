@@ -56,7 +56,7 @@ class Options
 
         if ($dbOption->first())
         {
-            $dbOptionInstance = Option::find($dbOption->id);
+            $dbOptionInstance = Option::find($dbOption->first()->id);
             Cache::forget($option);
 
 
