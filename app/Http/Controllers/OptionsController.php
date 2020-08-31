@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Options;
+use App\Options as Option;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,11 +17,12 @@ class OptionsController extends Controller
      */
     public function index()
     {
-        $options = Options::all();
+        // TODO: Obtain this from the facade
+        $options = Option::all();
 
 
         return view('dashboard.administration.positions')
-            ->with('options');
+            ->with('options', $options);
     }
 
    public function saveSettings(Request $request)
