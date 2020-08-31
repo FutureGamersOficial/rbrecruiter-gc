@@ -23,7 +23,7 @@ class Options
             Cache::put($option . '_desc', 'Undefined description');
         }
 
-        return $value;
+        return $value->option_value;
     }
 
     public function setOption(string $option, string $value, string $description)
