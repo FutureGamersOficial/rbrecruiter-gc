@@ -46,10 +46,15 @@
                         @foreach($options as $option)
                             <div class="form-group">
                                 <label for="{{$option->option_name}}">{{$option->friendly_name}}</label>
-                                <input type="checkbox" name="{{$option->option_name}}" id="{{$option->option_name}}" class="form-control" checked>
+                                <input type="checkbox" name="{{$option->option_name}}" id="{{$option->option_name}}" class="form-check-input" {{ ($option->option_value == 1) ? 'checked' : '' }}>
                             </div>
                         @endforeach
                     </form>
+                </div>
+
+                <div class="card-footer">
+                    <button type="button" class="btn btn-success" onclick="$('#settings').submit()"><i class="fa fa-save"></i> Save changes</button>
+                    <button type="button" class="btn btn-warning" onclick="window.location.href='{{route('dashboard')}}'"><i class="fa fa-arrow-circle-o-left"></i> Back to Dashboard</button>
                 </div>
 
             </div>
