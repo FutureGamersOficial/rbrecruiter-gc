@@ -10,10 +10,12 @@ use Illuminate\Notifications\Messages\SlackMessage;
 
 use App\User;
 use App\Facades\UUID;
+use App\Traits\Cancellable;
+use App\Facades\Options;
 
 class NewUser extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Cancellable;
 
     public $user;
 
@@ -27,18 +29,14 @@ class NewUser extends Notification implements ShouldQueue
         $this->user = $user;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
+    public function channels($notifiable)
     {
-        return ($notifiable->isStaffMember())
-          ? ['slack', 'mail']
-          : ['mail'];
+        return $this->chooseChannelsViaOptions();
+    }
 
+    public function optOut($notifiable)
+    {
+        return Options::getOption('notify_new_user') !== 1;
     }
 
     /**

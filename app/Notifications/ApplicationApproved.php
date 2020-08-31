@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Facades\Options;
+use App\Traits\Cancellable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,7 +13,7 @@ use App\Application;
 
 class ApplicationApproved extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Cancellable;
 
     public $application;
 
@@ -24,15 +26,15 @@ class ApplicationApproved extends Notification implements ShouldQueue
     {
         $this->application = $application;
     }
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
+
+    public function channels()
     {
-        return ['mail', 'slack'];
+        return $this->chooseChannelsViaOptions();
+    }
+
+    public function optOut($notifiable)
+    {
+        return Options::getOption('notify_applicant_approved') !== 1;
     }
 
     /**

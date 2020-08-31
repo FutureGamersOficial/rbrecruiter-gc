@@ -6,10 +6,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Traits\Cancellable;
+use App\Facades\Options;
 
 class ApplicationMoved extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Cancellable;
 
     /**
      * Create a new notification instance.
@@ -21,15 +23,9 @@ class ApplicationMoved extends Notification implements ShouldQueue
         //
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
+    public function optOut($notifiable)
     {
-        return ['mail'];
+        return Options::getOption('notify_application_status_change') !== 1;
     }
 
     /**

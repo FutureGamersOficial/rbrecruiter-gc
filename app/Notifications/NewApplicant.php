@@ -10,9 +10,12 @@ use Illuminate\Notifications\Notification;
 use App\Application;
 use App\Vacancy;
 
+use App\Traits\Cancellable;
+use App\Facades\Options;
+
 class NewApplicant extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Cancellable;
 
 
     protected $application;
@@ -31,15 +34,19 @@ class NewApplicant extends Notification implements ShouldQueue
         $this->vacancy = $vacancy;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
+    public function channels()
     {
-        return ['slack'];
+        if (Options::getOption('enable_slack_notifications') == 1)
+        {
+            return ['slack'];
+        }
+
+        return [];
+    }
+
+    public function optOut($notifiable)
+    {
+        return Options::getOption('notify_new_user') !== 1;
     }
 
     /**

@@ -8,10 +8,12 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Comment;
 use App\Application;
+use App\Traits\Cancellable;
+use App\Facades\Options;
 
 class NewComment extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Cancellable;
 
 
     protected $application;
@@ -26,15 +28,9 @@ class NewComment extends Notification implements ShouldQueue
         $this->application = $application;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
+    public function optOut($notifiable)
     {
-        return ['mail'];
+        return Options::getOption('notify_application_comment') !== 1;
     }
 
     /**
