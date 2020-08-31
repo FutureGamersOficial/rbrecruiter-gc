@@ -43,7 +43,7 @@
 
                 <div class="card-body">
                     <form name="settings" id="settings" method="post" action="{{route('saveSettings')}}">
-                        @foreach($notificationOptions as $option)
+                        @foreach($options as $option)
                             <div class="form-group">
                                 <label for="{{$option->option_name}}">{{$option->friendly_name}}</label>
                                 <input type="checkbox" name="{{$option->option_name}}" id="{{$option->option_name}}" class="form-control" checked>
