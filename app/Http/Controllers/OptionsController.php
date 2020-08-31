@@ -40,12 +40,15 @@ class OptionsController extends Controller
                }
                catch(\Exception $ex)
                {
+                   $errorCond = true;
                    $request->session()->flash('error', 'An error occurred while trying to save settings: ' . $ex->getMessage());
-                   exit;
                }
            }
 
-           $request->session()->flash('success', 'Settings saved successfully!');
+           if (!isset($errorCond))
+           {
+               $request->session()->flash('success', 'Settings saved successfully!');
+           }
        }
        else
        {

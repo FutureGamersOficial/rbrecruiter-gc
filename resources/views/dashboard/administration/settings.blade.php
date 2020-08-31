@@ -20,6 +20,12 @@
         </script>
     @endif
 
+    @if (session()->has('error'))
+        <script>
+            toastr.error("{{session('error')}}")
+        </script>
+    @endif
+
     @if($errors->any())
         @foreach ($errors->all() as $error)
             <script>toastr.error('{{$error}}', 'Validation error!')</script>
