@@ -45,7 +45,10 @@
                     <form name="settings" id="settings" method="post" action="{{route('saveSettings')}}">
                         @foreach($options as $option)
                             <div class="form-group form-check">
-                                <input type="checkbox" name="{{$option->option_name}}" id="{{$option->option_name}}" class="form-check-input" {{ ($option->option_value == 1) ? 'checked' : '' }}>
+                                <!-- Unchecked checkbox hack: This only works for serverside languages that process the last duplicate element, since the browser sends both the hidden and checkbox values. -->
+                                <!-- This "hack" is necessary because browsers don't send, by default, unchecked checkboxes to the server, so we would have no way to know if X checkbox was unchecked. -->
+                                <input type="hidden" name="{{$option->option_name}}" value="0">
+                                <input type="checkbox" name="{{$option->option_name}}" value="1" id="{{$option->option_name}}" class="form-check-input" {{ ($option->option_value == 1) ? 'checked' : '' }}>
                                 <label for="{{$option->option_name}}">{{$option->friendly_name}}</label>
                             </div>
                         @endforeach

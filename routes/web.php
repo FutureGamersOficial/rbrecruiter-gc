@@ -162,7 +162,7 @@ Route::group(['middleware' => ['auth', 'forcelogout', '2fa']], function(){
         Route::get('settings', 'OptionsController@index')
             ->name('showSettings');
 
-        Route::get('settings/save', 'OptionsController@saveSettings')
+        Route::post('settings/save', 'OptionsController@saveSettings')
             ->name('saveSettings');
 
         Route::post('players/ban/{user}', 'BanController@insert')
