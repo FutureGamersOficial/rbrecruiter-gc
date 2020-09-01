@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Applications')
+@section('title', config('app.name') . ' | ' . __('messages.application_m.p_review'))
 
 @section('content_header')
 
-    <h4>Application Management / Peer Review</h4>
+    <h4>{{__('messages.application_m.title')}} / {{__('messages.application_m.p_review')}}</h4>
 
 @stop
 
@@ -16,12 +16,12 @@
 
             <div class="callout callout-info">
 
-                <h4>Voting Reminder</h4>
+                <h4>{{__('messages.application_m.voting_reminder.title')}}</h4>
 
-                <p>Applications which gain more than 50% of positive votes are automatically approved after one day.</p>
-                <p>Conversely, applications that do not reach this number are automatically denied.</p>
+                <p>{{__('messages.application_m.voting_reminder.line1')}}</p>
+                <p>{{__('messages.application_m.voting_reminder.line2')}}</p>
 
-                <p>Please note that the vote system can be overriden.</p>
+                <p>{{__('messages.application_m.voting_reminder.line3')}}</p>
 
             </div>
 
@@ -36,7 +36,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <div class="card-title"><h3>Vote Backlog</h3></div>
+                    <div class="card-title"><h3>{{__('messages.v_backlog')}}</h3></div>
                 </div>
 
                 <div class="card-body">
@@ -48,10 +48,10 @@
 
                             <tr>
                                 <th>#</th>
-                                <th>Applicant Name</th>
-                                <th>Last Acted On</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>{{__('messages.application_m.applicant_name')}}</th>
+                                <th>{{__('messages.last_updated')}}</th>
+                                <th>{{__('messages.reusable.status')}}</th>
+                                <th>{{__('messages.reusable.actions')}}</th>
                             </tr>
 
                             </thead>
@@ -64,9 +64,9 @@
                                 <td>{{$application->id}}</td>
                                 <td>{{$application->user->name}}</td>
                                 <td>{{$application->created_at}}</td>
-                                <td><span class="badge badge-warning">{{($application->applicationStatus == 'STAGE_PEERAPPROVAL') ? 'Peer Review' : 'Unknown'}}</span></td>
+                                <td><span class="badge badge-warning">{{($application->applicationStatus == 'STAGE_PEERAPPROVAL') ? __('messages.application_m.p_review') : __('messages.application_m.unknown_stat')}}</span></td>
                                 <td>
-                                    <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="far fa-clipboard"></i> Review</button>
+                                    <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="far fa-clipboard"></i> {{__('messages.application_r.review')}}</button>
                                 </td>
 
                             @endforeach
@@ -76,10 +76,9 @@
                         </table>
                     @else
                         <x-alert alert-type="warning">
-                            <p class="text-bold"><i class="fa fa-exclamation-triangle"></i> There are no applications pending review</p>
+                            <p class="text-bold"><i class="fa fa-exclamation-triangle"></i> {{__('messages.application_m.no_pending_review')}}</p>
 
-                            Check the other queues for any applications! Applications will be shown here as soon as their interview is completed.
-                            You'll be able to view meeting notes and vote based on your observations.
+                            {{__('messages.application_m.no_pending_review_exp')}}
                         </x-alert>
                     @endif
 

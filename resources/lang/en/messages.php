@@ -24,10 +24,19 @@ return [
         'actions' => 'Actions',
         'delete' => 'Delete',
         'status' => 'Status',
+        'view' => 'View',
+        'view_c' => 'View Details',
         'no_access' => 'Application Access Denied',
         'validation_err' => 'Validation error!',
         'description' => 'Description',
-        'join_date' => 'Join Date'
+        'join_date' => 'Join Date',
+        'my_acc' => 'My Account',
+        'confirm' => 'Please Confirm',
+        'confirm_plain' => 'Confirm',
+        'date' => 'Date',
+        'datetime' => 'Time & Date',
+        'location' => 'Location',
+        'none_yet' => 'None yet'
     ],
 
 
@@ -55,6 +64,7 @@ return [
     'open_position_count' => '{1} There is :count open position!|[2,*] There are :count open positions!',
     'ineligible_days_remaining' => 'Ineligible (:days) day(s) remaining',
     'txt_apply' => 'Apply', // Context: Apply as in applying for a "job", e.g. registering for a job
+    'txt_application' => 'Application',
     'application_closed' => 'Applications Closed',
     'application_closed_intro' => 'Hello there!',
     'application_closed_intro_line2' => <<<EOT
@@ -266,7 +276,94 @@ EOT,
 
     // ======================== APPLICATION RENDERING MESSAGES =========================
 
+    'application_r' => [
 
+        'appl_submit_warn' => 'Are you sure you want to submit your application? Please review each of your answers carefully before doing so.',
+        'appl_submit_doublewarn' => 'Please note: Applications CANNOT be modified once they\'re submitted!',
+        'acceptsend' => 'Accept & Send',
+        'review' => 'Review',
+        'applying_for' => 'You are applying for: :name',
+        'welcome' => [
+            'yrs_old' => 'Years old', // Context: "years old" as in: Tom is 24 years old
+            'line1' => 'We\'re glad you\'ve decided to apply. Generally, applications take 48 hours to be processed and reviewed. Depending on the circumstances and the volume of applications, you may receive an answer in a shorter time.',
+            'line2' => 'Please fill out the form below. Keep all answers concise and complete. Please keep in mind that the age requirement is at least :agerqr.',
+            'line3' => 'Asking about your application will result in instant denial. Everything you need to know is here.'
+        ],
+        'app_timeout' => 'Your account is not permitted to submit another application. Please wait :days more days before trying to submit an application.'
+    ],
+
+
+    'application_m' => [
+        'title' => 'Application Management',
+        'all_apps' => 'All Applications',
+        'modal_confirm' => 'Are you sure?',
+        'really_delete' => 'Really delete this?',
+
+
+        'outstanding_sm' => 'Outstanding',
+        'outstanding_apps' => 'Outstanding applications',
+        'outstanding_subm' => 'Outstanding (Submitted)',
+
+        'interview_q' => 'Interview Queue',
+        'interview_p' => 'Interview',
+        'interview_s' => 'Interview Scheduled',
+        'finished_int' => 'Finished Interviews',
+        'schedule_int' => 'Schedule Interviews',
+        'p_review' => 'Peer Review',
+        'applicant' => 'Applicant',
+        'interviewee' => 'Interviewee',
+        'pending_int' => 'Pending Interview',
+        'schedule' => 'Schedule',
+
+        'view_interview_queue' => 'View Interview Queue',
+        'view_approval_queue' => 'View Approval Queue',
+        'view_outstanding_queue' => 'View Outstanding Queue',
+
+        'approved' => 'Approved',
+        'denied' => 'Denied',
+        'unknown_stat' => 'Unknown',
+
+        'consequence_irreversible' => 'IRREVERSIBLE',
+        'delete_action_warning' => 'This action is :consequence.',
+        'delete_explainer' => 'Comments, appointments and any votes attached to this application WILL be deleted too. Please make sure this application really needs to be deleted.',
+
+        'all_apps_header' => 'You\'re looking at all applications ever received',
+        'all_apps_exp' => 'Here, you have quick and easy access to all applications ever received by the system.',
+
+        'no_apps' => 'There are no applications here',
+        'no_apps_exp' => 'We couldn\'t find any applications. Maybe no one has applied yet? Please try again later.',
+        'int_applications' => 'Applications',
+
+        'no_apps_pending_int' => 'No Applications Pending Interview',
+        'no_apps_pending_int_exp' => 'There are no applications that have been moved up to the Interview stage. Please check the outstanding queue.There are no applications that have been moved up to the Interview stage. Please check the outstanding queue.',
+        'upcoming_int' => 'My Upcoming Interviews',
+        'pending_schedule' => 'Pending Schedule',
+
+        'no_upcoming' => 'There are no upcoming interviews',
+        'no_upcoming_exp' => 'Please check other queues down in the application process. Applicants here may have already been interviewed.',
+
+        'no_outstanding' => 'Seeing no applications? Check with an Administrator to make sure that there are available open positions.',
+        'no_outstanding_exp' => 'Advertising on relevant forums made for this purpose is also a good idea.',
+
+        'applicant_name' => 'Applicant Name',
+        'application_date' => 'Application Date',
+
+        'no_pending' => 'There are no pending applications',
+        'no_pending_exp' => 'It seems like no one new has applied yet. Checkout the interview and approval queues for applications that might have moved up the ladder by now.',
+
+        'voting_reminder' => [
+
+            'title' => 'Voting Reminder',
+            'line1' => 'Applications which gain more than 50% of positive votes are automatically approved after one day.',
+            'line2' => 'Conversely, applications that do not reach this number are automatically denied.',
+            'line3' => 'Please note that the vote system can be overridden'
+
+        ],
+
+        'no_pending_review' => 'There are no applications pending review',
+        'no_pending_review_exp' => 'Check the other queues for any applications! Applications will be shown here as soon as their interview is completed. You\'ll be able to view meeting notes and vote based on your observations.',
+
+    ]
 
 
 ];

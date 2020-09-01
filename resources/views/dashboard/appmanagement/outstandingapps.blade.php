@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Profile')
+@section('title', config('app.name') . ' | ' . __('messages.application_m.title'))
 
 @section('content_header')
 
-    <h4>Application Management / Outstanding Applications</h4>
+    <h4>{{__('messages.application_m.title')}} / {{__('messages.application_m.outstanding_apps')}}</h4>
 
 @stop
 
@@ -21,8 +21,8 @@
 
         <div class="col">
             <div class="callout callout-info">
-                <p>Seeing no applications? Check with an Administrator to make sure that there are available open positions.</p>
-                <p>Advertising on relevant forums made for this purpose is also a good idea.</p>
+                <p>{{__('messages.application_m.no_outstanding')}}</p>
+                <p>{{__('messages.application_m.no_outstanding_exp')}}</p>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
 
                 <div class="card-header">
 
-                    <div class="card-title"><h4>Outstanding Applications</h4></div>
+                    <div class="card-title"><h4>{{__('messages.application_m.outstanding_apps')}}</h4></div>
 
                 </div>
 
@@ -49,11 +49,11 @@
 
                             <tr>
                                 <th>#</th>
-                                <th>Applicant Name</th>
-                                <th>Status</th>
-                                <th>Application Date</th>
-                                <th>Last Updated</th>
-                                <th>Actions</th>
+                                <th>{{__('messages.application_m.applicant_name')}}</th>
+                                <th>{{__('messages.reusable.status')}}</th>
+                                <th>{{__('messages.application_m.application_date')}}</th>
+                                <th>{{__('messages.last_updated')}}</th>
+                                <th>{{__('messages.reusable.status')}}</th>
                             </tr>
 
                             </thead>
@@ -66,11 +66,11 @@
 
                                     <td>{{$application->id}}</td>
                                     <td>{{$application->user->name}}</td>
-                                    <td><span class="badge badge-warning">{{($application->applicationStatus == 'STAGE_SUBMITTED') ? 'Outstanding' : 'Unknown Status'}}</span></td>
+                                    <td><span class="badge badge-warning">{{($application->applicationStatus == 'STAGE_SUBMITTED') ? __('messages.application_m.outstanding_sm') : __('messages.application_m.unknown_stat')}}</span></td>
                                     <td>{{$application->created_at}}</td>
                                     <td>{{$application->updated_at}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fas fa-clipboard-check"></i> Review</button>
+                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fas fa-clipboard-check"></i> {{__('messages.application_r.review')}}</button>
                                     </td>
 
                                 </tr>
@@ -83,8 +83,8 @@
                     @else
 
                         <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i><b> There are no pending applications</b>
-                            <p>It seems like no one new has applied yet. Checkout the interview and approval queues for applications that might have moved up the ladder by now.</p>
+                            <i class="fas fa-exclamation-triangle"></i><b> {{__('messages.application_m.no_pending')}}</b>
+                            <p>{{__('messages.application_m.no_pending_exp')}}</p>
                         </div>
 
                     @endif
@@ -93,7 +93,7 @@
 
                 <div class="card-footer text-center">
 
-                    <button type="button" class="btn btn-success" onclick="window.location.href='{{route('pendingInterview')}}'">View Interview Queue</button>
+                    <button type="button" class="btn btn-success" onclick="window.location.href='{{route('pendingInterview')}}'">{{__('messages.application_m.view_interview_queue')}}</button>
 
                 </div>
 

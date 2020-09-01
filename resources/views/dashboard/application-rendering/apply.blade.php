@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network Team Management')
+@section('title', config('app.name') . ' | ' . __('messages.txt_apply'))
 
 @section('content_header')
-    <h1>My Account / Apply / {{$vacancy->vacancyName}} Application</h1>
+    <h1>{{__('messages.reusable.my_acc')}} / {{__('messages.txt_apply')}} / {{$vacancy->vacancyName}} {{__('messages.txt_application')}}</h1>
 @stop
 
 @section('js')
@@ -24,7 +24,7 @@
 
     @if(!$isEligibleForApplication)
 
-        <script>toastr.error("You do not have permission to view this page.", "Access denied")</script>
+        <script>toastr.error("{{__('messages.reusable.no_access')}}")</script>
 
     @endif
 
@@ -38,20 +38,20 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalConfirmLabel">Please confirm</h5>
+                        <h5 class="modal-title" id="modalConfirmLabel">{{__('messages.reusable.confirm')}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
 
-                        <p>Are you sure you want to submit your application? Please review each of your answers carefully before doing so.</p>
-                        <p class="text-bold">Please note: Applications CANNOT be modified once they're submitted!</p>
+                        <p>{{__('messages.application_r.appl_submit_warn')}}</p>
+                        <p class="text-bold">{{__('messages.application_r.appl_submit_doublewarn')}}</p>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" onclick="document.getElementById('submitApplicationForm').submit()"><i class="fas fa-check-double"></i> Accept & Send</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Review</button>
+                        <button type="button" class="btn btn-success" onclick="document.getElementById('submitApplicationForm').submit()"><i class="fas fa-check-double"></i> {{__('messages.application_r.acceptsend')}}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.application_r.review')}}</button>
                     </div>
                 </div>
             </div>
@@ -63,11 +63,11 @@
 
                 <div class="callout callout-success">
 
-                    <p class="text-bold">You are applying for: {{$vacancy->vacancyName}}</p>
+                    <p class="text-bold">{{__('messages.application_r.applying_for', ['name' => $vacancy->vacancyName])}}</p>
 
-                    <p>We're glad you've decided to apply. Generally, applications take 48 hours to be processed and reviewed. Depending on the circumstances and the volume of applications, you may receive an answer in a shorter time.</p>
-                    <p>Please fill out the form below. Keep all answers concise and complete. Please keep in mind that the age requirement is <b>at least 18 years old</b>.</p>
-                    <p class="text-bold">Asking about your application will result in instant denial. Everything you need to know is here.</p>
+                    <p>{{__('messages.application_r.welcome.line1')}}</p>
+                    <p>{{__('messages.application_r.welcome.line2', ['agerqr' => '18 ' . __('messages.application_r.welcome.yrs_old')])}}.</p>
+                    <p class="text-bold">{{__('messages.application_r.welcome.line3')}}.</p>
 
                 </div>
 
@@ -104,7 +104,7 @@
 
                     <div class="card-footer text-center">
 
-                        <button type="button" class="btn btn-success" onclick="$('#confirm').modal('show')"><i class="fas fa-paper-plane"></i> Send</button>
+                        <button type="button" class="btn btn-success" onclick="$('#confirm').modal('show')"><i class="fas fa-paper-plane"></i> {{__('messages.contactlabel_send')}}</button>
 
                     </div>
 
@@ -118,9 +118,9 @@
 
         <div class="alert alert-danger">
 
-            <p class="text-bold">Access denied</p>
+            <p class="text-bold">{{__('messages.reusable.no_access')}}</p>
 
-            <p>Your account is not permitted to submit another application. Please wait {{$eligibilityDaysRemaining}} more days before trying to submit an application.</p>
+            <p>{{__('messages.application_r.app_timeout', ['days' => $eligibilityDaysRemaining])}}</p>
         </div>
 
     @endif

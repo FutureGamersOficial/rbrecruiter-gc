@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Profile')
+@section('title', config('app.name') . ' | ' . __('messages.application_m.all_apps'))
 
 @section('content_header')
 
-    <h4>Application Management / All Applications</h4>
+    <h4>{{__('messages.application_m.title')}} / {{__('messages.application_m.all_apps')}}</h4>
 
 @stop
 
@@ -20,20 +20,20 @@
 
   @foreach($applications as $application)
 
-    <x-modal id="deletionConfirmationModal-{{ $application->id }}" modal-label="deletion-{{ $application->id }}" modal-title="Are you sure?" include-close-button="true">
+    <x-modal id="deletionConfirmationModal-{{ $application->id }}" modal-label="deletion-{{ $application->id }}" modal-title="{{__('messages.application_m.modal_confirm')}}" include-close-button="true">
 
-      <h4><i class="fas fa-exclamation-triangle"></i> Really delete this?</h3>
+      <h4><i class="fas fa-exclamation-triangle"></i> {{__('messages.application_m.really_delete')}}</h4>
       <p>
-        This action is <b>IRREVERSBILE.</b>
+        {{__('messages.application_m.delete_action_warning', ['consequence' => '<b>' . __('messages.application_m.consequence_irreversible') .'</b>'])}}
       </p>
-      <p>Comments, appointments and any votes attached to this application WILL be deleted too. Please make sure this application really needs to be deleted.</p>
+      <p>{{__('messages.application_m.delete_explainer')}}</p>
 
       <x-slot name="modalFooter">
 
         <form method="POST" action="{{ route('deleteApplication', ['application' => $application->id]) }}">
           @csrf
           @method('DELETE')
-          <button type="submit" class="btn btn-danger"><i class="fas fa-check-double"></i> Confirm</button>
+          <button type="submit" class="btn btn-danger"><i class="fas fa-check-double"></i> {{__('messages.reusable.confirm_plain')}}</button>
 
         </form>
 
@@ -61,9 +61,9 @@
 
             <div class="col">
 
-              <h3><i class="fas fa-info-circle"></i> You're looking at all applications ever received</h3>
+              <h3><i class="fas fa-info-circle"></i> {{__('messages.application_m.all_apps_header')}}</h3>
               <p>
-                Here, you have quick and easy access to all applications ever received by the system.
+                {{__('messages.application_m.all_apps_exp')}}
               </p>
 
             </div>
@@ -90,16 +90,16 @@
           <div class="row">
 
             <div class="col-3">
-              <h3>All applications</h3>
+              <h3>{{__('messages.application_m.all_apps')}}</h3>
             </div>
 
             <div class="col">
 
               <div class="navbtn right" style="whitespace: nowrap">
 
-                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('staffPendingApps') }}'"><i class="far fa-folder-open"></i> Outstanding Applications</button>
-                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('pendingInterview') }}'"><i class="fas fa-microphone-alt"></i> Interview Queue</button>
-                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('peerReview') }}'"><i class="fas fa-search"></i> Peer Review</button>
+                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('staffPendingApps') }}'"><i class="far fa-folder-open"></i> {{__('messages.application_m.outstanding_apps')}}</button>
+                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('pendingInterview') }}'"><i class="fas fa-microphone-alt"></i>  {{__('messages.application_m.interview_q')}}</button>
+                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('peerReview') }}'"><i class="fas fa-search"></i> {{__('messages.application_m.p_review')}}</button>
 
               </div>
 
@@ -131,10 +131,10 @@
 
                         <tr>
                           <th>#</th>
-                          <th>Applicant</th>
-                          <th>Status</th>
-                          <th>Date</th>
-                          <th>Actions</th>
+                          <th>{{__('messages.application_m.applicant')}}</th>
+                          <th>{{__('messages.reusable.status')}}</th>
+                          <th>{{__('messages.reusable.date')}}</th>
+                          <th>{{__('messages.reusable.actions')}}</th>
                         </tr>
 
                       </thead>
@@ -151,48 +151,48 @@
 
                                 @case('STAGE_SUBMITTED')
 
-                                  <span class="badge badge-primary"><i class="far fa-clock"></i> Outstanding (Submitted)</span>
+                                  <span class="badge badge-primary"><i class="far fa-clock"></i> {{__('messages.application_m.outstanding_subm')}}</span>
                                 @break
 
                                 @case('STAGE_PEERAPPROVAL')
 
-                                  <span class="badge badge-warning"><i class="fas fa-vote-yea"></i> Peer Approval</span>
+                                  <span class="badge badge-warning"><i class="fas fa-vote-yea"></i> {{__('messages.application_m.p_review')}}</span>
                                 @break
 
                                 @case('STAGE_INTERVIEW')
 
-                                  <span class="badge badge-warning"><i class="fas fa-microphone-alt"></i> Interview</span>
+                                  <span class="badge badge-warning"><i class="fas fa-microphone-alt"></i> {{__('messages.application_m.interview_p')}}</span>
 
                                 @break
 
                                 @case('STAGE_INTERVIEW_SCHEDULED')
 
-                                  <span class="badge badge-warning"><i class="far fa-clock"></i>Interview Scheduled</span>
+                                  <span class="badge badge-warning"><i class="far fa-clock"></i>{{__('messages.application_m.interview_s')}}</span>
 
                                 @break
 
                                 @case('APPROVED')
 
-                                  <span class="badge badge-success"><i class="fas fa-check"></i> Approved</span>
+                                  <span class="badge badge-success"><i class="fas fa-check"></i> {{__('messages.application_m.approved')}}</span>
 
                                 @break
 
                                 @case('DENIED')
 
-                                  <span class="badge badge-danger"><i class="fas fa-times"></i> Denied</span>
+                                  <span class="badge badge-danger"><i class="fas fa-times"></i> {{__('messages.application_m.denied')}}</span>
 
                                 @break;
 
                                 @default
-                                  <span class="badge badge-secondary"><i class="fas fa-question-circle"></i> Unknown</span>
+                                  <span class="badge badge-secondary"><i class="fas fa-question-circle"></i> {{__('messages.application_m.denied')}}</span>
 
 
                               @endswitch
                             </td>
                             <td>{{ $application->created_at }}</td>
                             <td>
-                              <button type="button" class="btn btn-success btn-sm" onclick="window.location.href='{{ route('showUserApp', ['application' => $application->id]) }}'"><i class="fas fa-eye"></i> View</button>
-                              <button type="button" class="btn btn-danger btn-sm ml-2" onclick="$('#deletionConfirmationModal-{{ $application->id }}').modal('show')"><i class="fa fa-trash"></i> Delete</button>
+                              <button type="button" class="btn btn-success btn-sm" onclick="window.location.href='{{ route('showUserApp', ['application' => $application->id]) }}'"><i class="fas fa-eye"></i> {{__('messages.reusable.view')}}</button>
+                              <button type="button" class="btn btn-danger btn-sm ml-2" onclick="$('#deletionConfirmationModal-{{ $application->id }}').modal('show')"><i class="fa fa-trash"></i> {{__('messages.reusable.delete')}}</button>
                             </td>
                           </tr>
 
@@ -206,10 +206,9 @@
 
                   <div class="alert alert-warning">
 
-                    <h3><i class="fas fa-question-circle"></i> There are no applications here</h3>
+                    <h3><i class="fas fa-question-circle"></i> {{__('messages.application_m.no_apps')}}</h3>
                     <p>
-                      We couldn't find any applications. Maybe no one has applied yet?
-                      Please try again later.
+                      {{__('messages.application_m.no_apps_exp')}}
                     </p>
 
                   </div>
