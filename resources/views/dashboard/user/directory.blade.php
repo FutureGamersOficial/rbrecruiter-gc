@@ -48,7 +48,7 @@
 
                         <div class="user-indicator mb-2">
 
-                            <span class="badge badge-success">It's you!</span>
+                            <span class="badge badge-success">{{__('messages.user.directory.itsyou')}}</span>
 
                         </div>
 
@@ -64,7 +64,7 @@
 
                       </div>
 
-                        <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('showSingleProfile', ['user' => $user->id]) }}'"><i class="fa fa-eye"></i> Profile</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('showSingleProfile', ['user' => $user->id]) }}'"><i class="fa fa-eye"></i> {{__('messages.profile.profile')}}</button>
 
                     </div>
                   </div>
@@ -98,7 +98,7 @@
       <div class="alert alert-danger">
 
         <p>
-          You do not have permission to view this page.
+          {{__('messages.component_nopermission')}}
         </p>
 
       </div>

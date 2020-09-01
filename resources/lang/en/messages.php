@@ -54,7 +54,9 @@ return [
         'profile' => 'My Profile',
         'code' => 'code',
         'here' => 'here',
-        'auth_req' => 'Please authenticate'
+        'auth_req' => 'Please authenticate',
+        'eligible' => 'Eligible',
+        'ineligible' => 'Ineligible'
     ],
 
 
@@ -493,7 +495,36 @@ EOT,
 
         'update_prfl' => 'Update Profile'
 
-    ]
+    ],
 
+    // ==================== USER ACCOUNT MESSAGES (NON-PRIVILEGED) =====================
+
+    'user' => [
+
+        'app_process' => [
+            'title' => 'Application Process',
+            'line1' => 'Please allow up to three days for your application to be processed. Your application will be reviewed by every team member, and will move up in stages.',
+            'line2' => 'If an interview is scheduled, you\'ll need to open your application here and confirm the time, date, and location assigned for you.'
+        ],
+
+        'account_standing' => 'Account Standing',
+        'account_eligibility' => 'Your account is currently :eligibility for application',
+        'days_remaining_acc_alt' => 'As of today, there are :days remaining until you\'re permitted to submit another application.',
+        'my_ongoingapps' => 'My Ongoing Applications',
+
+        'submitted' => 'Submitted',
+        'peer_approval' => 'Peer Approval',
+
+        'nothing_to_show' => 'Nothing to show',
+        'nothing_to_show_exp' => 'You currently have no applications to display. If you\'re eligible, you may apply once every month.',
+
+        'directory' => [
+
+            'itsyou' => 'It\'s you!',
+
+
+        ]
+
+    ]
 
 ];

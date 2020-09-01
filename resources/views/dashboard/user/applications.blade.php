@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Applications')
+@section('title', config('app.name') . ' | ' . __('messages.application_m.int_applications'))
 
 @section('content_header')
 
-    <h4>My Account / Applications</h4>
+    <h4>{{__('messages.reusable.my_acc')}} / {{__('messages.application_m.int_applications')}}</h4>
 
 @stop
 
@@ -21,22 +21,21 @@
         <div class="col">
 
             <div class="callout callout-warning">
-                <h5>Application Process</h5>
+                <h5>{{__('messages.user.app_process.title')}}</h5>
 
-                <p>Please allow up to three days for your application to be processed. Your application will be reviewed by every team member, and will move up in stages.</p>
-                <p>If an interview is scheduled, you'll need to open your application here and confirm the time, date, and location assigned for you.</p>
+                <p>{{__('messages.user.app_process.line1')}}</p>
+                <p>{{__('messages.user.app_process.line2')}}</p>
             </div>
 
             <div class="alert alert-info">
-                <b><i class="fa fa-info-circle"></i> Account Standing</b>
+                <b><i class="fa fa-info-circle"></i> {{__('messages.user.account_standing')}}</b>
 
-                <p>Your account is currently <b>{{($isEligibleForApplication) ? 'eligible' : 'not eligible'}}</b> for application.</p>
+                <p>{{__('messages.user.account_eligibility', ['eligibility' => ($isEligibileForApplication) ? __('messages.eligible') : __('messages.ineligible')])}}</p>
 
                 @if (!$isEligibleForApplication)
-                    <p>As of today, there are <b>{{$eligibilityDaysRemaining}} days</b> remaining until you're permitted to submit another application.</p>
+                    <p>{{__('messages.user.days_remaining_acc_alt', ['days' => '<b>' . $eligibilityDaysRemaining .'</b>'])}}</p>
                 @endif
 
-                <i class="text-sm">Powered by Carbon</i>
             </div>
 
         </div>
@@ -49,7 +48,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">My Ongoing Applications</h3>
+                    <h3 class="card-title">{{__('messages.user.my_ongoingapps')}}</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0"> <!-- move to dedi css -->
@@ -60,11 +59,11 @@
                             <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
-                                <th>Applicant</th>
-                                <th>Application Date</th>
-                                <th>Last Acted On</th>
-                                <th style="width: 40px">Status</th>
-                                <th style="width: 40px">Actions</th>
+                                <th>{{__('messages.application_m.applicant')}}</th>
+                                <th>{{__('messages.application_m.application_date')}}</th>
+                                <th>{{__('messages.last_updated')}}</th>
+                                <th style="width: 40px">{{__('messages.reusable.status')}}</th>
+                                <th style="width: 40px">{{__('messages.reusable.actions')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -80,36 +79,36 @@
                                         @switch($application->applicationStatus)
 
                                             @case('STAGE_SUBMITTED')
-                                            <span class="badge badge-success"><i class="fas fa-paper-plane"></i> Submitted</span>
+                                            <span class="badge badge-success"><i class="fas fa-paper-plane"></i> {{__('messages.user.submitted')}}</span>
                                             @break
 
                                             @case('STAGE_PEERAPPROVAL')
-                                            <span class="badge badge-warning"><i class="fas fa-users"></i> Peer Approval</span>
+                                            <span class="badge badge-warning"><i class="fas fa-users"></i> {{__('messages.user.peer_approval')}}</span>
                                             @break
 
                                             @case('STAGE_INTERVIEW')
-                                            <span class="badge badge-info"><i class="fa fa-microphone-alt"></i> Interview</span>
+                                            <span class="badge badge-info"><i class="fa fa-microphone-alt"></i> {{__('messages.application_m.interview_p')}}</span>
                                             @break
 
                                             @case('STAGE_INTERVIEW_SCHEDULED')
-                                            <span class="badge badge-warning"><i class="fa fa-clock"></i> Interview Scheduled</span>
+                                            <span class="badge badge-warning"><i class="fa fa-clock"></i> {{__('messages.application_m.interview_s')}}</span>
                                             @break
 
                                             @case('APPROVED')
-                                            <span class="badge badge-success"><i class="fa fa-check-double"></i> Approved</span>
+                                            <span class="badge badge-success"><i class="fa fa-check-double"></i> {{__('messages.application_m.approved')}}</span>
                                             @break
 
                                             @case('DENIED')
-                                            <span class="badge badge-danger"><i class="fa fa-ban"></i> <b>Denied</b></span>
+                                            <span class="badge badge-danger"><i class="fa fa-ban"></i> <b>{{__('messages.application_m.denied')}}</b></span>
                                             @break
 
                                             @default
-                                            <span class="badge badge-danger"><i class="fa fa-question"></i> Unknown</span>
+                                            <span class="badge badge-danger"><i class="fa fa-question"></i> {{__('messages.application_m.unknown_stat')}}</span>
                                         @endswitch
                                     </td>
 
                                     <td>
-                                        <button type="button" class="btn btn-success" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fa fa-eye"></i> View</button>
+                                        <button type="button" class="btn btn-success" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fa fa-eye"></i> {{__('messages.reusable.view')}}</button>
                                     </td>
                                 </tr>
 
@@ -121,8 +120,8 @@
                     @else
 
                         <div class="alert alert-warning">
-                            <p><i class="fa fa-info-circle"></i> <b>Nothing to show</b></p>
-                            <p>You currently have no applications to display. If you're eligible, you may apply once every month.</p>
+                            <p><i class="fa fa-info-circle"></i> <b>{{__('messages.user.nothing_to_show')}}</b></p>
+                            <p>{{__('messages.user.nothing_to_show_exp')}}</p>
                         </div>
 
                     @endif
