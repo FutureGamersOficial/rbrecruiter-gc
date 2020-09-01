@@ -1,4 +1,4 @@
-# Raspberry Teams - The Simple Staff Application Manager v 0.1.0
+# Raspberry Teams - The Simple Staff Application Manager v 0.5.2
 ## The quick and pain-free staff application manager
 
 Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
