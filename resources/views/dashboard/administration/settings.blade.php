@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Open Positions')
+@section('title', config('app.name') . ' | ' . __('messages.settings.settings'))
 
 @section('content_header')
 
     @if (Auth::user()->hasAnyRole('admin'))
-        <h4>Administration / Settings</h4>
+        <h4>{{__('messages.adm')}} / {{__('messages.settings.settings')}}</h4>
     @else
-        <h4>Application Access Denied</h4>
+        <h4>{{__('messages.reusable.no_access')}}</h4>
     @endif
 
 @stop
@@ -43,8 +43,8 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h3>Notification Settings</h3>
-                    <p>Change which notifications are sent here.</p>
+                    <h3>{{__('messages.settings.settings_header')}}</h3>
+                    <p>{{__('messages.settings.settings_p')}}</p>
                 </div>
 
                 <div class="card-body">
@@ -63,8 +63,8 @@
                 </div>
 
                 <div class="card-footer">
-                    <button type="button" class="btn btn-success" onclick="$('#settings').submit()"><i class="fa fa-save"></i> Save changes</button>
-                    <button type="button" class="btn btn-warning" onclick="window.location.href='{{route('dashboard')}}'"><i class="fa fa-arrow-circle-o-left"></i> Back to Dashboard</button>
+                    <button type="button" class="btn btn-success" onclick="$('#settings').submit()"><i class="fa fa-save"></i> {{__('messages.vacancy.save')}}</button>
+                    <button type="button" class="btn btn-warning" onclick="window.location.href='{{route('dashboard')}}'"><i class="fa fa-arrow-circle-o-left"></i> {{__('messages.settings.back_btn')}}</button>
                 </div>
 
             </div>

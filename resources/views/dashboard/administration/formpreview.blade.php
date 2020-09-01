@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Application Form Preview')
+@section('title', config('app.name') . ' | ' . __('messages.form_preview.title'))
 
 @section('content_header')
 
-    <h4>Administration / Form Builder / Preview</h4>
+    <h4>{{__('messages.adm')}} / {{__('messages.form_builder.builder')}} / {{__('messages.form_preview.preview')}}</h4>
 
 @stop
 
@@ -33,10 +33,10 @@
     <div class="col">
       <div class="alert alert-success">
 
-        <h5><i class="fas fa-eye"></i> This is how your form looks like to applicants</h3>
+        <h5><i class="fas fa-eye"></i> {{__('messages.form_preview.looks')}}</h5>
 
         <p>
-          You may edit it and add more fields later.
+          {{__('messages.form_preview.f_info')}}
         </p>
 
       </div>
@@ -52,7 +52,7 @@
 
         <div class="card-header">
 
-          <h3>{{ $title }}'s form</h2>
+          <h3>{{ $title }} - {{__('messages.form')}}</h2>
 
         </div>
 
@@ -66,8 +66,8 @@
 
         <div class="card-footer text-center">
 
-          <button type="button" class="btn btn-success ml-2" onclick="window.location.href='{{ route('showForms') }}'"><i class="fas fa-chevron-left"></i> Go back</button>
-          <button type="button" class="btn btn-warning ml-2" onclick="window.location.href='{{ route('editForm', ['form' => $formID]) }}'"><i class="far fa-edit"></i> Edit</button>
+          <button type="button" class="btn btn-success ml-2" onclick="window.location.href='{{ route('showForms') }}'"><i class="fas fa-chevron-left"></i> {{__('messages.back')}}</button>
+          <button type="button" class="btn btn-warning ml-2" onclick="window.location.href='{{ route('editForm', ['form' => $formID]) }}'"><i class="far fa-edit"></i> {{__('messages.edit')}}</button>
         </div>
 
       </div>

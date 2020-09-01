@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Application Form Management Tool')
+@section('title',  config('app.name') . '| ' . __('messages.form_builder.builder_name'))
 
 @section('content_header')
 
-    <h4>Administration / Form Builder</h4>
+    <h4>{{__('messages.adm')}} / {{__('messages.form_builder.builder')}}</h4>
 
 @stop
 
@@ -45,9 +45,9 @@
                         @csrf
 
                         <fieldset id="buildyourform">
-                            <legend class="text-center">Form Builder</legend>
+                            <legend class="text-center">{{__('messages.form_builder.builder')}}</legend>
 
-                            <input type="text" name="formName" class="form-control mb-5" placeholder="Name your form..." required>
+                            <input type="text" name="formName" class="form-control mb-5" placeholder="{{__('messages.form_builder.name_form')}}" required>
 
                         </fieldset>
 
@@ -57,7 +57,7 @@
 
                 <div class="card-footer text-center">
 
-                    <button onclick="save()" type="button" class="btn btn-success">Save Form</button>
+                    <button onclick="save()" type="button" class="btn btn-success">{{__('messages.form_builder.save_form')}}</button>
                     <input type="button" value="New Field" class="add btn btn-info ml-3" id="add" />
 
 

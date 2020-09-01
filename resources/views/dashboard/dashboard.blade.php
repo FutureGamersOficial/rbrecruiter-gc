@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network Team Management')
+@section('title', config('app.name'))
 
 @section('content_header')
-    <h1>RaspberryNet Teams / Dashboard (<i>At a glance</i>)</h1>
+    <h1>{{config('app.name')}} / {{__('messages.dashboard')}}</h1>
 @stop
 
 @section('js')
@@ -18,15 +18,15 @@
 
       @foreach($vacancies as $vacancy)
 
-          <x-modal id="{{ $vacancy->vacancySlug . '-details' }}" modal-label="{{ $vacancy->vacancySlug . '-details-label' }}" modal-title="Vacancy details" include-close-button="true">
+          <x-modal id="{{ $vacancy->vacancySlug . '-details' }}" modal-label="{{ $vacancy->vacancySlug . '-details-label' }}" modal-title="{{__('messages.details_m_title')}}" include-close-button="true">
 
             @if (is_null($vacancy->vacancyFullDescription))
 
               <div class="alert alert-warning">
 
-                <h3><i class="fas fa-question-circle"></i> There don't seem to be any details</h3>
+                <h3><i class="fas fa-question-circle"></i> {{__('messages.opening_nodetails')}}</h3>
                 <p>
-                  This vacancy does not have any details yet.
+                  {{__('messages.opening_nodetails_exp')}}
                 </p>
 
               </div>
@@ -34,7 +34,7 @@
 
               {!! $vacancy->vacancyFullDescription !!}
               <p class="text-sm text-muted">
-                Last updated @ {{ $vacancy->updated_at }}
+                {{__('messages.last_updated')}} @ {{ $vacancy->updated_at }}
               </p>
             @endif
 
@@ -52,7 +52,7 @@
 
           <div class="text-center">
 
-              <h4>Welcome back, {{ Auth::user()->name }}!</h4>
+              <h4>{{__('messages.welcome_back')}} {{ Auth::user()->name }}!</h4>
 
           </div>
 
@@ -66,9 +66,7 @@
 
         <div class="col">
             <div class="alert alert-info">
-
-                <p>Your current application eligibility status: <span class="badge badge-warning">{{($isEligibleForApplication) ? 'Eligibile' : 'Ineligible' }}</span></p>
-
+                <p>{{__('messages.eligibility_status', ['badgeStatus' => '<span class="badge badge-warning"> ' . ($isEligibleForApplication) ? __('messages.eligible') : __('messages.ineligible') .'</span>'])}}</p>
             </div>
         </div>
 
@@ -84,12 +82,12 @@
                 <div class="inner">
                   <h3>{{ $openApplications ?? 0 }}</h3>
 
-                  <p>Ongoing Apps</p>
+                  <p>{{__('messages.ongoing_apps')}}</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-sync"></i>
                 </div>
-                <a href="{{ route('showUserApps') }}" class="small-box-footer">Open <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('showUserApps') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -99,12 +97,12 @@
                 <div class="inner">
                   <h3>{{ $deniedApplications ?? 0 }}</h3>
 
-                  <p>Denied Apps</p>
+                  <p>{{__('messages.denied_apps')}}/p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-times"></i>
                 </div>
-                <a href="{{ route('showUserApps') }}" class="small-box-footer">Open <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('showUserApps') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
         </div>
@@ -118,14 +116,14 @@
               <div class="inner">
                 <h3>{{ $totalUserCount }}</h3>
 
-                <p>Total Users + Staff</p>
+                <p>{{__('messages.users_staff')}}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-users"></i>
               </div>
               @if (Auth::user()->hasRole('admin'))
 
-                <a href="{{ route('registeredPlayerList') }}" class="small-box-footer">Open <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('registeredPlayerList') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
 
               @endif
             </div>
@@ -137,7 +135,7 @@
               <div class="inner">
                 <h3>{{ $totalDenied }}</h3>
 
-                <p>Denied applications</p>
+                <p>{{__('messages.denied_apps')}}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-user-slash"></i>
@@ -151,12 +149,12 @@
               <div class="inner">
                 <h3>{{ $totalNewApplications }}</h3>
 
-                <p>New applications</p>
+                <p>{{__('messages.new_apps')}}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-plus"></i>
               </div>
-              <a href="{{ route('staffPendingApps') }}" class="small-box-footer">Open <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('staffPendingApps') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -166,12 +164,12 @@
               <div class="inner">
                 <h3>{{ $totalPeerReview }}</h3>
 
-                <p>Vote backlog</p>
+                <p>{{__('messages.v_backlog')}}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-vote-yea"></i>
               </div>
-              <a href="{{ route('peerReview') }}" class="small-box-footer">Open <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('peerReview') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -185,7 +183,7 @@
 
             <div class="col text-center">
 
-              <h4>Available ranks</h3>
+              <h4>{{__('messages.ranks')}}</h4>
               <hr />
 
             </div>
@@ -221,8 +219,8 @@
 
                 <div class="card-footer text-center">
 
-                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='{{ route('renderApplicationForm', ['vacancySlug' => $vacancy->vacancySlug]) }}'">Apply</button>
-                    <button type="button" class="btn btn-warning btn-sm" onclick="$('#{{ $vacancy->vacancySlug }}-details').modal('show')">Learn More</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='{{ route('renderApplicationForm', ['vacancySlug' => $vacancy->vacancySlug]) }}'">{{__('messages.txt_apply')}}</button>
+                    <button type="button" class="btn btn-warning btn-sm" onclick="$('#{{ $vacancy->vacancySlug }}-details').modal('show')">{{__('messages.txt_learn_more')}}</button>
 
                 </div>
               </div>
@@ -245,7 +243,7 @@
                 <div class="card-header">
 
                     <h4>
-                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;Your upcoming interviews (<i>coming soon</i>)
+                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;{{__('messages.upcoming')}} (<i>{{__('messages.soon')}}</i>)
                     </h4>
 
                 </div>

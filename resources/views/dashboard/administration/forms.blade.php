@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Application Form Management Tool')
+@section('title', config('app.name') . ' | ' . __('messages.forms_p.available_forms'))
 
 @section('content_header')
 
-    <h4>Administration / Forms</h4>
+    <h4>{{__('messages.adm')}} / {{__('messages.forms')}}</h4>
 
 @stop
 
@@ -23,7 +23,7 @@
             <div class="card bg-gray-dark">
 
                 <div class="card-header bg-indigo">
-                    <div class="card-title"><h4 class="text-bold">Available Forms</h4></div>
+                    <div class="card-title"><h4 class="text-bold">{{__('messages.forms_p.available_forms')}}</h4></div>
                 </div>
 
                 <div class="card-body">
@@ -36,10 +36,10 @@
 
                             <tr>
                                 <th>#</th>
-                                <th>Form Title</th>
-                                <th>Created On</th>
-                                <th>Updated On</th>
-                                <th>Actions</th>
+                                <th>{{__('messages.forms_p.form_title')}}</th>
+                                <th>{{__('messages.reusable.created_at')}}</th>
+                                <th>{{__('messages.reusable.updated_at')}}</th>
+                                <th>{{__('messages.reusable.actions')}}</th>
                             </tr>
 
                             </thead>
@@ -59,9 +59,9 @@
                                             @method('DELETE')
                                             @csrf
 
-                                            <button type="submit" class="btn btn-sm btn-danger mr-2"><i class="fa fa-trash"></i> Delete</button>
+                                            <button type="submit" class="btn btn-sm btn-danger mr-2"><i class="fa fa-trash"></i> {{__('messages.reusable.delete')}}</button>
                                         </form>
-                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{ route('previewForm', ['form' => $form->id]) }}'"><i class="fa fa-eye"></i> Preview</button>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{ route('previewForm', ['form' => $form->id]) }}'"><i class="fa fa-eye"></i> {{__('messages.form_preview.preview')}}</button>
                                     </td>
                                 </tr>
 
@@ -75,7 +75,7 @@
 
                         <div class="alert alert-warning">
 
-                            Nothing to see here! Please add some forms first.
+                            {{__('messages.forms_p.empty_noforms')}}
 
                         </div>
 
@@ -85,7 +85,7 @@
 
                 <div class="card-footer">
 
-                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showFormBuilder')}}'">NEW FORM</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showFormBuilder')}}'">{{__('messages.forms_p.new_form')}}</button>
 
                 </div>
 

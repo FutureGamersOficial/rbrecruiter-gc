@@ -16,12 +16,12 @@
       <div class="col">
 
         <div class="alert alert-{{$type}}">
-          <h4><i class="fas fa-user-lock"></i> Access Denied</h2>
+          <h4><i class="fas fa-user-lock"></i> {{__('messages.component_accessdenied')}}</h4>
           <p>
-            We're sorry, but you do not have permission to access this web page.
+            {{__('messages.component_nopermission')}}
           </p>
           <p>
-            Please contact your administrator if you believe this was in error.
+             {{__('messages.component_contact')}}
           </p>
         </div>
 

@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Registered Players')
+@section('title', config('app.name') . ' | ' . __('messages.players.reg_players'))
 
 @section('content_header')
 
-    <h4>Administration / Registered Players</h4>
+    <h4>{{__('messages.adm')}} / {{__('messages.players.reg_players')}}</h4>
 
 @stop
 
@@ -23,7 +23,7 @@
                 <div class="inner">
                     <h3>{{$users->count()}}</h3>
 
-                    <p>Registered Players</p>
+                    <p>{{__('messages.players.reg_players')}}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-users"></i>
@@ -37,7 +37,7 @@
                 <div class="inner">
                     <h3>{{$bannedUserCount}}</h3>
 
-                    <p>Total Banned Players</p>
+                    <p>{{__('messages.players.total_banned')}}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-ban"></i>
@@ -55,7 +55,7 @@ I
             <div class="card">
 
                 <div class="card-header">
-                    <div class="card-title"><h4><i class="fas fa-search"></i>Search Players</h4></div>
+                    <div class="card-title"><h4><i class="fas fa-search"></i>{{__('messages.players.search')}}</h4></div>
                 </div>
 
                 <div class="card-body">
@@ -63,7 +63,7 @@ I
                     <form name="search" method="POST" action="{{route('searchRegisteredPLayerList')}}">
                         @csrf
                         <div class="input-group">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="Full/partial email search">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="{{__('messages.players.f_p_search')}}">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="fa fa-search"></i>
@@ -87,7 +87,7 @@ I
         <div class="col">
 
             <div class="alert alert-warning">
-                <p>Please note: This list only includes players registered in the team management portal. In a future release, all network players will be shown here.</p>
+                <p>{{__('messages.players.p_disclaimer')}}</p>
             </div>
 
         </div>
@@ -103,7 +103,7 @@ I
 
               <div class="card-header bg-indigo">
 
-                  <div class="card-title"><h4 class="text-bold">Player Listing</h4></div>
+                  <div class="card-title"><h4 class="text-bold">{{__('messages.players.listing')}}</h4></div>
 
               </div>
 
@@ -114,12 +114,12 @@ I
                       <thead>
                       <tr>
                           <th>#</th>
-                          <th>IGN</th>
+                          <th>{{__('messages.players.ign')}}</th>
                           <th>UUID</th>
-                          <th>Email</th>
-                          <th>Status</th>
-                          <th>Registration Date</th>
-                          <th>Actions</th>
+                          <th>{{__('messages.contactlabel_email')}}</th>
+                          <th>{{__('messages.reusable.status')}}</th>
+                          <th>{{__('messages.players.reg_date')}}</th>
+                          <th>{{__('messages.reusable.actions')}}</th>
                       </tr>
                       </thead>
 
@@ -134,9 +134,9 @@ I
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     @if ($user->isBanned())
-                                        <span class="badge badge-danger"><i class="fa fa-ban"></i> Banned</span>
+                                        <span class="badge badge-danger"><i class="fa fa-ban"></i> {{__('messages.players.banned')}}</span>
                                     @else
-                                        <span class="badge badge-success">Active</span>
+                                        <span class="badge badge-success">{{__('messages.players.active')}}</span>
                                     @endif
                                 </td>
                                 <td>{{$user->created_at}}</td>
@@ -153,10 +153,9 @@ I
                 @else
                     <div class="alert alert-secondary">
 
-                        <i class="fas fa-question"></i><span> There are no registered players!</span>
+                        <i class="fas fa-question"></i><span> {{__('messages.players.no_reg')}}</span>
                         <p>
-                            Registered players are those without a staff role in the team management application.
-                            There may be other users registered in the platform, but they won't be displayed here.
+                            {{__('messages.players.no_reg_exp')}}
                         </p>
 
                     </div>
@@ -165,7 +164,7 @@ I
 
               <div class="card-footer">
 
-                  <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route("staffMemberList")}}'">See Staff Members</button>
+                  <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route("staffMemberList")}}'">{{__('messages.players.see_staff')}}</button>
 
               </div>
 

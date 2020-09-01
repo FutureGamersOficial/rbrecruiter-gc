@@ -17,7 +17,7 @@
                 {{ $modalFooter }}
 
                 @if ($includeCloseButton == true)
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.modal_close')}}</button>
                 @endif
             </div>
         </div>

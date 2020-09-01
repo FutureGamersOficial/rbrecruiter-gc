@@ -16,6 +16,21 @@
 
 return [
 
+    // ============== REUSABLE STRINGS =======================
+
+    'reusable' => [
+        'created_at' => 'Created at',
+        'updated_at' => 'Updated at',
+        'actions' => 'Actions',
+        'delete' => 'Delete',
+        'status' => 'Status',
+        'no_access' => 'Application Access Denied',
+        'validation_err' => 'Validation error!',
+        'description' => 'Description',
+        'join_date' => 'Join Date'
+    ],
+
+
     // ============== HOMEPAGE MESSAGES ======================
 
     'home' => 'Home',
@@ -24,6 +39,7 @@ return [
     'logout' => 'Sign out',
     'register' => 'Sign up',
     'dashboard' => 'Dashboard',
+    'back' => 'Go back',
     'homepage_welcome' => 'Welcome to our team management center!',
     'homepage_explainer_line1' => 'Here, you can apply for open staff member positions, view your application status, and manage your profile.',
     'homepage_explainer_line2' => 'Sign up with Email to continue.',
@@ -91,5 +107,166 @@ EOT,
     'register_txt' => 'Register',
 
     // ===================== DASHBOARD & COMPONENT MESSAGES ===========================
+
+    'modal_close' => 'Close',
+    'component_nopermission' => 'We\'re sorry, but you do not have permission to access this web page.',
+    'component_accessdenied' => 'Access Denied',
+    'component_contact' => 'Please contact your administrator if you believe this was in error.',
+    'welcome_back' => 'Welcome back,',
+    'eligible' => 'Eligible',
+    'ineligible' => 'Ineligible',
+    'eligibility_status' => 'Your current application eligibility status: :badgeStatus',
+    'ongoing_apps' => 'Ongoing apps',
+    'denied_apps' => 'Denied apps',
+    'users_staff' => 'Total Users + Staff',
+    'new_apps' => 'New applications',
+    'v_backlog' => 'Vote backlog',
+    'ranks' => 'Available ranks',
+    'open' => 'Open',
+    'closed' => 'Closed',
+    'upcoming' => 'Your upcoming interviews',
+    'soon' => 'Coming soon',
+
+
+    //=================== ADMINISTRATION MESSAGES (for all administration pages) ===============
+
+    'adm' => 'Administration',
+    'devtools' => 'Developer Tools',
+    'devoptions' => 'Developer Options',
+    'forceeval' => 'Please choose an application to force re-evaluation',
+    'appid' => 'Application ID',
+    'no_valid_app' => 'There are no valid applications',
+    'choose_app' => 'Choose an application',
+    'dispatch_event' => 'Dispatch event now',
+    'devtools_warn' => 'Do not use these options if you don\'t know what you\'re doing, even if you have access to this page.',
+    'warn' => 'Warning',
+    'override_votes' => 'Override Vote Evaluation',
+    'artisan_evaluate' => 'Artisan: Evaluate Votes Now', // Tip: Artisan is a program name, therefore not translatable
+    'devtools_info' => 'This panel may be also used to completely override the vote system in stalemate scenarios',
+
+
+    'forms' => 'Forms',
+    'positions' => 'Positions', // Context: Positions as in job opening
+    'edit_form' => 'Edit Form',
+    'edt' => 'Editor',
+    'edit' => 'Edit',
+    'edt_action' => 'Editing',
+    'txtbox' => 'Textbox',
+    'multiline' => 'Multi line answer',
+    'checkbox' => 'Checkbox',
+    'field_type' => 'Choose a field type',
+    'save_exit' => 'Save & Quit',
+    'new_field' => 'New field',
+    'vacancy_edit' => 'Vacancy Editor',
+    'new_vacancy' => 'New Vacancy',
+    'form_consistency' => 'For consistency purposes, grayed out fields can\'t be edited.',
+
+    'vacancy' => [
+        'add' => 'Add vacancy',
+        'name' => 'Vacancy Name',
+        'description' => 'Vacancy Description',
+        'details' => 'Vacancy Details',
+        'markdown' => 'Markdown Supported',
+        'no_details' => 'No details yet... Add some!',
+        'permission_group' => 'Permission Group',
+        'permission_group_tooltip' => 'The permission group from your server/network\'s permissions manager. Compatible with Luckperms and PEX.',
+        'discord_roleid' => 'Discord Role ID',
+        'discord_roleid_tooltip' => 'Discord Desktop: Go to your Account Settings > Appearance -> Advanced and toggle Developer Mode. On your server\'s roles tab, right click any role to copy it\'s ID.',
+        'current_form' => 'Current Form (uneditable)',
+        'remaining_slots' => 'Remaining slots',
+        'free_slots' => 'Free slots',
+        'free_slots_tooltip' => 'How many submissions before the vacancy stops accepting new applicants?',
+        'save' => 'Save Changes',
+        'cancel' => 'Cancel',
+        'close_vacancy' => 'Close Position',
+        'description_tooltip' => 'Add things like admission requirements, rank resposibilities and roles, and anything else you feel is necessary',
+        ''
+
+    ],
+
+    'form' => 'Form',
+
+    'form_builder' => [
+        'builder' => 'Form Builder',
+        'builder_name' => 'Application Form Management Tool',
+        'name_form' => 'Name your form...',
+        'save_form' => 'Save Form',
+    ],
+
+    'form_preview' => [
+        'preview' => 'Preview',
+        'title' => 'Application Form Preview',
+        'looks' => 'This is how your form looks like to applicants',
+        'f_info' => 'You may edit it and add more fields later.',
+        ''
+    ],
+
+    'forms_p' => [
+
+        'available_forms' => 'Available forms',
+        'form_title' => 'Form title',
+        'empty_noforms' => 'Nothing to see here! Please add some forms first.',
+        'new_form' => 'NEW FORM'
+    ],
+
+    'players' => [
+
+        'reg_players' => 'Registered players',
+        'reg_players_staff' => 'See Registered Players (Applicant Pool)',
+        'total_banned' => 'Total Banned Players',
+        'search' => 'Search players',
+        'f_p_search' => 'Full/partial email search',
+        'p_disclaimer' => 'Please note: This list only includes players registered in the team management portal. In a future release, all network players will be shown here.',
+        'listing' => 'Player Listing',
+        'reg_date' => 'Registration Date',
+        'ign' => 'IGN', // Context: Short for In-Game Name
+        'banned' => 'Banned',
+        'active' => 'Active',
+        'no_reg' => 'There are no registered players!',
+        'no_reg_exp' => <<<EOT
+          Registered players are those without a staff role in the team management application.
+          There may be other users registered in the platform, but they won't be displayed here.
+EOT,
+        'see_staff' => 'See Staff Members'
+
+    ],
+
+    'positions_p' => [
+
+        'application_form' => 'Application Form',
+        'select_form' => 'Select a form...',
+        'no_form_error' => <<<EOT
+           You cannot create a vacancy without any forms with which people would apply.
+           create a form first, then, create a vacancy.
+           A single form is allowed to have multiple vacancies, so you can attach future vacancies to the same form if you'd like.
+EOT,
+        'new_pos' => 'NEW POSITION',
+        'empty_pos_warning' => 'Nothing to see here! Open some vacancies first. This will get applicants pouring in! (hopefully)',
+        'manage_forms' => 'MANAGE APPLICATION FORMS',
+
+    ],
+
+    'settings' => [
+
+        'settings' => 'Settings',
+        'settings_header' => 'Notification Settings',
+        'settings_p' => 'Change which notifications are sent here.',
+        'back_btn' => 'Back to Dashboard'
+
+    ],
+
+    'staff' => [
+
+        'members' => 'Staff Members',
+        'active_sm' => 'Active Staff Members',
+        'm_listing' => 'Member Listing',
+        'f_name' => 'Full Name',
+        'rank' => 'Rank',
+    ],
+
+    // ======================== APPLICATION RENDERING MESSAGES =========================
+
+
+
 
 ];

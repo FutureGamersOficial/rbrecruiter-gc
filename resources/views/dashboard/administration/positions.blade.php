@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Open Positions')
+@section('title',  config('app.name') . ' | ' . __('messages.open_positions'))
 
 @section('content_header')
 
     @if (Auth::user()->hasAnyRole('admin', 'hiringManager'))
-      <h4>Administration / Open Positions</h4>
+      <h4>{{__('messages.adm')}} / {{__('messages.open_positions')}}</h4>
     @else
-      <h4>Application Access Denied</h4>
+      <h4>{{__('messages.reusable.no_access')}}</h4>
     @endif
 
 @stop
@@ -29,7 +29,7 @@
     @if($errors->any())
 
         @foreach ($errors->all() as $error)
-            <script>toastr.error('{{$error}}', 'Validation error!')</script>
+            <script>toastr.error('{{$error}}', '{{__('messages.reusable.validation_err')}}')</script>
         @endforeach
 
     @endif
@@ -43,7 +43,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalFormLabel">New Vacancy</h5>
+                    <h5 class="modal-title" id="modalFormLabel">{{__('messages.new_vacancy')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -54,35 +54,35 @@
 
                         <form id="savePositionForm" action="{{route('savePosition')}}" method="POST">
                             @csrf
-                            <label for="vacancyName">Vacancy name (e.g. Helper)</label>
+                            <label for="vacancyName">{{__('messages.vacancy.name')}}</label>
                             <input type="text" id="vacancyName" name="vacancyName" class="form-control">
 
-                            <label for="vacancyDescription">Vacancy Description</label>
+                            <label for="vacancyDescription">{{__('messages.vacancy.description')}}</label>
                             <input type="text" id="vacancyDescription" name="vacancyDescription" class="form-control">
 
-                            <label for="vacancyFullDescription">Vacancy Details</label>
-                            <textarea name="vacancyFullDescription" class="form-control" rel="txtTooltip" title="Add things like admission requirements, rank resposibilities and roles, and anything else you feel is necessary" data-toggle="tooltip" data-placement="bottom"></textarea>
-                            <span class="right text-muted"><i class="fab fa-markdown"></i> Markdown supported</span>
+                            <label for="vacancyFullDescription">{{__('messages.vacancy.description')}}</label>
+                            <textarea name="vacancyFullDescription" class="form-control" rel="txtTooltip" title="{{__('messages.vacancy.description_tooltip')}}" data-toggle="tooltip" data-placement="bottom"></textarea>
+                            <span class="right text-muted"><i class="fab fa-markdown"></i> {{__('messages.vacancy.markdown')}}</span>
                             <div class="row mt-3">
 
                                 <div class="col">
-                                    <label for="pgroup">Permission Group Name</label>
-                                    <input rel="txtTooltip" title="The permission group from your server/network's permissions manager. Compatible with Luckperms and PEX." data-toggle="tooltip" data-placement="bottom" type="text" id="pgroup" name="permissionGroup" class="form-control">
+                                    <label for="pgroup">{{__('messages.vacancy.permission_group')}}</label>
+                                    <input rel="txtTooltip" title="{{__('messages.vacancy.permission_group_tooltip')}}" data-toggle="tooltip" data-placement="bottom" type="text" id="pgroup" name="permissionGroup" class="form-control">
                                 </div>
 
                                 <div class="col">
-                                    <label for="discordrole">Discord Role ID (*)</label>
-                                    <input rel="txtTooltip" title="Discord Desktop: Go to your Account Settings > Appearance -> Advanced and toggle Developer Mode. On your server's roles tab, right click any role to copy it's ID." data-toggle="tooltip" data-placement="bottom" type="text" id="discordrole" name="discordRole" class="form-control">
+                                    <label for="discordrole">{{__('messages.vacancy.discord_roleid')}} (*)</label>
+                                    <input rel="txtTooltip" title="{{__('messages.vacancy.discord_roleid_tooltip')}}" data-toggle="tooltip" data-placement="bottom" type="text" id="discordrole" name="discordRole" class="form-control">
                                 </div>
 
                             </div>
 
                             <div class="form-group mt-4">
 
-                                <label for="associatedForm">Application form</label>
+                                <label for="associatedForm">{{__('messages.positions_p.application_form')}}</label>
                                 <select class="custom-select" name="vacancyFormID" id="associatedForm">
 
-                                    <option disabled>Select a form...</option>
+                                    <option disabled>{{__('messages.positions_p.select_form')}}</option>
                                     @foreach($forms as $form)
 
                                         <option value="{{$form->id}}">{{$form->formName}}</option>
@@ -91,8 +91,8 @@
 
                                 </select>
 
-                                <label for="vacancyCount">Free slots</label>
-                                <input rel="txtTooltip" title="How many submissions before the vacancy stops accepting new applicants?" data-toggle="tooltip" data-placement="bottom" type="text" id="vacancyCount" name="vacancyCount" class="form-control">
+                                <label for="vacancyCount">{{__('messages.vacancy.free_slots')}}</label>
+                                <input rel="txtTooltip" title="{{__('messages.vacancy.free_slots_tooltip')}}" data-toggle="tooltip" data-placement="bottom" type="text" id="vacancyCount" name="vacancyCount" class="form-control">
 
 
                             </div>
@@ -103,9 +103,7 @@
                         <div class="alert alert-danger">
 
                             <p>
-                                You cannot create a vacancy without any forms with which people would apply.
-                                Please create a form first, then, create a vacancy.
-                                A single form is allowed to have multiple vacancies, so you can attach future vacancies to the same form if you'd like.
+                                {{__('messages.positions_p.no_form_error')}}
                             </p>
                         </div>
 
@@ -115,10 +113,10 @@
                 <div class="modal-footer">
 
                     @if(!$forms->isEmpty())
-                        <button type="button" class="btn btn-primary" onclick="document.getElementById('savePositionForm').submit()">Add Vacancy</button>
+                        <button type="button" class="btn btn-primary" onclick="document.getElementById('savePositionForm').submit()">{{__('messages.vacancy.add')}}</button>
                     @endif
 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.modal_close')}}</button>
                 </div>
             </div>
         </div>
@@ -132,7 +130,7 @@
 
                 <div class="card-body">
 
-                    <button type="button" class="btn btn-primary" onclick="$('#newVacancyForm').modal('show')">NEW POSITION</button>
+                    <button type="button" class="btn btn-primary" onclick="$('#newVacancyForm').modal('show')">{{__('messages.positions_p.new_pos')}}</button>
 
                 </div>
 
@@ -149,7 +147,7 @@
             <div class="card bg-gray-dark">
 
                 <div class="card-header bg-indigo">
-                    <div class="card-title"><h4 class="text-bold">Open Vacancies</h4></div>
+                    <div class="card-title"><h4 class="text-bold">{{__('messages.open_positions')}}</h4></div>
                 </div>
 
                 <div class="card-body">
@@ -161,14 +159,14 @@
                             <thead>
 
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Discord Role ID</th>
-                                <th>Perm. Group Name</th>
-                                <th>Open Slots</th>
-                                <th>Status</th>
-                                <th>Created On</th>
-                                <th>Actions</th>
+                                <th>{{__('messages.contactlabel_name')}}</th>
+                                <th>{{__('messages.reusable.description')}}</th>
+                                <th>{{__('messages.vacancy.discord_roleid')}}</th>
+                                <th>{{__('messages.vacancy.permission_groupr')}}</th>
+                                <th>{{__('messages.vacancy.free_slots')}}</th>
+                                <th>{{__('messages.reusable.status')}}</th>
+                                <th>{{__('messages.reusable.created_at')}}</th>
+                                <th>{{__('messages.reusable.actions')}}</th>
                             </tr>
 
                             </thead>
@@ -184,9 +182,9 @@
                                     <td><span class="badge badge-success">{{$vacancy->permissionGroupName}}</span></td>
                                     <td>{{$vacancy->vacancyCount}}</td>
                                     @if($vacancy->vacancyStatus == 'OPEN')
-                                        <td><span class="badge badge-success">OPEN</span></td>
+                                        <td><span class="badge badge-success">{{__('messages.open')}}</span></td>
                                     @else
-                                        <td><span class="badge badge-danger">CLOSED</span></td>
+                                        <td><span class="badge badge-danger">{{__('messages.closed')}}</span></td>
                                     @endif
                                     <td>{{$vacancy->created_at}}</td>
                                     <td>
@@ -223,7 +221,7 @@
                     @else
 
                         <div class="alert alert-warning">
-                            <p>Nothing to see here! Open some vacancies first. This will get applicants pouring in! (hopefully)</p>
+                            <p>{{__('messages.positions_p.empty_pos_warning')}}</p>
                         </div>
 
                     @endif
@@ -231,7 +229,7 @@
 
                 <div class="card-footer">
 
-                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showForms')}}'">MANAGE APPLICATION FORMS</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showForms')}}'">{{__('messages.positions_p.manage_forms')}}</button>
 
                 </div>
 

@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-    <h4>Administration / Forms / Editor</h4>
+    <h4>{{__('messages.adm')}} / {{__('messages.forms')}} / {{__('messages.edt')}}</h4>
 
 @stop
 
@@ -47,7 +47,7 @@
 
             <div class="card-header">
 
-              <h4>Editing {{ $title }}...</h4>
+              <h4>{{__('messages.edt_action')}} {{ $title }}...</h4>
 
             </div>
 
@@ -61,10 +61,10 @@
 
                     <select class="custom-select" id="{{ $fieldName }}-type" name="{{ $fieldName }}[]">
 
-                        <option value="nil" disabled>Choose a type</option>
-                        <option value="textbox" {{ ($field['type'] == 'textbox' ? 'selected' : '') }}>Textbox</option>
-                        <option value="textarea" {{ ($field['type'] == 'textarea' ? 'selected' : '') }}>Multi line answer</option>
-                        <option value="checkbox" {{ ($field['type'] == 'checkbox' ? 'selected' : '') }}>Checkbox</option>
+                        <option value="nil" disabled>{{__('messages.field_type')}}</option>
+                        <option value="textbox" {{ ($field['type'] == 'textbox' ? 'selected' : '') }}>{{__('messages.txtbox')}}</option>
+                        <option value="textarea" {{ ($field['type'] == 'textarea' ? 'selected' : '') }}>{{__('messages.multiline')}}</option>
+                        <option value="checkbox" {{ ($field['type'] == 'checkbox' ? 'selected' : '') }}>{{__('messages.checkbox')}}</option>
 
                     </select>
 
@@ -82,8 +82,8 @@
 
             <div class="card-footer text-center">
 
-              <button type="button" class="btn btn-warning ml-2" onclick="$('#editForm').submit()"><i class="fas fa-save"></i> Save & Quit</button>
-              <button type="button" class="btn btn-primary ml-2" id="add"><i class="fas fa-plus"></i> New field</button>
+              <button type="button" class="btn btn-warning ml-2" onclick="$('#editForm').submit()"><i class="fas fa-save"></i> {{__('messages.save_exit')}}</button>
+              <button type="button" class="btn btn-primary ml-2" id="add"><i class="fas fa-plus"></i> {{__('messages.new_field')}}</button>
 
             </div>
 
