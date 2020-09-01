@@ -16,7 +16,24 @@
 
 return [
 
-    // ============== REUSABLE STRINGS =======================
+    // ============== MENU TRANSLATIONS ======================
+
+
+    'menu' => [
+
+        'my_apps' => 'My Applications',
+        'current_apps' => 'Current Applications',
+        'profile_settings' => 'Profile Settings',
+        'hiring_man' => 'Hiring Management',
+        'all_forms' => 'All Forms',
+        'app_settings' => 'App Settings',
+        'global_app_settings' => 'Global App Settings',
+        'system_logs' => 'System Logs'
+    ],
+
+
+
+    // ============== REUSABLE, GENERIC STRINGS ===============
 
     'reusable' => [
         'created_at' => 'Created at',
@@ -243,7 +260,7 @@ EOT,
 
     'players' => [
 
-        'reg_players' => 'Registered players',
+        'reg_players' => 'Registered Players',
         'reg_players_staff' => 'See Registered Players (Applicant Pool)',
         'total_banned' => 'Total Banned Players',
         'search' => 'Search players',
@@ -323,7 +340,7 @@ EOT,
 
 
         'outstanding_sm' => 'Outstanding',
-        'outstanding_apps' => 'Outstanding applications',
+        'outstanding_apps' => 'Outstanding Applications',
         'outstanding_subm' => 'Outstanding (Submitted)',
 
         'interview_q' => 'Interview Queue',
@@ -440,6 +457,7 @@ EOT,
         'acc_management' => 'Account Management (Admin)',
         'discord_tag' => 'User\'s Discord Tag: :discordTag',
         'account_settings' => 'Account Settings',
+        'account_settings_personal' => 'My Account Settings',
 
         '2fa_welcome' => 'We\'re glad you decided to increase your account\'s security!',
         'supported_apps' => 'Supported apps you can install: ',
@@ -516,6 +534,7 @@ EOT,
 
         'submitted' => 'Submitted',
         'peer_approval' => 'Peer Approval',
+        'peer_approval_q' => 'Peer Approval Queue',
 
         'nothing_to_show' => 'Nothing to show',
         'nothing_to_show_exp' => 'You currently have no applications to display. If you\'re eligible, you may apply once every month.',
@@ -578,8 +597,8 @@ EOT,
         'max_chars' => 'max characters', // Context: A number is added before max characters
         'post' => 'Post', // Context: Post as in post comment
 
-
-
     ]
+
+    // ==================== END OF MAIN I18N FILE ======================
 
 ];

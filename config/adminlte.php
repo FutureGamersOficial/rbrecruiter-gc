@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Raspberry Net',
+    'title' => env('APP_NAME'),
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => 'RaspberryNet Staff',
-    'logo_img' => 'https://www.raspberrypi.org/app/uploads/2020/05/Raspberry-Pi-OS-downloads-image-150x150-1.png',
+    'logo' => env('APP_NAME'),
+    'logo_img' => env('APP_LOGO'),
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Raspberry Network Staff Temporary Logo',
+    'logo_img_alt' => env('APP_NAME') . '\'s Temporary Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -209,74 +209,74 @@ return [
 
     'menu' => [
         [
-          'text' => 'Home',
+          'text' => __('messages.home'),
           'icon' => 'fas fa-home',
           'url' => 'dashboard'
         ],
         [
-          'text' => 'Directory',
+          'text' => __('messages.user.directory.directory'),
           'icon' => 'fas fa-users',
           'url' => 'users/directory',
           'can' => 'profiles.view.others'
         ],
         [
-            'header' => 'Applications',
+            'header' => __('messages.application_m.int_applications'),
             'can' => 'applications.view.own'
         ],
         [
-            'text' => 'My Applications',
+            'text' => __('messages.menu.my_apps'),
             'icon'  => 'fas fa-fw fa-list-ul',
             'can' => 'applications.view.own',
             'submenu' => [
                 [
-                    'text' => 'Current Applications',
+                    'text' => __('messages.menu.current_apps'),
                     'icon' => 'fas fa-fw fa-check-double',
                     'url' => '/applications/my-applications'
                 ]
             ],
 
         ],
-        'My Profile',
+        __('messages.reusable.profile'),
         [
-            'text' => 'Profile Settings',
+            'text' => __('messages.menu.profile_settings'),
             'url' => '/profile/settings',
             'icon' => 'fas fa-fw fa-cog'
         ],
         [
-            'text' => 'My Account Settings',
+            'text' => __('messages.profile.account_settings_personal'),
             'icon' => 'fas fa-user-circle',
             'url' => '/profile/settings/account'
         ],
         [
-            'header' => 'Application Management',
+            'header' => __('messages.application_m.title'),
             'can' => ['applications.view.all', 'applications.vote']
         ],
         [
-          'text' => 'All applications',
+          'text' => __('messages.application_m.all_apps'),
           'url' => 'applications/staff/all',
           'icon' => 'fas fa-list-ol',
           'can' => 'applications.view.all'
         ],
         [
-            'text' => 'Outstanding Applications',
+            'text' => __('messages.application_m.outstanding_apps'),
             'url' => '/applications/staff/outstanding',
             'icon' => 'far fa-folder-open',
             'can' => 'applications.view.all'
         ],
         [
-            'text' => 'Interview Queue',
+            'text' => __('messages.application_m.interview_q'),
             'url' => '/applications/staff/pending-interview',
             'icon' => 'fas fa-fw fa-microphone-alt',
             'can' => 'applications.view.all'
         ],
         [
-            'text' => 'Peer Approval Queue',
+            'text' => __('messages.user.peer_approval_q'),
             'url' => '/applications/staff/peer-review',
             'icon' => 'fas fa-fw fa-search',
             'can' => 'applications.view.all'
         ],
         [
-            'header' => 'Administration',
+            'header' => __('messages.adm'),
             'can' => [ // may need to be modified
                 'admin.hiring.*',
                 'admin.userlist',
@@ -286,38 +286,38 @@ return [
             ]
         ],
         [
-            'text' => 'Staff Members',
+            'text' => __('messages.staff.members'),
             'icon' => 'fas fa-fw fa-users',
             'url' => '/hr/staff-members',
             'can' => 'admin.stafflist'
         ],
         [    // players who haven't been promoted yet
-            'text' => 'Registered Players',
+            'text' => __('messages.players.reg_players'),
             'icon' => 'fas fa-fw fa-user-friends',
             'url' => '/hr/players',
             'can' => 'admin.userlist'
         ],
         [
-          'text' => 'Hiring Management',
+          'text' => __('messages.menu.hiring_man'),
           'icon' => 'far fa-calendar-plus',
             'can' => 'admin.hiring.*',
             'submenu' => [
                 [
-                    'text' => 'Open Positions',
+                    'text' => __('messages.open_positions'),
                     'icon' => 'fas fa-box-open',
                     'url' => '/admin/positions'
                 ],
                 [
-                    'text' => 'Forms',
+                    'text' => __('messages.forms'),
                     'icon' => 'fab fa-wpforms',
                     'submenu' => [
                         [
-                            'text' => 'All forms',
+                            'text' => __('messages.menu.all_forms'),
                             'icon' => 'far fa-list-alt',
                             'url' => '/admin/forms'
                         ],
                         [
-                            'text' => 'Form Builder',
+                            'text' => __('messages.form_builder.builder'),
                             'icon' => 'fas fa-fw fa-hammer',
                             'url' => '/admin/forms/builder'
                         ]
@@ -326,18 +326,18 @@ return [
             ]
         ],
         [
-            'text' => 'App Settings',
+            'text' => __('messages.menu.app_settings'),
             'icon' => 'fas fa-fw fa-cog',
             'can' => 'admin.notificationsettings',
             'submenu' => [
                 [
-                    'text' => 'Global Application Settings',
+                    'text' => __('messages.menu.global_app_settings'),
                     'icon' => 'fas fa-cogs',
                     'url' => '/admin/settings',
                     'can' => 'admin.settings.view'
                 ],
                 [
-                    'text' => 'Developer Tools',
+                    'text' => __('messages.devtools'),
                     'icon' => 'fas fa-code',
                     'url' => '/admin/devtools',
                     'can' => 'admin.developertools.use'
@@ -345,7 +345,7 @@ return [
             ]
         ],
         [
-            'text' => 'System Logs',
+            'text' => __('messages.menu.system_logs'),
             'url' => '/admin/maintenance/system-logs',
             'icon' => 'fas fa-clipboard-list',
             'can' => 'admin.maintenance.logs.view'
