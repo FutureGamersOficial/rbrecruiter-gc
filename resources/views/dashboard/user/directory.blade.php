@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | User Directory')
+@section('title', config('app.name') . ' | ' . __('messages.user.directory.title'))
 
 @section('content_header')
 
-    <h4>Users / Directory</h4>
+    <h4>{{__('messages.profile.users')}} / {{__('messages.user.directory.directory')}}</h4>
 
 @stop
 

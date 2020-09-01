@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Profile')
+@section('title', config('app.name') . ' | ' . __('messages.view_app.title'))
 
 @section('content_header')
 
-    <h4>Application Management / Viewing {{$application->user->name}}'s Application</h4>
+    <h4>{{__('messages.application_m.title')}} / {{__('messages.view_app.viewing_app', ['user' => $application->user->name])}}</h4>
 
 @stop
 
@@ -24,7 +24,7 @@
     <x-global-errors></x-global-errors>
     @if (!$canVote && Auth::user()->can('applications.vote') && $application->applicationStatus == 'STAGE_PEERAPPROVAL')
         <script>
-            toastr.info('You cannot vote on this application anymore.', 'Warning')
+            toastr.info('{{__('messages.view_app.cantvote')}}', '{{__('messages.warn')}}')
         </script>
     @endif
 
@@ -41,12 +41,12 @@
                     <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['application' => $application->id])}}">
                         @csrf
                         @method('PATCH')
-                        <textarea name="noteText" rows="5" class="form-control">{{$application->appointment->meetingNotes ?? 'There are no notes yet. Add some!'}}</textarea>
+                        <textarea name="noteText" rows="5" class="form-control">{{$application->appointment->meetingNotes ?? __('messages.view_app.no_notes')}}</textarea>
                     </form>
-                    <p class="text-muted text-sm">Last updated @ {{$application->appointment->updated_at}}</p>
+                    <p class="text-muted text-sm">{{__('messages.last_updated')}} @ {{$application->appointment->updated_at}}</p>
 
                     <x-slot name="modalFooter">
-                        <button type="button" class="btn btn-success" onclick="document.getElementById('meetingNotes').submit()"><i class="far fa-paper-plane"></i> Save & Close</button>
+                        <button type="button" class="btn btn-success" onclick="document.getElementById('meetingNotes').submit()"><i class="far fa-paper-plane"></i> {{__('messages.save_exit')}}</button>
                     </x-slot>
                 </x-modal>
 
@@ -55,19 +55,19 @@
 
         @role('hiringManager')
 
-            <x-modal id="denyApplication" modal-label="denyApplicationLabel" modal-title="Please confirm" include-close-button="true">
+            <x-modal id="denyApplication" modal-label="denyApplicationLabel" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
 
-                <p>Are you sure you want to deny this application? Please keep in mind that this user will only be allowed to apply 30 days after their first application.</p>
-                <p class="text-muted">This action cannot be undone.</p>
+                <p>{{__('messages.view_app.deny_confirm')}}</p>
+                <p class="text-muted">{{__('messages.view_app.deny_confirm_consequence')}}</p>
 
                 <x-slot name="modalFooter">
 
                     <form id="updateApplication" action="{{route('updateApplicationStatus', ['application' => $application->id, 'newStatus' => 'deny'])}}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="btn btn-danger">Confirm: Deny Applicant</button>
+                        <button type="submit" class="btn btn-danger">{{__('messages.view_app.deny_confirm_btn')}}</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.modal_close')}}</button>
 
                 </x-slot>
 
@@ -81,7 +81,7 @@
 
         <div class="alert alert-warning alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Reminder:</strong> If this form has been updated, new fields and updated questions will not show up here!
+            {{__('messages.view_app.form_updated_alert')}}
         </div>
 
       </div>
@@ -124,43 +124,43 @@
                     <div class="card bg-gray">
 
                         <div class="card-header bg-gradient-gray">
-                            <div class="card-title">Contextual Information</div>
+                            <div class="card-title">{{__('messages.view_app.context_info')}}</div>
                         </div>
 
                         <div class="card-body">
 
-                            <p><b>Applicant Name: </b> <span class="badge badge-primary">{{$application->user->name}}</span></p>
+                            <p><b>{{__('messages.application_m.applicant_name')}} </b> <span class="badge badge-primary">{{$application->user->name}}</span></p>
                             @if (Auth::user()->hasRole('hiringManager'))
-                                <p><b>Applicant IP Address:</b> <span class="badge badge-primary">{{$application->user->originalIP}}</span></p>
+                                <p><b>{{__('messages.view_app.appl_ip')}}</b> <span class="badge badge-primary">{{$application->user->originalIP}}</span></p>
                             @endif
-                            <p><b>Applied On:</b> <span class="badge badge-primary">{{$application->created_at}}</span></p>
-                            <p><b>Last acted on:</b><span class="badge badge-primary">{{$application->updated_at}}</span></p>
-                            <p><b>Applying for:</b> <span class="badge badge-primary">{{$vacancy->vacancyName}}</span></p>
-                            <p class="mt-2"><b>Current Status:</b>
+                            <p><b>{{__('messages.application_m.application_date')}}</b> <span class="badge badge-primary">{{$application->created_at}}</span></p>
+                            <p><b>{{__('messages.last_updated')}}</b><span class="badge badge-primary">{{$application->updated_at}}</span></p>
+                            <p><b>{{__('messages.view_app.appl_for')}}</b> <span class="badge badge-primary">{{$vacancy->vacancyName}}</span></p>
+                            <p class="mt-2"><b>{{__('messages.view_app.currentstatus')}}</b>
                                 @switch($application->applicationStatus)
 
                                     @case('STAGE_SUBMITTED')
-                                        <span class="badge badge-warning">Outstanding</span>
+                                        <span class="badge badge-warning">{{__('messages.application_m.outstanding_sm')}}</span>
                                         @break
 
                                     @case('STAGE_PEERAPPROVAL')
-                                        <span class="badge badge-primary">Pending Peer Approval</span>
+                                        <span class="badge badge-primary">{{__('messages.user.peer_approval')}}</span>
                                     @break
 
                                     @case('STAGE_INTERVIEW')
-                                        <span class="badge badge-primary">Pending Interview</span>
+                                        <span class="badge badge-primary">{{__('messages.application_m.pending_int')}}</span>
                                     @break
 
                                     @case('STAGE_INTERVIEW_SCHEDULED')
-                                        <span class="badge badge-primary"><i class="fas fa-clock"></i> Interview Scheduled</span>
+                                        <span class="badge badge-primary"><i class="fas fa-clock"></i> {{__('messages.application_m.interview_s')}}</span>
                                     @break
 
                                     @case('APPROVED')
-                                        <span class="badge badge-success"><i class="fa fa-check-double"></i> Approved</span>
+                                        <span class="badge badge-success"><i class="fa fa-check-double"></i> {{__('messages.application_m.approved')}}</span>
                                     @break
 
                                     @case('DENIED')
-                                        <span class="badge badge-danger"><i class="fa fa-ban"></i> Denied</span>
+                                        <span class="badge badge-danger"><i class="fa fa-ban"></i> {{__('messages.application_m.denied')}}</span>
                                     @break
 
 
@@ -186,7 +186,7 @@
                         <div class="card bg-gray">
                             <div class="card-header bg-gradient-gray">
 
-                                <div class="card-title">Decision & Moderation Tools</div>
+                                <div class="card-title">{{__('messages.view_app.decisionmod')}}</div>
 
                             </div>
 
@@ -196,14 +196,14 @@
 
 
                                     <div class="col mr-5">
-                                        <button type="button" class="btn btn-danger" onclick="$('#denyApplication').modal('show')" {{($application->applicationStatus == 'DENIED') ? 'disabled' : ''}}><i class="fas fa-arrow-left"></i> Deny Applicant</button>
+                                        <button type="button" class="btn btn-danger" onclick="$('#denyApplication').modal('show')" {{($application->applicationStatus == 'DENIED') ? 'disabled' : ''}}><i class="fas fa-arrow-left"></i> {{__('messages.view_app.denyapp')}}</button>
                                     </div>
 
                                     <div class="col">
                                         <form method="POST" action="{{route('updateApplicationStatus', ['application' => $application->id, 'newStatus' => 'interview'])}}">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="btn btn-success" {{($application->applicationStatus == 'DENIED') ? 'disabled' : ''}}><i class="fas fa-arrow-right" ></i> Move to next stage</button>
+                                            <button type="submit" class="btn btn-success" {{($application->applicationStatus == 'DENIED') ? 'disabled' : ''}}><i class="fas fa-arrow-right" ></i> {{__('messages.view_app.nextstage')}}</button>
                                         </form>
                                     </div>
                                 </div>
@@ -234,17 +234,17 @@
 
                                 @csrf
 
-                                <label for="appointmentDescription">Appointment Description</label>
+                                <label for="appointmentDescription">{{__('messages.view_app.appointment_desc')}}</label>
                                 <input type="text" class="form-control" name="appointmentDescription">
 
-                                <label for="appointmentDateTime">Interview date & time</label>
+                                <label for="appointmentDateTime">{{__('messages.view_app.int_date_time')}}</label>
                                 <input type="text" class="form-control" name="appointmentDateTime" id="appointmentDateTime">
-                                <p class="text-muted text-sm">Click to choose a date</p>
+                                <p class="text-muted text-sm">{{__('messages.view_app.choosedate')}}</p>
 
-                                <label for="appointmentLocation">Appointment Location</label>
+                                <label for="appointmentLocation">{{__('messages.view_app.appointment_loc')}}</label>
                                 <select class="custom-select" id="appointmentLocation" name="appointmentLocation">
 
-                                    <option value="nil" disabled>Select your preferred platform</option>
+                                    <option value="nil" disabled>{{__('messages.view_app.pref_platform')}}</option>
                                     <option value="ZOOM">Zoom</option>
                                     <option value="DISCORD">Discord</option>
                                     <option value="SKYPE">Skype</option>
@@ -252,11 +252,11 @@
                                     <option value="TEAMSPEAK">Teamspeak</option>
 
                                 </select>
-                                <p class="text-muted text-sm">Embedded in-house video conferencing coming soon, powered by Jitsi Meet</p>
+                                <p class="text-muted text-sm">{{__('messages.view_app.coming_soon_int')}}</p>
                             </form>
 
                             <x-slot name="cardFooter">
-                                <button type="button" class="btn btn-warning text-center" onclick="document.getElementById('scheduleAppointment').submit()"><i class="fas fa-clock"></i> Schedule</button>
+                                <button type="button" class="btn btn-warning text-center" onclick="document.getElementById('scheduleAppointment').submit()"><i class="fas fa-clock"></i> {{__('messages.reusable.schedule')}}</button>
                             </x-slot>
 
                         </x-card>
@@ -279,9 +279,9 @@
 
                             <p class="text-muted">{{$application->appointment->appointmentDescription}}</p>
 
-                            <p><b>Interview scheduled for:</b> <span class="badge badge-primary">{{$application->appointment->appointmentDate}}</span></p>
-                            <p><b>Status: </b> <span class="badge badge-primary">{{Str::ucfirst(Str::lower($application->appointment->appointmentStatus))}}</span></p>
-                            <p><b>Platform:</b> <span class="badge badge-primary">{{Str::ucfirst(Str::lower($application->appointment->appointmentLocation))}}</span></p>
+                            <p><b>{{__('messages.view_app.scheduled_for')}}</b> <span class="badge badge-primary">{{$application->appointment->appointmentDate}}</span></p>
+                            <p><b>{{__('messages.reusable.status')}}: </b> <span class="badge badge-primary">{{Str::ucfirst(Str::lower($application->appointment->appointmentStatus))}}</span></p>
+                            <p><b>{{__('messages.reusable.platform')}}:</b> <span class="badge badge-primary">{{Str::ucfirst(Str::lower($application->appointment->appointmentLocation))}}</span></p>
 
                             <x-slot name="cardFooter">
 
@@ -289,12 +289,12 @@
                                     <form style="white-space: nowrap;display:inline-block" class="footer-button" action="{{route('updateAppointment', ['application' => $application->id, 'status' => 'concluded'])}}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success">Finish Meeting</button>
+                                        <button type="submit" class="btn btn-success">{{__('messages.view_app.finish_meeting')}}</button>
                                     </form>
                                 @endcan
 
                                 @can('applications.vote')
-                                    <button class="btn btn-warning mr-3" onclick="$('#notes').modal('show')">View Meeting Notes</button>
+                                    <button class="btn btn-warning mr-3" onclick="$('#notes').modal('show')">{{__('messages.view_app.view_notes')}}</button>
                                 @endcan
 
                             </x-slot>
@@ -309,14 +309,14 @@
 
             @if ($application->applicationStatus == 'STAGE_PEERAPPROVAL' && Auth::user()->can('applications.vote'))
 
-                <x-card id="peerApproval" card-title="Vote on this Application" footer-style="text-center">
+                <x-card id="peerApproval" card-title="{{__('messages.view_app.vote_app')}}" footer-style="text-center">
 
                     <x-slot name="cardHeader"></x-slot>
 
-                    <p class="text-muted">If you weren't present during this meeting, you can view the shared meeting notepad to help you make a decision.</p>
-                    <p class="text-muted">You may vote on as many applications as needed; However, you can only vote once per application.</p>
+                    <p class="text-muted">{{__('messages.view_app.vote_explainer.line1')}}</p>
+                    <p class="text-muted">{{__('messages.view_app.vote_explainer.line2')}}</p>
 
-                    <p class="text-muted">Votes carry no weight based on rank. This system has been designed with fairness and ease of use in mind.</p>
+                    <p class="text-muted">{{__('messages.view_app.vote_explainer.line3')}}</p>
 
                     <x-slot name="cardFooter">
 
@@ -325,17 +325,17 @@
                             <form class="d-inline-block" method="POST" action="{{route('voteApplication', ['application' => $application->id])}}">
                                 @csrf
                                 <input type="hidden" name="voteType" value="VOTE_APPROVE">
-                                <button type="submit" class="btn btn-sm btn-warning">Vote: Approve Applicant</button>
+                                <button type="submit" class="btn btn-sm btn-warning">{{__('messages.view_app.vote_approve')}}</button>
                             </form>
                             <form class="d-inline-block" method="POST" action="{{route('voteApplication', ['application' => $application->id])}}">
                                 @csrf
                                 <input type="hidden" name="voteType" value="VOTE_DENY">
-                                <button type="submit" class="btn btn-sm btn-warning">Vote: Deny Applicant</button>
+                                <button type="submit" class="btn btn-sm btn-warning">{{__('messages.view_app.vote_deny')}}</button>
                             </form>
 
                         @endif
 
-                        <button type="button" class="btn btn-sm btn-warning {{($canVote) ? 'ml-5' : ''}}" onclick="$('#notes').modal('show')">Meeting Notes</button>
+                        <button type="button" class="btn btn-sm btn-warning {{($canVote) ? 'ml-5' : ''}}" onclick="$('#notes').modal('show')">{{__('messages.view_app.m_notes')}}</button>
                     </x-slot>
 
                 </x-card>
@@ -348,7 +348,7 @@
 
                     <div class="col text-center">
 
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('staffPendingApps')}}'">View more Applications</button>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('staffPendingApps')}}'">{{__('messages.view_app.view_more')}}</button>
 
                     </div>
 
@@ -364,7 +364,7 @@
       @if (!Auth::user()->is($application->user))
         <div class="row mb-3 mt-2">
 
-            <h3>Comments ({{$comments->count()}})</h3>
+            <h3>{{__('messages.view_app.comments')}} ({{$comments->count()}})</h3>
 
         </div>
 
@@ -375,11 +375,11 @@
                 @if ($comments->isEmpty())
 
                     <div class="alert alert-warning">
-                        <i class="fas fa-question"></i> <b>Such wow, much empty</b>
+                        <i class="fas fa-question"></i> <b></b>
 
 
-                        <p>There are no comments here! Comments are only visible to staff members. Be the first to share your input!</p>
-                        <p>Commenting may help with decision-making when time comes to vote for an application.</p>
+                        <p>{{__('messages.view_app.no_comments_exp')}}</p>
+
 
                     </div>
                 @endif
@@ -409,7 +409,8 @@
 
                                 <div class="card-header comment-header">
 
-                                    <h1 class="commenter">{{$comment->user->name}} &#9679; {{Carbon\Carbon::parse($comment->created_at)->diffForHumans()}}</h3>
+                                    <!-- Carbon has to be set to translate diffs, can't do directly. -->
+                                    <h1 class="commenter">{{$comment->user->name}} &#9679; {{Carbon\Carbon::parse($comment->created_at)->diffForHumans()}}</h1>
 
                                 </div>
 
@@ -473,13 +474,13 @@
                     <div class="row">
 
                         <div class="col text-left">
-                            <p class="text-sm text-muted">Commenting as {{Auth::user()->name}}</p>
+                            <p class="text-sm text-muted">{{__('messages.view_app.commenting_as', ['username' => Auth::user()->name ])}}</p>
                         </div>
 
 
                         <div class="col text-right">
 
-                            <p class="text-sm text-muted"><span id="charcount">0</span>/600 max characters</p>
+                            <p class="text-sm text-muted"><span id="charcount">0</span>/600 {{__('messages.view_app.max_chars')}}</p>
 
                         </div>
 
@@ -489,7 +490,7 @@
 
                 <div class="card-footer text-right">
 
-                    <button type="button" id="submitComment" class="btn btn-sm btn-secondary">Post</button>
+                    <button type="button" id="submitComment" class="btn btn-sm btn-secondary">{{__('messages.view_app.post')}}</button>
 
                 </div>
 

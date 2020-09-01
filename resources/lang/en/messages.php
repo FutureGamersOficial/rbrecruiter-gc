@@ -56,7 +56,9 @@ return [
         'here' => 'here',
         'auth_req' => 'Please authenticate',
         'eligible' => 'Eligible',
-        'ineligible' => 'Ineligible'
+        'ineligible' => 'Ineligible',
+        'schedule' => 'Schedule',
+        'platform' => 'Platform'
     ],
 
 
@@ -521,9 +523,62 @@ EOT,
         'directory' => [
 
             'itsyou' => 'It\'s you!',
-
+            'title' => 'User Directory',
+            'directory' => 'Directory'
 
         ]
+
+    ],
+
+    'view_app' => [
+
+        'title' => 'Viewing application',
+        'viewing_app' => 'Viewing :user\'s application',
+        'cantvote' => 'You cannot vote on this application anymore.',
+        'no_notes' => 'There are no notes yet. Add some!',
+        'deny_confirm' => 'Are you sure you want to deny this application? Please keep in mind that this user will only be allowed to apply 30 days after their first application.',
+        'deny_confirm_consequence' => 'This action cannot be undone.',
+        'deny_confirm_btn' => 'Confirm: Deny Applicant',
+        'form_updated_alert' => 'If this form has been updated, new fields and updated questions will not show up here!',
+        'context_info' => 'Contextual Information',
+        'appl_ip' => 'Applicant IP Address',
+        'appl_for' => 'Applying for',
+        'currentstatus' => 'Current Status',
+        'decisionmod' => 'Decision & Moderation Tools',
+        'denyapp' => 'Deny applicant',
+        'nextstage' => 'Move to next stage',
+        'appointment_desc' => 'Appointment description',
+        'int_date_time' => 'Interview Date & Time',
+        'choosedate' => 'Click to choose a date',
+        'appointment_loc' => 'Appointment Location',
+        'pref_platform' => 'Select your preferred platform',
+        'coming_soon_int' => 'Embedded in-house video conferencing coming soon, powered by Jitsi Meet',
+        'scheduled_for' => 'Interview Scheduled for:',
+        'platform' => 'Platform',
+        'finish_meeting' => 'Finish Meeting',
+        'view_notes' => 'View Meeting Notes',
+        'vote_app' => 'Vote on this application',
+
+        'vote_explainer' => [
+
+            'line1' => 'If you weren\'t present during this meeting, you can view the shared meeting notepad to help you make a decision.',
+            'line2' => 'You may vote on as many applications as needed; However, you can only vote once per application.',
+            'line3' => 'Votes carry no weight based on rank. This system has been designed with fairness and ease of use in mind.'
+
+        ],
+
+        'vote_approve' => 'Vote: Approve Applicant',
+        'vote_deny' => 'Vote: Deny Applicant',
+        'm_notes' => 'Meeting notes',
+        'view_more' => 'View more Applications',
+        'comments' => 'Comments',
+        'no_comments' => 'There are no comments here.',
+        'no_comments_exp' => 'There are no comments here! Comments are only visible to staff members. Be the first to share your input! Commenting may help with decision-making when time comes to vote for an application.',
+        'commenting_as' => 'Commenting as :username',
+        'max_chars' => 'max characters', // Context: A number is added before max characters
+        'post' => 'Post', // Context: Post as in post comment
+
+
 
     ]
 
