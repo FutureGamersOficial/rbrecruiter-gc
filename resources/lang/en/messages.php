@@ -33,10 +33,28 @@ return [
         'my_acc' => 'My Account',
         'confirm' => 'Please Confirm',
         'confirm_plain' => 'Confirm',
+        'confirm_click' => 'Click to Confirm',
         'date' => 'Date',
         'datetime' => 'Time & Date',
         'location' => 'Location',
-        'none_yet' => 'None yet'
+        'none_yet' => 'None yet',
+        'reason' => 'Reason',
+        'days' => 'Days',
+        'weeks' => 'Weeks',
+        'months' => 'Months',
+        'years' => 'Years',
+        'yes' => 'Yes',
+        'no' => 'No',
+        'roles' => 'Roles',
+        'member_since' => 'Member since :date',
+        'lookup' => 'Lookup :ipAddress',
+        'abt' => 'About',
+        'acc' => 'Account',
+        'settings' => 'Settings',
+        'profile' => 'My Profile',
+        'code' => 'code',
+        'here' => 'here',
+        'auth_req' => 'Please authenticate'
     ],
 
 
@@ -362,6 +380,118 @@ EOT,
 
         'no_pending_review' => 'There are no applications pending review',
         'no_pending_review_exp' => 'Check the other queues for any applications! Applications will be shown here as soon as their interview is completed. You\'ll be able to view meeting notes and vote based on your observations.',
+
+    ],
+
+    // ============= PROFILE & USER MESSAGES ===============
+
+    'profile' => [
+
+        'title' => ':name\'s profile',
+        'profile' => 'Profile',
+        'users' => 'Users',
+        'account_banned' => 'Account banned',
+        'account_banned_exp' => 'This user has been banned by the moderators.',
+        'ban_confirm' => 'Please confirm that you want to ban this user account. You\'ll need to add a reason and expiration date to confirm this. Bans don\'t transfer to connected Minecraft networks (yet).',
+        'leave_empty' => 'Leave empty for a permanent ban',
+        'duration' => 'Duration',
+        'p_duration' => 'Punishment duration',
+        'p_duration_exp' => 'e.g. Spamming',
+        'ban' => 'Ban',
+
+        'terminate_notice' => 'You are about to terminate a staff member',
+        'terminate_notice_warning' => 'Terminating a staff member will remove their privileges on the team management site and Network.
+                They will be notified of their termination. Make sure to have discussed this with them first.',
+        'terminate_notice_consequence' => 'THIS PROCESS IS IRREVERSIBLE AND IMMEDIATE',
+        'terminate_txt' => 'Terminate Staff Member',
+
+        'delete_acc_warn' => 'WARNING: This is a potentially destructive action!',
+        'delete_acc_consequence' => 'Deleting a user\'s account is an irreversible process. Historic and current applications, votes, and profile content, as well as any personally identifiable information will be immediately erased.',
+        'type_to_confirm' => 'Type to confirm:',
+        'type_placeholder' => 'Please type the above',
+
+        'delete_acc' => 'Delete Account',
+        'edit_acc' => 'Edit Account',
+
+        'ban_acc' => 'Ban Account',
+        'unban_acc' => 'Unban Account',
+
+        'search_result' => 'Search results',
+
+        'origin_cc' => 'Origin country',
+        'state_prov' => 'State/Province',
+        'district' => 'District (if any)',
+        'city' => 'City',
+        'zipcode' => 'Zipcode',
+        'coords' => 'Coordinates',
+        'european' => 'European?',
+        'isp' => 'ISP', // Internet service provider
+        'org' => 'Organization (if any)',
+        'ctype' => 'C. Type', // Internet Connection type
+        'timezone' => 'Timezone',
+        'noresults' => 'This query returned no results.',
+
+        'edituser' => 'Edit PII and Roles', // PII: Personally identifiable information
+        'edituser_consequence' => 'Warning! This is a sensitive setting! Changing this could have unintended consequences!',
+        'acc_management' => 'Account Management (Admin)',
+        'discord_tag' => 'User\'s Discord Tag: :discordTag',
+        'account_settings' => 'Account Settings',
+
+        '2fa_welcome' => 'We\'re glad you decided to increase your account\'s security!',
+        'supported_apps' => 'Supported apps you can install: ',
+        'scan_code' => 'Scan the :scannable code with your preferred app, and then copy the code here.',
+        'otp' => 'One-time code',
+        '2fa_enable' => 'Enable 2FA',
+        '2fa_remove_consequence' => 'Removing two-factor authentication will reduce the security of your account.',
+        '2fa_password_confirm' => 'Confirm your password to continue',
+        '2fa_password_confirm_exp' => 'To prevent unauthorized changes, a password is always required for sensitive operations.',
+        '2fa_disable_consent' => '"I understand the possible consequences of disabling two factor authentication"',
+        '2fa_remove' => 'Remove 2FA',
+
+        'security_lgotherdev' => 'For your security, you\'ll need to re-enter your password before logging out other devices. If you believe your account has been compromised, please change your password instead, as that will automatically log out anyone else who might using your account, and prevent them from signing back in.',
+        'password_reenter' => 'Re-enter your password',
+
+        'acc_security' => 'Account Security',
+        '2fa' => 'Two Factor Authentication',
+        'sessions' => 'Sessions',
+        'contact_settings' => 'Contact Settings (E-Mail)',
+
+        'change_password' => 'Change Password',
+        'change_password_exp' => 'Change your password here. This will log you out from all existing sessions for your security.',
+
+        'old_pass' => 'Old Password',
+        'forgot_pw' => 'Forgot your password? Reset it :link',
+        'new_pw' => 'New Password',
+
+        '2fa_enable_success' => 'Hooray! 2FA is setup correctly for your account. A code will be asked each time you login.',
+        '2fa_avail' => 'Two-factor auth is available for your account.',
+        '2fa_avail_exp' => ' Enabling this security option greatly increases your account\'s security in case your password ever gets stolen.',
+
+        'session_manager' => 'Session Manager',
+        'terminate_others' => 'Terminating other sessions is generally a good idea if your account has been compromised.',
+        'current_session' => 'Your current session: logged in from :ipAddress',
+        'flush_session' => 'Flush sessions',
+        'personal_data_change' => 'Need to change personal data? You can do so here.',
+        'current_email' => 'Current Email Address',
+        'new_email' => 'New Email Address',
+        'current_password' => 'Current Password',
+        'security_nochangepw' => 'For security reasons, you cannot make important account changes without confirming your password. You\'ll also need to verify your new email.',
+        'change_email' => 'Change Email Address',
+
+        'basic_info' => 'Basic Information',
+        'fl_name' => 'First / Last Name',
+        'shortbio' => 'Short Bio',
+        'about_me' => 'About Me',
+        'pref_media' => 'Preferences & Media',
+        'avatar_source' => 'Retrieve avatar from: ',
+        'social_media' => 'Social Media',
+
+        'github_user' => 'Github Username',
+        'twitter_user' => 'Twitter Username',
+        'insta_user' => 'Instagram Username',
+        'discord_user' => 'Discord Handle',
+
+        'update_prfl' => 'Update Profile'
 
     ]
 

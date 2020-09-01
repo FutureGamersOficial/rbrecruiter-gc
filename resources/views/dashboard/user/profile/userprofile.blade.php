@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Profile')
+@section('title', config('app.name') . ' | ' . __('messages.profile.profile'))
 
 @section('content_header')
 
-    <h4>My Profile / Settings</h4>
+    <h4>{{__('messages.reusable.profile')}} / {{__('messages.reusable.settings')}}</h4>
 
 @stop
 
@@ -67,7 +67,7 @@
                 <div class="card-footer text-center">
 
                     <a href="https://github.com/{{$github}}" class="pr-2 pl-2"><i class="fab fa-github fa-2x"></i></a>
-                    <a href="#" onclick="toastr.info('User\'s Discord tag: {{$discord}}')" class="pr-2 pl-2"><i class="fab fa-discord fa-2x"></i></a>
+                    <a href="#" onclick="toastr.info('{{__('messages.profile.discord_tag', ['discordTag' => $discord])}}')" class="pr-2 pl-2"><i class="fab fa-discord fa-2x"></i></a>
                     <a href="https://twitter.com/{{$twitter}}" class="pr-2 pl-2"><i class="fab fa-twitter fa-2x"></i></a>
                     <a href="https://instagram.com/{{$insta}}" class="pr-2 pl-2"><i class="fab fa-instagram fa-2x"></i></a>
 
@@ -100,7 +100,7 @@
 
                    <div class="card-header">
 
-                       <div class="card-title"><h3>Basic Information</h3></div>
+                       <div class="card-title"><h3>{{__('messages.profile.basic_info')}}</h3></div>
 
                    </div>
 
@@ -110,7 +110,7 @@
 
                            <div class="col">
 
-                               <label for="firstName">First / Last Name</label>
+                               <label for="firstName">{{__('messages.profile.fl_name')}}</label>
                                <input disabled type="text" class="form-control" id="firstName" value="{{Auth::user()->name}}">
 
                            </div>
@@ -119,16 +119,16 @@
 
                        <div class="form-group mt-3">
 
-                           <label for="shortBio">Short Bio</label>
+                           <label for="shortBio">{{__('messages.profile.shortbio')}}</label>
                            <input  type="text" name="shortBio" id="shortBio" class="form-control" value="{{$profile->profileShortBio}}">
 
                        </div>
 
                        <div class="form-group mt-3">
 
-                           <label for="aboutMe">About Me</label>
+                           <label for="aboutMe">{{__('messages.profile.about_me')}}</label>
                            <textarea name="aboutMe" id="aboutMe" rows="8" class="form-control">{{$profile->profileAboutMe}}</textarea>
-                           <p class="text-muted"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Github-flavored Markdown</a> supported</p>
+                           <p class="text-muted"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">{{__('messages.vacancy.markdown')}}</p>
 
                        </div>
 
@@ -143,12 +143,12 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <div class="card-title"><h3>Preferences & Media</h3></div>
+                        <div class="card-title"><h3>{{__('messages.profile.pref_media')}}</h3></div>
                     </div>
 
                     <div class="card-body">
 
-                        <label>Retrieve avatar from: </label>
+                        <label>{{__('messages.profile.avatar_source')}} </label>
 
                         <div class="form-group mb-3">
 
@@ -164,34 +164,34 @@
 
                         </div>
 
-                        <label>Social Media</label>
+                        <label>{{__('messages.profile.social_media')}}</label>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fab fa-github"></i></span>
                             </div>
-                            <input name="socialGithub" type="text" class="form-control" placeholder="Github Username" value="{{$github}}">
+                            <input name="socialGithub" type="text" class="form-control" placeholder="{{__('messages.profile.github_user')}}" value="{{$github}}">
                         </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fab fa-discord"></i></span>
                             </div>
-                            <input name="socialDiscord" type="text" class="form-control" placeholder="Discord Handle" value="{{$discord}}">
+                            <input name="socialDiscord" type="text" class="form-control" placeholder="{{__('messages.profile.discord_user')}}" value="{{$discord}}">
                         </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fab fa-twitter"></i></span>
                             </div>
-                            <input name="socialTwitter" type="text" class="form-control" placeholder="Twitter Username" value="{{$twitter}}">
+                            <input name="socialTwitter" type="text" class="form-control" placeholder="{{__('messages.profile.twitter_user')}}" value="{{$twitter}}">
                         </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fab fa-instagram"></i></span>
                             </div>
-                            <input name="socialInsta" type="text" class="form-control" placeholder="Instagram Username" value="{{$insta}}">
+                            <input name="socialInsta" type="text" class="form-control" placeholder="{{__('messages.profile.insta_user')}}" value="{{$insta}}">
                         </div>
 
                     </div>
@@ -206,7 +206,7 @@
 
            <div class="col text-center">
 
-               <button type="button" class="btn btn-success" onclick="document.getElementById('saveProfileSettings').submit()">Update Profile</button>
+               <button type="button" class="btn btn-success" onclick="document.getElementById('saveProfileSettings').submit()">{{__('messages.profile.update_prfl')}}</button>
 
            </div>
 

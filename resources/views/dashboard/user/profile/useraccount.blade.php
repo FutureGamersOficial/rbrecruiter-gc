@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Account Settings')
+@section('title', config('app.name') . ' | ' . __('messages.profile.account_settings'))
 
 @section('content_header')
 
-    <h4>My Profile / Account / Settings</h4>
+    <h4>{{__('messages.reusable.profile')}} / {{__('messages.reusable.acc')}} / {{__('messages.reusable.settings')}}</h4>
 
 @stop
 
@@ -25,14 +25,14 @@
 
       <x-modal id="twoFactorAuthModal" modal-label="2faLabel" modal-title="Two-factor Authentication" include-close-button="true">
 
-        <h3><i class="fas fa-user-shield"></i> We're glad you decided to increase your account's security!</h3>
+        <h3><i class="fas fa-user-shield"></i> {{__('messages.profile.2fa_welcome')}}</h3>
 
-        <p><b>Supported apps you can install:</b></p>
+        <p><b>{{__('messages.profile.supported_apps')}}</b></p>
         <ul>
           <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en"><i class="fab fa-google-play"></i> Google Authenticator</a></li>
         </ul>
 
-        <p>Scan the <i>QR code</i> below with your preferred app, and then copy the code here.</p>
+        <p>{{__('messages.profile.scan_code', ['scannable', 'QR'])}}</p>
 
 
         <div class="row">
@@ -52,7 +52,7 @@
             <form method="POST" action="{{ route('enable2FA') }}" id="enable2Fa">
               @csrf
               @method('PATCH')
-              <label for="otp">One-time code</label>
+              <label for="otp">{{__('messages.profile.otp')}}</label>
               <input type="text" id="otp" name="otp" class="form-control" />
 
             </form>
@@ -65,7 +65,7 @@
 
         <x-slot name="modalFooter">
 
-          <button type="button" class="btn btn-success" onclick="$('#enable2Fa').submit()"><i class="fas fa-key"></i> Enable 2FA</button>
+          <button type="button" class="btn btn-success" onclick="$('#enable2Fa').submit()"><i class="fas fa-key"></i> {{__('messages.profile.2fa_enable')}}</button>
 
         </x-slot>
 
@@ -77,19 +77,19 @@
 
       <x-modal id="remove2FA" modal-label="remove2FALabel" modal-title="Remove Two-Factor Authentication" include-close-button="true">
 
-        <p><i class="fas fa-exclamation-triangle"></i> <b>Are you sure?</b> Removing two-factor authentication will reduce the security of your account.</p>
+        <p><i class="fas fa-exclamation-triangle"></i> <b>{{__('messages.application_m.modal_confirm')}}</b> {{__('messages.profile.2fa_remove_consequence')}}</p>
 
         <form action="{{ route('disable2FA') }}" method="POST" id="disable2FA">
           @csrf
           @method('PATCH')
-          <label for="currentPassword">Confirm your password to continue</label>
+          <label for="currentPassword">{{__('messages.profile.2fa_password_confirm')}}</label>
           <input id="currentPassword" type="password" name="currentPassword" class="form-control" required />
-          <p class="text-sm text-muted">To prevent unauthorized changes, a password is always required for sensitive operations.</p>
+          <p class="text-sm text-muted">{{__('messages.profile.2fa_password_confirm_exp')}}</p>
 
           <div class="form-group mt-2">
 
-            <label for="consent">"I understand the possible consequences of disabling two factor authentication"</label>
-            <span><i>Click to confirm  </i> </span><input type="checkbox" name="consent" id="consent" required />
+            <label for="consent">{{__('messages.profile.2fa_disable_consent')}}</label>
+            <span><i>{{__('messages.reusable.confirm_click')}}  </i> </span><input type="checkbox" name="consent" id="consent" required />
 
           </div>
 
@@ -97,7 +97,7 @@
 
         <x-slot name="modalFooter">
 
-          <button type="button" class="btn btn-danger" onclick="$('#disable2FA').submit()"><i class="fa fa-trash"></i> Remove 2FA</button>
+          <button type="button" class="btn btn-danger" onclick="$('#disable2FA').submit()"><i class="fa fa-trash"></i> {{__('messages.profile.2fa_remove')}}</button>
 
         </x-slot>
 
@@ -109,24 +109,24 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="authenticationFormLabel">Please authenticate</h5>
+                    <h5 class="modal-title" id="authenticationFormLabel">{{__('messages.reusable.auth_req')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-muted">For your security, you'll need to re-enter your password before logging out other devices. If you believe your account has been compromised, please change your password instead, as that will automatically log out anyone else who might using your account, and prevent them from signing back in.</p>
+                    <p class="text-muted">{{__('messages.profile.security_lgotherdev')}}</p>
 
                     <form method="POST" action="{{route('flushSessions')}}" id="flushSessions">
                         @csrf
-                        <label for="reenter">Re-enter your password</label>
+                        <label for="reenter">{{__('messages.profile.password_reenter')}}</label>
                         <input type="password" name="currentPasswordFlush" id="currentPasswordFlush" class="form-control" autocomplete="current-password">
                     </form>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="document.getElementById('flushSessions').submit()">Confirm</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" onclick="document.getElementById('flushSessions').submit()">{{__('messages.reusable.confirm')}}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.modal_close')}}</button>
                 </div>
             </div>
         </div>
@@ -140,10 +140,10 @@
 
                 <div class="card-body">
 
-                    <h3>Welcome back, {{Auth::user()->name}}</h3>
+                    <h3>{{__('messages.welcome_back')}} {{Auth::user()->name}}</h3>
 
                     <p class="text-muted">{{Auth::user()->email}}</p>
-                    <a href="https://namemc.com/profile/{{Auth::user()->uuid}}" target="_blank">View @ NameMC</a>
+                    <a href="https://namemc.com/profile/{{Auth::user()->uuid}}" target="_blank">{{__('messages.reusable.view')}} @ NameMC</a>
                 </div>
 
             </div>
@@ -159,69 +159,69 @@
                 <div class="card-header tab-card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" id="accountSecurityTab" data-toggle="tab" href="#accountSecurity" role="tab" aria-controls="AccountSecurity" aria-selected="true">Account Security</a>
+                            <a class="nav-link" id="accountSecurityTab" data-toggle="tab" href="#accountSecurity" role="tab" aria-controls="AccountSecurity" aria-selected="true">{{__('messages.profile.acc_security')}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="twofaTab" data-toggle="tab" href="#twofa" role="tab" aria-controls="TwoFa" aria-selected="false">Two Factor Authentication</a>
+                            <a class="nav-link" id="twofaTab" data-toggle="tab" href="#twofa" role="tab" aria-controls="TwoFa" aria-selected="false">{{__('messages.profile.2fa')}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="sessionsTab" data-toggle="tab" href="#sessions" role="tab" aria-controls="Sessions" aria-selected="false">Sessions</a>
+                            <a class="nav-link" id="sessionsTab" data-toggle="tab" href="#sessions" role="tab" aria-controls="Sessions" aria-selected="false">{{__('messages.profile.sessions')}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="contactSettingsTab" data-toggle="tab" href="#contactSettings" role="tab" aria-controls="ContactSettings" aria-selected="false">Contact Settings (E-mail)</a>
+                            <a class="nav-link" id="contactSettingsTab" data-toggle="tab" href="#contactSettings" role="tab" aria-controls="ContactSettings" aria-selected="false">{{__('messages.profile.contact_settings')}}</a>
                         </li>
                     </ul>
                 </div>
 
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active p-3" id="accountSecurity" role="tabpanel" aria-labelledby="accountSecurityTab">
-                        <h5 class="card-title">Change Password</h5>
-                        <p class="card-text">Change your password here. This will log you out from all existing sessions for your security.</p>
+                        <h5 class="card-title">{{__('messages.profile.change_password')}}</h5>
+                        <p class="card-text">{{__('messages.profile.change_password_exp')}}</p>
 
                         <form method="POST" action="{{route('changePassword')}}" id="changePassword">
 
                             @csrf
                             @method('PATCH')
-                            <label for="oldpassword">Old Password</label>
+                            <label for="oldpassword">{{__('messages.profile.old_pass')}}</label>
                             <input class="form-control" name="oldPassword" type="password" id="oldpassword" autocomplete="current-password">
-                            <p class="text-sm text-muted">Forgot your password? Reset it <a href="/auth/password/reset">here</a></p>
+                            <p class="text-sm text-muted">{{__('messages.forgot_pw', ['link' => '<a href="/auth/password/reset">' . __('messages.reusable.here') . '</a>'])}}</p>
 
                             <div class="form-group mt-5">
 
-                                <label for="newpassword">New Password</label>
+                                <label for="newpassword">{{__('messages.profile.new_pw')}}</label>
                                 <input type="password" name="newPassword" id="newpassword" class="form-control" autocomplete="new-password">
 
-                                <label for="newpassword_confirmation">Confirm Password</label>
+                                <label for="newpassword_confirmation">{{__('messages.sronly_confirmpassword')}}</label>
                                 <input type="password" name="newPassword_confirmation" id="newpassword_confirmation" autocomplete="new-password" class="form-control">
 
                             </div>
 
                         </form>
 
-                        <button class="btn btn-success" type="button" onclick="document.getElementById('changePassword').submit()">Change Password</button>
+                        <button class="btn btn-success" type="button" onclick="document.getElementById('changePassword').submit()">{{__('messages.profile.change_password')}}</button>
                     </div>
                     <div class="tab-pane fade p-3" id="twofa" role="tabpanel" aria-labelledby="twofaTab">
-                        <h5 class="card-title">Two-factor Authentication</h5>
+                        <h5 class="card-title">{{__('messages.profile.2fa')}}</h5>
                         <br />
                         @if (Auth::user()->has2FA())
-                            <p><b>Hooray!</b> 2FA is setup correctly for your account. A code will be asked each time you login.</p>
-                            <button type="button" class="btn btn-danger" onclick="$('#remove2FA').modal('show')"><i class="fa fa-ban"></i> Disable 2FA (not recommended)</button>
+                            <p>{{__('messages.profile.2fa_enable_success')}}</p>
+                            <button type="button" class="btn btn-danger" onclick="$('#remove2FA').modal('show')"><i class="fa fa-ban"></i>{{__('messages.profile.2fa_remove')}}</button>
                         @else
-                            <p class="card-text"><b>Two-factor auth is available for your account.</b> Enabling this security option greatly increases your account's security in case your password ever gets stolen.</p>
-                            <button type="button" class="btn btn-primary" onclick="$('#twoFactorAuthModal').modal('show')">Enable 2FA</button>
+                            <p class="card-text"><b>{{__('messages.profile.2fa_avail')}}</b>{{__('messages.profile.2fa_avail_exp')}}</p>
+                            <button type="button" class="btn btn-primary" onclick="$('#twoFactorAuthModal').modal('show')">{{__('messages.profile.2fa_enable')}}</button>
 
                         @endif
 
                     </div>
                     <div class="tab-pane fade p-3" id="sessions" role="tabpanel" aria-labelledby="sessionsTab">
-                        <h5 class="card-title">Session Manager</h5>
-                        <p class="card-text">Terminating other sessions is generally a good idea if your account has been compromised.</p>
-                        <p>Your current session: Logged in from {{ $ip }}</p>
-                        <button type="button" class="btn btn-warning" onclick="$('#authenticationForm').modal('show')">Flush Sessions</button>
+                        <h5 class="card-title">{{__('messages.profile.session_manager')}}</h5>
+                        <p class="card-text">{{__('messages.profile.terminate_others')}}</p>
+                        <p>{{__('messages.profile.current_session', ['ipAddress' => $ip])}}</p>
+                        <button type="button" class="btn btn-warning" onclick="$('#authenticationForm').modal('show')">{{__('messages.profile.flush_session')}}</button>
                     </div>
                     <div class="tab-pane fade p-3" id="contactSettings" role="tabpanel" aria-labelledby="contactSettingsTab">
-                        <h5 class="card-title">Contact Settings</h5>
-                        <p class="card-text">Need to change personal data? You can do so here.</p>
+                        <h5 class="card-title">{{__('messages.profile.contact_settings')}}</h5>
+                        <p class="card-text">{{__('messages.profile.personal_data_change')}}</p>
 
                             <form method="POST" action="{{route('changeEmail')}}" id="changeEmail">
 
@@ -229,11 +229,11 @@
                                 @method('PATCH')
                                 <div class="form-group">
 
-                                    <label for="oldEmail">Current Email Address</label>
+                                    <label for="oldEmail">{{__('messages.profile.current_email')}}</label>
                                     <input type="text" class="form-control" id="oldEmail" disabled value="{{Auth::user()->email}}">
 
 
-                                    <label for="newEmail">New Email Address</label>
+                                    <label for="newEmail">{{__('messages.profile.new_email')}}</label>
                                     <input type="email" name="newEmail" class="form-control mb-3" id="newEmail">
 
 
@@ -241,13 +241,13 @@
 
                                 <div class="form-group mt-5">
 
-                                    <label for="currentPassword">Current Password</label>
+                                    <label for="currentPassword">{{__('messages.profile.current_password')}}</label>
                                     <input type="password" name="currentPassword" class="form-control" id="currentPassword" autocomplete="current-password">
-                                    <p class="text-sm text-muted">For security reasons, you cannot make important account changes without confirming your password. You'll also need to verify your new email.</p>
+                                    <p class="text-sm text-muted">{{__('messages.profile.security_nochangepw')}}</p>
                                 </div>
                             </form>
 
-                        <button class="btn btn-success" type="button" onclick="document.getElementById('changeEmail').submit()">Change Email Address</button>
+                        <button class="btn btn-success" type="button" onclick="document.getElementById('changeEmail').submit()">{{__('messages.profile.change_email')}}</button>
                     </div>
 
                 </div>
