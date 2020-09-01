@@ -60,5 +60,36 @@ EOT,
 
     // ======================== AUTHENTICATION MESSAGES ===========================
 
+    '2fa_txt' => 'Two-Factor Authentication',
+    '2fa_sronly' => 'Two-factor secret code (You can find this on Google Authenticator)',
+    '2fa_lostcode' => 'Don\'t know the code?',
+    '2fa_cancel_login' => 'Cancel login (logout)',
+
+    'terms' => 'Terms of Use',
+    'ppolicy' => 'Privacy Policy',
+
+    'signin_cta' => 'Sign into your account',
+    'password' => 'Password',
+    'remember_me' => 'Remember me',
+    'forgot_pw' => 'Forgot password?',
+    'register_cta' => 'Register here',
+    'no_acc' => 'Don\'t have an account?',
+    'register_acc' => 'Register a new account',
+    'pwsec' => [
+        'line1' => 'Basic password security',
+        'line2' => 'For your security, we implement strict password policies. It\'s also advisable to let your password manager or browser generate and save passwords for you (if it\'s a private device).',
+        'line3' => 'Passwords must be a combination of: ',
+        'line4' => 'A minimum of 10 characters;',
+        'line5' => 'At least 3 uppercase characters;',
+        'line6' => 'At least 3 numbers;',
+        'line7' => 'Any number of special characters.'
+    ],
+    'sronly_confirmpassword' => 'Confirm Password', // hint: sronly stands for screen-reader only
+    'sronly_mcusername' => 'Minecraft Username (Premium)',
+    'have_account' => 'Have an account with us?',
+    'login_here' => 'Login here',
+    'register_txt' => 'Register',
+
+    // ===================== DASHBOARD & COMPONENT MESSAGES ===========================
 
 ];

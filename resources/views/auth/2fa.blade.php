@@ -13,19 +13,19 @@
               <div class="brand-wrapper">
                 <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo">{{ config('adminlte.logo') }}
               </div>
-              <p class="login-card-description">Two-factor Authentication</p>
+              <p class="login-card-description">{{__('messages.2fa_txt')}}</p>
               <form action="{{ route('verify2FA') }}" method="POST" id="verify">
                   @csrf
                   <div class="form-group">
-                    <label for="name" class="sr-only">Two-factor secret code (You can find this on Google Authenticator)</label>
+                    <label for="name" class="sr-only">{{__('messages.2fa_sronly')}}</label>
                     <input type="text" name="otp" id="name" class="form-control" placeholder="2FA Code (e.g. 543324)">
                   </div>
                   <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="Send 2FA Code">
                 </form>
-                <p class="login-card-footer-text">Don't know the code? <a href="{{ route('logout') }}" class="text-reset">Cancel login (logout)</a></p>
+                <p class="login-card-footer-text">{{__('messages.2fa_lostcode')}} <a href="{{ route('logout') }}" class="text-reset">{{__('messages.2fa_cancel_login')}}</a></p>
                 <nav class="login-card-footer-nav">
-                  <a href="#!">Terms of use</a>
-                  <a href="#!">Privacy policy</a>
+                  <a href="#!">{{__('messages.terms')}}</a>
+                  <a href="#!">{{__('messages.ppolicy')}}</a>
                 </nav>
             </div>
           </div>

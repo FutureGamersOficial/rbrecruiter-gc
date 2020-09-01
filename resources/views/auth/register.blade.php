@@ -13,57 +13,57 @@
               <div class="brand-wrapper">
                 <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo">{{ config('adminlte.logo') }}
               </div>
-              <p class="login-card-description">Register a new account</p>
+              <p class="login-card-description">{{__('messages.register_acc')}}</p>
               <div class="alert alert-warning alert-dismissible">
                   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                  <p><b>Basic password security</b></p>
-                  <p>For your security, we implement strict password policies. It's also advisable to let your password manager or browser generate and save passwords for you (if it's a private device).</p>
+                  <p><b>{{__('messages.pwsec.line1')}}</b></p>
+                  <p>{{__('messages.pwsec.line2')}}</p>
 
-                  <p>Passwords must be a combination of: </p>
+                  <p>{{__('messages.pwsec.line3')}} </p>
                   <ul>
                     <li>
-                      A minimum of 10 characters;
+                      {{__('messages.pwsec.line4')}}
                     </li>
                     <li>
-                      At least 3 uppercase characters;
+                      {{__('messages.pwsec.line5')}}
                     </li>
                     <li>
-                      At least 3 numbers;
+                      {{__('messages.pwsec.line6')}}
                     </li>
                     <li>
-                      Any number of special characters.
+                      {{__('messages.pwsec.line7')}}
                     </li>
                   </ul>
               </div>
               <form action="{{ route('register') }}" method="POST" id="registerForm">
                   @csrf
                   <div class="form-group">
-                    <label for="name" class="sr-only">Name</label>
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Name (e.g. John Smith)">
+                    <label for="name" class="sr-only">{{__('messages.contactlabel_name')}}/label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="{{__('messages.contactlabel_name')}}">
                   </div>
                   <div class="form-group mb-4">
-                    <label for="email" class="sr-only">Email address</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address">
+                    <label for="email" class="sr-only">{{__('messages.contactlabel_email')}}</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="{{__('messages.contactlabel_email')}}">
                   </div>
                   <div class="form-group mb-4">
-                    <label for="password" class="sr-only">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Password"
+                    <label for="password" class="sr-only">{{__('messages.password')}}</label>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="{{__('messages.password')}}">
                   </div>
                   <div class="form-group mb-4">
-                    <label for="passwordc" class="sr-only">Confirm password</label>
-                    <input type="password" id="passwordc" name="password_confirmation" class="form-control" placeholder="Confirm password" />
+                    <label for="passwordc" class="sr-only">{{__('messages.sronly_confirmpassword')}}</label>
+                    <input type="password" id="passwordc" name="password_confirmation" class="form-control" placeholder="{{__('messages.sronly_confirmpassword')}}" />
                   </div>
 
                   <div class="form-group mt-5">
-                    <label for="mcusername" class="sr-only">Minecraft Username (Premium)</label>
-                    <input type="text" name="uuid" class="form-control" id="mcusername" placeholder="Premium Minecraft Username (e.g. Notch)" />
+                    <label for="mcusername" class="sr-only">{{__('messages.sronly_mcusername')}}</label>
+                    <input type="text" name="uuid" class="form-control" id="mcusername" placeholder="{{__('messages.sronly_mcusername')}}" />
                   </div>
-                  <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="Register">
+                  <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="{{__('messages.register_txt')}}">
                 </form>
-                <p class="login-card-footer-text">Have an account with us? <a href="{{ route('login') }}" class="text-reset">Login here</a></p>
+                <p class="login-card-footer-text">{{__('messages.have_account')}} <a href="{{ route('login') }}" class="text-reset">{{__('messages.login_here')}}</a></p>
                 <nav class="login-card-footer-nav">
-                  <a href="#!">Terms of use</a>
-                  <a href="#!">Privacy policy</a>
+                  <a href="#!">{{__('messages.terms')}}</a>
+                  <a href="#!">{{__('messages.ppolicy')}}</a>
                 </nav>
             </div>
           </div>
