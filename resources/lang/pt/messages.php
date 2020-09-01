@@ -106,11 +106,11 @@ return [
     'txt_application' => 'Candidatura',
     'application_closed' => 'Candidaturas Fechadas',
     'application_closed_intro' => 'Olá!',
-    'application_closed_intro_line2' => <<<EOT
-      We are currently not hiring any new staff members at the moment. If you'd like to apply, check out our Discord's
+    'application_closed_intro_line2' => '
+      We are currently not hiring any new staff members at the moment. If you\'d like to apply, check out our Discord\'s
       announcement channel for news when a new position opens.
-      Our application cycle usually lasts two weeks, so if you're seeing this, it's because it finished, and new one will begin soon.
-EOT,
+      Our application cycle usually lasts two weeks, so if you\'re seeing this, it\'s because it finished, and new one will begin soon.
+    ',
     'where_work' => 'Where you\'ll work',
     'join_team' => 'Join The Team',
     'join_team_cta' => 'Join the team today and help out network grow and prosper!',
@@ -272,10 +272,10 @@ EOT,
         'banned' => 'Banned',
         'active' => 'Active',
         'no_reg' => 'There are no registered players!',
-        'no_reg_exp' => <<<EOT
+        'no_reg_exp' => "
           Registered players are those without a staff role in the team management application.
           There may be other users registered in the platform, but they won't be displayed here.
-EOT,
+",
         'see_staff' => 'See Staff Members'
 
     ],
@@ -284,11 +284,11 @@ EOT,
 
         'application_form' => 'Application Form',
         'select_form' => 'Select a form...',
-        'no_form_error' => <<<EOT
+        'no_form_error' => "
            You cannot create a vacancy without any forms with which people would apply.
            create a form first, then, create a vacancy.
            A single form is allowed to have multiple vacancies, so you can attach future vacancies to the same form if you'd like.
-EOT,
+",
         'new_pos' => 'NEW POSITION',
         'empty_pos_warning' => 'Nothing to see here! Open some vacancies first. This will get applicants pouring in! (hopefully)',
         'manage_forms' => 'MANAGE APPLICATION FORMS',
