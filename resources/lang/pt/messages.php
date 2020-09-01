@@ -107,71 +107,71 @@ return [
     'application_closed' => 'Candidaturas Fechadas',
     'application_closed_intro' => 'Olá!',
     'application_closed_intro_line2' => '
-      We are currently not hiring any new staff members at the moment. If you\'d like to apply, check out our Discord\'s
-      announcement channel for news when a new position opens.
-      Our application cycle usually lasts two weeks, so if you\'re seeing this, it\'s because it finished, and new one will begin soon.
+      Atualmente não estamos contratando nenhum novo membro da equipa no momento. Se você quiser se candidatar, confira o canal de anúncios
+      do Discord para saber quando abre uma nova vaga.
+      Nosso ciclo de candidaturas geralmente dura duas semanas, então se você está vendo isso, é porque ela terminou, e um novo começará em breve.
     ',
-    'where_work' => 'Where you\'ll work',
-    'join_team' => 'Join The Team',
-    'join_team_cta' => 'Join the team today and help out network grow and prosper!',
-    'contact_cta' => 'Any questions? Leave a message!',
-    'contact_disclaimer' => '*This is not an application form. Any applications sent here will be ignored.',
-    'contactlabel_name' => 'Name',
+    'where_work' => 'Onde você trabalhará',
+    'join_team' => 'Junte-se à equipa',
+    'join_team_cta' => 'Junte-se hoje à equipa e ajude a rede a crescer e prosperar!',
+    'contact_cta' => 'Alguma pergunta? Deixe uma mensagem!',
+    'contact_disclaimer' => '*Este não é um formulário de candidatura. Qualquer candidatura enviada aqui será ignorada.',
+    'contactlabel_name' => 'Nome',
     'contactlabel_email' => 'E-mail',
-    'contactlabel_subject' => 'Subject (ex. Site Suggestion)',
-    'contactlabel_send' => 'Send',
+    'contactlabel_subject' => 'Assunto (ex. sugestão do site)',
+    'contactlabel_send' => 'Enviar',
 
 
 
     // ======================== AUTHENTICATION MESSAGES ===========================
 
-    '2fa_txt' => 'Two-Factor Authentication',
-    '2fa_sronly' => 'Two-factor secret code (You can find this on Google Authenticator)',
-    '2fa_lostcode' => 'Don\'t know the code?',
-    '2fa_cancel_login' => 'Cancel login (logout)',
+    '2fa_txt' => 'Autenticação de dois Fatores',
+    '2fa_sronly' => 'Código secreto de dois fatores (Poderá encontrar isso no Google Authenticator)',
+    '2fa_lostcode' => 'Não sabe o código?',
+    '2fa_cancel_login' => 'Cancelar login (sair)',
 
-    'terms' => 'Terms of Use',
-    'ppolicy' => 'Privacy Policy',
+    'terms' => 'Condições de Utilização',
+    'ppolicy' => 'Política de privacidade',
 
-    'signin_cta' => 'Sign into your account',
-    'password' => 'Password',
-    'remember_me' => 'Remember me',
-    'forgot_pw' => 'Forgot password?',
-    'register_cta' => 'Register here',
-    'no_acc' => 'Don\'t have an account?',
-    'register_acc' => 'Register a new account',
+    'signin_cta' => 'Entrar na sua conta',
+    'password' => 'Palavra-passe',
+    'remember_me' => 'Lembrar-me',
+    'forgot_pw' => 'Esqueceu-se da palavra-passe?',
+    'register_cta' => 'Registe-se aqui',
+    'no_acc' => 'Não tem uma conta?',
+    'register_acc' => 'Registar nova conta',
     'pwsec' => [
-        'line1' => 'Basic password security',
-        'line2' => 'For your security, we implement strict password policies. It\'s also advisable to let your password manager or browser generate and save passwords for you (if it\'s a private device).',
-        'line3' => 'Passwords must be a combination of: ',
-        'line4' => 'A minimum of 10 characters;',
-        'line5' => 'At least 3 uppercase characters;',
-        'line6' => 'At least 3 numbers;',
-        'line7' => 'Any number of special characters.'
+        'line1' => 'Verificar a segurança da password',
+        'line2' => 'Para sua segurança, implementamos políticas de palavra-passe rigorosas. Também é aconselhável deixar o seu gestor de senhas ou o navegador gerar e salvar senhas para você (se for um dispositivo privado).',
+        'line3' => 'As senhas devem ser uma combinação de: ',
+        'line4' => 'Um mínimo de 10 caracteres;',
+        'line5' => 'Pelo menos 3 caracteres maiúsculos;',
+        'line6' => 'Pelo menos 3 números;',
+        'line7' => 'Números e caracteres especiais.'
     ],
-    'sronly_confirmpassword' => 'Confirm Password', // hint: sronly stands for screen-reader only
-    'sronly_mcusername' => 'Minecraft Username (Premium)',
-    'have_account' => 'Have an account with us?',
-    'login_here' => 'Login here',
-    'register_txt' => 'Register',
+    'sronly_confirmpassword' => 'Confirmar palavra-passe', // hint: sronly stands for screen-reader only
+    'sronly_mcusername' => 'Utilizador do Minecraft (Premium)',
+    'have_account' => 'Já tem uma conta?',
+    'login_here' => 'Inicie sessão aqui',
+    'register_txt' => 'Registe-se',
 
     // ===================== DASHBOARD & COMPONENT MESSAGES ===========================
 
-    'modal_close' => 'Close',
-    'component_nopermission' => 'We\'re sorry, but you do not have permission to access this web page.',
-    'component_accessdenied' => 'Access Denied',
-    'component_contact' => 'Please contact your administrator if you believe this was in error.',
-    'welcome_back' => 'Welcome back,',
-    'eligible' => 'Eligible',
-    'ineligible' => 'Ineligible',
-    'eligibility_status' => 'Your current application eligibility status: :badgeStatus',
-    'ongoing_apps' => 'Ongoing apps',
-    'denied_apps' => 'Denied apps',
-    'users_staff' => 'Total Users + Staff',
-    'new_apps' => 'New applications',
-    'v_backlog' => 'Vote backlog',
-    'ranks' => 'Available ranks',
-    'open' => 'Open',
+    'modal_close' => 'Fechar',
+    'component_nopermission' => 'Não tem permissões para aceder a este recurso.',
+    'component_accessdenied' => 'Acesso negado',
+    'component_contact' => 'Por favor, entre em contato com seu administrador se acredita que isso foi um erro.',
+    'welcome_back' => 'Bem-vindo de volta,',
+    'eligible' => 'Qualificado',
+    'ineligible' => 'Não elegível',
+    'eligibility_status' => 'Seu atual estado de elegibilidade: :badgeStatus',
+    'ongoing_apps' => 'Candidaturas a decorrer',
+    'denied_apps' => 'Candidaturas negadas',
+    'users_staff' => 'Utilizadores totais + Equipa',
+    'new_apps' => 'Novas Candidaturas',
+    'v_backlog' => 'Votos em atraso',
+    'ranks' => 'Cargos disponíveis',
+    'open' => 'Abrir',
     'closed' => 'Closed',
     'upcoming' => 'Your upcoming interviews',
     'soon' => 'Coming soon',
@@ -236,97 +236,97 @@ return [
     'form' => 'Form',
 
     'form_builder' => [
-        'builder' => 'Form Builder',
-        'builder_name' => 'Application Form Management Tool',
-        'name_form' => 'Name your form...',
-        'save_form' => 'Save Form',
+        'builder' => 'Construtor de Formulários',
+        'builder_name' => 'Ferramenta de Gestão de Formulários de Candidatura',
+        'name_form' => 'Nomeie o seu formulário...',
+        'save_form' => 'Guardar Formulário',
     ],
 
     'form_preview' => [
-        'preview' => 'Preview',
-        'title' => 'Application Form Preview',
-        'looks' => 'This is how your form looks like to applicants',
-        'f_info' => 'You may edit it and add more fields later.',
+        'preview' => 'Pré-visualizar',
+        'title' => 'Pré-visualização do Formulário de Candidatura',
+        'looks' => 'É assim que o seu formulário aparece para os candidatos',
+        'f_info' => 'Você pode editá-lo e adicionar mais campos posteriormente.',
         ''
     ],
 
     'forms_p' => [
 
-        'available_forms' => 'Available forms',
-        'form_title' => 'Form title',
-        'empty_noforms' => 'Nothing to see here! Please add some forms first.',
-        'new_form' => 'NEW FORM'
+        'available_forms' => 'Formulários disponíveis',
+        'form_title' => 'Título do Formulário',
+        'empty_noforms' => 'Nada para ver aqui! Por favor, crie alguns formulários primeiro.',
+        'new_form' => 'NOVO FORMULÁRIO'
     ],
 
     'players' => [
 
-        'reg_players' => 'Registered Players',
-        'reg_players_staff' => 'See Registered Players (Applicant Pool)',
-        'total_banned' => 'Total Banned Players',
-        'search' => 'Search players',
-        'f_p_search' => 'Full/partial email search',
-        'p_disclaimer' => 'Please note: This list only includes players registered in the team management portal. In a future release, all network players will be shown here.',
-        'listing' => 'Player Listing',
-        'reg_date' => 'Registration Date',
+        'reg_players' => 'Jogadores registados',
+        'reg_players_staff' => 'Ver Jogadores Registrados (Grupo de Candidatos)',
+        'total_banned' => 'Total de jogadores banidos',
+        'search' => 'Procurar jogadores',
+        'f_p_search' => 'Pesquisa de e-mail completa/parcial',
+        'p_disclaimer' => 'Atenção: Esta lista inclui apenas jogadores registados no portal de gestão de equipa. Numa versão futura, todos os jogadores da rede serão mostrados aqui.',
+        'listing' => 'Lista de jogadores',
+        'reg_date' => 'Data de registo',
         'ign' => 'IGN', // Context: Short for In-Game Name
-        'banned' => 'Banned',
-        'active' => 'Active',
-        'no_reg' => 'There are no registered players!',
+        'banned' => 'Banido',
+        'active' => 'Ativo',
+        'no_reg' => 'Não há jogadores inscritos!',
         'no_reg_exp' => "
-          Registered players are those without a staff role in the team management application.
-          There may be other users registered in the platform, but they won't be displayed here.
+          Jogadores registrados são aqueles que não possuem uma função administrativa no aplicativo de gestão de equipa.
+          Pode haver outros utilizadores registados na plataforma, mas eles não serão exibidos aqui.
 ",
-        'see_staff' => 'See Staff Members'
+        'see_staff' => 'Ver Membros da Equipa'
 
     ],
 
     'positions_p' => [
 
-        'application_form' => 'Application Form',
-        'select_form' => 'Select a form...',
+        'application_form' => 'Formulário de Candidatura',
+        'select_form' => 'Selecione um formulário...',
         'no_form_error' => "
-           You cannot create a vacancy without any forms with which people would apply.
-           create a form first, then, create a vacancy.
-           A single form is allowed to have multiple vacancies, so you can attach future vacancies to the same form if you'd like.
+           Não pode criar uma vaga sem qualquer formulário cujos quais as pessoas se poderiam candidatar.
+           Crie um formulário primeiro, e depois crie uma vaga.
+           Um único formulário pode ter várias vagas, para que possa anexar futuras vagas ao mesmo formulário, se quiser.
 ",
-        'new_pos' => 'NEW POSITION',
-        'empty_pos_warning' => 'Nothing to see here! Open some vacancies first. This will get applicants pouring in! (hopefully)',
-        'manage_forms' => 'MANAGE APPLICATION FORMS',
+        'new_pos' => 'NOVA VAGA',
+        'empty_pos_warning' => 'Nada para ver aqui! Abra algumas vagas primeiro. Isso fará os candidatos aparecerem! (esperançoso)',
+        'manage_forms' => 'GERIR FORMULÁRIOS DE CANDIDATURA',
 
     ],
 
     'settings' => [
 
-        'settings' => 'Settings',
-        'settings_header' => 'Notification Settings',
-        'settings_p' => 'Change which notifications are sent here.',
-        'back_btn' => 'Back to Dashboard'
+        'settings' => 'Definições',
+        'settings_header' => 'Configuração das notificações',
+        'settings_p' => 'Altere quais notificações são enviadas aqui.',
+        'back_btn' => 'Voltar ao painel'
 
     ],
 
     'staff' => [
 
-        'members' => 'Staff Members',
-        'active_sm' => 'Active Staff Members',
-        'm_listing' => 'Member Listing',
-        'f_name' => 'Full Name',
-        'rank' => 'Rank',
+        'members' => 'Membros da Equipa',
+        'active_sm' => 'Membros Ativos da Equipa',
+        'm_listing' => 'Lista de Membros',
+        'f_name' => 'Nome completo',
+        'rank' => 'Cargo',
     ],
 
     // ======================== APPLICATION RENDERING MESSAGES =========================
 
     'application_r' => [
 
-        'appl_submit_warn' => 'Are you sure you want to submit your application? Please review each of your answers carefully before doing so.',
-        'appl_submit_doublewarn' => 'Please note: Applications CANNOT be modified once they\'re submitted!',
-        'acceptsend' => 'Accept & Send',
-        'review' => 'Review',
-        'applying_for' => 'You are applying for: :name',
+        'appl_submit_warn' => 'Tem certeza de que deseja enviar a sua candidatura? Por favor, analise cada uma das suas respostas cuidadosamente antes de enviá-la.',
+        'appl_submit_doublewarn' => 'Por favor, note: Candidaturas NÃO PODEM serem modificadas assim que forem enviadas!',
+        'acceptsend' => 'Aceitar e Enviar',
+        'review' => 'Rever',
+        'applying_for' => 'Você está se candidatando para: :name',
         'welcome' => [
-            'yrs_old' => 'Years old', // Context: "years old" as in: Tom is 24 years old
-            'line1' => 'We\'re glad you\'ve decided to apply. Generally, applications take 48 hours to be processed and reviewed. Depending on the circumstances and the volume of applications, you may receive an answer in a shorter time.',
-            'line2' => 'Please fill out the form below. Keep all answers concise and complete. Please keep in mind that the age requirement is at least :agerqr.',
-            'line3' => 'Asking about your application will result in instant denial. Everything you need to know is here.'
+            'yrs_old' => 'Anos de idade', // Context: "years old" as in: Tom is 24 years old
+            'line1' => 'Estamos felizes que você decidiu se candidatar. Geralmente, as candidaturas levam 48 horas para serem processadas e revisadas. Dependendo das circunstâncias e do volume de candidaturas, você poderá receber uma resposta em um período mais curto de tempo.',
+            'line2' => 'Por favor, preencha o formulário abaixo. Mantenha todas as respostas concisas e completas. Lembre-se de que o requisito de idade é de pelo menos :agerqr.',
+            'line3' => 'Perguntar sobre a sua candidatura resultará em ser negado instantaneamente. Tudo o que você precisa saber está aqui.'
         ],
         'app_timeout' => 'Your account is not permitted to submit another application. Please wait :days more days before trying to submit an application.'
     ],
@@ -408,65 +408,65 @@ return [
 
     'profile' => [
 
-        'title' => ':name\'s profile',
-        'profile' => 'Profile',
-        'users' => 'Users',
-        'account_banned' => 'Account banned',
-        'account_banned_exp' => 'This user has been banned by the moderators.',
-        'ban_confirm' => 'Please confirm that you want to ban this user account. You\'ll need to add a reason and expiration date to confirm this. Bans don\'t transfer to connected Minecraft networks (yet).',
-        'leave_empty' => 'Leave empty for a permanent ban',
-        'duration' => 'Duration',
-        'p_duration' => 'Punishment duration',
-        'p_duration_exp' => 'e.g. Spamming',
-        'ban' => 'Ban',
+        'title' => 'Perfil de :name',
+        'profile' => 'Perfil',
+        'users' => 'Utilizadores',
+        'account_banned' => 'Conta banida',
+        'account_banned_exp' => 'Este utilizador foi banido pelos moderadores.',
+        'ban_confirm' => 'Por favor, confirme que você deseja banir este utilizador. Você precisará adicionar um motivo e uma data de expiração para confirmar isto. Banimentos não transferem para redes de Minecraft conectadas (ainda).',
+        'leave_empty' => 'Deixe em branco para um banimento permanente',
+        'duration' => 'Duração',
+        'p_duration' => 'Duração da penalização',
+        'p_duration_exp' => 'por exemplo, spam',
+        'ban' => 'Banir',
 
-        'terminate_notice' => 'You are about to terminate a staff member',
-        'terminate_notice_warning' => 'Terminating a staff member will remove their privileges on the team management site and Network.
-                They will be notified of their termination. Make sure to have discussed this with them first.',
-        'terminate_notice_consequence' => 'THIS PROCESS IS IRREVERSIBLE AND IMMEDIATE',
-        'terminate_txt' => 'Terminate Staff Member',
+        'terminate_notice' => 'Você está prestes a excluir um membro da equipa',
+        'terminate_notice_warning' => 'Excluir um membro da equipa irá remover os respetivos privilégios do site de gestão da equipa e da Rede.
+                Eles serão notificados sobre o cancelamento. Certifique-se de que já tenha discutido isto com eles.',
+        'terminate_notice_consequence' => 'ESTE PROCESSO É IRREVERSÍVEL E IMEDIATO',
+        'terminate_txt' => 'Apagar membro da equipa',
 
-        'delete_acc_warn' => 'WARNING: This is a potentially destructive action!',
-        'delete_acc_consequence' => 'Deleting a user\'s account is an irreversible process. Historic and current applications, votes, and profile content, as well as any personally identifiable information will be immediately erased.',
-        'type_to_confirm' => 'Type to confirm:',
-        'type_placeholder' => 'Please type the above',
+        'delete_acc_warn' => 'AVISO: Esta é uma ação potencialmente destrutiva!',
+        'delete_acc_consequence' => 'Excluir uma conta de utilizador é um processo irreversível. Candidaturas históricas e atuais, votos e conteúdo do perfil, bem como qualquer informação que seja pessoalmente identificável serão imediatamente apagados.',
+        'type_to_confirm' => 'Digite para confirmar:',
+        'type_placeholder' => 'Digite o valor acima',
 
-        'delete_acc' => 'Delete Account',
-        'edit_acc' => 'Edit Account',
+        'delete_acc' => 'Apagar conta',
+        'edit_acc' => 'Editar Conta',
 
-        'ban_acc' => 'Ban Account',
-        'unban_acc' => 'Unban Account',
+        'ban_acc' => 'Banir conta',
+        'unban_acc' => 'Desbanir conta',
 
-        'search_result' => 'Search results',
+        'search_result' => 'Resultados da pesquisa',
 
-        'origin_cc' => 'Origin country',
-        'state_prov' => 'State/Province',
-        'district' => 'District (if any)',
-        'city' => 'City',
-        'zipcode' => 'Zipcode',
-        'coords' => 'Coordinates',
-        'european' => 'European?',
-        'isp' => 'ISP', // Internet service provider
-        'org' => 'Organization (if any)',
-        'ctype' => 'C. Type', // Internet Connection type
-        'timezone' => 'Timezone',
-        'noresults' => 'This query returned no results.',
+        'origin_cc' => 'País de origem',
+        'state_prov' => 'Estado/Província',
+        'district' => 'Distrito (se houver)',
+        'city' => 'Cidade',
+        'zipcode' => 'Código postal',
+        'coords' => 'Coordenadas',
+        'european' => 'Europeu?',
+        'isp' => 'Provedor', // Internet service provider
+        'org' => 'Organização (se houver)',
+        'ctype' => 'T. de Ligação', // Internet Connection type
+        'timezone' => 'Fuso horário',
+        'noresults' => 'A sua pesquisa não retornou resultados.',
 
-        'edituser' => 'Edit PII and Roles', // PII: Personally identifiable information
-        'edituser_consequence' => 'Warning! This is a sensitive setting! Changing this could have unintended consequences!',
-        'acc_management' => 'Account Management (Admin)',
-        'discord_tag' => 'User\'s Discord Tag: :discordTag',
-        'account_settings' => 'Account Settings',
-        'account_settings_personal' => 'My Account Settings',
+        'edituser' => 'Editar dados pessoais e cargos', // PII: Personally identifiable information
+        'edituser_consequence' => 'Aviso! Esta é uma configuração sensível! Mudar isto pode ter consequências não intencionais!',
+        'acc_management' => 'Gestão de conta (administrador)',
+        'discord_tag' => 'Tag do Discord: :discordTag',
+        'account_settings' => 'Definições de Conta',
+        'account_settings_personal' => 'Minhas Configurações de Conta',
 
-        '2fa_welcome' => 'We\'re glad you decided to increase your account\'s security!',
-        'supported_apps' => 'Supported apps you can install: ',
-        'scan_code' => 'Scan the :scannable code with your preferred app, and then copy the code here.',
-        'otp' => 'One-time code',
-        '2fa_enable' => 'Enable 2FA',
-        '2fa_remove_consequence' => 'Removing two-factor authentication will reduce the security of your account.',
-        '2fa_password_confirm' => 'Confirm your password to continue',
-        '2fa_password_confirm_exp' => 'To prevent unauthorized changes, a password is always required for sensitive operations.',
+        '2fa_welcome' => 'Estamos felizes por você ter decidido aumentar a segurança de sua conta!',
+        'supported_apps' => 'Aplicativos suportados que você pode instalar: ',
+        'scan_code' => 'Escaneie o código :scannable com o seu aplicativo preferido e copie o código aqui.',
+        'otp' => 'Código de uso único',
+        '2fa_enable' => 'Ativar 2FA',
+        '2fa_remove_consequence' => 'Remover a autenticação de dois fatores reduzirá a segurança de sua conta.',
+        '2fa_password_confirm' => 'Confirme a sua palavra-passe para continuar',
+        '2fa_password_confirm_exp' => 'Para impedir alterações não autorizadas, uma senha é sempre necessária para operações confidenciais.',
         '2fa_disable_consent' => '"I understand the possible consequences of disabling two factor authentication"',
         '2fa_remove' => 'Remove 2FA',
 
@@ -541,9 +541,9 @@ return [
 
         'directory' => [
 
-            'itsyou' => 'It\'s you!',
-            'title' => 'User Directory',
-            'directory' => 'Directory'
+            'itsyou' => 'É você!',
+            'title' => 'Diretório de Utilizadores',
+            'directory' => 'Diretório'
 
         ]
 
@@ -551,14 +551,14 @@ return [
 
     'view_app' => [
 
-        'title' => 'Viewing application',
-        'viewing_app' => 'Viewing :user\'s application',
-        'cantvote' => 'You cannot vote on this application anymore.',
-        'no_notes' => 'There are no notes yet. Add some!',
-        'deny_confirm' => 'Are you sure you want to deny this application? Please keep in mind that this user will only be allowed to apply 30 days after their first application.',
-        'deny_confirm_consequence' => 'This action cannot be undone.',
-        'deny_confirm_btn' => 'Confirm: Deny Applicant',
-        'form_updated_alert' => 'If this form has been updated, new fields and updated questions will not show up here!',
+        'title' => 'Vendo candidatura',
+        'viewing_app' => 'Visualizando a candidatura de :user',
+        'cantvote' => 'Não pode votar nesta candidatura novamente.',
+        'no_notes' => 'Ainda não há notas. Adicione algumas!',
+        'deny_confirm' => 'Tem certeza que deseja negar esta candidatura? Por favor, tenha em mente que este utilizador só terá permissão para se candidatar 30 dias após sua primeira candidatura.',
+        'deny_confirm_consequence' => 'Esta ação não pode ser desfeita.',
+        'deny_confirm_btn' => 'Confirmar: Negar candidato',
+        'form_updated_alert' => 'Se este formulário foi atualizado, novos campos e perguntas atualizadas não aparecerão aqui!',
         'context_info' => 'Contextual Information',
         'appl_ip' => 'Applicant IP Address',
         'appl_for' => 'Applying for',
