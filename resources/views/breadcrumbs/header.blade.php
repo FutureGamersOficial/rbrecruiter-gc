@@ -55,7 +55,7 @@
                     <a class="nav-link " href="{{config('app.sitehomepage')}}">{{__('messages.homepagetxt')}}</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">Language selection</a>
+                    <a href="#" class="nav-link dropdown-toggle"><i class="fas fa-language"></i> Language</a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item text-center">
                             <a target="_blank" href="https://crowdin.com/project/raspberry-staff-manager"><img src="https://badges.crowdin.net/raspberry-staff-manager/localized.svg"></a>
