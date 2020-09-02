@@ -76,6 +76,8 @@ class AppointmentController extends Controller
     {
         if (!is_null($application))
         {
+            $application->load('appointment');
+
             $application->appointment->meetingNotes = $request->noteText;
             $application->appointment->save();
 
