@@ -38,7 +38,7 @@
 
                 <x-modal id="notes" modal-label="notes" modal-title="Shared Notepad" include-close-button="true">
 
-                    <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['application' => $application->id])}}">
+                    <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['applicationID' => $application->id])}}">
                         @csrf
                         @method('PATCH')
                         <textarea name="noteText" rows="5" class="form-control">{{$application->appointment->meetingNotes ?? __('messages.view_app.no_notes')}}</textarea>
@@ -224,7 +224,7 @@
 
                     <div class="col">
 
-                        <x-card id="appointmentCard" card-title="Schedule An Interview" footer-style="text-center">
+                        <x-card id="appointmentCard" card-title="{{__('messages.reusable.schedule')}}" footer-style="text-center">
 
                             <x-slot name="cardHeader">
 
