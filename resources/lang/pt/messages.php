@@ -26,7 +26,7 @@ return [
         'profile_settings' => 'Configurações do Perfil',
         'hiring_man' => 'Gestão de Contratação',
         'all_forms' => 'Todos os Formulários',
-        'app_settings' => 'Configurações do Aplicativo',
+        'app_settings' => 'Configurações da App',
         'global_app_settings' => 'Configurações globais do aplicativo',
         'system_logs' => 'Registos do Sistema'
     ],
@@ -160,7 +160,7 @@ return [
     'modal_close' => 'Fechar',
     'component_nopermission' => 'Não tem permissões para aceder a este recurso.',
     'component_accessdenied' => 'Acesso negado',
-    'component_contact' => 'Por favor, entre em contato com seu administrador se acredita que isso foi um erro.',
+    'component_contact' => 'Por favor, entre em contacto com seu administrador se acredita que isso foi um erro.',
     'welcome_back' => 'Bem-vindo de volta,',
     'eligible' => 'Qualificado',
     'ineligible' => 'Não elegível',
@@ -261,7 +261,7 @@ return [
     'players' => [
 
         'reg_players' => 'Jogadores registados',
-        'reg_players_staff' => 'Ver Jogadores Registrados (Grupo de Candidatos)',
+        'reg_players_staff' => 'Ver Jogadores Registados (Grupo de Candidatos)',
         'total_banned' => 'Total de jogadores banidos',
         'search' => 'Procurar jogadores',
         'f_p_search' => 'Pesquisa de e-mail completa/parcial',
@@ -273,7 +273,7 @@ return [
         'active' => 'Ativo',
         'no_reg' => 'Não há jogadores inscritos!',
         'no_reg_exp' => "
-          Jogadores registrados são aqueles que não possuem uma função administrativa no aplicativo de gestão de equipa.
+          Jogadores registados são aqueles que não possuem uma função administrativa no aplicativo de gestão de equipa.
           Pode haver outros utilizadores registados na plataforma, mas eles não serão exibidos aqui.
 ",
         'see_staff' => 'Ver Membros da Equipa'
@@ -328,79 +328,79 @@ return [
             'line2' => 'Por favor, preencha o formulário abaixo. Mantenha todas as respostas concisas e completas. Lembre-se de que o requisito de idade é de pelo menos :agerqr.',
             'line3' => 'Perguntar sobre a sua candidatura resultará em ser negado instantaneamente. Tudo o que você precisa saber está aqui.'
         ],
-        'app_timeout' => 'Your account is not permitted to submit another application. Please wait :days more days before trying to submit an application.'
+        'app_timeout' => 'A sua conta não pode enviar outra candidatura. Por favor, espere :days mais dias antes de tentar enviar uma candidatura.'
     ],
 
 
     'application_m' => [
-        'title' => 'Application Management',
-        'all_apps' => 'All Applications',
-        'modal_confirm' => 'Are you sure?',
-        'really_delete' => 'Really delete this?',
+        'title' => 'Gestão de Candidaturas',
+        'all_apps' => 'Todas as Candidaturas',
+        'modal_confirm' => 'Tem a certeza?',
+        'really_delete' => 'Deseja realmente excluir isto?',
 
 
-        'outstanding_sm' => 'Outstanding',
-        'outstanding_apps' => 'Outstanding Applications',
-        'outstanding_subm' => 'Outstanding (Submitted)',
+        'outstanding_sm' => 'Pendente',
+        'outstanding_apps' => 'Candidaturas Pendendes',
+        'outstanding_subm' => 'Pendente (Enviado)',
 
-        'interview_q' => 'Interview Queue',
-        'interview_p' => 'Interview',
-        'interview_s' => 'Interview Scheduled',
-        'finished_int' => 'Finished Interviews',
-        'schedule_int' => 'Schedule Interviews',
-        'p_review' => 'Peer Review',
-        'applicant' => 'Applicant',
-        'interviewee' => 'Interviewee',
-        'pending_int' => 'Pending Interview',
-        'schedule' => 'Schedule',
+        'interview_q' => 'Fila de entrevistas',
+        'interview_p' => 'Entrevista',
+        'interview_s' => 'Entrevista Agendada para',
+        'finished_int' => 'Entrevistas concluídas',
+        'schedule_int' => 'Agendar Entrevistas',
+        'p_review' => 'Revisão por pares',
+        'applicant' => 'Candidato',
+        'interviewee' => 'Entrevistado',
+        'pending_int' => 'Entrevista Pendente',
+        'schedule' => 'Agendar',
 
-        'view_interview_queue' => 'View Interview Queue',
-        'view_approval_queue' => 'View Approval Queue',
-        'view_outstanding_queue' => 'View Outstanding Queue',
+        'view_interview_queue' => 'Ver fila de entrevistas',
+        'view_approval_queue' => 'Ver Fila de Aprovação por Pares',
+        'view_outstanding_queue' => 'Visualizar fila de pendentes',
 
-        'approved' => 'Approved',
-        'denied' => 'Denied',
-        'unknown_stat' => 'Unknown',
+        'approved' => 'Aprovado',
+        'denied' => 'Recusado',
+        'unknown_stat' => 'Desconhecido',
 
-        'consequence_irreversible' => 'IRREVERSIBLE',
-        'delete_action_warning' => 'This action is :consequence.',
-        'delete_explainer' => 'Comments, appointments and any votes attached to this application WILL be deleted too. Please make sure this application really needs to be deleted.',
+        'consequence_irreversible' => 'IRREVERSÍVEL',
+        'delete_action_warning' => 'Esta ação é :consequence.',
+        'delete_explainer' => 'Comentários, compromissos e quaisquer votos anexados a esta candidatura também serão excluídos. Por favor, certifique-se de que esta candidatura realmente precisa ser excluída.',
 
-        'all_apps_header' => 'You\'re looking at all applications ever received',
-        'all_apps_exp' => 'Here, you have quick and easy access to all applications ever received by the system.',
+        'all_apps_header' => 'Você está a ver todas as candidaturas recebidas',
+        'all_apps_exp' => 'Aqui, você tem acesso rápido e fácil a todas as candidaturas recebidos pelo sistema.',
 
-        'no_apps' => 'There are no applications here',
-        'no_apps_exp' => 'We couldn\'t find any applications. Maybe no one has applied yet? Please try again later.',
-        'int_applications' => 'Applications',
+        'no_apps' => 'Não há candidaturas aqui',
+        'no_apps_exp' => 'Não conseguimos encontrar nenhuma candidatura. Talvez ninguém se inscreveu ainda? Por favor, tente novamente mais tarde.',
+        'int_applications' => 'Candidaturas',
 
-        'no_apps_pending_int' => 'No Applications Pending Interview',
-        'no_apps_pending_int_exp' => 'There are no applications that have been moved up to the Interview stage. Please check the outstanding queue.There are no applications that have been moved up to the Interview stage. Please check the outstanding queue.',
-        'upcoming_int' => 'My Upcoming Interviews',
-        'pending_schedule' => 'Pending Schedule',
+        'no_apps_pending_int' => 'Nenhuma candidatura pendente de entrevista',
+        'no_apps_pending_int_exp' => 'Não há aplicativos que tenham sido movidos para a fase de Entrevistas. Verifique a fila pendente. Aqui não há aplicativos que tenham sido movidos para a fase de Entrevistas. Por favor, verifique a fila pendente.',
+        'upcoming_int' => 'Minhas próximas entrevistas',
+        'pending_schedule' => 'Agendamento pendente',
 
-        'no_upcoming' => 'There are no upcoming interviews',
-        'no_upcoming_exp' => 'Please check other queues down in the application process. Applicants here may have already been interviewed.',
+        'no_upcoming' => 'Não há próximas entrevistas',
+        'no_upcoming_exp' => 'Por favor, verifique outras filas no processo de candidatura. Os candidatos aqui podem já ter sido entrevistados.',
 
-        'no_outstanding' => 'Seeing no applications? Check with an Administrator to make sure that there are available open positions.',
-        'no_outstanding_exp' => 'Advertising on relevant forums made for this purpose is also a good idea.',
+        'no_outstanding' => 'Não está vendo candidaturas? Verifique com um administrador para certificar-se de que existem posições abertas.',
+        'no_outstanding_exp' => 'É também uma boa ideia a publicidade em fóruns relevantes para este fim.',
 
-        'applicant_name' => 'Applicant Name',
-        'application_date' => 'Application Date',
+        'applicant_name' => 'Nome do Candidato',
+        'application_date' => 'Data de Inscrição',
 
-        'no_pending' => 'There are no pending applications',
-        'no_pending_exp' => 'It seems like no one new has applied yet. Checkout the interview and approval queues for applications that might have moved up the ladder by now.',
+        'no_pending' => 'Não existem candidaturas pendente',
+        'no_pending_exp' => 'Parece que ninguém novo se candidatou ainda. Confira as filas de entrevista e aprovação para candidaturas que podem ter movido fases até agora.',
 
         'voting_reminder' => [
 
-            'title' => 'Voting Reminder',
-            'line1' => 'Applications which gain more than 50% of positive votes are automatically approved after one day.',
-            'line2' => 'Conversely, applications that do not reach this number are automatically denied.',
-            'line3' => 'Please note that the vote system can be overridden'
+            'title' => 'Lembrete de votação',
+            'line1' => 'Candidaturas que obtêm mais de 50% dos votos positivos são automaticamente aprovadas após um dia.',
+            'line2' => 'Inversamente, candidaturas que não atingem esse número são automaticamente negadas.',
+            'line3' => 'Por favor, lembre-se que o sistema de votação pode ser substituído'
 
         ],
 
-        'no_pending_review' => 'There are no applications pending review',
-        'no_pending_review_exp' => 'Check the other queues for any applications! Applications will be shown here as soon as their interview is completed. You\'ll be able to view meeting notes and vote based on your observations.',
+        'no_pending_review' => 'Não há candidaturas pendentes de entrevista',
+        'no_pending_review_exp' => 'Verifique as outras filas para ver mais candidaturas! As candidaturas serão mostradas aqui assim que as suas entrevistas forem concluídas. Poderá ver notas da reunião e votar baseando-se nas suas observações.',
 
     ],
 
@@ -435,7 +435,7 @@ return [
         'edit_acc' => 'Editar Conta',
 
         'ban_acc' => 'Banir conta',
-        'unban_acc' => 'Desbanir conta',
+        'unban_acc' => 'Desbloquar conta',
 
         'search_result' => 'Resultados da pesquisa',
 
@@ -461,7 +461,7 @@ return [
 
         '2fa_welcome' => 'Estamos felizes por você ter decidido aumentar a segurança de sua conta!',
         'supported_apps' => 'Aplicativos suportados que você pode instalar: ',
-        'scan_code' => 'Escaneie o código :scannable com o seu aplicativo preferido e copie o código aqui.',
+        'scan_code' => 'Leia o código :scannable com o seu aplicativo preferido e copie o código aqui.',
         'otp' => 'Código de uso único',
         '2fa_enable' => 'Ativar 2FA',
         '2fa_remove_consequence' => 'Remover a autenticação de dois fatores reduzirá a segurança de sua conta.',
@@ -470,50 +470,50 @@ return [
         '2fa_disable_consent' => '"Eu compreendo as possíveis consequências de desativar a autenticação de dois fatores"',
         '2fa_remove' => 'Remover 2FA',
 
-        'security_lgotherdev' => 'Para sua segurança, você precisará redigitar a sua senha antes de desconectar outros dispositivos. Se você acredita que sua conta foi comprometida, altere sua senha em vez disso, já que isso desconectará automaticamente qualquer pessoa que poderá estar usando sua conta e impedir que faça login novamente.',
+        'security_lgotherdev' => 'Para sua segurança, você precisará re-introduzir a sua senha antes de desconectar outros dispositivos. Se você acredita que sua conta foi comprometida, altere sua senha em vez disso, já que isso desconectará automaticamente qualquer pessoa que poderá estar usando sua conta e impedir que faça login novamente.',
         'password_reenter' => 'Repita a sua palavra-passe',
 
         'acc_security' => 'Segurança da conta',
         '2fa' => 'Autenticação de dois Fatores',
         'sessions' => 'Sessões',
-        'contact_settings' => 'Configurações de Contato (E-Mail)',
+        'contact_settings' => 'Configurações de Contacto (E-Mail)',
 
         'change_password' => 'Alterar palavra-passe',
         'change_password_exp' => 'Altere sua senha aqui. Isto desconectará você de todas as sessões existentes para sua segurança.',
 
         'old_pass' => 'Palavra-passe antiga',
-        'forgot_pw' => 'Esqueceu sua senha? Resete-a :link',
+        'forgot_pw' => 'Esqueceu sua senha? Reponha-a :link',
         'new_pw' => 'Nova palavra-passe',
 
         '2fa_enable_success' => 'Fixe! A 2FA está configurada corretamente para a sua conta. Será solicitado um código toda vez que você fizer login.',
         '2fa_avail' => 'A autenticação de dois fatores está disponível para sua conta.',
-        '2fa_avail_exp' => ' Enabling this security option greatly increases your account\'s security in case your password ever gets stolen.',
+        '2fa_avail_exp' => ' Habilitar esta opção de segurança aumenta consideravelmente a segurança da sua conta caso a sua senha seja roubada.',
 
-        'session_manager' => 'Session Manager',
-        'terminate_others' => 'Terminating other sessions is generally a good idea if your account has been compromised.',
-        'current_session' => 'Your current session: logged in from :ipAddress',
-        'flush_session' => 'Flush sessions',
-        'personal_data_change' => 'Need to change personal data? You can do so here.',
-        'current_email' => 'Current Email Address',
-        'new_email' => 'New Email Address',
-        'current_password' => 'Current Password',
-        'security_nochangepw' => 'For security reasons, you cannot make important account changes without confirming your password. You\'ll also need to verify your new email.',
-        'change_email' => 'Change Email Address',
+        'session_manager' => 'Gestor de Sessões',
+        'terminate_others' => 'Terminar outras sessões é geralmente uma boa ideia se sua conta foi comprometida.',
+        'current_session' => 'Sua sessão atual: conectado a partir de :ipAddress',
+        'flush_session' => 'Limpar sessões',
+        'personal_data_change' => 'Precisa alterar dados pessoais? Você pode fazer isso aqui.',
+        'current_email' => 'Endereço de e-mail atual',
+        'new_email' => 'Novo endereço de e-mail',
+        'current_password' => 'Palavra-passe Atual',
+        'security_nochangepw' => 'Por motivos de segurança, você não pode fazer alterações de conta importantes sem confirmar a sua senha. Você também precisará confirmar o seu novo e-mail.',
+        'change_email' => 'Alterar Endereço de Email',
 
-        'basic_info' => 'Basic Information',
-        'fl_name' => 'First / Last Name',
-        'shortbio' => 'Short Bio',
-        'about_me' => 'About Me',
-        'pref_media' => 'Preferences & Media',
-        'avatar_source' => 'Retrieve avatar from: ',
-        'social_media' => 'Social Media',
+        'basic_info' => 'Informações básicas',
+        'fl_name' => 'Primeiro e último nome',
+        'shortbio' => 'Pequena biografia',
+        'about_me' => 'Sobre mim',
+        'pref_media' => 'Preferências & Média',
+        'avatar_source' => 'Obter o avatar de: ',
+        'social_media' => 'Redes Sociais',
 
-        'github_user' => 'Github Username',
-        'twitter_user' => 'Twitter Username',
-        'insta_user' => 'Instagram Username',
-        'discord_user' => 'Discord Handle',
+        'github_user' => 'Utilizador GitHub',
+        'twitter_user' => 'Utilizador no Twitter',
+        'insta_user' => 'Nome de Utilizador do Instagram',
+        'discord_user' => '"Handle" do Discord',
 
-        'update_prfl' => 'Update Profile'
+        'update_prfl' => 'Atualizar Perfil'
 
     ],
 
@@ -522,22 +522,22 @@ return [
     'user' => [
 
         'app_process' => [
-            'title' => 'Application Process',
-            'line1' => 'Please allow up to three days for your application to be processed. Your application will be reviewed by every team member, and will move up in stages.',
-            'line2' => 'If an interview is scheduled, you\'ll need to open your application here and confirm the time, date, and location assigned for you.'
+            'title' => 'Processo de Candidatura',
+            'line1' => 'Por favor, aguarde pelo menos três dias para que sua candidatura seja processada. A inscrição será revisada por todos os membros da equipa, e será promovida em fases.',
+            'line2' => 'Se uma entrevista estiver programada, você precisará abrir o aplicativo aqui e confirmar a hora, data e local atribuídos para você.'
         ],
 
-        'account_standing' => 'Account Standing',
-        'account_eligibility' => 'Your account is currently :eligibility for application',
-        'days_remaining_acc_alt' => 'As of today, there are :days remaining until you\'re permitted to submit another application.',
-        'my_ongoingapps' => 'My Ongoing Applications',
+        'account_standing' => 'Estado da Conta',
+        'account_eligibility' => 'Sua conta está atualmente :eligibility para candidatura',
+        'days_remaining_acc_alt' => 'A partir de hoje, há :days restantes até que você tenha permissão para enviar outra candidatura.',
+        'my_ongoingapps' => 'Minhas Candidaturas em Andamento',
 
-        'submitted' => 'Submitted',
-        'peer_approval' => 'Peer Approval',
-        'peer_approval_q' => 'Peer Approval Queue',
+        'submitted' => 'Enviado',
+        'peer_approval' => 'Aprovação em Pares',
+        'peer_approval_q' => 'Fila de Aprovação por Pares',
 
-        'nothing_to_show' => 'Nothing to show',
-        'nothing_to_show_exp' => 'You currently have no applications to display. If you\'re eligible, you may apply once every month.',
+        'nothing_to_show' => 'Nada a exibir',
+        'nothing_to_show_exp' => 'Você atualmente não tem nenhuma candidatura para exibir. Se você é elegível, você pode-se candidatar uma vez por mês.',
 
         'directory' => [
 
@@ -559,43 +559,43 @@ return [
         'deny_confirm_consequence' => 'Esta ação não pode ser desfeita.',
         'deny_confirm_btn' => 'Confirmar: Negar candidato',
         'form_updated_alert' => 'Se este formulário foi atualizado, novos campos e perguntas atualizadas não aparecerão aqui!',
-        'context_info' => 'Contextual Information',
-        'appl_ip' => 'Applicant IP Address',
-        'appl_for' => 'Applying for',
-        'currentstatus' => 'Current Status',
-        'decisionmod' => 'Decision & Moderation Tools',
-        'denyapp' => 'Deny applicant',
-        'nextstage' => 'Move to next stage',
-        'appointment_desc' => 'Appointment description',
-        'int_date_time' => 'Interview Date & Time',
-        'choosedate' => 'Click to choose a date',
-        'appointment_loc' => 'Appointment Location',
-        'pref_platform' => 'Select your preferred platform',
-        'coming_soon_int' => 'Embedded in-house video conferencing coming soon, powered by Jitsi Meet',
-        'scheduled_for' => 'Interview Scheduled for:',
-        'platform' => 'Platform',
-        'finish_meeting' => 'Finish Meeting',
-        'view_notes' => 'View Meeting Notes',
-        'vote_app' => 'Vote on this application',
+        'context_info' => 'Informações contextuais',
+        'appl_ip' => 'Endereço IP do candidato',
+        'appl_for' => 'Candidatando-se a',
+        'currentstatus' => 'Estado atual',
+        'decisionmod' => 'Ferramentas de Decisão & Moderação',
+        'denyapp' => 'Recusar candidato',
+        'nextstage' => 'Mover para a próxima fase',
+        'appointment_desc' => 'Descrição do agendamento',
+        'int_date_time' => 'Data e Hora da Entrevista',
+        'choosedate' => 'Clique para escolher uma data',
+        'appointment_loc' => 'Local do Agendamento',
+        'pref_platform' => 'Selecione sua plataforma preferida',
+        'coming_soon_int' => 'Videoconferência interna em breve, suportada por Jitsi Meet',
+        'scheduled_for' => 'Entrevista Agendada para:',
+        'platform' => 'Plataforma',
+        'finish_meeting' => 'Finalizar reunião',
+        'view_notes' => 'Notas da Reunião',
+        'vote_app' => 'Votar nesta candidatura',
 
         'vote_explainer' => [
 
-            'line1' => 'If you weren\'t present during this meeting, you can view the shared meeting notepad to help you make a decision.',
-            'line2' => 'You may vote on as many applications as needed; However, you can only vote once per application.',
-            'line3' => 'Votes carry no weight based on rank. This system has been designed with fairness and ease of use in mind.'
+            'line1' => 'Se você não estava presente durante esta reunião, pode visualizar o bloco de notas da reunião partilhado para ajudá-lo a tomar uma decisão.',
+            'line2' => 'Você pode votar em quantas candidaturas forem necessárias; no entanto, só pode votar uma vez por candidatura.',
+            'line3' => 'Os votos não têm peso baseado no cargo. Esse sistema foi projetado com justiça e facilidade de uso em mente.'
 
         ],
 
-        'vote_approve' => 'Vote: Approve Applicant',
-        'vote_deny' => 'Vote: Deny Applicant',
-        'm_notes' => 'Meeting notes',
-        'view_more' => 'View more Applications',
-        'comments' => 'Comments',
-        'no_comments' => 'There are no comments here.',
-        'no_comments_exp' => 'There are no comments here! Comments are only visible to staff members. Be the first to share your input! Commenting may help with decision-making when time comes to vote for an application.',
-        'commenting_as' => 'Commenting as :username',
-        'max_chars' => 'max characters', // Context: A number is added before max characters
-        'post' => 'Post', // Context: Post as in post comment
+        'vote_approve' => 'Voto: Aprovar o candidato',
+        'vote_deny' => 'Voto: Negar o candidato',
+        'm_notes' => 'Notas da Reunião',
+        'view_more' => 'Ver mais candidaturas',
+        'comments' => 'Comentários',
+        'no_comments' => 'Ainda não há comentários.',
+        'no_comments_exp' => 'Não há comentários aqui! Comentários só são visíveis para os membros da equipa. Seja o primeiro a partilhar a sua opinião! Comentar pode ajudar na tomada de decisões quando chegar o momento de votar na candidatura.',
+        'commenting_as' => 'Comentando como :username',
+        'max_chars' => 'caracteres no máximo', // Context: A number is added before max characters
+        'post' => 'Publicar', // Context: Post as in post comment
 
     ]
 
