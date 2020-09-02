@@ -33,7 +33,7 @@
                 <p>{{__('messages.user.account_eligibility', ['eligibility' => ($isEligibleForApplication) ? __('messages.eligible') : __('messages.ineligible')])}}</p>
 
                 @if (!$isEligibleForApplication)
-                    <p>{{__('messages.user.days_remaining_acc_alt', ['days' => '<b>' . $eligibilityDaysRemaining .'</b>'])}}</p>
+                    <p>{{__('messages.user.days_remaining_acc_alt', ['days' => $eligibilityDaysRemaining])}}</p>
                 @endif
 
             </div>
