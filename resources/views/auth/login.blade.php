@@ -28,7 +28,7 @@
                     <label for="remember">{{__('messages.remember_me')}}</label>
                     <input type="checkbox" name="remember" id="remember" />
                   </div>
-                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="Sign-in">
+                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="{{__('messages.login')}}">
                 </form>
                 <a href="{{ route('password.request') }}" class="forgot-password-link">{{__('messages.forgot_pw')}}</a>
                 <p class="login-card-footer-text">{{__('messages.no_acc')}} <a href="{{ route('register') }}" class="text-reset">{{__('messages.register_cta')}}</a></p>
