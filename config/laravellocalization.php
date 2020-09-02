@@ -7,8 +7,8 @@ return [
     // Regional languages are sorted by their base language, so "British English" sorts as "English, British"
     'supportedLocales' => [
         'en'          => ['name' => 'English',                'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB'],
-        'es'          => ['name' => 'Spanish',                'script' => 'Latn', 'native' => 'español', 'regional' => 'es_ES'],
-        'pt'          => ['name' => 'Portuguese',             'script' => 'Latn', 'native' => 'português', 'regional' => 'pt_PT'],
+        'es'          => ['name' => 'Spanish',                'script' => 'Latn', 'native' => 'Español', 'regional' => 'es_ES'],
+        'pt'          => ['name' => 'Portuguese',             'script' => 'Latn', 'native' => 'Português', 'regional' => 'pt_PT'],
     ],
 
     // Requires middleware `LaravelSessionRedirect.php`.
