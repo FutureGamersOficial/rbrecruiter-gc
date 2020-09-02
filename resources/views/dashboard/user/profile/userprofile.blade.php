@@ -128,7 +128,7 @@
 
                            <label for="aboutMe">{{__('messages.profile.about_me')}}</label>
                            <textarea name="aboutMe" id="aboutMe" rows="8" class="form-control">{{$profile->profileAboutMe}}</textarea>
-                           <p class="text-muted"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">{{__('messages.vacancy.markdown')}}</p>
+                           <p class="text-muted"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">{{__('messages.vacancy.markdown')}}</a></p>
 
                        </div>
 
