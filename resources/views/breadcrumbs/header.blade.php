@@ -55,6 +55,7 @@
                     <a class="nav-link " href="{{config('app.sitehomepage')}}">{{__('messages.homepagetxt')}}</a>
                 </li>
                 <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Language selection</a>
                     <ul class="dropdown-menu">
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li class="dropdown-item">
