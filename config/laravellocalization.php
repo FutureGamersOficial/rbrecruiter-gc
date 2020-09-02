@@ -9,6 +9,7 @@ return [
         'en'          => ['name' => 'English',                'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB'],
         'es'          => ['name' => 'Spanish',                'script' => 'Latn', 'native' => 'Español', 'regional' => 'es_ES'],
         'pt'          => ['name' => 'Portuguese',             'script' => 'Latn', 'native' => 'Português', 'regional' => 'pt_PT'],
+        'fr'          => ['name' => 'French',                 'script' => 'Latn', 'native' => 'Français', 'regional' => 'fr_FR'],
     ],
 
     // Requires middleware `LaravelSessionRedirect.php`.
