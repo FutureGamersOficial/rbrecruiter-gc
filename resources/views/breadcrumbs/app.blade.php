@@ -19,7 +19,9 @@
 		@yield('content')
 
     @include('breadcrumbs.footer')
-
+    <script>
+        $('.dropdown-toggle').dropdown()
+    </script>
 	</body>
 
 </html>
