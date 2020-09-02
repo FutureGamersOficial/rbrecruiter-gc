@@ -63,7 +63,8 @@ return [
         '/vendor/*',
         '/app.css',
         '/robots.txt',
-        '/slides/*'
+        '/slides/*',
+        '/auth/logout'
     ],
 
 ];
