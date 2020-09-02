@@ -162,7 +162,7 @@
                                 <th>{{__('messages.contactlabel_name')}}</th>
                                 <th>{{__('messages.reusable.description')}}</th>
                                 <th>{{__('messages.vacancy.discord_roleid')}}</th>
-                                <th>{{__('messages.vacancy.permission_groupr')}}</th>
+                                <th>{{__('messages.vacancy.permission_group')}}</th>
                                 <th>{{__('messages.vacancy.free_slots')}}</th>
                                 <th>{{__('messages.reusable.status')}}</th>
                                 <th>{{__('messages.reusable.created_at')}}</th>
