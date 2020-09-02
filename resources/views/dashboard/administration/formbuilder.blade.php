@@ -58,7 +58,7 @@
                 <div class="card-footer text-center">
 
                     <button onclick="save()" type="button" class="btn btn-success">{{__('messages.form_builder.save_form')}}</button>
-                    <input type="button" value="New Field" class="add btn btn-info ml-3" id="add" />
+                    <input type="button" value="{{__('messages.new_field')}}" class="add btn btn-info ml-3" id="add" />
 
 
                 </div>
