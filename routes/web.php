@@ -56,7 +56,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
                 ->name('deleteApplicationComment');
 
 
-            Route::patch('/notes/save/{applicationID}', 'AppointmentController@saveNotes')
+            Route::patch('/notes/save/{application}', 'AppointmentController@saveNotes')
                 ->name('saveNotes');
 
 
