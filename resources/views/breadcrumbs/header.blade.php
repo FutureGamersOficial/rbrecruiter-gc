@@ -57,6 +57,9 @@
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">Language selection</a>
                     <ul class="dropdown-menu">
+                        <li class="dropdown-item text-center">
+                            <a target="_blank" href="https://crowdin.com/project/raspberry-staff-manager"><img src="https://badges.crowdin.net/raspberry-staff-manager/localized.svg"></a>
+                        </li>
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li class="dropdown-item">
                                 <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
