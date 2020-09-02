@@ -60,7 +60,7 @@
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li class="dropdown-item">
                                 <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                    <img src="https://www.countryflags.io/{{$localeCode}}/flat/64.png"> {{ $properties['native'] }}
+                                    <img src="https://www.countryflags.io/{{($localeCode == 'en') ? 'gb' : $localeCode}}/flat/24.png"> {{ $properties['native'] }}
                                 </a>
                             </li>
                         @endforeach
