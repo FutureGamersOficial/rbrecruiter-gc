@@ -236,7 +236,9 @@ return [
             ],
 
         ],
-        'h_my_profile',
+        [
+            'header' => 'h_my_profile',
+        ],
         [
             'text' => 'm_profile_settings',
             'url' => '/profile/settings',
@@ -276,7 +278,7 @@ return [
             'can' => 'applications.view.all'
         ],
         [
-            'header' => 'h_administration',
+            'header' => 'h_admin',
             'can' => [ // may need to be modified
                 'admin.hiring.*',
                 'admin.userlist',
