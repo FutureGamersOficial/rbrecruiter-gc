@@ -185,6 +185,7 @@ return [
 
     'adm' => 'Administration',
     'devtools' => 'Developer Tools',
+    'devtools_evn' => 'Event Management',
     'devoptions' => 'Developer Options',
     'forceeval' => 'Please choose an application to force re-evaluation',
     'appid' => 'Application ID',
