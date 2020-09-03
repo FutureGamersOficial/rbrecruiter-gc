@@ -75,7 +75,11 @@ return [
         'eligible' => 'Qualificado',
         'ineligible' => 'Não elegível',
         'schedule' => 'Agendar',
-        'platform' => 'Plataforma'
+        'schedule_action' => 'Marcar um Compromisso',
+        'platform' => 'Plataforma',
+        'notepad' => 'Bloco Notas Partilhado', // Context: The shared notepad that appears when votes are needed,
+        'appointment_info' => 'Informação da Marcação',
+        'ip_info' => 'Informação de Endereço IP para'
     ],
 
 
@@ -181,6 +185,7 @@ return [
 
     'adm' => 'Administração',
     'devtools' => 'Ferramentas de Programador',
+    'devtools_evn' => 'Gestão de Eventos',
     'devoptions' => 'Opções de Desenvolvedor',
     'forceeval' => 'Por favor, escolha uma candidatura para forçar reavaliação',
     'appid' => 'ID da candidatura',
@@ -345,7 +350,7 @@ return [
 
         'interview_q' => 'Fila de entrevistas',
         'interview_p' => 'Entrevista',
-        'interview_s' => 'Entrevista Agendada para',
+        'interview_s' => 'Entrevista Agendada',
         'finished_int' => 'Entrevistas concluídas',
         'schedule_int' => 'Agendar Entrevistas',
         'p_review' => 'Revisão por pares',
@@ -469,6 +474,7 @@ return [
         '2fa_password_confirm_exp' => 'Para impedir alterações não autorizadas, uma senha é sempre necessária para operações confidenciais.',
         '2fa_disable_consent' => '"Eu compreendo as possíveis consequências de desativar a autenticação de dois fatores"',
         '2fa_remove' => 'Remover 2FA',
+        '2fa_remove_extended' => 'Desativar autenticação em dois passos',
 
         'security_lgotherdev' => 'Para sua segurança, você precisará re-introduzir a sua senha antes de desconectar outros dispositivos. Se você acredita que sua conta foi comprometida, altere sua senha em vez disso, já que isso desconectará automaticamente qualquer pessoa que poderá estar usando sua conta e impedir que faça login novamente.',
         'password_reenter' => 'Repita a sua palavra-passe',
