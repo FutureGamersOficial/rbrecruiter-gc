@@ -121,7 +121,7 @@ return [
     'contact_cta' => 'Alguma pergunta? Deixe uma mensagem!',
     'contact_disclaimer' => '*Este não é um formulário de candidatura. Qualquer candidatura enviada aqui será ignorada.',
     'contactlabel_name' => 'Nome',
-    'contactlabel_email' => 'E-mail',
+    'contactlabel_email' => 'Endereço E-mail',
     'contactlabel_subject' => 'Assunto (ex. sugestão do site)',
     'contactlabel_send' => 'Enviar',
 
@@ -475,6 +475,8 @@ return [
         '2fa_disable_consent' => '"Eu compreendo as possíveis consequências de desativar a autenticação de dois fatores"',
         '2fa_remove' => 'Remover 2FA',
         '2fa_remove_extended' => 'Desativar autenticação em dois passos',
+        '2fa_send_code' => 'Enviar código 2FA',
+        '2fa_send_code_s' => 'Código de autenticação (ex. 41351)',
 
         'security_lgotherdev' => 'Para sua segurança, você precisará re-introduzir a sua senha antes de desconectar outros dispositivos. Se você acredita que sua conta foi comprometida, altere sua senha em vez disso, já que isso desconectará automaticamente qualquer pessoa que poderá estar usando sua conta e impedir que faça login novamente.',
         'password_reenter' => 'Repita a sua palavra-passe',

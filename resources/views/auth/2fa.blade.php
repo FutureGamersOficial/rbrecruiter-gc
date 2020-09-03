@@ -18,9 +18,9 @@
                   @csrf
                   <div class="form-group">
                     <label for="name" class="sr-only">{{__('messages.2fa_sronly')}}</label>
-                    <input type="text" name="otp" id="name" class="form-control" placeholder="2FA Code (e.g. 543324)">
+                    <input type="text" name="otp" id="name" class="form-control" placeholder="{{__('messages.profile.2fa_send_code_s')}}">
                   </div>
-                  <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="Send 2FA Code">
+                  <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="{{__('messages.profile.2fa_send_code')}}">
                 </form>
                 <p class="login-card-footer-text">{{__('messages.2fa_lostcode')}} <a href="{{ route('logout') }}" class="text-reset">{{__('messages.2fa_cancel_login')}}</a></p>
                 <nav class="login-card-footer-nav">
