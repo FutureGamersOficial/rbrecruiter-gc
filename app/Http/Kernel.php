@@ -66,5 +66,10 @@ class Kernel extends HttpKernel
         'usernameUUID' => \App\Http\Middleware\UsernameUUID::class,
         'forcelogout' => \App\Http\Middleware\ForceLogoutMiddleware::class,
         '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
+        'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+        'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+        'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+        'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
+        'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class
     ];
 }

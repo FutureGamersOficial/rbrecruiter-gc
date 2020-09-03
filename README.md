@@ -1,3 +1,4 @@
+
 # Raspberry Teams - The Simple Staff Application Manager v 0.1.0 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager)
 ## The quick and pain-free staff application manager
 

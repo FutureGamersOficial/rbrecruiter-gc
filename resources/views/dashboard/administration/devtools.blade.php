@@ -55,7 +55,7 @@
 
         <div class="col">
 
-            <x-card id="tools" card-title="Event Management" footer-style="text-center">
+            <x-card id="tools" card-title="{{__('messages.devtools_evn')}}" footer-style="text-center">
 
                 <x-slot name="cardHeader">
 

@@ -162,7 +162,7 @@
                                 <th>{{__('messages.contactlabel_name')}}</th>
                                 <th>{{__('messages.reusable.description')}}</th>
                                 <th>{{__('messages.vacancy.discord_roleid')}}</th>
-                                <th>{{__('messages.vacancy.permission_groupr')}}</th>
+                                <th>{{__('messages.vacancy.permission_group')}}</th>
                                 <th>{{__('messages.vacancy.free_slots')}}</th>
                                 <th>{{__('messages.reusable.status')}}</th>
                                 <th>{{__('messages.reusable.created_at')}}</th>
@@ -189,7 +189,7 @@
                                     <td>{{$vacancy->created_at}}</td>
                                     <td>
 
-                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{ route('editPosition', ['position' => $vacancy->id]) }}'"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{ route('editPosition', ['vacancy' => $vacancy->id]) }}'"><i class="fas fa-edit"></i></button>
 
                                         @if ($vacancy->vacancyStatus == 'OPEN')
 

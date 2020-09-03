@@ -97,7 +97,7 @@
                 <div class="inner">
                   <h3>{{ $deniedApplications ?? 0 }}</h3>
 
-                  <p>{{__('messages.denied_apps')}}/p>
+                  <p>{{__('messages.denied_apps')}}</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-times"></i>

@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     public $fillable = [
-      'appointmentDescription',
-      'appointmentDate',
-      'applicationID',
+        'appointmentDescription',
+        'appointmentDate',
+        'applicationID',
         'appointmentStatus',
-      'appointmentLocation'
+        'appointmentLocation',
+        'meetingNotes',
+        'userAccepted'
     ];
 
     public function application()

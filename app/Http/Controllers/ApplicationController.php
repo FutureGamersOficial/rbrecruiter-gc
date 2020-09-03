@@ -231,7 +231,7 @@ class ApplicationController extends Controller
         return redirect()->back();
     }
 
-    public function updateApplicationStatus(Request $request, $application, $newStatus)
+    public function updateApplicationStatus(Request $request, Application $application, $newStatus)
     {
         $this->authorize('update', Application::class);
 

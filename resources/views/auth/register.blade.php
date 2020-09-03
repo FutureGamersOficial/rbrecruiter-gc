@@ -38,7 +38,7 @@
               <form action="{{ route('register') }}" method="POST" id="registerForm">
                   @csrf
                   <div class="form-group">
-                    <label for="name" class="sr-only">{{__('messages.contactlabel_name')}}/label>
+                    <label for="name" class="sr-only">{{__('messages.contactlabel_name')}}</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="{{__('messages.contactlabel_name')}}">
                   </div>
                   <div class="form-group mb-4">

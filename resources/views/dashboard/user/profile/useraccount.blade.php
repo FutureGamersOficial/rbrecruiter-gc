@@ -23,7 +23,7 @@
     @if (!Auth::user()->has2FA())
 
 
-      <x-modal id="twoFactorAuthModal" modal-label="2faLabel" modal-title="Two-factor Authentication" include-close-button="true">
+      <x-modal id="twoFactorAuthModal" modal-label="2faLabel" modal-title="{{__('messages.2fa_txt')}}" include-close-button="true">
 
         <h3><i class="fas fa-user-shield"></i> {{__('messages.profile.2fa_welcome')}}</h3>
 
@@ -75,7 +75,7 @@
 
     @if (Auth::user()->has2FA())
 
-      <x-modal id="remove2FA" modal-label="remove2FALabel" modal-title="Remove Two-Factor Authentication" include-close-button="true">
+      <x-modal id="remove2FA" modal-label="remove2FALabel" modal-title="{{__('messages.profile.2fa_remove_extended')}}" include-close-button="true">
 
         <p><i class="fas fa-exclamation-triangle"></i> <b>{{__('messages.application_m.modal_confirm')}}</b> {{__('messages.profile.2fa_remove_consequence')}}</p>
 

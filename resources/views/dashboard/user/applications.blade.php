@@ -30,10 +30,10 @@
             <div class="alert alert-info">
                 <b><i class="fa fa-info-circle"></i> {{__('messages.user.account_standing')}}</b>
 
-                <p>{{__('messages.user.account_eligibility', ['eligibility' => ($isEligibileForApplication) ? __('messages.eligible') : __('messages.ineligible')])}}</p>
+                <p>{{__('messages.user.account_eligibility', ['eligibility' => ($isEligibleForApplication) ? __('messages.eligible') : __('messages.ineligible')])}}</p>
 
                 @if (!$isEligibleForApplication)
-                    <p>{{__('messages.user.days_remaining_acc_alt', ['days' => '<b>' . $eligibilityDaysRemaining .'</b>'])}}</p>
+                    <p>{{__('messages.user.days_remaining_acc_alt', ['days' => $eligibilityDaysRemaining])}}</p>
                 @endif
 
             </div>
@@ -130,7 +130,7 @@
 
                 <div class="card-footer">
 
-                    <button type="button" class="btn btn-default mr-2">Back</button>
+                    <button type="button" class="btn btn-default mr-2" onclick="window.location.href='{{route('dashboard')}}'">{{__('messages.back')}}</button>
 
                 </div>
             </div>

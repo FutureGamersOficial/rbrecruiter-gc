@@ -36,7 +36,7 @@
 
     @if (Auth::user()->hasRole('admin'))
 
-        <x-modal id="banAccountModal" modal-label="banAccount" modal-title="Please confirm" include-close-button="true">
+        <x-modal id="banAccountModal" modal-label="banAccount" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
 
             <p>{{__('messages.profile.ban_confirm')}}</p>
 
@@ -74,7 +74,7 @@
         </x-modal>
 
         @if (!Auth::user()->is($profile->user) && $profile->user->isStaffMember())
-            <x-modal id="terminateUser" modal-label="terminateUser" modal-title="Please confirm" include-close-button="true">
+            <x-modal id="terminateUser" modal-label="terminateUser" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
 
               <p><i class="fa fa-exclamation-triangle"></i> <b>{{__('messages.profile.terminate_notice')}}</b></p>
               <p>
@@ -99,7 +99,7 @@
             </x-modal>
         @endif
 
-        <x-modal id="deleteAccount" modal-label="deleteAccount" modal-title="Please confirm" include-close-button="true">
+        <x-modal id="deleteAccount" modal-label="deleteAccount" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
 
             <p><i class="fa fa-exclamation-triangle"></i><b> {{__('messages.profile.delete_acc_warn')}}</b></p>
 
@@ -122,7 +122,7 @@
             </x-slot>
         </x-modal>
 
-        <x-modal id="ipInfo" modal-label="ipInfo" modal-title="IP Address Information for {{$ipInfo->ip ?? 'Unknown'}}" include-close-button="true">
+        <x-modal id="ipInfo" modal-label="ipInfo" modal-title="{{__('messages.reusable.ip_info')}} {{$ipInfo->ip ?? 'Unknown'}}" include-close-button="true">
 
             <h4 class="text-center">{{__('messages.profile.search_result')}}</h3>
 

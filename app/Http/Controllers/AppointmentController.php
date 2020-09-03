@@ -72,10 +72,12 @@ class AppointmentController extends Controller
     }
 
     // also updates
-    public function saveNotes(SaveNotesRequest $request, $application)
+    public function saveNotes(SaveNotesRequest $request, Application $application)
     {
         if (!is_null($application))
         {
+            $application->load('appointment');
+
             $application->appointment->meetingNotes = $request->noteText;
             $application->appointment->save();
 

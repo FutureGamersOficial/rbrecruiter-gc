@@ -21,7 +21,7 @@ class VoteController extends Controller
             'userID' => Auth::user()->id,
             'allowedVoteType' => $voteRequest->voteType,
         ]);
-        $vote->application()->attach($applicationID);
+        $vote->application()->attach($application->id);
 
 
         Log::info('User ' . Auth::user()->name . ' has voted in applicant ' . $application->user->name . '\'s application', [
