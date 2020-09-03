@@ -51,7 +51,7 @@
 
           <p class="text-muted"><i class="fas fa-question-circle"></i> {{__('messages.form_consistency')}}</p>
 
-          <form method="POST" id="editPositionForm" action="{{ route('updatePosition', ['position' => $vacancy->id]) }}">
+          <form method="POST" id="editPositionForm" action="{{ route('updatePosition', ['vacancy' => $vacancy->id]) }}">
 
             @csrf
             @method('PATCH')

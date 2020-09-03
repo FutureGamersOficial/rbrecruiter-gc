@@ -191,10 +191,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
                 ->name('savePosition');
 
 
-            Route::get('positions/edit/{position}', 'VacancyController@edit')
+            Route::get('positions/edit/{vacancy}', 'VacancyController@edit')
                 ->name('editPosition');
 
-            Route::patch('positions/update/{position}', 'VacancyController@update')
+            Route::patch('positions/update/{vacancy}', 'VacancyController@update')
                 ->name('updatePosition');
 
 

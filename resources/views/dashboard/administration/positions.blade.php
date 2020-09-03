@@ -189,7 +189,7 @@
                                     <td>{{$vacancy->created_at}}</td>
                                     <td>
 
-                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{ route('editPosition', ['position' => $vacancy->id]) }}'"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{ route('editPosition', ['vacancy' => $vacancy->id]) }}'"><i class="fas fa-edit"></i></button>
 
                                         @if ($vacancy->vacancyStatus == 'OPEN')
 
