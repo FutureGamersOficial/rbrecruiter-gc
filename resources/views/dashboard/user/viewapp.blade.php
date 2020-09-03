@@ -36,7 +36,7 @@
 
             @canany('applications.view.all', 'appointments.*')
 
-                <x-modal id="notes" modal-label="notes" modal-title="Shared Notepad" include-close-button="true">
+                <x-modal id="notes" modal-label="notes" modal-title="{{__('messages.reusable.notepad')}}" include-close-button="true">
 
                     <form id="meetingNotes" method="POST" action="{{route('saveNotes', ['application' => $application->id])}}">
                         @csrf
@@ -224,7 +224,7 @@
 
                     <div class="col">
 
-                        <x-card id="appointmentCard" card-title="{{__('messages.reusable.schedule')}}" footer-style="text-center">
+                        <x-card id="appointmentCard" card-title="{{__('messages.reusable.schedule_action')}}" footer-style="text-center">
 
                             <x-slot name="cardHeader">
 
@@ -273,7 +273,7 @@
 
                     <div class="col">
 
-                        <x-card id="scheduleInfo" card-title="Appointment Information" footer-style="text-center">
+                        <x-card id="scheduleInfo" card-title="{{__('messages.reusable.appointment_info')}}" footer-style="text-center">
 
                             <x-slot name="cardHeader"></x-slot>
 

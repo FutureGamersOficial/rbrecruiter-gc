@@ -75,7 +75,10 @@ return [
         'eligible' => 'Eligible',
         'ineligible' => 'Ineligible',
         'schedule' => 'Schedule',
-        'platform' => 'Platform'
+        'schedule_action' => 'Schedule an Appointment',
+        'platform' => 'Platform',
+        'notepad' => 'Shared Notepad', // Context: The shared notepad that appears when votes are needed,
+        'appointment_info' => 'Appointment Information'
     ],
 
 
