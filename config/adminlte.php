@@ -288,7 +288,7 @@ return [
             ]
         ],
         [
-            'text' => 'm_staff_members',
+            'text' => 'm_staff_m',
             'icon' => 'fas fa-fw fa-users',
             'url' => '/hr/staff-members',
             'can' => 'admin.stafflist'
