@@ -130,7 +130,7 @@
 
                 <div class="card-footer">
 
-                    <button type="button" class="btn btn-default mr-2">Back</button>
+                    <button type="button" class="btn btn-default mr-2" onclick="window.location.href='{{route('dashboard')}}'">{{__('messages.back')}}</button>
 
                 </div>
             </div>

@@ -124,11 +124,11 @@ class VacancyController extends Controller
     {
       $this->authorize('update', $vacancy);
 
-      $position->vacancyFullDescription = $request->vacancyFullDescription;
-      $position->vacancyDescription = $request->vacancyDescription;
-      $position->vacancyCount = $request->vacancyCount;
+      $vacancy->vacancyFullDescription = $request->vacancyFullDescription;
+      $vacancy->vacancyDescription = $request->vacancyDescription;
+      $vacancy->vacancyCount = $request->vacancyCount;
 
-      $position->save();
+      $vacancy->save();
 
       $request->session()->flash('success', 'Vacancy successfully updated.');
       return redirect()->back();
