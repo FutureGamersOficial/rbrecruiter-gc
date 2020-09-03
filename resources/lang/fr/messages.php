@@ -475,6 +475,8 @@ return [
         '2fa_disable_consent' => '"I understand the possible consequences of disabling two factor authentication"',
         '2fa_remove' => 'Remove 2FA',
         '2fa_remove_extended' => 'Remove Two-Factor Authentication',
+        '2fa_send_code' => 'Send 2FA Code',
+        '2fa_send_code_s' => '2FA Code (ex. 41351)',
 
         'security_lgotherdev' => 'For your security, you\'ll need to re-enter your password before logging out other devices. If you believe your account has been compromised, please change your password instead, as that will automatically log out anyone else who might using your account, and prevent them from signing back in.',
         'password_reenter' => 'Re-enter your password',
