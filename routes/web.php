@@ -17,7 +17,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
 
     Route::group(['prefix' => 'auth', 'middleware' => ['usernameUUID']], function (){
 
-        Auth::routes();
+        Auth::routes(['verify' => true]);
 
         Route::post('/twofa/authenticate', 'Auth\TwofaController@verify2FA')
             ->name('verify2FA');
@@ -31,7 +31,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
         ->name('sendSubmission');
 
 
-    Route::group(['middleware' => ['auth', 'forcelogout', '2fa']], function(){
+    Route::group(['middleware' => ['auth', 'forcelogout', '2fa', 'verified']], function(){
 
         Route::get('/dashboard', 'DashboardController@index')
             ->name('dashboard')
