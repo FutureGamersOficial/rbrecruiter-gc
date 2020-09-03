@@ -75,7 +75,11 @@ return [
         'eligible' => 'Eligible',
         'ineligible' => 'Ineligible',
         'schedule' => 'Schedule',
-        'platform' => 'Platform'
+        'schedule_action' => 'Schedule an Appointment',
+        'platform' => 'Platform',
+        'notepad' => 'Shared Notepad', // Context: The shared notepad that appears when votes are needed,
+        'appointment_info' => 'Appointment Information',
+        'ip_info' => 'IP Address Information for'
     ],
 
 
@@ -469,6 +473,7 @@ return [
         '2fa_password_confirm_exp' => 'To prevent unauthorized changes, a password is always required for sensitive operations.',
         '2fa_disable_consent' => '"I understand the possible consequences of disabling two factor authentication"',
         '2fa_remove' => 'Remove 2FA',
+        '2fa_remove_extended' => 'Remove Two-Factor Authentication',
 
         'security_lgotherdev' => 'For your security, you\'ll need to re-enter your password before logging out other devices. If you believe your account has been compromised, please change your password instead, as that will automatically log out anyone else who might using your account, and prevent them from signing back in.',
         'password_reenter' => 'Re-enter your password',
