@@ -113,9 +113,9 @@ class VacancyController extends Controller
 
     public function edit(Request $request, Vacancy $vacancy)
     {
-       $this->authorize('update', $position);
+       $this->authorize('update', $vacancy);
         return view('dashboard.administration.editposition')
-               ->with('vacancy', $position);
+               ->with('vacancy', $vacancy);
     }
 
 
