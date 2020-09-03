@@ -12,7 +12,7 @@
             <div class="card-body">
               <div class="brand-wrapper">
                 <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo">{{ config('adminlte.logo') }}
-              </div>
+              </div> <!-- main content start -->
               <p class="login-card-description">{{__('messages.register_acc')}}</p>
               <div class="alert alert-warning alert-dismissible">
                   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

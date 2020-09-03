@@ -209,74 +209,74 @@ return [
 
     'menu' => [
         [
-            'text' => 'Home',
+            'text' => 'm_home',
             'icon' => 'fas fa-home',
             'url' => 'dashboard'
         ],
         [
-            'text' => 'Directory',
+            'text' => 'm_directory',
             'icon' => 'fas fa-users',
             'url' => 'users/directory',
             'can' => 'profiles.view.others'
         ],
         [
-            'header' => 'Applications',
+            'header' => 'h_applications',
             'can' => 'applications.view.own'
         ],
         [
-            'text' => 'My Applications',
+            'text' => 'm_my_applications',
             'icon'  => 'fas fa-fw fa-list-ul',
             'can' => 'applications.view.own',
             'submenu' => [
                 [
-                    'text' => 'Current Applications',
+                    'text' => 'm_curr_applications',
                     'icon' => 'fas fa-fw fa-check-double',
                     'url' => '/applications/my-applications'
                 ]
             ],
 
         ],
-        'My Profile',
+        'h_my_profile',
         [
-            'text' => 'Profile Settings',
+            'text' => 'm_profile_settings',
             'url' => '/profile/settings',
             'icon' => 'fas fa-fw fa-cog'
         ],
         [
-            'text' => 'My Account Settings',
+            'text' => 'm_account_settings',
             'icon' => 'fas fa-user-circle',
             'url' => '/profile/settings/account'
         ],
         [
-            'header' => 'Application Management',
+            'header' => 'h_app_management',
             'can' => ['applications.view.all', 'applications.vote']
         ],
         [
-            'text' => 'All applications',
+            'text' => 'm_all_apps',
             'url' => 'applications/staff/all',
             'icon' => 'fas fa-list-ol',
             'can' => 'applications.view.all'
         ],
         [
-            'text' => 'Outstanding Applications',
+            'text' => 'm_outstanding_apps',
             'url' => '/applications/staff/outstanding',
             'icon' => 'far fa-folder-open',
             'can' => 'applications.view.all'
         ],
         [
-            'text' => 'Interview Queue',
+            'text' => 'm_interview_queue',
             'url' => '/applications/staff/pending-interview',
             'icon' => 'fas fa-fw fa-microphone-alt',
             'can' => 'applications.view.all'
         ],
         [
-            'text' => 'Peer Approval Queue',
+            'text' => 'm_peer_approval',
             'url' => '/applications/staff/peer-review',
             'icon' => 'fas fa-fw fa-search',
             'can' => 'applications.view.all'
         ],
         [
-            'header' => 'Administration',
+            'header' => 'h_administration',
             'can' => [ // may need to be modified
                 'admin.hiring.*',
                 'admin.userlist',
@@ -286,38 +286,38 @@ return [
             ]
         ],
         [
-            'text' => 'Staff Members',
+            'text' => 'm_staff_members',
             'icon' => 'fas fa-fw fa-users',
             'url' => '/hr/staff-members',
             'can' => 'admin.stafflist'
         ],
         [    // players who haven't been promoted yet
-            'text' => 'Registered Players',
+            'text' => 'm_reg_players',
             'icon' => 'fas fa-fw fa-user-friends',
             'url' => '/hr/players',
             'can' => 'admin.userlist'
         ],
         [
-            'text' => 'Hiring Management',
+            'text' => 'sm_hiring_man',
             'icon' => 'far fa-calendar-plus',
             'can' => 'admin.hiring.*',
             'submenu' => [
                 [
-                    'text' => 'Open Positions',
+                    'text' => 'm_open_pos',
                     'icon' => 'fas fa-box-open',
                     'url' => '/admin/positions'
                 ],
                 [
-                    'text' => 'Forms',
+                    'text' => 'sm_forms',
                     'icon' => 'fab fa-wpforms',
                     'submenu' => [
                         [
-                            'text' => 'All forms',
+                            'text' => 'sm_all_forms',
                             'icon' => 'far fa-list-alt',
                             'url' => '/admin/forms'
                         ],
                         [
-                            'text' => 'Form Builder',
+                            'text' => 'm_form_builder',
                             'icon' => 'fas fa-fw fa-hammer',
                             'url' => '/admin/forms/builder'
                         ]
@@ -326,18 +326,18 @@ return [
             ]
         ],
         [
-            'text' => 'App Settings',
+            'text' => 'sm_app_settings',
             'icon' => 'fas fa-fw fa-cog',
             'can' => 'admin.notificationsettings',
             'submenu' => [
                 [
-                    'text' => 'Global Application Settings',
+                    'text' => 'm_global_app_s',
                     'icon' => 'fas fa-cogs',
                     'url' => '/admin/settings',
                     'can' => 'admin.settings.view'
                 ],
                 [
-                    'text' => 'Developer Tools',
+                    'text' => 'm_devtools',
                     'icon' => 'fas fa-code',
                     'url' => '/admin/devtools',
                     'can' => 'admin.developertools.use'
@@ -345,7 +345,7 @@ return [
             ]
         ],
         [
-            'text' => 'System Logs',
+            'text' => 'm_s_logs',
             'url' => '/admin/maintenance/system-logs',
             'icon' => 'fas fa-clipboard-list',
             'can' => 'admin.maintenance.logs.view'
