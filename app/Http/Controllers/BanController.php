@@ -50,7 +50,7 @@ class BanController extends Controller
             else
             {
                 // Essentially permanent
-                $expiryDate->addYears(100);
+                $expiryDate->addYears(5);
             }
 
             $ban = Ban::create([
