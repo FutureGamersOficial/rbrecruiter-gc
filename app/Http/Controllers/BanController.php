@@ -15,7 +15,7 @@ class BanController extends Controller
     public function insert(BanUserRequest $request, User $user)
     {
 
-        $this->authorize('create', Ban::class);
+        $this->authorize('create', [Ban::class, $user]);
 
         if (is_null($user->bans))
         {

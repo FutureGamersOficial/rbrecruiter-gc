@@ -41,15 +41,16 @@ class BanPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, User $targetUser)
     {
         Log::debug("Authorization check started", [
             'requiredRoles' => 'admin',
-            'currentRoles' => $user->roles(),
+            'currentRoles' => $user->roles,
             'hasRequiredRole' => $user->hasRole('admin'),
+            'targetUser' => $user->username,
             'isCurrentUser' => Auth::user()->is($user)
         ]);
-        return $user->hasRole('admin') && Auth::user()->isNot($user);
+        return $user->hasRole('admin') && $user->isNot($targetUser);
     }
 
     /**
