@@ -99,12 +99,16 @@ class Install extends Command
                $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen)');
                $settings['MAIL_PORT'] = $this->ask('SMTP Server Port');
                $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname');
+               $settings['MAIL_FROM'] = $this->ask('E-mail address to send from: ');
 
                $this->info('== Notification Settings (5/6) (Slack) ==');
                $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL');
 
                $this->info('== Web Settings (6/6) ==');
-               $settings['APP_URL'] = $this->ask('Application\'s URL');
+               $settings['APP_URL'] = $this->ask('Application\'s URL (ex. https://where.you.installed.theapp.com): ');
+               $settings['APP_LOGO'] = $this->ask('App logo (Link to an image): ');
+               $settings['APP_SITEHOMEPAGE'] = $this->ask('Site homepage (appears in the main header): ');
+
 
            } while(!$this->confirm('Are you sure you want to save these settings? You can always go back and try again.'));
 
