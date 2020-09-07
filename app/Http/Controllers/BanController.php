@@ -56,7 +56,7 @@ class BanController extends Controller
             $ban = Ban::create([
                 'userID' => $user->id,
                 'reason' => $reason,
-                'bannedUntil' => $expiryDate,
+                'bannedUntil' => $expiryDate->format('Y-m-d H:i:s'),
                 'userAgent' => "Unknown",
                 'authorUserID' => Auth::user()->id
             ]);
