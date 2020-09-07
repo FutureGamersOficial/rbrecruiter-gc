@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Application;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationObserver
 {
@@ -55,7 +56,7 @@ class ApplicationObserver
             }
         }
 
-        // application can now be deleted 
+        // application can now be deleted
     }
 
     /**
