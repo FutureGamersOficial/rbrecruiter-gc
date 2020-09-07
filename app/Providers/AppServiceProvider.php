@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Application;
+use App\Observers\ApplicationObserver;
 use App\Observers\UserObserver;
 use App\User;
 use Illuminate\Support\Facades\Schema;
@@ -32,7 +34,9 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         Schema::defaultStringLength(191);
+
         User::observe(UserObserver::class);
+        Application::observe(ApplicationObserver::class);
 
         $this->app['request']->server->set('HTTPS', $this->app->environment() != 'local');
     }
