@@ -27,7 +27,7 @@ class BanUserRequest extends FormRequest
     {
         return [
             'reason' => 'required|string',
-            'durationOperand' => 'nullable|integer',
+            'durationOperand' => 'nullable|string',
             'durationOperator' => 'nullable|string'
         ];
     }
