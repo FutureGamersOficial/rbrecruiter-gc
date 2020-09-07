@@ -46,7 +46,6 @@ class BanPolicy
     {
         Log::debug("Authorization check started", [
             'requiredRoles' => 'admin',
-            'currentRoles' => $user->roles,
             'hasRequiredRole' => $user->hasRole('admin'),
             'targetUser' => $user->username,
             'isCurrentUser' => Auth::user()->is($user)
