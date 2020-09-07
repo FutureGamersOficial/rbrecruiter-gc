@@ -33,7 +33,7 @@ class OptionsController extends Controller
            Log::debug('Updating application options', [
                'ip' => $request->ip(),
                'ua' => $request->userAgent(),
-               'username' => Auth::user()->name
+               'username' => Auth::user()->username
            ]);
            foreach($request->all() as $optionName => $option)
            {
