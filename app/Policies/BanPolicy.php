@@ -38,7 +38,8 @@ class BanPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
+     * @param User $targetUser
      * @return mixed
      */
     public function create(User $user, User $targetUser)
