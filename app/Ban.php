@@ -8,7 +8,7 @@ class Ban extends Model
 {
 
     public $fillable = [
-        
+
         'userID',
         'reason',
         'bannedUntil',
@@ -16,7 +16,11 @@ class Ban extends Model
         'authorUserID'
 
     ];
-    
+
+    public $dates = [
+        'bannedUntil'
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User', 'userID', 'id');
