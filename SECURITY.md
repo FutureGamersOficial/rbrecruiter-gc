@@ -15,3 +15,5 @@ The following versions are currently supported:
 To securely report a vulnerability, you may send me an email directly containing the details of said vulnerability: ``me@nogueira.codes``.
 
 You may optionally encrypt your message with my [public PGP key](http://pool.sks-keyservers.net/pks/lookup?op=get&search=0x48DF709E7405702B).
+
+Use this free [online encryption tool](https://www.igolder.com/pgp/encryption/) if you don't know how to use PGP on your desktop.
