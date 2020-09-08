@@ -26,8 +26,16 @@ class LogAuthenticationFailure
      */
     public function handle($event)
     {
+        $targetAccountID = 0;
+
+        if (isset($event->user->id))
+        {
+            $targetAccountID = $event->user->id;
+        }
+
         Log::alert('SECURITY (login): Detected failed authentication attempt!', [
-            'targetAccountID' => $event->user->id ?? '(nonexistent user)',
+            'targetAccountID' => $targetAccountID,
+            'existingAccount' => ($targetAccountID == 0) ? false : true,
             'sourceIP' => request()->ip(),
             'matchesAccountLastIP' => request()->ip() == $event->user->originalIP,
             'sourceUserAgent' => request()->userAgent(),
