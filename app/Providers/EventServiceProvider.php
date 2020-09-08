@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Listeners\LogAuthenticationFailure;
 use App\Listeners\OnUserRegistration;
+use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -19,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
             OnUserRegistration::class
+        ],
+        Failed::class => [
+            LogAuthenticationFailure::class
         ],
         'App\Events\ApplicationApprovedEvent' => [
             'App\Listeners\PromoteUser'
