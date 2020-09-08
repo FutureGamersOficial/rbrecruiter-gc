@@ -47,6 +47,14 @@ Tech stack:
  - AdminLTE / Bootstrap 4
  - jQuery / Plain Javascript
  - vueJS (in the future)
+ 
+ # Stability
+ 
+ Currently, the ``master`` branch is highly unstable, since it's under active development. Expect it to break with each commit. Even though I make an effort to make sure each commit is good to go before pushing, things might still break unexpectedly, and you may find a lot of bugs (which you should report).
+ 
+ Every released version is currently pre-release. If you really want to run this before version ``1.0.0`` comes out, always stay on the latest version, as those will always be tested before release, ensuring less chaos.
+ 
+ *Note: This application is NOT production ready! It won't be until the first stable release comes out, which might take a bit longer.
 
 # Operating System Requirements
 
