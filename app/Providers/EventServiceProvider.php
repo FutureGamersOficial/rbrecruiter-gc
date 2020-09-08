@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Listeners\LogAuthenticationFailure;
+use App\Listeners\LogAuthenticationSuccess;
 use App\Listeners\OnUserRegistration;
 use Illuminate\Auth\Events\Failed;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         Failed::class => [
             LogAuthenticationFailure::class
+        ],
+        Login::class => [
+            LogAuthenticationSuccess::class
         ],
         'App\Events\ApplicationApprovedEvent' => [
             'App\Listeners\PromoteUser'
