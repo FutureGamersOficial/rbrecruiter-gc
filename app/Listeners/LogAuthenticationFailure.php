@@ -27,6 +27,7 @@ class LogAuthenticationFailure
     public function handle($event)
     {
         $targetAccountID = 0;
+        $originalIP = "0.0.0.0";
 
         if (isset($event->user->id))
         {
@@ -37,7 +38,7 @@ class LogAuthenticationFailure
             'targetAccountID' => $targetAccountID,
             'existingAccount' => ($targetAccountID == 0) ? false : true,
             'sourceIP' => request()->ip(),
-            'matchesAccountLastIP' => request()->ip() == $event->user->originalIP,
+            'matchesAccountLastIP' => request()->ip() == $originalIP,
             'sourceUserAgent' => request()->userAgent(),
         ]);
     }
