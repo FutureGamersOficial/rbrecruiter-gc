@@ -15,13 +15,11 @@ class AddTeamAssocToVacancies extends Migration
     {
         Schema::table('vacancies', function (Blueprint $table) {
 
-            $table->bigInteger('ownerTeamID')->unsigned()->after('vacancyFormID');
+            $table->integer('ownerTeamID')->unsigned()->after('vacancyFormID');
 
             $table->foreign('ownerTeamID')
-                ->references('team_id')
-                ->on('teams')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->references('id')
+                ->on('teams');
         });
     }
 
