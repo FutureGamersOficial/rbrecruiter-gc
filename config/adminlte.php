@@ -300,6 +300,12 @@ return [
             'can' => 'admin.userlist'
         ],
         [
+            'text' => 'm_teams',
+            'icon' => 'fas fa-user-friends',
+            'url' => 'teams',
+            'can' => 'teams.view'
+        ],
+        [
             'text' => 'sm_hiring_man',
             'icon' => 'far fa-calendar-plus',
             'can' => 'admin.hiring.*',

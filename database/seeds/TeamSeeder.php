@@ -12,6 +12,20 @@ class TeamSeeder extends Seeder
      */
     public function run()
     {
+
+        Permission::create([
+           'name' => 'teams.user.view.own'
+        ]);
+
+        Permission::create([
+            'name' => 'teams.admin.view.all'
+        ]);
+
+        // Has access to the teams feature
+        Permission::create([
+            'name' => 'teams.view'
+        ]);
+
         Permission::create([
             'name' => 'teams.admin.create',
         ]);
