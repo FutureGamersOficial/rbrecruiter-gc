@@ -9,6 +9,8 @@ class Team extends TeamworkTeam
 {
     public $fillable = [
         'owner_id',
-        'name'
+        'name',
+        'description',
+        'openJoin'
     ];
 }

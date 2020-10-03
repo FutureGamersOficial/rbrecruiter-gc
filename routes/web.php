@@ -40,6 +40,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
         Route::get('users/directory', 'ProfileController@index')
             ->name('directory');
 
+
+        Route::post('teams/{team}/invites/send', 'TeamController@invite')
+            ->name('sendInvite');
+
+        Route::get('teams/invites/{action}/{token}', 'TeamController@processInviteAction')
+            ->name('processInvite');
+        
+
+        Route::resource('teams', 'TeamController');
+
+
         Route::group(['prefix' => '/applications'], function (){
 
             Route::get('/my-applications', 'ApplicationController@showUserApps')

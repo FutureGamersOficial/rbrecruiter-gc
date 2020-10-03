@@ -43,3 +43,5 @@ $("#comment").keyup(function(){
 $("#submitComment").on('click', function(){
     $("#newComment").submit();
 });
+
+$("#jointype").bootstrapToggle();

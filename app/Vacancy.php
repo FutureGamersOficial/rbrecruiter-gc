@@ -5,12 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Mpociot\Teamwork\Traits\UsedByTeams;
+
 
 use GrahamCampbell\Markdown\Facades\Markdown;
 
 
 class Vacancy extends Model
 {
+    use UsedByTeams;
+
     public $fillable = [
 
         'permissionGroupName',

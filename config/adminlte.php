@@ -536,6 +536,17 @@ return [
           ]
         ],
         [
+            'name' => 'CheckboxValues',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '/js/switches.js'
+                ]
+            ]
+        ],
+        [
           'name' => 'AuthCustomisations',
           'active' => true,
           'files' => [
@@ -545,6 +556,22 @@ return [
               'location' => '/css/authpages.css'
             ]
           ]
-        ]
+            ],
+            [
+                'name' => 'BootstrapToggleButton',
+                'active' => true,
+                'files' => [
+                    [
+                        'type' => 'css',
+                        'asset' => false,
+                        'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css'
+                    ],
+                    [
+                        'type' => 'js',
+                        'asset' => false,
+                        'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js'
+                    ]
+                ]
+            ]
     ],
 ];
