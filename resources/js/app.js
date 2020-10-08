@@ -45,3 +45,4 @@ $("#submitComment").on('click', function(){
 });
 
 $("#jointype").bootstrapToggle();
+

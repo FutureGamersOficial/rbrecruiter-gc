@@ -572,6 +572,22 @@ return [
                         'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js'
                     ]
                 ]
+            ],
+            [
+                'name' => 'BootstrapMultiselectDropdown',
+                'active' => true,
+                'files' => [
+                    [
+                        'type' => 'js',
+                        'asset' => 'false',
+                        'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js'
+                    ],
+                    [
+                        'type' => 'css',
+                        'asset' => false,
+                        'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css'
+                    ]
+                ]
             ]
     ],
 ];

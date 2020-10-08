@@ -30,6 +30,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
     Route::post('/form/contact', 'ContactController@create')
         ->name('sendSubmission');
 
+    Route::get('/accounts/danger-zone/{ID}/{action}/{token}', 'UserController@processDeleteConfirmation')
+        ->name('processDeleteConfirmation');
+
 
     Route::group(['middleware' => ['auth', 'forcelogout', '2fa', 'verified']], function(){
 
@@ -41,14 +44,20 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
             ->name('directory');
 
 
-        Route::post('teams/{team}/invites/send', 'TeamController@invite')
-            ->name('sendInvite');
+        
+            Route::post('teams/{team}/invites/send', 'TeamController@invite')
+                ->name('sendInvite');
+
+            Route::get('teams/{team}/switch', 'TeamController@switchTeam')
+                ->name('switchTeam');
 
         Route::get('teams/invites/{action}/{token}', 'TeamController@processInviteAction')
             ->name('processInvite');
         
 
         Route::resource('teams', 'TeamController');
+
+
 
 
         Route::group(['prefix' => '/applications'], function (){
@@ -151,6 +160,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
 
             Route::patch('/settings/account/twofa/disable', 'UserController@remove2FASecret')
                 ->name('disable2FA');
+
+            Route::patch('/settings/account/dg/delete', 'UserController@userDelete')
+                ->name('userDelete');
 
         });
 

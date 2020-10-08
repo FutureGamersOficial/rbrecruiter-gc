@@ -13,7 +13,7 @@ use GrahamCampbell\Markdown\Facades\Markdown;
 
 class Vacancy extends Model
 {
-    use UsedByTeams;
+    //use UsedByTeams;
 
     public $fillable = [
 
@@ -25,7 +25,8 @@ class Vacancy extends Model
         'vacancyFormID',
         'vacancyCount',
         'vacancyStatus',
-        'vacancySlug'
+        'vacancySlug',
+        'team_id'
 
     ];
 
@@ -46,6 +47,12 @@ class Vacancy extends Model
         {
           return null;
         }
+    }
+
+
+    public function teams()
+    {
+        return $this->belongsToMany('App\Team', 'team_has_vacancy');
     }
 
 

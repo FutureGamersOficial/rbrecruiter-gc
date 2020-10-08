@@ -66,7 +66,16 @@
 
             <div class="card-header bg-indigo">
 
-                <div class="card-title"><h4>{{ __('messages.teams.m_teams_page') }}</h4></div>
+
+                <div class="row">
+
+                    <div class="col">
+
+                        <div class="card-title"><h4>{{ __('messages.teams.m_teams_page') }} <span class="badge badge-warning"><i class="fas fa-check-circle"></i> {{ (Auth::user()->currentTeam) ? Auth::user()->currentTeam->name : 'Select a team' }}</span></h4></div>
+                        
+
+                    </div>
+                </div>
 
             </div>
 
@@ -96,7 +105,7 @@
                                     <td>{{ $team->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm ml-2" onclick="location.href='{{ route('teams.edit', ['team' => $team->id]) }}'"><i class="fas fa-cogs"></i> Settings</button>
-                                        <button type="button" class="btn btn-warning btn-sm ml-2"><i class="fas fas fa-long-arrow-alt-right"></i> Team Dashboard</button>
+                                        <button onclick="location.href='{{ route('switchTeam', ['team' => $team]) }}'" rel="buttonTxtTooltip" data-placement="top" data-toggle="tooltip" title="Select your active team (for dasboard context, etc)" type="button" class="btn btn-warning btn-sm ml-2"><i class="fas fa-random"></i> Switch To</button>
                                     </td>
                                 </tr>
 
@@ -122,6 +131,7 @@
             <div class="card-footer">
 
                 <button type="button" class="btn btn-success btn-sm ml-3" onclick="$('#newTeamModal').modal('show')"><i class="fas fa-plus-circle"></i> New team</button>
+                <button type="button" class="btn btn-warning btn-sm ml-3"><i class="fas fas fa-long-arrow-alt-right"></i> Team Dashboard</button>
 
             </div>
 

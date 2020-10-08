@@ -8,9 +8,11 @@ use App\Http\Requests\SendInviteRequest;
 use App\Mail\InviteToTeam;
 use App\Team;
 use App\User;
+use App\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Mpociot\Teamwork\Exceptions\UserNotInTeamException;
 use Mpociot\Teamwork\Facades\Teamwork;
 use Mpociot\Teamwork\TeamInvite;
 
@@ -23,8 +25,10 @@ class TeamController extends Controller
      */
     public function index()
     {
+        $teams = Team::with('users.roles')->get();
+
         return view('dashboard.teams.teams')
-            ->with('teams', Team::all());
+            ->with('teams', $teams);
     }
 
     /**
@@ -45,10 +49,12 @@ class TeamController extends Controller
      */
     public function store(NewTeamRequest $request)
     {
-        Team::create([
+        $team = Team::create([
             'name' => $request->teamName,
             'owner_id' => Auth::user()->id
         ]);
+
+        Auth::user()->teams()->attach($team->id);
 
         $request->session()->flash('success', 'Team successfully created.');
         return redirect()->back();
@@ -75,7 +81,8 @@ class TeamController extends Controller
     {
         return view('dashboard.teams.edit-team')
               ->with('team', $team)
-              ->with('users', User::all());
+              ->with('users', User::all())
+              ->with('vacancies', Vacancy::all());
     }
 
     /**
@@ -185,5 +192,21 @@ class TeamController extends Controller
         // This page will show the user's current teams
         return redirect()->to(route('teams.index'));
 
+    }
+
+    public function switchTeam(Request $request, Team $team)
+    {
+        try
+        {
+            Auth::user()->switchTeam($team);
+
+            $request->session()->flash('success', 'Switched teams! Your team dashboard will now use this context.');
+        }
+        catch(UserNotInTeamException $ex)
+        {
+            $request->session()->flash('error', 'You can\'t switch to a team you don\'t belong to.');
+        }
+
+        return redirect()->back();
     }
 }

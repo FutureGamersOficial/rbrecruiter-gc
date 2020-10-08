@@ -13,4 +13,10 @@ class Team extends TeamworkTeam
         'description',
         'openJoin'
     ];
+
+
+    public function vacancies()
+    {
+        return $this->belongsToMany('App\Vacancy', 'team_has_vacancy');
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTeamAssocToVacancies extends Migration
+class AddAccountTokensToUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class AddTeamAssocToVacancies extends Migration
      */
     public function up()
     {
-        Schema::table('vacancies', function (Blueprint $table) {
-
-            $table->integer('ownerTeamID')->unsigned()->after('vacancyFormID');
-
-            $table->foreign('ownerTeamID')
-                ->references('id')
-                ->on('teams');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('account_tokens')->after('password')->nullable();
         });
     }
 
@@ -30,8 +25,8 @@ class AddTeamAssocToVacancies extends Migration
      */
     public function down()
     {
-        Schema::table('vacancies', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('account_tokens');
         });
     }
 }

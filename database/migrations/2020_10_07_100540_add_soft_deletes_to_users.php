@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTeamIDToVacancy extends Migration
+class AddSoftDeletesToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddTeamIDToVacancy extends Migration
      */
     public function up()
     {
-        Schema::table('vacancy', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->softDeletes()->after('account_tokens');
         });
     }
 
@@ -25,8 +25,8 @@ class AddTeamIDToVacancy extends Migration
      */
     public function down()
     {
-        Schema::table('vacancy', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropSoftDeletes();
         });
     }
 }
