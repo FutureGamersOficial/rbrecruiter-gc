@@ -6,8 +6,11 @@ use App\Application;
 use App\Observers\ApplicationObserver;
 use App\Observers\UserObserver;
 use App\User;
+
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+
 use Sentry;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         Schema::defaultStringLength(191);
+        
+        // Keep using Bootstrap; Laravel 8 has the paginator use Tailwind. Quite opinionated tbh
+        Paginator::useBootstrap();
 
         User::observe(UserObserver::class);
         Application::observe(ApplicationObserver::class);

@@ -2,15 +2,18 @@
 
 namespace App;
 
+use App\Traits\HandlesAccountTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use Mpociot\Teamwork\Traits\UserHasTeams;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
-    use HasRoles;
+    use UserHasTeams, Notifiable, HasRoles, SoftDeletes, HandlesAccountTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -74,7 +77,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
 
-
     public function isStaffMember()
     {
         return $this->hasAnyRole('reviewer', 'admin', 'hiringManager');
@@ -85,8 +87,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return !is_null($this->twofa_secret);
     }
 
-
-
+    
     public function routeNotificationForSlack($notification)
     {
        return config('slack.webhook.integrationURL');

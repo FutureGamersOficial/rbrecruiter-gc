@@ -5,12 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Mpociot\Teamwork\Traits\UsedByTeams;
+
 
 use GrahamCampbell\Markdown\Facades\Markdown;
 
 
 class Vacancy extends Model
 {
+    //use UsedByTeams;
+
     public $fillable = [
 
         'permissionGroupName',
@@ -21,7 +25,8 @@ class Vacancy extends Model
         'vacancyFormID',
         'vacancyCount',
         'vacancyStatus',
-        'vacancySlug'
+        'vacancySlug',
+        'team_id'
 
     ];
 
@@ -42,6 +47,12 @@ class Vacancy extends Model
         {
           return null;
         }
+    }
+
+
+    public function teams()
+    {
+        return $this->belongsToMany('App\Team', 'team_has_vacancy');
     }
 
 
@@ -67,6 +78,34 @@ class Vacancy extends Model
 
         Log::warning("Vacancies: Vacancy " . $this->id . " (" . $this->vacancyName . ") closed by " . Auth::user()->name);
 
+    }
+
+
+    /**
+     * Check if the Modal is attached to the $checkingTeam Model
+     *
+     * @param Team $checkingTeam The mdoel you want to check against
+     * @return boolean Whether the models are attached
+     */
+    public function hasTeam(Team $checkingTeam): bool
+    {
+        $myTeams = $this->teams;
+
+        if (empty($myTeams))
+        {
+            // no associated teams
+            return false;
+        }
+
+        foreach($myTeams as $team)
+        {
+            if ($team->id === $checkingTeam->id)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

@@ -300,6 +300,12 @@ return [
             'can' => 'admin.userlist'
         ],
         [
+            'text' => 'm_teams',
+            'icon' => 'fas fa-user-friends',
+            'url' => 'teams',
+            'can' => 'teams.view'
+        ],
+        [
             'text' => 'sm_hiring_man',
             'icon' => 'far fa-calendar-plus',
             'can' => 'admin.hiring.*',
@@ -530,6 +536,17 @@ return [
           ]
         ],
         [
+            'name' => 'CheckboxValues',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '/js/switches.js'
+                ]
+            ]
+        ],
+        [
           'name' => 'AuthCustomisations',
           'active' => true,
           'files' => [
@@ -539,6 +556,38 @@ return [
               'location' => '/css/authpages.css'
             ]
           ]
-        ]
+            ],
+            [
+                'name' => 'BootstrapToggleButton',
+                'active' => true,
+                'files' => [
+                    [
+                        'type' => 'css',
+                        'asset' => false,
+                        'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css'
+                    ],
+                    [
+                        'type' => 'js',
+                        'asset' => false,
+                        'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js'
+                    ]
+                ]
+            ],
+            [
+                'name' => 'BootstrapMultiselectDropdown',
+                'active' => true,
+                'files' => [
+                    [
+                        'type' => 'js',
+                        'asset' => 'false',
+                        'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js'
+                    ],
+                    [
+                        'type' => 'css',
+                        'asset' => false,
+                        'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css'
+                    ]
+                ]
+            ]
     ],
 ];

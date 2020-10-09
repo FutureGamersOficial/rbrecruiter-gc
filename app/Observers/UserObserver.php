@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Log;
 
 class UserObserver
 {
+
+    public function __construct()
+    {
+        Log::debug('User observer has been initialised and ready for use!');
+    }
+
     /**
      * Handle the user "created" event.
      *
@@ -39,20 +45,28 @@ class UserObserver
 
     public function deleting(User $user)
     {
-        $user->profile()->delete();
-        Log::debug('Referential integrity cleanup: Deleted profile!');
-        $applications = $user->applications;
-
-        if (!$applications->isEmpty())
+        if ($user->isForceDeleting())
         {
-            Log::debug('RIC: Now trying to delete applications and responses...');
-            foreach($applications as $application)
+            $user->profile->delete();
+            Log::debug('Referential integrity cleanup: Deleted profile!');
+            $applications = $user->applications;
+    
+            if (!$applications->isEmpty())
             {
-                // code moved to Application observer, where it gets rid of attached elements individually
-                Log::debug('RIC: Deleting application ' . $application->id);
-                $application->delete();
-
+                Log::debug('RIC: Now trying to delete applications and responses...');
+                foreach($applications as $application)
+                {
+                    // code moved to Application observer, where it gets rid of attached elements individually
+                    Log::debug('RIC: Deleting application ' . $application->id);
+                    $application->delete();
+    
+                }
             }
+
+        }
+        else
+        {
+            Log::debug('RIC: Not cleaning up soft deleted models!');
         }
 
         Log::debug('RIC: Cleanup done!');
@@ -66,7 +80,6 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        //
     }
 
     /**
@@ -88,6 +101,8 @@ class UserObserver
      */
     public function forceDeleted(User $user)
     {
-        //
+        Log::info('Model has been force deleted', [
+            'modelID' => $user->id
+        ]);
     }
 }

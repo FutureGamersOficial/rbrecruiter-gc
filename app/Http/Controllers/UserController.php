@@ -23,11 +23,13 @@ use App\Notifications\EmailChanged;
 use App\Notifications\ChangedPassword;
 use Spatie\Permission\Models\Role;
 
+use App\Traits\ReceivesAccountTokens;
 use Google2FA;
 
 class UserController extends Controller
 {
 
+    use ReceivesAccountTokens;
 
     public function showStaffMembers()
     {
@@ -220,7 +222,7 @@ class UserController extends Controller
 
         if ($request->confirmPrompt == 'DELETE ACCOUNT')
         {
-            $user->delete();
+            $user->forceDelete();
             $request->session()->flash('success','User deleted successfully. PII has been erased.');
         }
         else
@@ -231,6 +233,7 @@ class UserController extends Controller
 
         return redirect()->route('registeredPlayerList');
     }
+
 
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -356,4 +359,6 @@ class UserController extends Controller
         //TODO: Dispatch event
         return redirect()->back();
     }
+
+
 }

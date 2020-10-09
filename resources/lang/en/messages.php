@@ -605,6 +605,13 @@ return [
         'max_chars' => 'max characters', // Context: A number is added before max characters
         'post' => 'Post', // Context: Post as in post comment
 
+    ],
+
+
+    'teams' => [
+
+        'm_teams_page' => 'Teams'
+
     ]
 
     // ==================== END OF MAIN I18N FILE ======================

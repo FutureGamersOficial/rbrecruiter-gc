@@ -33,6 +33,14 @@ class FormController extends Controller
         $this->authorize('create', Form::class);
         $fields = $request->all();
 
+        if (count($fields) == 2)
+        {
+            // form is probably empty, since forms with fields will alawys have more than 2 items
+
+            $request->session()->flash('error', 'Sorry, but you may not create empty forms.');
+            return redirect()->to(route('showForms'));
+        }
+
         $contextValidation = ContextAwareValidator::getValidator($fields, true, true);
 
         if (!$contextValidation->get('validator')->fails())
