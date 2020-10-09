@@ -80,4 +80,32 @@ class Vacancy extends Model
 
     }
 
+
+    /**
+     * Check if the Modal is attached to the $checkingTeam Model
+     *
+     * @param Team $checkingTeam The mdoel you want to check against
+     * @return boolean Whether the models are attached
+     */
+    public function hasTeam(Team $checkingTeam): bool
+    {
+        $myTeams = $this->teams;
+
+        if (empty($myTeams))
+        {
+            // no associated teams
+            return false;
+        }
+
+        foreach($myTeams as $team)
+        {
+            if ($team->id === $checkingTeam->id)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

@@ -12,6 +12,7 @@
         "ext-imagick": "*",
         "ext-json": "*",
         "arcanedev/log-viewer": "^8.0",
+        "awssat/discord-notification-channel": "^1.4",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",

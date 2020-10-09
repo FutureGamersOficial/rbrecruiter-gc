@@ -16,6 +16,7 @@ use Mpociot\Teamwork\Exceptions\UserNotInTeamException;
 use Mpociot\Teamwork\Facades\Teamwork;
 use Mpociot\Teamwork\TeamInvite;
 
+
 class TeamController extends Controller
 {
     /**
@@ -82,7 +83,7 @@ class TeamController extends Controller
         return view('dashboard.teams.edit-team')
               ->with('team', $team)
               ->with('users', User::all())
-              ->with('vacancies', Vacancy::all());
+              ->with('vacancies', Vacancy::with('teams')->get()->all());
     }
 
     /**
@@ -115,7 +116,7 @@ class TeamController extends Controller
     }
 
     public function invite(SendInviteRequest $request, Team $team)
-    {   
+    {
         $user = User::findOrFail($request->user);
 
         if (!$team->openJoin)
@@ -126,29 +127,29 @@ class TeamController extends Controller
                 Teamwork::inviteToTeam($user, $team, function(TeamInvite $invite) use ($user) {
                     Mail::to($user)->send(new InviteToTeam($invite));
                 });
-    
+
                 $request->session()->flash('success', 'Invite sent! They can now accept or deny it.');
             }
-            else 
+            else
             {
                 $request->session()->flash('error', 'This user has already been invited.');
             }
 
-            
+
         }
         else
         {
             $request->session()->flash('error', 'You can\'t invite users to public teams.');
         }
 
-        return redirect()->back();   
+        return redirect()->back();
     }
 
 
 
     public function processInviteAction(Request $request, $action, $token)
     {
-        
+
         switch($action)
         {
             case 'accept':
@@ -168,7 +169,7 @@ class TeamController extends Controller
                break;
 
             case 'deny':
-                    
+
                 $invite = Teamwork::getInviteFromDenyToken($token);
 
                 if ($invite && $invite->user->is(Auth::user()))
@@ -182,10 +183,10 @@ class TeamController extends Controller
                 }
 
                 break;
-                
+
             default:
                 $request->session()->flash('error', 'Sorry, but the invite URL you followed was malformed. Try asking for another invite, or submit a bug report.');
-                    
+
 
         }
 
@@ -208,5 +209,54 @@ class TeamController extends Controller
         }
 
         return redirect()->back();
+    }
+
+
+    // Since it's a separate form, we shouldn't use the same update method
+    public function assignVacancies(Request $request, Team $team)
+    {
+        // P.S. To future developers
+        // This method gave me a lot of trouble lol. It's hard to write code when you're half asleep.
+        // There may be an n+1 query in the view and I don't think there's a way to avoid that without writing a lot of extra code.
+
+        $requestVacancies = $request->assocVacancies;
+        $currentVacancies = $team->vacancies->pluck('id')->all();
+
+        if (is_null($requestVacancies))
+        {
+
+            foreach ($team->vacancies as $vacancy)
+            {
+                $team->vacancies()->detach($vacancy->id);
+            }
+
+            $request->session()->flash('success', 'Removed all vacancy associations.');
+            return redirect()->back();
+        }
+
+        $vacancyDiff = array_diff($requestVacancies, $currentVacancies);
+        $deselectedDiff = array_diff($currentVacancies, $requestVacancies);
+
+
+        if (!empty($vacancyDiff) || !empty($deselectedDiff))
+        {
+            foreach ($vacancyDiff as $selectedVacancy)
+            {
+                $team->vacancies()->attach($selectedVacancy);
+            }
+
+            foreach ($deselectedDiff as $deselectedVacancy)
+            {
+                $team->vacancies()->detach($deselectedVacancy);
+            }
+        }
+        else
+        {
+            $team->vacancies()->attach($requestVacancies);
+        }
+
+        $request->session()->flash('success', 'Assignments changed successfully.');
+        return redirect()->back();
+
     }
 }

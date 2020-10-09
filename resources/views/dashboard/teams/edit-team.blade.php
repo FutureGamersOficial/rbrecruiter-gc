@@ -60,13 +60,13 @@
                 <tbody>
 
                     @foreach ($team->users as $teammate)
-                        
+
                         <tr>
                             <td>{{ $teammate->id }}</td>
                             <td><a target="_blank" href="{{ route('showSingleProfile', ['user' => $teammate->id]) }}">{{ $teammate->name }}</a></td>
                             <td>
                                 @foreach ($teammate->roles as $teammate_role)
-                                    
+
                                     <span class="badge badge-secondary">{{ $teammate_role->name }}</span>
 
                                 @endforeach
@@ -123,21 +123,21 @@
                 </div>
 
                 <div class="card-body">
-                    
+
                     <form id="editTeam" method="POST" action="{{ route('teams.update', ['team' => $team->id]) }}">
 
                         @csrf
                         @method('PATCH')
 
                         <div class="form-group">
-                
+
                             <label for="teamName">Team name</label>
                             <input type="text" class="form-control" id="teamName" value="{{ $team->name }}" disabled>
-            
+
                             <label for="teamDescription">Team description</label>
                             <textarea class="form-control" rows="4" name="teamDescription" id="teamDescription">{{ $team->description }}</textarea>
                             <span class="text-left text-muted text-sm"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"><i class="fab fa-markdown"></i></a> Markdown supported</span>
-                            
+
                             <div class="controlbuttons mt-3">
 
                                 <span rel="spanTxtTooltip" data-toggle="tooltip" title="This setting controls whether people can join the team freely." data-placement="top">
@@ -147,11 +147,11 @@
 
                                 <button onclick="$('#addUserModal').modal('show')" type="button" id="inviteUser" name="inviteUser" class="btn btn-success" {{ ($team->openJoin) ? 'disabled' : '' }}><i class="fas fa-user-plus"></i> Invite user</button>
                             </div>
-            
+
                         </div>
 
                     </form>
-                    
+
                 </div>
 
                 <div class="card-footer">
@@ -176,20 +176,30 @@
                 <div class="card-body">
 
                     <span class="text-muted"><i class="fas fa-info-circle"></i> The vacancies you select determine what applications your team members see. All applications under the vacancies you choose will be displayed.</span>
-                    
-                    <form>
 
-                        <select id="assocVacancies" name="assocVacancies" multiple="multiple">
+                    <form method="POST" id="vacancyChangeForm" action="{{ route('assignVacancies', ['team' => $team->id]) }}">
+
+                        @csrf
+                        @method('PATCH')
+
+                        <select id="assocVacancies" name="assocVacancies[]" multiple="multiple">
 
                             @foreach($vacancies as $vacancy)
 
-                                <option value="{{ $vacancy->id }}">{{ $vacancy->vacancyName }}</option>
+                                <!-- fixme: n+1 query here -->
+                                <option {{ ($vacancy->hasTeam($team)) ? 'selected' : '' }} value="{{ $vacancy->id }}">{{ $vacancy->vacancyName }}</option>
 
                             @endforeach
 
                         </select>
 
                     </form>
+
+                </div>
+
+                <div class="card-footer">
+
+                    <button onclick="$('#vacancyChangeForm').submit()" type="button" class="btn btn-success"><i class="far fa-save"></i> Update Assignments</button>
 
                 </div>
 

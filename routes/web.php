@@ -60,22 +60,24 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
             ->name('directory');
 
 
+
+        Route::resource('teams', TeamController::class);
+
         
-            Route::post('teams/{team}/invites/send', [TeamController::class, 'invite'])
+        Route::post('teams/{team}/invites/send', [TeamController::class, 'invite'])
                 ->name('sendInvite');
 
-            Route::get('teams/{team}/switch', [TeamController::class, 'switchTeam'])
+        Route::get('teams/{team}/switch', [TeamController::class, 'switchTeam'])
                 ->name('switchTeam');
+
+        Route::patch('teams/{team}/vacancies/update', [TeamController::class, 'assignVacancies'])
+                ->name('assignVacancies');
+
 
         Route::get('teams/invites/{action}/{token}', [TeamController::class, 'processInviteAction'])
             ->name('processInvite');
-        
 
-        // WARNING: This is a resource, might not work under laravel 8.
-        Route::resource('teams', TeamController::class);
-
-
-
+    
 
         Route::group(['prefix' => '/applications'], function (){
 
@@ -251,7 +253,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
             Route::delete('forms/destroy/{form}', [FormController::class, 'destroy'])
                 ->name('destroyForm');
 
-            Route::get('forms', [FormController::class, 'showFormBuilder'])
+            Route::get('forms', [FormController::class, 'index'])
                 ->name('showForms');
 
             Route::get('forms/preview/{form}', [FormController::class, 'preview'])
