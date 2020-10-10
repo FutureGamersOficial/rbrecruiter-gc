@@ -1,25 +1,41 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Notifications;
 
+use App\Application;
+use App\Facades\Options;
+use App\Traits\Cancellable;
+use App\Vacancy;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
-use App\Application;
-use App\Vacancy;
-
-use App\Traits\Cancellable;
-use App\Facades\Options;
 
 class NewApplicant extends Notification implements ShouldQueue
 {
     use Queueable, Cancellable;
 
-
     protected $application;
-
 
     protected $vacancy;
 
@@ -36,8 +52,7 @@ class NewApplicant extends Notification implements ShouldQueue
 
     public function channels()
     {
-        if (Options::getOption('enable_slack_notifications') == 1)
-        {
+        if (Options::getOption('enable_slack_notifications') == 1) {
             return ['slack'];
         }
 
@@ -59,17 +74,15 @@ class NewApplicant extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name') . ' - New application')
+                    ->subject(config('app.name').' - New application')
                     ->line('Someone has just applied for a position. Check it out!')
-                    ->line('You are receiving this because you\'re a staff member at ' . config('app.name') . '.')
+                    ->line('You are receiving this because you\'re a staff member at '.config('app.name').'.')
                     ->action('View Application', url(route('showUserApp', ['application' => $this->application->id])))
                     ->line('Thank you!');
     }
 
-
     public function toSlack($notifiable)
     {
-
         $vacancyDetails = [];
         $vacancyDetails['name'] = $this->vacancy->vacancyName;
         $vacancyDetails['slots'] = $this->vacancy->vacancyCount;
@@ -80,16 +93,17 @@ class NewApplicant extends Notification implements ShouldQueue
         return (new SlackMessage)
             ->success()
             ->content('Notice: New application coming through. Please review as soon as possible.')
-            ->attachment(function($attachment) use ($vacancyDetails, $url, $applicant){
+            ->attachment(function ($attachment) use ($vacancyDetails, $url, $applicant) {
                 $attachment->title('Application details')
                            ->fields([
-                             'Applied for' => $vacancyDetails['name'],
-                             'Avaiable positions' => $vacancyDetails['slots'],
-                             'Applicant' => $applicant
+                               'Applied for' => $vacancyDetails['name'],
+                               'Avaiable positions' => $vacancyDetails['slots'],
+                               'Applicant' => $applicant,
                            ])
                            ->action('Review application', $url);
             });
     }
+
     /**
      * Get the array representation of the notification.
      *
