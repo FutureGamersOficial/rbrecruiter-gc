@@ -1,5 +1,24 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -20,24 +39,24 @@ class PermissionSeeder extends Seeder
         //
         $user = Role::create(
             [
-                'name' => 'user'
+                'name' => 'user',
             ]
         );
 
         $reviewer = Role::create(
             [
-                'name' => 'reviewer'
+                'name' => 'reviewer',
             ]
         );
 
         $hiringManager = Role::create(
             [
-                'name' => 'hiringManager'
+                'name' => 'hiringManager',
             ]
         );
 
         $admin = Role::create([
-           'name' => 'admin'
+            'name' => 'admin',
         ]);
 
         // Spatie wildcard permissions (same concept of MC permissions)
@@ -69,19 +88,18 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'admin.notificationsettings.*']);
         Permission::create(['name' => 'admin.maintenance.logs.view']);
 
-
         Permission::create(['name' => 'admin.developertools.use']);
 
         $user->givePermissionTo([
             'applications.submit',
             'applications.view.own',
-            'profiles.view.others'
+            'profiles.view.others',
         ]);
 
         // Able to view applications and vote on them once they reach the right stage, but not approve applications up to said stage
         $reviewer->givePermissionTo([
             'applications.view.all',
-            'applications.vote'
+            'applications.vote',
         ]);
 
         $hiringManager->givePermissionTo('appointments.*', 'applications.*', 'admin.hiring.*');
@@ -94,7 +112,7 @@ class PermissionSeeder extends Seeder
             'admin.notificationsettings.*',
             'profiles.view.others',
             'profiles.edit.others',
-            'admin.maintenance.logs.view'
+            'admin.maintenance.logs.view',
         ]);
     }
 }

@@ -1,5 +1,24 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 return [
 
     /*
@@ -50,7 +69,7 @@ return [
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => env('APP_NAME') . '\'s Temporary Logo',
+    'logo_img_alt' => env('APP_NAME').'\'s Temporary Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -211,17 +230,17 @@ return [
         [
             'text' => 'm_home',
             'icon' => 'fas fa-home',
-            'url' => 'dashboard'
+            'url' => 'dashboard',
         ],
         [
             'text' => 'm_directory',
             'icon' => 'fas fa-users',
             'url' => 'users/directory',
-            'can' => 'profiles.view.others'
+            'can' => 'profiles.view.others',
         ],
         [
             'header' => 'h_applications',
-            'can' => 'applications.view.own'
+            'can' => 'applications.view.own',
         ],
         [
             'text' => 'm_my_applications',
@@ -231,8 +250,8 @@ return [
                 [
                     'text' => 'm_curr_applications',
                     'icon' => 'fas fa-fw fa-check-double',
-                    'url' => '/applications/my-applications'
-                ]
+                    'url' => '/applications/my-applications',
+                ],
             ],
 
         ],
@@ -242,40 +261,40 @@ return [
         [
             'text' => 'm_profile_settings',
             'url' => '/profile/settings',
-            'icon' => 'fas fa-fw fa-cog'
+            'icon' => 'fas fa-fw fa-cog',
         ],
         [
             'text' => 'm_account_settings',
             'icon' => 'fas fa-user-circle',
-            'url' => '/profile/settings/account'
+            'url' => '/profile/settings/account',
         ],
         [
             'header' => 'h_app_management',
-            'can' => ['applications.view.all', 'applications.vote']
+            'can' => ['applications.view.all', 'applications.vote'],
         ],
         [
             'text' => 'm_all_apps',
             'url' => 'applications/staff/all',
             'icon' => 'fas fa-list-ol',
-            'can' => 'applications.view.all'
+            'can' => 'applications.view.all',
         ],
         [
             'text' => 'm_outstanding_apps',
             'url' => '/applications/staff/outstanding',
             'icon' => 'far fa-folder-open',
-            'can' => 'applications.view.all'
+            'can' => 'applications.view.all',
         ],
         [
             'text' => 'm_interview_queue',
             'url' => '/applications/staff/pending-interview',
             'icon' => 'fas fa-fw fa-microphone-alt',
-            'can' => 'applications.view.all'
+            'can' => 'applications.view.all',
         ],
         [
             'text' => 'm_peer_approval',
             'url' => '/applications/staff/peer-review',
             'icon' => 'fas fa-fw fa-search',
-            'can' => 'applications.view.all'
+            'can' => 'applications.view.all',
         ],
         [
             'header' => 'h_admin',
@@ -284,26 +303,26 @@ return [
                 'admin.userlist',
                 'admin.stafflist',
                 'admin.hiring.*',
-                'admin.notificationsettings.*'
-            ]
+                'admin.notificationsettings.*',
+            ],
         ],
         [
             'text' => 'm_staff_m',
             'icon' => 'fas fa-fw fa-users',
             'url' => '/hr/staff-members',
-            'can' => 'admin.stafflist'
+            'can' => 'admin.stafflist',
         ],
         [    // players who haven't been promoted yet
             'text' => 'm_reg_players',
             'icon' => 'fas fa-fw fa-user-friends',
             'url' => '/hr/players',
-            'can' => 'admin.userlist'
+            'can' => 'admin.userlist',
         ],
         [
             'text' => 'm_teams',
             'icon' => 'fas fa-user-friends',
             'url' => 'teams',
-            'can' => 'teams.view'
+            'can' => 'teams.view',
         ],
         [
             'text' => 'sm_hiring_man',
@@ -313,7 +332,7 @@ return [
                 [
                     'text' => 'm_open_pos',
                     'icon' => 'fas fa-box-open',
-                    'url' => '/admin/positions'
+                    'url' => '/admin/positions',
                 ],
                 [
                     'text' => 'sm_forms',
@@ -322,16 +341,16 @@ return [
                         [
                             'text' => 'sm_all_forms',
                             'icon' => 'far fa-list-alt',
-                            'url' => '/admin/forms'
+                            'url' => '/admin/forms',
                         ],
                         [
                             'text' => 'm_form_builder',
                             'icon' => 'fas fa-fw fa-hammer',
-                            'url' => '/admin/forms/builder'
-                        ]
-                    ]
-                ]
-            ]
+                            'url' => '/admin/forms/builder',
+                        ],
+                    ],
+                ],
+            ],
         ],
         [
             'text' => 'sm_app_settings',
@@ -342,22 +361,22 @@ return [
                     'text' => 'm_global_app_s',
                     'icon' => 'fas fa-cogs',
                     'url' => '/admin/settings',
-                    'can' => 'admin.settings.view'
+                    'can' => 'admin.settings.view',
                 ],
                 [
                     'text' => 'm_devtools',
                     'icon' => 'fas fa-code',
                     'url' => '/admin/devtools',
-                    'can' => 'admin.developertools.use'
-                ]
-            ]
+                    'can' => 'admin.developertools.use',
+                ],
+            ],
         ],
         [
             'text' => 'm_s_logs',
             'url' => '/admin/maintenance/system-logs',
             'icon' => 'fas fa-clipboard-list',
-            'can' => 'admin.maintenance.logs.view'
-        ]
+            'can' => 'admin.maintenance.logs.view',
+        ],
     ],
 
     /*
@@ -423,9 +442,9 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '/js/formbuilder.js'
-                ]
-            ]
+                    'location' => '/js/formbuilder.js',
+                ],
+            ],
         ],
         [
             'name' => 'Select2',
@@ -488,14 +507,14 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => 'https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js'
+                    'location' => 'https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css'
-                ]
-            ]
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css',
+                ],
+            ],
         ],
         [
             'name' => 'GlobalTooltip',
@@ -504,9 +523,9 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '/js/globaltooltip.js'
-                ]
-            ]
+                    'location' => '/js/globaltooltip.js',
+                ],
+            ],
         ],
         [
             'name' => 'DatePickApp',
@@ -515,25 +534,25 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '/js/datepick.js'
-                ]
-            ]
+                    'location' => '/js/datepick.js',
+                ],
+            ],
         ],
         [
-          'name' => 'Fullcalendar',
-          'active' => true,
-          'files' => [
-            [
-              'type' => 'js',
-              'asset' => false,
-              'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.min.js',
+            'name' => 'Fullcalendar',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.min.css',
+                ],
             ],
-            [
-              'type' => 'css',
-              'asset' => false,
-              'location' => 'https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.min.css'
-            ]
-          ]
         ],
         [
             'name' => 'CheckboxValues',
@@ -542,36 +561,36 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '/js/switches.js'
-                ]
-            ]
+                    'location' => '/js/switches.js',
+                ],
+            ],
         ],
         [
-          'name' => 'AuthCustomisations',
-          'active' => true,
-          'files' => [
-            [
-              'type' => 'css',
-              'asset' => false,
-              'location' => '/css/authpages.css'
-            ]
-          ]
+            'name' => 'AuthCustomisations',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '/css/authpages.css',
+                ],
             ],
-            [
-                'name' => 'BootstrapToggleButton',
-                'active' => true,
-                'files' => [
-                    [
-                        'type' => 'css',
-                        'asset' => false,
-                        'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css'
-                    ],
-                    [
-                        'type' => 'js',
-                        'asset' => false,
-                        'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js'
-                    ]
-                ]
+              ],
+              [
+                  'name' => 'BootstrapToggleButton',
+                  'active' => true,
+                  'files' => [
+                      [
+                          'type' => 'css',
+                          'asset' => false,
+                          'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css',
+                      ],
+                      [
+                          'type' => 'js',
+                          'asset' => false,
+                          'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js',
+                      ],
+                  ],
             ],
             [
                 'name' => 'BootstrapMultiselectDropdown',
@@ -580,14 +599,14 @@ return [
                     [
                         'type' => 'js',
                         'asset' => 'false',
-                        'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js'
+                        'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js',
                     ],
                     [
                         'type' => 'css',
                         'asset' => false,
-                        'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css'
-                    ]
-                ]
-            ]
+                        'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css',
+                    ],
+                ],
+            ],
     ],
 ];
