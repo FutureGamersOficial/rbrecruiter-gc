@@ -607,6 +607,22 @@ return [
                         'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css',
                     ],
                 ],
+                [
+                    'name' => 'DropzoneJS',
+                    'active' => true,
+                    'files' => [
+                        [
+                            'type' => 'js',
+                            'asset' => false,
+                            'location' => '/js/plugins/dropzone.min.js'
+                        ],
+                        [
+                            'type' => 'css',
+                            'asset' => false,
+                            'location' => '/css/dropzone.min.css'
+                        ]
+                    ]
+                ]
             ],
     ],
 ];
