@@ -97,7 +97,7 @@ class NewApplicant extends Notification implements ShouldQueue
                 $attachment->title('Application details')
                            ->fields([
                                'Applied for' => $vacancyDetails['name'],
-                               'Avaiable positions' => $vacancyDetails['slots'],
+                               'Available positions' => $vacancyDetails['slots'],
                                'Applicant' => $applicant,
                            ])
                            ->action('Review application', $url);
