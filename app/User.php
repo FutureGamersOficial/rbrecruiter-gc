@@ -60,7 +60,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-//
+    // RELATIONSHIPS
+
     public function applications()
     {
         return $this->hasMany('App\Application', 'applicantUserID', 'id');
@@ -85,6 +86,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Comment', 'authorID', 'id');
     }
+
+    public function files()
+    {
+        return $this->hasMany('App\TeamFile', 'uploaded_by');
+    }
+
+    // UTILITY LOGIC
 
     public function isBanned()
     {

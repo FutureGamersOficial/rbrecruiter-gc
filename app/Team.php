@@ -36,4 +36,10 @@ class Team extends TeamworkTeam
     {
         return $this->belongsToMany('App\Vacancy', 'team_has_vacancy');
     }
+
+
+    public function files()
+    {
+        return $this->hasMany('App\TeamFile', 'team_id');
+    }
 }

@@ -35,5 +35,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(DefaultOptionsSeeder::class);
+        $this->call(NewPermissions::class);
+        $this->call(TeamSeeder::class);
+        $this->call(TeamFileSeeder::class);
     }
 }

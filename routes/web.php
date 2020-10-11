@@ -31,6 +31,7 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamFileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VacancyController;
 use App\Http\Controllers\VoteController;
@@ -85,6 +86,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::get('teams/invites/{action}/{token}', [TeamController::class, 'processInviteAction'])
             ->name('processInvite');
+
+
+        Route::get('team/files', [TeamFileController::class, 'index'])
+            ->name('showTeamFiles');
+
+        Route::post('team/files/upload', [TeamFileController::class, 'store'])
+            ->name('uploadTeamFile');
+
+        Route::get('team/files/{teamFile}/download', [TeamFileController::class, 'download'])
+            ->name('downloadTeamFile');
+
 
         Route::group(['prefix' => '/applications'], function () {
             Route::get('/my-applications', [ApplicationController::class, 'showUserApps'])
