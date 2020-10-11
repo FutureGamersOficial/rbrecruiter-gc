@@ -616,14 +616,14 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '/js/plugins/dropzone.min.js'
+                    'location' => '/js/plugins/dropzone.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '/css/dropzone.min.css'
-                ]
-            ]
-        ]
+                    'location' => '/css/dropzone.min.css',
+                ],
+            ],
+        ],
     ],
 ];

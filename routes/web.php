@@ -87,7 +87,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('teams/invites/{action}/{token}', [TeamController::class, 'processInviteAction'])
             ->name('processInvite');
 
-
         Route::get('team/files', [TeamFileController::class, 'index'])
             ->name('showTeamFiles');
 
@@ -96,7 +95,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::get('team/files/{teamFile}/download', [TeamFileController::class, 'download'])
             ->name('downloadTeamFile');
-
 
         Route::group(['prefix' => '/applications'], function () {
             Route::get('/my-applications', [ApplicationController::class, 'showUserApps'])
