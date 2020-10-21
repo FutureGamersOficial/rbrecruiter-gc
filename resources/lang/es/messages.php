@@ -1,27 +1,23 @@
 <?php
-
 /*
- * Copyright © 2020 Miguel Nogueira
+ * -- Information for translators | READ BEFORE TRANSLATING ANYTHING ---
+ * In this file, only translate messages to the right, in this fashion:
+ * 'something' => 'translate-me'
+ * Also, don't translate, change, or move placeholders (:this-is-a-placeholder) starting with a colon.
+ * Try to keep the message as close to the original in meaning as possible. These simple rules also apply to other files you're translating, such as:
+ * auth.php, pagination.php, passwords.php, and validation.php.
+ * It is VERY important that you "escape" single quotes with a backslash if they're present in your language, like this: I\'m an escaped quote
  *
- *   This file is part of Raspberry Staff Manager.
+ * Additionally, don't change anything in square or curly brackets, and don't remove pipe (|) characters.
+ * If you see two messages separated by pipe, then usually the left side is singular and the right side is plural, so translate accordingly.
  *
- *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     Raspberry Staff Manager is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ * Thank you for translating!
  */
 
 return [
 
     // ============== MENU TRANSLATIONS ======================
+
 
     'menu' => [
 
@@ -32,8 +28,10 @@ return [
         'all_forms' => 'All Forms',
         'app_settings' => 'App Settings',
         'global_app_settings' => 'Global App Settings',
-        'system_logs' => 'System Logs',
+        'system_logs' => 'System Logs'
     ],
+
+
 
     // ============== REUSABLE, GENERIC STRINGS ===============
 
@@ -81,8 +79,9 @@ return [
         'platform' => 'Platform',
         'notepad' => 'Shared Notepad', // Context: The shared notepad that appears when votes are needed,
         'appointment_info' => 'Appointment Information',
-        'ip_info' => 'IP Address Information for',
+        'ip_info' => 'IP Address Information for'
     ],
+
 
     // ============== HOMEPAGE MESSAGES ======================
 
@@ -126,6 +125,8 @@ return [
     'contactlabel_subject' => 'Subject (ex. Site Suggestion)',
     'contactlabel_send' => 'Send',
 
+
+
     // ======================== AUTHENTICATION MESSAGES ===========================
 
     '2fa_txt' => 'Two-Factor Authentication',
@@ -150,7 +151,7 @@ return [
         'line4' => 'A minimum of 10 characters;',
         'line5' => 'At least 3 uppercase characters;',
         'line6' => 'At least 3 numbers;',
-        'line7' => 'Any number of special characters.',
+        'line7' => 'Any number of special characters.'
     ],
     'sronly_confirmpassword' => 'Confirm Password', // hint: sronly stands for screen-reader only
     'sronly_mcusername' => 'Minecraft Username (Premium)',
@@ -179,6 +180,7 @@ return [
     'upcoming' => 'Your upcoming interviews',
     'soon' => 'Coming soon',
 
+
     //=================== ADMINISTRATION MESSAGES (for all administration pages) ===============
 
     'adm' => 'Administration',
@@ -195,6 +197,7 @@ return [
     'override_votes' => 'Override Vote Evaluation',
     'artisan_evaluate' => 'Artisan: Evaluate Votes Now', // Tip: Artisan is a program name, therefore not translatable
     'devtools_info' => 'This panel may be also used to completely override the vote system in stalemate scenarios',
+
 
     'forms' => 'Forms',
     'positions' => 'Positions', // Context: Positions as in job opening
@@ -231,7 +234,7 @@ return [
         'cancel' => 'Cancel',
         'close_vacancy' => 'Close Position',
         'description_tooltip' => 'Add things like admission requirements, rank resposibilities and roles, and anything else you feel is necessary',
-        '',
+        ''
 
     ],
 
@@ -249,7 +252,7 @@ return [
         'title' => 'Application Form Preview',
         'looks' => 'This is how your form looks like to applicants',
         'f_info' => 'You may edit it and add more fields later.',
-        '',
+        ''
     ],
 
     'forms_p' => [
@@ -257,7 +260,7 @@ return [
         'available_forms' => 'Available forms',
         'form_title' => 'Form title',
         'empty_noforms' => 'Nothing to see here! Please add some forms first.',
-        'new_form' => 'NEW FORM',
+        'new_form' => 'NEW FORM'
     ],
 
     'players' => [
@@ -278,7 +281,7 @@ return [
           Registered players are those without a staff role in the team management application.
           There may be other users registered in the platform, but they won't be displayed here.
 ",
-        'see_staff' => 'See Staff Members',
+        'see_staff' => 'See Staff Members'
 
     ],
 
@@ -302,7 +305,7 @@ return [
         'settings' => 'Settings',
         'settings_header' => 'Notification Settings',
         'settings_p' => 'Change which notifications are sent here.',
-        'back_btn' => 'Back to Dashboard',
+        'back_btn' => 'Back to Dashboard'
 
     ],
 
@@ -328,16 +331,18 @@ return [
             'yrs_old' => 'Years old', // Context: "years old" as in: Tom is 24 years old
             'line1' => 'We\'re glad you\'ve decided to apply. Generally, applications take 48 hours to be processed and reviewed. Depending on the circumstances and the volume of applications, you may receive an answer in a shorter time.',
             'line2' => 'Please fill out the form below. Keep all answers concise and complete. Please keep in mind that the age requirement is at least :agerqr.',
-            'line3' => 'Asking about your application will result in instant denial. Everything you need to know is here.',
+            'line3' => 'Asking about your application will result in instant denial. Everything you need to know is here.'
         ],
-        'app_timeout' => 'Your account is not permitted to submit another application. Please wait :days more days before trying to submit an application.',
+        'app_timeout' => 'Your account is not permitted to submit another application. Please wait :days more days before trying to submit an application.'
     ],
+
 
     'application_m' => [
         'title' => 'Application Management',
         'all_apps' => 'All Applications',
         'modal_confirm' => 'Are you sure?',
         'really_delete' => 'Really delete this?',
+
 
         'outstanding_sm' => 'Outstanding',
         'outstanding_apps' => 'Outstanding Applications',
@@ -395,7 +400,7 @@ return [
             'title' => 'Voting Reminder',
             'line1' => 'Applications which gain more than 50% of positive votes are automatically approved after one day.',
             'line2' => 'Conversely, applications that do not reach this number are automatically denied.',
-            'line3' => 'Please note that the vote system can be overridden',
+            'line3' => 'Please note that the vote system can be overridden'
 
         ],
 
@@ -516,7 +521,7 @@ return [
         'insta_user' => 'Instagram Username',
         'discord_user' => 'Discord Handle',
 
-        'update_prfl' => 'Update Profile',
+        'update_prfl' => 'Update Profile'
 
     ],
 
@@ -527,7 +532,7 @@ return [
         'app_process' => [
             'title' => 'Application Process',
             'line1' => 'Please allow up to three days for your application to be processed. Your application will be reviewed by every team member, and will move up in stages.',
-            'line2' => 'If an interview is scheduled, you\'ll need to open your application here and confirm the time, date, and location assigned for you.',
+            'line2' => 'If an interview is scheduled, you\'ll need to open your application here and confirm the time, date, and location assigned for you.'
         ],
 
         'account_standing' => 'Account Standing',
@@ -546,9 +551,9 @@ return [
 
             'itsyou' => 'It\'s you!',
             'title' => 'User Directory',
-            'directory' => 'Directory',
+            'directory' => 'Directory'
 
-        ],
+        ]
 
     ],
 
@@ -585,7 +590,7 @@ return [
 
             'line1' => 'If you weren\'t present during this meeting, you can view the shared meeting notepad to help you make a decision.',
             'line2' => 'You may vote on as many applications as needed; However, you can only vote once per application.',
-            'line3' => 'Votes carry no weight based on rank. This system has been designed with fairness and ease of use in mind.',
+            'line3' => 'Votes carry no weight based on rank. This system has been designed with fairness and ease of use in mind.'
 
         ],
 
@@ -600,7 +605,7 @@ return [
         'max_chars' => 'max characters', // Context: A number is added before max characters
         'post' => 'Post', // Context: Post as in post comment
 
-    ],
+    ]
 
     // ==================== END OF MAIN I18N FILE ======================
 

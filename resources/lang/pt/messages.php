@@ -1,27 +1,23 @@
 <?php
-
 /*
- * Copyright © 2020 Miguel Nogueira
+ * -- Information for translators | READ BEFORE TRANSLATING ANYTHING ---
+ * In this file, only translate messages to the right, in this fashion:
+ * 'something' => 'translate-me'
+ * Also, don't translate, change, or move placeholders (:this-is-a-placeholder) starting with a colon.
+ * Try to keep the message as close to the original in meaning as possible. These simple rules also apply to other files you're translating, such as:
+ * auth.php, pagination.php, passwords.php, and validation.php.
+ * It is VERY important that you "escape" single quotes with a backslash if they're present in your language, like this: I\'m an escaped quote
  *
- *   This file is part of Raspberry Staff Manager.
+ * Additionally, don't change anything in square or curly brackets, and don't remove pipe (|) characters.
+ * If you see two messages separated by pipe, then usually the left side is singular and the right side is plural, so translate accordingly.
  *
- *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     Raspberry Staff Manager is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ * Thank you for translating!
  */
 
 return [
 
     // ============== MENU TRANSLATIONS ======================
+
 
     'menu' => [
 
@@ -32,8 +28,10 @@ return [
         'all_forms' => 'Todos os Formulários',
         'app_settings' => 'Configurações da App',
         'global_app_settings' => 'Configurações globais do aplicativo',
-        'system_logs' => 'Registos do Sistema',
+        'system_logs' => 'Registos do Sistema'
     ],
+
+
 
     // ============== REUSABLE, GENERIC STRINGS ===============
 
@@ -81,8 +79,9 @@ return [
         'platform' => 'Plataforma',
         'notepad' => 'Bloco Notas Partilhado', // Context: The shared notepad that appears when votes are needed,
         'appointment_info' => 'Informação da Marcação',
-        'ip_info' => 'Informação de Endereço IP para',
+        'ip_info' => 'Informação de Endereço IP para'
     ],
+
 
     // ============== HOMEPAGE MESSAGES ======================
 
@@ -126,6 +125,8 @@ return [
     'contactlabel_subject' => 'Assunto (ex. sugestão do site)',
     'contactlabel_send' => 'Enviar',
 
+
+
     // ======================== AUTHENTICATION MESSAGES ===========================
 
     '2fa_txt' => 'Autenticação de dois Fatores',
@@ -150,7 +151,7 @@ return [
         'line4' => 'Um mínimo de 10 caracteres;',
         'line5' => 'Pelo menos 3 caracteres maiúsculos;',
         'line6' => 'Pelo menos 3 números;',
-        'line7' => 'Números e caracteres especiais.',
+        'line7' => 'Números e caracteres especiais.'
     ],
     'sronly_confirmpassword' => 'Confirmar palavra-passe', // hint: sronly stands for screen-reader only
     'sronly_mcusername' => 'Utilizador do Minecraft (Premium)',
@@ -179,6 +180,7 @@ return [
     'upcoming' => 'As suas próximas entrevistas',
     'soon' => 'Disponível em breve',
 
+
     //=================== ADMINISTRATION MESSAGES (for all administration pages) ===============
 
     'adm' => 'Administração',
@@ -195,6 +197,7 @@ return [
     'override_votes' => 'Substituir Avaliação do Voto',
     'artisan_evaluate' => 'Artisan: Avaliar Votos Agora', // Tip: Artisan is a program name, therefore not translatable
     'devtools_info' => 'Este painel também pode ser usado para substituir completamente o sistema de votação em cenários de impasse',
+
 
     'forms' => 'Formulários',
     'positions' => 'Vagas', // Context: Positions as in job opening
@@ -231,7 +234,7 @@ return [
         'cancel' => 'Cancelar',
         'close_vacancy' => 'Fechar vaga',
         'description_tooltip' => 'Adicione coisas como requisitos de admissão, responsabilidades e funções, e qualquer outra coisa que você ache necessária',
-        '',
+        ''
 
     ],
 
@@ -249,7 +252,7 @@ return [
         'title' => 'Pré-visualização do Formulário de Candidatura',
         'looks' => 'É assim que o seu formulário aparece para os candidatos',
         'f_info' => 'Você pode editá-lo e adicionar mais campos posteriormente.',
-        '',
+        ''
     ],
 
     'forms_p' => [
@@ -257,7 +260,7 @@ return [
         'available_forms' => 'Formulários disponíveis',
         'form_title' => 'Título do Formulário',
         'empty_noforms' => 'Nada para ver aqui! Por favor, crie alguns formulários primeiro.',
-        'new_form' => 'NOVO FORMULÁRIO',
+        'new_form' => 'NOVO FORMULÁRIO'
     ],
 
     'players' => [
@@ -274,11 +277,11 @@ return [
         'banned' => 'Banido',
         'active' => 'Ativo',
         'no_reg' => 'Não há jogadores inscritos!',
-        'no_reg_exp' => '
+        'no_reg_exp' => "
           Jogadores registados são aqueles que não possuem uma função administrativa no aplicativo de gestão de equipa.
           Pode haver outros utilizadores registados na plataforma, mas eles não serão exibidos aqui.
-',
-        'see_staff' => 'Ver Membros da Equipa',
+",
+        'see_staff' => 'Ver Membros da Equipa'
 
     ],
 
@@ -286,11 +289,11 @@ return [
 
         'application_form' => 'Formulário de Candidatura',
         'select_form' => 'Selecione um formulário...',
-        'no_form_error' => '
+        'no_form_error' => "
            Não pode criar uma vaga sem qualquer formulário cujos quais as pessoas se poderiam candidatar.
            Crie um formulário primeiro, e depois crie uma vaga.
            Um único formulário pode ter várias vagas, para que possa anexar futuras vagas ao mesmo formulário, se quiser.
-',
+",
         'new_pos' => 'NOVA VAGA',
         'empty_pos_warning' => 'Nada para ver aqui! Abra algumas vagas primeiro. Isso fará os candidatos aparecerem! (esperançoso)',
         'manage_forms' => 'GERIR FORMULÁRIOS DE CANDIDATURA',
@@ -302,7 +305,7 @@ return [
         'settings' => 'Definições',
         'settings_header' => 'Configuração das notificações',
         'settings_p' => 'Altere quais notificações são enviadas aqui.',
-        'back_btn' => 'Voltar ao painel',
+        'back_btn' => 'Voltar ao painel'
 
     ],
 
@@ -328,16 +331,18 @@ return [
             'yrs_old' => 'Anos de idade', // Context: "years old" as in: Tom is 24 years old
             'line1' => 'Estamos felizes que você decidiu se candidatar. Geralmente, as candidaturas levam 48 horas para serem processadas e revisadas. Dependendo das circunstâncias e do volume de candidaturas, você poderá receber uma resposta em um período mais curto de tempo.',
             'line2' => 'Por favor, preencha o formulário abaixo. Mantenha todas as respostas concisas e completas. Lembre-se de que o requisito de idade é de pelo menos :agerqr.',
-            'line3' => 'Perguntar sobre a sua candidatura resultará em ser negado instantaneamente. Tudo o que você precisa saber está aqui.',
+            'line3' => 'Perguntar sobre a sua candidatura resultará em ser negado instantaneamente. Tudo o que você precisa saber está aqui.'
         ],
-        'app_timeout' => 'A sua conta não pode enviar outra candidatura. Por favor, espere :days mais dias antes de tentar enviar uma candidatura.',
+        'app_timeout' => 'A sua conta não pode enviar outra candidatura. Por favor, espere :days mais dias antes de tentar enviar uma candidatura.'
     ],
+
 
     'application_m' => [
         'title' => 'Gestão de Candidaturas',
         'all_apps' => 'Todas as Candidaturas',
         'modal_confirm' => 'Tem a certeza?',
         'really_delete' => 'Deseja realmente excluir isto?',
+
 
         'outstanding_sm' => 'Pendente',
         'outstanding_apps' => 'Candidaturas Pendendes',
@@ -395,7 +400,7 @@ return [
             'title' => 'Lembrete de votação',
             'line1' => 'Candidaturas que obtêm mais de 50% dos votos positivos são automaticamente aprovadas após um dia.',
             'line2' => 'Inversamente, candidaturas que não atingem esse número são automaticamente negadas.',
-            'line3' => 'Por favor, lembre-se que o sistema de votação pode ser substituído',
+            'line3' => 'Por favor, lembre-se que o sistema de votação pode ser substituído'
 
         ],
 
@@ -516,7 +521,7 @@ return [
         'insta_user' => 'Nome de Utilizador do Instagram',
         'discord_user' => '"Handle" do Discord',
 
-        'update_prfl' => 'Atualizar Perfil',
+        'update_prfl' => 'Atualizar Perfil'
 
     ],
 
@@ -527,7 +532,7 @@ return [
         'app_process' => [
             'title' => 'Processo de Candidatura',
             'line1' => 'Por favor, aguarde pelo menos três dias para que sua candidatura seja processada. A inscrição será revisada por todos os membros da equipa, e será promovida em fases.',
-            'line2' => 'Se uma entrevista estiver programada, você precisará abrir o aplicativo aqui e confirmar a hora, data e local atribuídos para você.',
+            'line2' => 'Se uma entrevista estiver programada, você precisará abrir o aplicativo aqui e confirmar a hora, data e local atribuídos para você.'
         ],
 
         'account_standing' => 'Estado da Conta',
@@ -546,9 +551,9 @@ return [
 
             'itsyou' => 'É você!',
             'title' => 'Diretório de Utilizadores',
-            'directory' => 'Diretório',
+            'directory' => 'Diretório'
 
-        ],
+        ]
 
     ],
 
@@ -585,7 +590,7 @@ return [
 
             'line1' => 'Se você não estava presente durante esta reunião, pode visualizar o bloco de notas da reunião partilhado para ajudá-lo a tomar uma decisão.',
             'line2' => 'Você pode votar em quantas candidaturas forem necessárias; no entanto, só pode votar uma vez por candidatura.',
-            'line3' => 'Os votos não têm peso baseado no cargo. Esse sistema foi projetado com justiça e facilidade de uso em mente.',
+            'line3' => 'Os votos não têm peso baseado no cargo. Esse sistema foi projetado com justiça e facilidade de uso em mente.'
 
         ],
 
@@ -600,7 +605,7 @@ return [
         'max_chars' => 'caracteres no máximo', // Context: A number is added before max characters
         'post' => 'Publicar', // Context: Post as in post comment
 
-    ],
+    ]
 
     // ==================== END OF MAIN I18N FILE ======================
 
