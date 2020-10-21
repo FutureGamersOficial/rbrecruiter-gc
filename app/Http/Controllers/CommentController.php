@@ -1,34 +1,19 @@
 <?php
 
-/*
- * Copyright © 2020 Miguel Nogueira
- *
- *   This file is part of Raspberry Staff Manager.
- *
- *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     Raspberry Staff Manager is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 namespace App\Http\Controllers;
 
-use App\Application;
-use App\Comment;
-use App\Http\Requests\NewCommentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\NewCommentRequest;
+
+use App\Comment;
+use App\Application;
+use App\Notifications\NewComment;
+use App\User;
 
 class CommentController extends Controller
 {
+
     public function index()
     {
         //
@@ -41,16 +26,21 @@ class CommentController extends Controller
         $comment = Comment::create([
             'authorID' => Auth::user()->id,
             'applicationID' => $application->id,
-            'text' => $request->comment,
+            'text' => $request->comment
         ]);
 
-        if ($comment) {
+        if ($comment)
+        {
+
             $request->session()->flash('success', 'Comment posted! (:');
-        } else {
+        }
+        else
+        {
             $request->session()->flash('error', 'Something went wrong while posting your comment!');
         }
 
         return redirect()->back();
+
     }
 
     public function delete(Request $request, Comment $comment)
@@ -61,5 +51,7 @@ class CommentController extends Controller
         $request->session()->flash('success', 'Comment deleted!');
 
         return redirect()->back();
+
     }
+
 }
