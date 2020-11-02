@@ -1,5 +1,24 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Console\Commands;
 
 use App\Facades\UUID;
@@ -23,6 +42,7 @@ class CreateUser extends Command
      * @var string
      */
     protected $description = 'Creates an application user. Seeding the database is for testing environments, so use this command in production for your first admin user.';
+
     /**
      * Create a new command instance.
      *
@@ -40,9 +60,7 @@ class CreateUser extends Command
      */
     public function handle()
     {
-
-        do
-        {
+        do {
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                 system('cls');
             } else {
@@ -53,60 +71,43 @@ class CreateUser extends Command
             $this->info('We\'ll ask some questions to get you started.');
 
             $username = $this->ask('Username');
-            do
-            {
+            do {
                 $password = $this->secret('Password');
                 $password_confirm = $this->secret('Confirm Password');
 
-                if ($password === $password_confirm)
-                {
+                if ($password === $password_confirm) {
                     $password = Hash::make($password);
                     $matches = true;
-                }
-                else
-                {
+                } else {
                     $this->error('Password doesn\'t match. Please try again.');
                     $matches = false;
                 }
-            }
-            while(!$matches);
+            } while (! $matches);
 
             $email = $this->ask('E-mail address');
             $name = $this->ask('First/Last Name');
 
-            do
-            {
-                try
-                {
+            do {
+                try {
                     $uuid = UUID::toUUID($this->ask('Minecraft username (Must be a valid Premium account)'));
-                }
-                catch (\InvalidArgumentException $e)
-                {
+                } catch (\InvalidArgumentException $e) {
                     $this->error($e->getMessage());
                     $hasError = true;
                 }
 
-                if (isset($hasError))
-                {
+                if (isset($hasError)) {
                     $continue = true;
-                }
-                else
-                {
+                } else {
                     $continue = false;
                 }
                 unset($hasError);
-            }
-            while($continue);
-
+            } while ($continue);
 
             $this->info('Please check if these details are correct: ');
-            $this->info('Username: ' . $username);
-            $this->info('Email: ' . $email);
-            $this->info('Name: ' . $name);
-
-        }
-        while(!$this->confirm('Create user now? You can go back to correct any details.'));
-
+            $this->info('Username: '.$username);
+            $this->info('Email: '.$email);
+            $this->info('Name: '.$name);
+        } while (! $this->confirm('Create user now? You can go back to correct any details.'));
 
         $user = User::create([
             'uuid' => $uuid,
@@ -114,11 +115,10 @@ class CreateUser extends Command
             'email' => $email,
             'username' => $username,
             'originalIP' => '127.0.0.1',
-            'password' => $password
+            'password' => $password,
         ]);
 
-        if ($user)
-        {
+        if ($user) {
             $user->assignRole('admin', 'reviewer', 'user', 'hiringManager');
             Profile::create([
                 'profileShortBio' => 'Random data '.rand(0, 1000),
@@ -128,13 +128,12 @@ class CreateUser extends Command
                 'userID' => $user->id,
             ]);
 
-            $this->info('Account created! You may now login at ' . route('login') . '. Enjoy the app!');
+            $this->info('Account created! You may now login at '.route('login').'. Enjoy the app!');
 
             return 0;
-        }
-        else
-        {
+        } else {
             $this->error('There was an unknown problem creating the user. There might have been errors above. Please try again.');
+
             return 1;
         }
     }
