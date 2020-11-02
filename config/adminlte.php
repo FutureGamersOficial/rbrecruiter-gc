@@ -609,21 +609,5 @@ return [
                 ],
 
             ],
-        [
-            'name' => 'DropzoneJS',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '/js/plugins/dropzone.min.js'
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location' => '/css/dropzone.min.css'
-                ]
-            ]
-        ]
     ],
 ];

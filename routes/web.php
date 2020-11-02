@@ -88,14 +88,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             ->name('processInvite');
 
 
+
         Route::get('team/files', [TeamFileController::class, 'index'])
             ->name('showTeamFiles');
 
         Route::post('team/files/upload', [TeamFileController::class, 'store'])
             ->name('uploadTeamFile');
 
+        Route::delete('team/files/{teamFile}/delete', [TeamFileController::class, 'destroy'])
+            ->name('deleteTeamFile');
+
         Route::get('team/files/{teamFile}/download', [TeamFileController::class, 'download'])
             ->name('downloadTeamFile');
+
 
 
         Route::group(['prefix' => '/applications'], function () {

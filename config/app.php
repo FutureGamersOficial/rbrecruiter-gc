@@ -46,6 +46,23 @@ return [
     */
     'sitehomepage' => env('APP_SITEHOMEPAGE', 'https://google.com'),
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SSL for non-production environments
+    |--------------------------------------------------------------------------
+    |
+    | If you're a developer, and need to use SSL locally for testing,
+    | enable this setting.
+    | It forces Laravel to load all assets via HTTPS, even when the environment is
+    | set to "local". This setting is useless in production because it's already enforced.
+    | If you don't enable this when using SSL locally, the pages won't load properly.
+    | If you're a regular user, don't touch this setting.
+    |
+    */
+    'force_secure' => env('NONPROD_FORCE_SECURE', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -212,6 +229,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         \App\Providers\MojangStatusProvider::class,
         \App\Providers\OptionsProvider::class,
+        App\Providers\DigitalStorageProvider::class,
 
     ],
 

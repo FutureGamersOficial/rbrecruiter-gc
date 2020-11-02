@@ -61,6 +61,11 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Application::observe(ApplicationObserver::class);
 
-        $this->app['request']->server->set('HTTPS', $this->app->environment() != 'local');
+
+        $https = ($this->app->environment() != 'local');
+        if(config('app.force_secure') && $this->app->environment() != 'production')
+            $https = true;
+
+        $this->app['request']->server->set('HTTPS', $https);
     }
 }

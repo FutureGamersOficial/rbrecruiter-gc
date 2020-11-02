@@ -15,10 +15,30 @@
 
     <x-modal id="upload-dropzone" modal-label="upload-dropzone-modal" modal-title="Upload Files" include-close-button="true">
 
-        <form class="dropzone" id="teamFile" action="{{route('uploadTeamFile')}}"></form>
+        <form action="{{route('uploadTeamFile')}}" enctype="multipart/form-data" method="POST" id="newFile">
+            @csrf
+            <div class="form-group">
+
+                <label for="caption">Caption</label>
+                <input id="caption" type="text" class="form-control" name="caption" required>
+
+                <label for="description">File description (optional)</label>
+                <textarea rows="5" name="description" id="description" class="form-control"></textarea>
+
+            </div>
+
+
+            <label class="btn btn-primary" for="file-selector">
+                <input id="file-selector" name="file" type="file" style="display:none"
+                       onchange="$('#upload-file-info').html(this.files[0].name)">
+                Choose File (max {{ini_get('post_max_size')}})
+            </label>
+            <span class='label label-info' id="upload-file-info"></span>
+
+        </form>
 
         <x-slot name="modalFooter">
-
+            <button onclick="$('#newFile').submit()" type="button" class="btn btn-warning" rel="buttonTxtTooltip" title="Upload chosen file" data-placement="top"><i class="fas fa-upload"></i></button>
         </x-slot>
     </x-modal>
 
@@ -68,12 +88,16 @@
                                     <td>{{$file->id}}</td>
                                     <td>{{ Str::of($file->name)->limit(10, '(..).' . $file->extension) }}</td>
                                     <td>{{ Str::of($file->caption)->limit(10) }}</td>
-                                    <td>{{ $file->size }} bytes</td>
+                                    <td>{{ $file->size }}</td>
                                     <td>{{ $file->updated_at }}</td>
                                     <td>
-                                        <button rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="Download" type="button" class="btn btn-success btn-sm ml-3" onclick="window.location='{{route('downloadTeamFile', ['teamFile' => $file->id])}}'"><i class="fas fa-download"></i></button>
-                                        <button rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="View" type="button" class="btn btn-success btn-sm ml-3"><i class="fas fa-eye"></i></button>
-                                        <button rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="Delete File" type="button" class="btn btn-danger btn-sm ml-3"><i class="fas fa-trash"></i></button>
+                                        <button rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="Download" type="button" class="btn btn-success btn-sm ml-2" onclick="window.location='{{route('downloadTeamFile', ['teamFile' => $file->id])}}'"><i class="fas fa-download"></i></button>
+                                        <button rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="View" type="button" class="btn btn-success btn-sm ml-2"><i class="fas fa-eye"></i></button>
+                                        <form style="white-space: nowrap; display: inline-block" action="{{route('deleteTeamFile', ['teamFile' => $file->id])}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="Deleting a file is irreversible!" class="btn btn-danger btn-sm ml-2"><i class="fas fa-trash"></i></button>
+                                        </form>
                                     </td>
                                 </tr>
 
