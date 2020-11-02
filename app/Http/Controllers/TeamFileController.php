@@ -85,7 +85,7 @@ class TeamFileController extends Controller
     {
         try
         {
-            return Storage::download($teamFile->fs_location, $teamFile->name);
+            return Storage::download('uploads/' . $teamFile->fs_location, $teamFile->name);
         }
         catch (FileNotFoundException $ex)
         {
@@ -130,7 +130,7 @@ class TeamFileController extends Controller
 
         try
         {
-            Storage::delete($teamFile->fs_location);
+            Storage::delete('uploads/' . $teamFile->fs_location);
             $teamFile->delete();
 
             $request->session()->flash('success', 'File deleted successfully.');
