@@ -129,14 +129,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('/staff/all', [ApplicationController::class, 'showAllApps'])
                 ->name('allApplications');
 
-            Route::get('/staff/outstanding', [ApplicationController::class, 'showAllPendingApps'])
-                ->name('staffPendingApps');
-
-            Route::get('/staff/peer-review', [ApplicationController::class, 'showPeerReview'])
-                ->name('peerReview');
-
-            Route::get('/staff/pending-interview', [ApplicationController::class, 'showPendingInterview'])
-                ->name('pendingInterview');
 
             Route::post('{application}/staff/vote', [VoteController::class, 'vote'])
                 ->name('voteApplication');

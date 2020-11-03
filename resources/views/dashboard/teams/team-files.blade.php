@@ -120,7 +120,8 @@
                 </div>
 
                 <div class="card-footer text-center">
-                    <button type="button" class="btn btn-warning" onclick="$('#upload-dropzone').modal('show')"><i class="fas fa-upload"></i> Upload Files</button>
+                    <button type="button" class="btn btn-warning ml-3" onclick="$('#upload-dropzone').modal('show')"><i class="fas fa-upload"></i> Upload Files</button>
+                    <button type="button" class="btn btn-success ml-3" onclick="window.location.href='{{route('teams.index')}}'"><i class="fas fa-arrow-circle-left"></i> Back</button>
                     {{ $files->links() }}
                 </div>
 

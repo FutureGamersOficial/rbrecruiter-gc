@@ -279,22 +279,29 @@ return [
             'can' => 'applications.view.all',
         ],
         [
-            'text' => 'm_outstanding_apps',
-            'url' => '/applications/staff/outstanding',
-            'icon' => 'far fa-folder-open',
-            'can' => 'applications.view.all',
-        ],
-        [
-            'text' => 'm_interview_queue',
-            'url' => '/applications/staff/pending-interview',
-            'icon' => 'fas fa-fw fa-microphone-alt',
-            'can' => 'applications.view.all',
-        ],
-        [
-            'text' => 'm_peer_approval',
-            'url' => '/applications/staff/peer-review',
-            'icon' => 'fas fa-fw fa-search',
-            'can' => 'applications.view.all',
+            'text' => 'Teams',
+            'icon' => 'fas fa-user-friends',
+            'url' => 'teams',
+            'can' => 'teams.view',
+            'submenu' => [
+                [
+                    'text' => 'Dashboard',
+                    'icon' => 'fas fa-chart-line',
+                    'url' => 'teams/dashboard',
+                    'can' => 'teams.view'
+                ],
+                [
+                    'text' => 'Files',
+                    'icon' => 'fas fa-file-alt',
+                    'url' => 'team/files',
+                    'can' => 'teams.view'
+                ],
+                [
+                    'text' => 'Calendar',
+                    'icon' => 'far fa-calendar-alt',
+                    'url' => 'teams/calendar'
+                ]
+            ]
         ],
         [
             'header' => 'h_admin',
@@ -317,12 +324,6 @@ return [
             'icon' => 'fas fa-fw fa-user-friends',
             'url' => '/hr/players',
             'can' => 'admin.userlist',
-        ],
-        [
-            'text' => 'm_teams',
-            'icon' => 'fas fa-user-friends',
-            'url' => 'teams',
-            'can' => 'teams.view',
         ],
         [
             'text' => 'sm_hiring_man',

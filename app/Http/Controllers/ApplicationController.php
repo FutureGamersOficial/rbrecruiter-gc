@@ -85,56 +85,6 @@ class ApplicationController extends Controller
           ->with('applications', Application::paginate(6));
     }
 
-    public function showAllPendingApps()
-    {
-        $this->authorize('viewAny', Application::class);
-
-        return view('dashboard.appmanagement.outstandingapps')
-            ->with('applications', Application::where('applicationStatus', 'STAGE_SUBMITTED')->get());
-    }
-
-    public function showPendingInterview()
-    {
-        $this->authorize('viewAny', Application::class);
-        $applications = Application::with('appointment', 'user')->get();
-        $count = 0;
-
-        $pendingInterviews = collect([]);
-        $upcomingInterviews = collect([]);
-
-        foreach ($applications as $application) {
-            if (! is_null($application->appointment) && $application->appointment->appointmentStatus == 'CONCLUDED') {
-                $count = +1;
-            }
-
-            switch ($application->applicationStatus) {
-                case 'STAGE_INTERVIEW':
-                    $upcomingInterviews->push($application);
-
-                    break;
-
-                case 'STAGE_INTERVIEW_SCHEDULED':
-                    $pendingInterviews->push($application);
-
-                    break;
-            }
-        }
-
-        return view('dashboard.appmanagement.interview')
-            ->with([
-                'finishedCount' => $count,
-                'applications' => $pendingInterviews,
-                'upcomingApplications' => $upcomingInterviews,
-            ]);
-    }
-
-    public function showPeerReview()
-    {
-        $this->authorize('viewAny', Application::class);
-
-        return view('dashboard.appmanagement.peerreview')
-            ->with('applications', Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get());
-    }
 
     public function renderApplicationForm(Request $request, $vacancySlug)
     {
