@@ -68,17 +68,7 @@ class TeamSeeder extends Seeder
             'name' => 'teams.admin.applications.changeteam',
         ]);
         Permission::create([
-            'name' => 'teams.members.appointment.schedule',
-        ]);
-        Permission::create([
-            'name' => 'teams.members.appointment.deleteappointment',
-        ]);
-        Permission::create([
             'name' => 'teams.members.groupchat',
-        ]);
-
-        Permission::create([
-            'name' => 'chat.use',
         ]);
     }
 }

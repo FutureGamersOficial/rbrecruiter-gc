@@ -285,9 +285,9 @@ return [
             'can' => 'teams.view',
             'submenu' => [
                 [
-                    'text' => 'Dashboard',
-                    'icon' => 'fas fa-chart-line',
-                    'url' => 'teams/dashboard',
+                    'text' => 'Available Teams',
+                    'icon' => 'fas fa-clipboard',
+                    'url' => 'teams',
                     'can' => 'teams.view'
                 ],
                 [
