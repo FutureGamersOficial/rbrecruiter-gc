@@ -154,7 +154,6 @@
               <div class="icon">
                 <i class="fas fa-plus"></i>
               </div>
-              <a href="{{ route('staffPendingApps') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -169,7 +168,6 @@
               <div class="icon">
                 <i class="fas fa-vote-yea"></i>
               </div>
-              <a href="{{ route('peerReview') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

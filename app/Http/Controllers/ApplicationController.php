@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
-    private function canVote($votes)
+    private function canVote($votes): bool
     {
         $allvotes = collect([]);
 
