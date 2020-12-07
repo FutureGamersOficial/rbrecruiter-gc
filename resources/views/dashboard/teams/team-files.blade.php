@@ -92,7 +92,6 @@
                                     <td>{{ $file->updated_at }}</td>
                                     <td>
                                         <button rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="Download" type="button" class="btn btn-success btn-sm ml-2" onclick="window.location='{{route('downloadTeamFile', ['teamFile' => $file->id])}}'"><i class="fas fa-download"></i></button>
-                                        <button rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="View" type="button" class="btn btn-success btn-sm ml-2"><i class="fas fa-eye"></i></button>
                                         <form style="white-space: nowrap; display: inline-block" action="{{route('deleteTeamFile', ['teamFile' => $file->id])}}" method="post">
                                             @csrf
                                             @method('DELETE')

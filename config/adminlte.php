@@ -296,11 +296,6 @@ return [
                     'url' => 'team/files',
                     'can' => 'teams.view'
                 ],
-                [
-                    'text' => 'Calendar',
-                    'icon' => 'far fa-calendar-alt',
-                    'url' => 'teams/calendar'
-                ]
             ]
         ],
         [
