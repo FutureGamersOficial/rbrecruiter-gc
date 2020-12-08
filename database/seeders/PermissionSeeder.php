@@ -36,7 +36,7 @@ class PermissionSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        //
+
         $user = Role::create(
             [
                 'name' => 'user',
@@ -61,34 +61,40 @@ class PermissionSeeder extends Seeder
 
         // Spatie wildcard permissions (same concept of MC permissions)
 
-        Permission::create(['name' => 'applications.submit']);
-        Permission::create(['name' => 'applications.stages.deny']);
-        Permission::create(['name' => 'applications.stages.approve']);
-        Permission::create(['name' => 'applications.view.all']);
-        Permission::create(['name' => 'applications.view.own']);
-        Permission::create(['name' => 'applications.vote']);
-        Permission::create(['name' => 'appointments.schedule']);
-        Permission::create(['name' => 'appointments.schedule.edit']);
-        Permission::create(['name' => 'appointments.schedule.cancel']);
-        Permission::create(['name' => 'applications.*']);
-        Permission::create(['name' => 'appointments.*']);
+        $permissions = [
+            'applications.submit',
+            'applications.stages.deny',
+            'applications.stages.approve',
+            'applications.view.all',
+            'applications.view.own',
+            'applications.vote',
+            'appointments.schedule',
+            'appointments.schedule.edit',
+            'appointments.schedule.cancel',
+            'applications.*',
+            'appointments.*',
 
-        Permission::create(['name' => 'profiles.view.others']);
-        Permission::create(['name' => 'profiles.edit.others']);
+            'profiles.view.others',
+            'profiles.edit.others',
 
-        Permission::create(['name' => 'admin.userlist']);
-        Permission::create(['name' => 'admin.stafflist']);
-        Permission::create(['name' => 'admin.hiring.forms']);
-        Permission::create(['name' => 'admin.hiring.formbuilder']);
-        Permission::create(['name' => 'admin.hiring.vacancy']);
-        Permission::create(['name' => 'admin.hiring.vacancy.edit,delete']);
-        Permission::create(['name' => 'admin.notificationsettings']);
-        Permission::create(['name' => 'admin.notificationsettings.edit']);
-        Permission::create(['name' => 'admin.hiring.*']);
-        Permission::create(['name' => 'admin.notificationsettings.*']);
-        Permission::create(['name' => 'admin.maintenance.logs.view']);
+            'admin.userlist',
+            'admin.stafflist',
+            'admin.hiring.forms',
+            'admin.hiring.formbuilder',
+            'admin.hiring.vacancy',
+            'admin.hiring.vacancy.edit,delete',
+            'admin.notificationsettings',
+            'admin.notificationsettings.edit',
+            'admin.hiring.*',
+            'admin.notificationsettings.*',
+            'admin.maintenance.logs.view',
+            'admin.developertools.use',
+        ];
 
-        Permission::create(['name' => 'admin.developertools.use']);
+        foreach ($permissions as $permission)
+        {
+            Permission::create(['name' => $permission]);
+        }
 
         $user->givePermissionTo([
             'applications.submit',

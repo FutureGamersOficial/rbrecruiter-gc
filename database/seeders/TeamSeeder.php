@@ -23,6 +23,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class TeamSeeder extends Seeder
 {
@@ -33,42 +34,43 @@ class TeamSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create([
-            'name' => 'teams.user.view.own',
-        ]);
+       $teamUserPermissions = [
 
-        Permission::create([
-            'name' => 'teams.admin.view.all',
-        ]);
+           'teams.files.view',
+           'teams.files.upload',
+           'teams.files.download',
+           'teams.files.delete',
+       ];
 
-        // Has access to the teams feature
-        Permission::create([
-            'name' => 'teams.view',
-        ]);
+       // Some of these perms also check whether the user is a member or owner to determine access to resources.
+       $teamPermissions = [
 
-        Permission::create([
-            'name' => 'teams.admin.create',
-        ]);
-        Permission::create([
-            'name' => 'teams.admin.delete',
-        ]);
-        Permission::create([
-            'name' => 'teams.user.join',
-        ]);
-        Permission::create([
-            'name' => 'teams.user.leave',
-        ]);
-        Permission::create([
-            'name' => 'teams.admin.vacancies.assign',
-        ]);
-        Permission::create([
-            'name' => 'teams.admin.vacancies.unassign',
-        ]);
-        Permission::create([
-            'name' => 'teams.admin.applications.changeteam',
-        ]);
-        Permission::create([
-            'name' => 'teams.members.groupchat',
-        ]);
+           'teams.view',
+           'teams.create',
+           'teams.update',
+           'teams.invite'
+       ];
+
+        $admin = Role::where('name', 'admin')->first();
+        $reviewer = Role::where('name', 'reviewer')->first();
+
+       foreach($teamPermissions as $permission)
+       {
+           foreach ($teamUserPermissions as $userPermission)
+           {
+               Permission::create(['name' => $permission]);
+               Permission::create(['name' => $userPermission]);
+
+           }
+       }
+
+        $admin->givePermissionTo($teamPermissions);
+        $reviewer->givePermissionTo($teamUserPermissions);
+
+
+
+
+
+
     }
 }
