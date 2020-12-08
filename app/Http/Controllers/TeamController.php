@@ -44,20 +44,12 @@ class TeamController extends Controller
      */
     public function index()
     {
+        $this->authorize('index');
+
         $teams = Team::with('users.roles')->get();
 
         return view('dashboard.teams.teams')
             ->with('teams', $teams);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -68,6 +60,8 @@ class TeamController extends Controller
      */
     public function store(NewTeamRequest $request)
     {
+        $this->authorize('create');
+
         $team = Team::create([
             'name' => $request->teamName,
             'owner_id' => Auth::user()->id,
@@ -81,17 +75,6 @@ class TeamController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -99,6 +82,8 @@ class TeamController extends Controller
      */
     public function edit(Team $team)
     {
+        $this->authorize('update', $team);
+
         return view('dashboard.teams.edit-team')
               ->with('team', $team)
               ->with('users', User::all())
@@ -114,6 +99,9 @@ class TeamController extends Controller
      */
     public function update(EditTeamRequest $request, Team $team)
     {
+        $this->authorize('update', $team);
+
+
         $team->description = $request->teamDescription;
         $team->openJoin = $request->joinType;
 
@@ -137,6 +125,8 @@ class TeamController extends Controller
 
     public function invite(SendInviteRequest $request, Team $team)
     {
+        $this->authorize('invite', $team);
+
         $user = User::findOrFail($request->user);
 
         if (! $team->openJoin) {
@@ -196,6 +186,8 @@ class TeamController extends Controller
 
     public function switchTeam(Request $request, Team $team)
     {
+        $this->authorize('switchTeam', $team);
+
         try {
             Auth::user()->switchTeam($team);
 
@@ -210,6 +202,8 @@ class TeamController extends Controller
     // Since it's a separate form, we shouldn't use the same update method
     public function assignVacancies(Request $request, Team $team)
     {
+        $this->authorize('update', $team);
+
         // P.S. To future developers
         // This method gave me a lot of trouble lol. It's hard to write code when you're half asleep.
         // There may be an n+1 query in the view and I don't think there's a way to avoid that without writing a lot of extra code.

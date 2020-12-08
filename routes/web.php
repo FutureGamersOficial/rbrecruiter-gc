@@ -35,6 +35,7 @@ use App\Http\Controllers\TeamFileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VacancyController;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\OptionsController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 

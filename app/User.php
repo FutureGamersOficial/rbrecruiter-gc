@@ -109,6 +109,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return ! is_null($this->twofa_secret);
     }
 
+    public function hasTeam($team): bool
+    {
+        if ($team instanceof Team || is_int($team))
+        {
+            return $this->teams->contains($team);
+        }
+        else
+        {
+            /**
+             * In PHP 8, we can just use union types and let PHP enforce this for us.
+             */
+            throw new \InvalidArgumentException('Please pass either a Team object or an integer identifying a Team.');
+        }
+    }
+
     public function routeNotificationForSlack($notification)
     {
         return config('slack.webhook.integrationURL');

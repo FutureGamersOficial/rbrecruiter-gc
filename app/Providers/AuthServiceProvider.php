@@ -30,9 +30,11 @@ use App\Policies\AppointmentPolicy;
 use App\Policies\BanPolicy;
 use App\Policies\FormPolicy;
 use App\Policies\ProfilePolicy;
+use App\Policies\TeamPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\VacancyPolicy;
 use App\Policies\VotePolicy;
+use App\Team;
 use App\User;
 use App\Vacancy;
 use App\Vote;
@@ -56,6 +58,7 @@ class AuthServiceProvider extends ServiceProvider
         Vote::class => VotePolicy::class,
         Ban::class => BanPolicy::class,
         Appointment::class => AppointmentPolicy::class,
+        Team::class => TeamPolicy::class
     ];
 
     /**
