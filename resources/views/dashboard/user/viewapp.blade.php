@@ -348,7 +348,7 @@
 
                     <div class="col text-center">
 
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('staffPendingApps')}}'">{{__('messages.view_app.view_more')}}</button>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('allApplications')}}'">{{__('messages.view_app.view_more')}}</button>
 
                     </div>
 

@@ -39,9 +39,11 @@ class Options
             }
             Cache::put($option, $value);
             Cache::put($option.'_desc', 'Undefined description');
+
+            return $value->option_value;
         }
 
-        return $value->option_value;
+        return $value;
     }
 
     public function setOption(string $option, string $value, string $description)
