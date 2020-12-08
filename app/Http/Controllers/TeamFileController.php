@@ -32,6 +32,8 @@ class TeamFileController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('index');
+
         if (is_null(Auth::user()->currentTeam))
         {
             $request->session()->flash('error', 'Please choose a team before viewing it\'s files.');
@@ -51,6 +53,8 @@ class TeamFileController extends Controller
      */
     public function store(UploadFileRequest $request)
     {
+        $this->authorize('store');
+
         $upload = $request->file('file');
 
         $file = $upload->store('uploads');
@@ -83,6 +87,8 @@ class TeamFileController extends Controller
 
     public function download(Request $request, TeamFile $teamFile)
     {
+        $this->authorize('download');
+
         try
         {
             return Storage::download($teamFile->fs_location, $teamFile->name);
@@ -127,6 +133,7 @@ class TeamFileController extends Controller
      */
     public function destroy(Request $request, TeamFile $teamFile)
     {
+        $this->authorize('delete');
 
         try
         {
