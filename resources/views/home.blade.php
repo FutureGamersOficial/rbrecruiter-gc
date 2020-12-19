@@ -81,7 +81,7 @@
                                   @auth
                                       <button {{($isEligibleForApplication) ? '' : 'disabled'}} type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('messages.txt_apply')}}</button>
                                       @if(!$isEligibleForApplication)
-                                          <span class="badge-warning badge"><i class="fa fa-info"></i> {{__('messages.ineligible_days_remaining', ['days' => $elegibilityDaysRemaining])}}</span>
+                                          <span class="badge-warning badge"><i class="fa fa-info"></i> {{__('messages.ineligible_days_remaining', ['days' => $eligibilityDaysRemaining])}}</span>
                                       @endif
                                   @endauth
 
