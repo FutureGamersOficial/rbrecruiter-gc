@@ -23,8 +23,8 @@ return [
 
     'sender' => [
 
-        'address' => 'teams@spacejewel-hosting.com',
-        'name' => 'RaspberryNet Teams',
+        'address' => env('MAIL_FROM_ADDRESS'),
+        'name' => env('MAIL_FROM_NAME'),
 
     ],
 
