@@ -61,9 +61,7 @@ class Install extends Command
         if (Storage::disk('local')->missing('INSTALLED')) {
             $this->info('[!! Welcome to Rasberry Teams !!]');
             $this->info('>> Installing...');
-            $this->call('down', [
-                '--message' => 'Down for maintenance. We\'ll be right back!',
-            ]);
+            $this->call('down');
 
             copy($basePath.'/.env.example', $basePath.'/.env');
             $this->call('key:generate');
