@@ -99,7 +99,7 @@ class Install extends Command
                $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen)');
                $settings['MAIL_PORT'] = $this->ask('SMTP Server Port');
                $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname');
-               $settings['MAIL_FROM'] = $this->ask('E-mail address to send from: ');
+               $settings['MAIL_FROM_ADDRESS'] = $this->ask('E-mail address to send from');
 
                $this->info('== Notification Settings (5/6) (Slack) ==');
                $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL');
