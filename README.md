@@ -44,7 +44,7 @@ Many other features are currently planned for this app, such as:
 Tech stack:
  - [Laravel 7](https://laravel.com/)
  - [Eloquent ORM](https://laravel.com/docs/5.0/eloquent)
- - [AdminLTE / Bootstrap 4](https://adminlte.io/)
+ - [AdminLTE](https://adminlte.io/) / [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
  - [jQuery](https://jquery.com/) / [Plain Javascript](https://www.javascript.com/)
  - [vueJS](https://vuejs.org/) (in the future)
  
