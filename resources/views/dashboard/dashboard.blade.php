@@ -124,7 +124,8 @@
               @if (Auth::user()->hasRole('admin'))
 
                 <a href="{{ route('registeredPlayerList') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
-
+              @else
+              <a class="small-box-footer"><i class="fas"></i></a>
               @endif
             </div>
           </div>
@@ -140,6 +141,12 @@
               <div class="icon">
                 <i class="fas fa-user-slash"></i>
               </div>
+              @if (Auth::user()->hasRole('admin'))
+
+                <a href="{{ route('allApplications') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+              @else
+              <a class="small-box-footer"><i class="fas"></i></a>
+              @endif
             </div>
           </div>
           <!-- ./col -->
@@ -154,6 +161,12 @@
               <div class="icon">
                 <i class="fas fa-plus"></i>
               </div>
+              @if (Auth::user()->hasRole('admin'))
+
+                <a href="{{ route('allApplications') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+              @else
+              <a class="small-box-footer"><i class="fas"></i></a>
+              @endif
             </div>
           </div>
           <!-- ./col -->
@@ -168,6 +181,7 @@
               <div class="icon">
                 <i class="fas fa-vote-yea"></i>
               </div>
+              <a class="small-box-footer"><i class="fas"></i></a>
             </div>
           </div>
           <!-- ./col -->
