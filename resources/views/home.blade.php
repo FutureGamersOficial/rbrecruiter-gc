@@ -143,7 +143,7 @@
 
           <div class="row mt-5 mb-5">
 
-              <div id="carouselControls" class="carousel slide" data-ride="carousel">
+              <div id="carouselControls" class="carousel slide w-100" data-ride="carousel">
                   <div class="carousel-inner">
                       <div class="carousel-item active">
                           <img class="d-block w-100" src="/slides/01.png"
