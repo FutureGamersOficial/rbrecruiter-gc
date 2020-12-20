@@ -6,7 +6,7 @@
         <a href="{{ env('APP_URL') }}"> {{ env('APP_NAME') }} &copy; 2019-{{ now()->year }} - {{__('messages.footer_copy')}}</a>
     </div>
     <!-- Copyright -->
-    <!-- Built by Miguel Nogueira -->
+    <!-- GNU General Public License (https://www.gnu.org/licenses/gpl-3.0.en.html) Built by Miguel Nogueira -->
 
 </footer>
 <!-- Footer -->
