@@ -6,8 +6,8 @@
 
       <li class="d-inline-block">
 
-          <a class="mr-3" href="https://github.com/spacejewel-hosting/staffmanagement"><i class="fab fa-github"></i> Github</a>
-          <a class="mr-3" href="https://github.com/spacejewel-hosting/staffmanagement/issues"><i class="fas fa-bug"></i> Issue Tracker</a>
+          <a class="mr-3" href="https://code.spacejewel-hosting.com/spacejewelhosting/staffmanager"><i class="fas fa-code-branch"></i> Gitea</a>
+          <a class="mr-3" href="https://code.spacejewel-hosting.com/spacejewelhosting/staffmanager/issues"><i class="fas fa-bug"></i> Issue Tracker</a>
 
       </li>
 

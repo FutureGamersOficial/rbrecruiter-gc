@@ -1,5 +1,5 @@
 
-# Raspberry Teams - The Simple Staff Application Manager v 0.6.2 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager)  [![StyleCI](https://bitbucket.styleci.io/repos/2513833655827911319/shield?branch=develop)](https://bitbucket.styleci.io/repos/2513833655827911319?branch=develop)
+# Raspberry Teams - The Simple Staff Application Manager v 0.6.2 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager)
 ## The quick and pain-free staff application manager
 
 Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
@@ -43,10 +43,10 @@ Many other features are currently planned for this app, such as:
 
 Tech stack:
  - [Laravel 7](https://laravel.com/)
- - Eloquent ORM
- - AdminLTE / Bootstrap 4
- - jQuery / Plain Javascript
- - vueJS (in the future)
+ - [Eloquent ORM](https://laravel.com/docs/5.0/eloquent)
+ - [AdminLTE](https://adminlte.io/) / [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
+ - [jQuery](https://jquery.com/) / [Plain Javascript](https://www.javascript.com/)
+ - [vueJS](https://vuejs.org/) (in the future)
  
  # Stability
  
