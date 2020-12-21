@@ -48,6 +48,20 @@ return [
 
 
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This value is the application's version.
+    | It's used for informational purposes, and it'll be used for an auto-update system
+    | in the near future.
+    | Should always be the latest minor release.
+    |
+    */
+    'release' => env('RELEASE', '(unknown)'),
+
     /*
     |--------------------------------------------------------------------------
     | SSL for non-production environments
