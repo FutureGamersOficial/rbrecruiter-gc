@@ -32,7 +32,7 @@ class TeamFileController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('index');
+        $this->authorize('index', TeamFile::class);
 
         if (is_null(Auth::user()->currentTeam))
         {
@@ -53,7 +53,7 @@ class TeamFileController extends Controller
      */
     public function store(UploadFileRequest $request)
     {
-        $this->authorize('store');
+        $this->authorize('store', TeamFile::class);
 
         $upload = $request->file('file');
 
@@ -87,7 +87,7 @@ class TeamFileController extends Controller
 
     public function download(Request $request, TeamFile $teamFile)
     {
-        $this->authorize('download');
+        $this->authorize('download', TeamFile::class);
 
         try
         {
@@ -133,7 +133,7 @@ class TeamFileController extends Controller
      */
     public function destroy(Request $request, TeamFile $teamFile)
     {
-        $this->authorize('delete');
+        $this->authorize('delete', $teamFile);
 
         try
         {

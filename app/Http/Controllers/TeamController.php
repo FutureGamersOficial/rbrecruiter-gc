@@ -40,11 +40,11 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        $this->authorize('index');
+        $this->authorize('index', Team::class);
 
         $teams = Team::with('users.roles')->get();
 
@@ -55,12 +55,13 @@ class TeamController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param NewTeamRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(NewTeamRequest $request)
     {
-        $this->authorize('create');
+        $this->authorize('create', Team::class);
 
         $team = Team::create([
             'name' => $request->teamName,
@@ -77,27 +78,30 @@ class TeamController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Team $team
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Team $team)
     {
         $this->authorize('update', $team);
-
         return view('dashboard.teams.edit-team')
-              ->with('team', $team)
-              ->with('users', User::all())
-              ->with('vacancies', Vacancy::with('teams')->get()->all());
+            ->with([
+               'team' => $team,
+               'users' => User::all(),
+               'vacancies' =>  Vacancy::with('teams')->get()->all()
+            ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param EditTeamRequest $request
+     * @param Team $team
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(EditTeamRequest $request, Team $team)
+    public function update(EditTeamRequest $request, Team $team): \Illuminate\Http\Response
     {
         $this->authorize('update', $team);
 
@@ -120,10 +124,10 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // wip
     }
 
-    public function invite(SendInviteRequest $request, Team $team)
+    public function invite(SendInviteRequest $request, Team $team): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('invite', $team);
 
@@ -146,7 +150,7 @@ class TeamController extends Controller
         return redirect()->back();
     }
 
-    public function processInviteAction(Request $request, $action, $token)
+    public function processInviteAction(Request $request, $action, $token): \Illuminate\Http\RedirectResponse
     {
         switch ($action) {
             case 'accept':
@@ -184,7 +188,7 @@ class TeamController extends Controller
         return redirect()->to(route('teams.index'));
     }
 
-    public function switchTeam(Request $request, Team $team)
+    public function switchTeam(Request $request, Team $team): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('switchTeam', $team);
 
@@ -200,7 +204,7 @@ class TeamController extends Controller
     }
 
     // Since it's a separate form, we shouldn't use the same update method
-    public function assignVacancies(Request $request, Team $team)
+    public function assignVacancies(Request $request, Team $team): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('update', $team);
 
