@@ -22,11 +22,13 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class TeamSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -54,22 +56,28 @@ class TeamSeeder extends Seeder
         $admin = Role::where('name', 'admin')->first();
         $reviewer = Role::where('name', 'reviewer')->first();
 
-       foreach($teamPermissions as $permission)
+        foreach($teamPermissions as $permission)
        {
            foreach ($teamUserPermissions as $userPermission)
            {
-               Permission::create(['name' => $permission]);
-               Permission::create(['name' => $userPermission]);
+               $permCheck = Permission::where('name', $permission)->get()->all();
 
+               if (empty($permCheck))
+               {
+                   Permission::create(['name' => $permission]);
+               }
+
+               $userPermCheck = Permission::where('name', $userPermission)->get()->all();
+
+               if (empty($userPermCheck))
+               {
+                   Permission::create(['name' => $userPermission]);
+               }
            }
        }
 
         $admin->givePermissionTo($teamPermissions);
         $reviewer->givePermissionTo($teamUserPermissions);
-
-
-
-
 
 
     }
