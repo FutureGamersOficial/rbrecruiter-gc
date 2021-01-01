@@ -42,5 +42,16 @@ class DefaultOptionsSeeder extends Seeder
 
         Options::setOption('enable_slack_notifications', true, 'Enable slack notifications');
         Options::setOption('enable_email_notifications', true, 'Enable e-mail notifications');
+
+        // added in 0.6.2
+        Options::setOption('pw_security_policy', 'low', 'Describes the current password security policy.');
+        Options::setOption('graceperiod', 7, '2FA Grace Period');
+        Options::setOption('password_expiry', 'disabled', 'Defines wether passwords must be reset after $value');
+        Options::setOption('force2fa', false, 'Defines whether 2fa is forced upon users');
+        Options::setOption('force2faRole', 'reviewer', 'Defines which role to force 2fa for');
+        Options::setOption('requireGameLicense', true, 'Defines whether people need to validate their game license');
+
+        Options::setOption('currentGame', 'MINECRAFT', 'Defines what game we\'re working with');
+
     }
 }

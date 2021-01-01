@@ -33,6 +33,11 @@ class Application extends Model
 
     ];
 
+    public function oneoffApplicant()
+    {
+        return $this->hasOne('App\OneoffApplicant', 'application_id', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'applicantUserID', 'id');
@@ -64,4 +69,12 @@ class Application extends Model
             'applicationStatus' => $status,
         ]);
     }
+
+
+    public function isOneoff()
+    {
+        return $this->user->id == 1; // ID 1 is always the ghost
+    }
+
+    
 }

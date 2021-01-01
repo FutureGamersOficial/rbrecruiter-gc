@@ -22,6 +22,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "jeroennoten/laravel-adminlte": "^3.2",
         "laravel/framework": "^8.0",
+        "laravel/sanctum": "^2.8",
         "laravel/slack-notification-channel": "^2.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
