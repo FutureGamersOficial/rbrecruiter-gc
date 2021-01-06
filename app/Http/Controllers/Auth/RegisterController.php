@@ -94,7 +94,7 @@ class RegisterController extends Controller
                 break;
                 
             case 'medium':
-                $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{10,}$/'];
+                $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{12,}$/'];
                 break;
 
             case 'high':

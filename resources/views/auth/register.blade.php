@@ -14,27 +14,41 @@
                 <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo">{{ config('adminlte.logo') }}
               </div> <!-- main content start -->
               <p class="login-card-description">{{__('messages.register_acc')}}</p>
-              <div class="alert alert-warning alert-dismissible">
-                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                  <p><b>{{__('messages.pwsec.line1')}}</b></p>
-                  <p>{{__('messages.pwsec.line2')}}</p>
+              
+              @if(\App\Facades\Options::getOption('pw_security_policy') !== 'off')
 
-                  <p>{{__('messages.pwsec.line3')}} </p>
-                  <ul>
-                    <li>
-                      {{__('messages.pwsec.line4')}}
-                    </li>
-                    <li>
-                      {{__('messages.pwsec.line5')}}
-                    </li>
-                    <li>
-                      {{__('messages.pwsec.line6')}}
-                    </li>
-                    <li>
-                      {{__('messages.pwsec.line7')}}
-                    </li>
-                  </ul>
-              </div>
+                  <div class="alert alert-warning alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p><b>{{__('messages.pwsec.line1')}}</b></p>
+                    <p>{{__('messages.pwsec.line2')}}</p>
+
+                    <p>{{__('messages.pwsec.line3')}} </p>
+                    <ul>
+                      @switch(\App\Facades\Options::getOption('pw_security_policy'))
+                        
+                        @case('low')
+                          <li>A minimum of 10 characters</li>
+                          @break
+
+                        @case('medium')
+                          <li>A minimum of 12 characters;</li>
+                          <li>At least one special character;</li>
+                          <li>Lower case and upper case characters</li>
+                          @break  
+
+                        @case('high')
+                          <li>A minimum of 20 characters;</li>
+                          <li>At least one special character;</li>
+                          <li>Lower case and upper case characters</li>
+                          <li>At least one numerical character</li>
+                          @break  
+
+                      @endswitch
+                    </ul>
+                  </div>
+
+              @endif
+
               <form action="{{ route('register') }}" method="POST" id="registerForm">
                   @csrf
                   <div class="form-group">
@@ -54,10 +68,14 @@
                     <input type="password" id="passwordc" name="password_confirmation" class="form-control" placeholder="{{__('messages.sronly_confirmpassword')}}" />
                   </div>
 
-                  <div class="form-group mt-5">
-                    <label for="mcusername" class="sr-only">{{__('messages.sronly_mcusername')}}</label>
-                    <input type="text" name="uuid" class="form-control" id="mcusername" placeholder="{{__('messages.sronly_mcusername')}}" />
-                  </div>
+                  
+                  @if(\App\Facades\Options::getOption('requireGameLicense') && \App\Facades\Options::getOption('currentGame') == 'MINECRAFT')
+                      <div class="form-group mt-5">
+                        <label for="mcusername" class="sr-only">{{__('messages.sronly_mcusername')}}</label>
+                        <input type="text" name="uuid" class="form-control" id="mcusername" placeholder="{{__('messages.sronly_mcusername')}}" />
+                      </div>
+                  @endif
+
                   <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="{{__('messages.register_txt')}}">
                 </form>
                 <p class="login-card-footer-text">{{__('messages.have_account')}} <a href="{{ route('login') }}" class="text-reset">{{__('messages.login_here')}}</a></p>

@@ -90,6 +90,26 @@
 
     </div>
 
+    @if($security['secPolicy'] == 'off')
+
+        <div class="row">
+
+            <div class="col">
+            
+                <div class="alert alert-danger">
+                
+                    <p><b><i class="fas fa-exclamation-triangle"></i> DANGER: </b> Insecure security policy</p>
+
+                    <p>Your current password security policy is set to <b>off</b>. This allows users to choose potentially unsafe passwords.</p>
+                    <p>We strongly recommend you update this value to <b>Low</b> or <b>Medium</b>.</p>
+                
+                </div>
+
+            </div>
+        
+        </div>
+
+    @endif
 
     <div class="row">
 
