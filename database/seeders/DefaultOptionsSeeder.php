@@ -46,7 +46,7 @@ class DefaultOptionsSeeder extends Seeder
         // added in 0.6.2
         Options::setOption('pw_security_policy', 'low', 'Describes the current password security policy.', 'app_security');
         Options::setOption('graceperiod', 7, '2FA Grace Period', 'app_security');
-        Options::setOption('password_expiry', 'disabled', 'Defines wether passwords must be reset after $value', 'app_security');
+        Options::setOption('password_expiry', '0', 'Defines wether passwords must be reset after $value', 'app_security');
         Options::setOption('force2fa', false, 'Defines whether 2fa is forced upon users', 'app_security');
         Options::setOption('force2faRole', 'reviewer', 'Defines which role to force 2fa for', 'app_security');
         Options::setOption('requireGameLicense', true, 'Defines whether people need to validate their game license', 'app_security');
