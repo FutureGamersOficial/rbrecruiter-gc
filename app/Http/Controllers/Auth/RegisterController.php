@@ -24,6 +24,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Profile;
 use App\User;
+use App\Facades\Options;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -81,11 +82,30 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $password = ['required', 'string', 'confirmed'];
+
+        switch (Options::getOption('pw_security_policy'))
+        { // this could be better structured, switch doesn't feel right
+            case 'off':
+                $password = ['required', 'string', 'confirmed'];
+                break;
+            case 'low':
+                $password = ['required', 'string', 'min:10', 'confirmed'];
+                break;
+                
+            case 'medium':
+                $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{10,}$/'];
+                break;
+
+            case 'high':
+                $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{20,}$/']    
+        }
+
         return Validator::make($data, [
-            'uuid' => ['required', 'string', 'unique:users', 'min:32', 'max:32'],
+            'uuid' => (Options::getOption('requireGameLicense') && Options::getOption('currentGame') == 'MINECRAFT') ? ['required', 'string', 'unique:users', 'min:32', 'max:32'] : ['nullable', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:10', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+            'password' => $password,
         ], [
             'uuid.required' => 'Please enter a valid (and Premium) Minecraft username! We do not support cracked users.',
         ]);

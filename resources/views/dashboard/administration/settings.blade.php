@@ -58,7 +58,6 @@
                     <p><b>Low:</b> Good choice for low-traffic websites, e.g. community with less than 100 members.</p>
                     <ul>
                         <li>Minimum 10 characters</li>
-                        <li>Must contain special characters</li>
                     </ul>
                 </div>
                 <div class="col">
@@ -67,7 +66,6 @@
                         <li>Minimum 12 characters</li>
                         <li>Must contain special characters</li>
                         <li>Must contain upper and lower case characters</li>
-                        <li>Can't be the user's name/e-mail</li>
                     </ul>
                 </div>
                 <div class="col">
