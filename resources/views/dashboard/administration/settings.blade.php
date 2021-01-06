@@ -47,7 +47,7 @@
         <div class="col">
         
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <i class="fas fa-info-circle"></i> <b>Available security policies</b>
+            <i class="fas fa-info-circle"></i> <b>Available security policies</b> (current policy: {{ $security['secPolicy'] }})
 
             <p><b>Disabled:</b> No security policy will be enforced. This is insecure.</p>
             
@@ -166,7 +166,7 @@
                         <div class="form-group">
                             <label for="pwExpiry">Password Expiry Control</label>
                             <input type="text" class="form-control" id="pwExpiry" placeholder="time in days" name="pwExpiry" value="{{ $security['pwExpiry'] }}">
-                            <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> Leave this field blank to disable. Users will be forced to reset their password after the specified time.</p>
+                            <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> Leave this field zeroed to disable. Users will be forced to reset their password after the specified time.</p>
                         </div>
 
 

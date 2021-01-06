@@ -30,6 +30,7 @@ class Options
     public function getOption(string $option): string
     {
         $value = Cache::get($option);
+        
 
         if (is_null($value)) {
             Log::debug('Option '.$option.'not found in cache, refreshing from database');
@@ -37,7 +38,7 @@ class Options
             if (is_null($value)) {
                 throw new \Exception('This option does not exist.');
             }
-            Cache::put($option, $value);
+            Cache::put($option, $value->option_value);
             Cache::put($option.'_desc', 'Undefined description');
 
             return $value->option_value;
