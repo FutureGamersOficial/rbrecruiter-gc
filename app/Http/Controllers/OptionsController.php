@@ -46,7 +46,8 @@ class OptionsController extends Controller
                     'pwExpiry' => Options::getOption('password_expiry'),
                     'requiresPMC' => Options::getOption('requireGameLicense'),
                     'enforce2fa' => Options::getOption('force2fa')
-                ]
+                ],
+                'currentGame' => Options::getOption('currentGame')
             ]);
     }
 
@@ -87,6 +88,28 @@ class OptionsController extends Controller
             $request->session()->flash('error', 'You do not have permission to update this resource.');
         }
 
+        return redirect()->back();
+    }
+
+    public function saveGameIntegration(Request $request)
+    {
+        $supportedGames = [
+            'RUST',
+            'MINECRAFT',
+            'SE',
+            'GMOD'
+        ];
+
+        if (!is_null($request->gamePref) && in_array($request->gamePref, $supportedGames))
+        {
+            Options::changeOption('currentGame', $request->gamePref);
+            $request->session()->flash('success', 'Updated current game.');
+
+            return redirect()->back();
+        }
+
+        $request->session()->flash('error', 'Unsupported game ' . $request->gamePref . '.');
+        
         return redirect()->back();
     }
 }

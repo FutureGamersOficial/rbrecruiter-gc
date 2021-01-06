@@ -208,43 +208,48 @@
 
                 <div class="card-body">
 
-                    <div class="form-group mb-3">
-                        <div class="row">
-                            <div class="col">
-                                <label>
-                                    <input type="radio" name="gamePref" value="MINECRAFT">
-                                    <img alt="Mojang Logo (Minecraft)" height="150px" width="150px" src="/img/mc.jpg">
-                                </label>
-                            </div>
+                    <form method="POST" id="gamePrefForm" action={{ route('saveGameIntegration') }}>
+                        @csrf
+                        @method('PATCH')
+                        <div class="form-group mb-3">
+                            <div class="row">
+                                <div class="col">
+                                    <label>
+                                        <input type="radio" name="gamePref" value="MINECRAFT" {{ ($currentGame == 'MINECRAFT') ? 'checked' : '' }}>
+                                        <img alt="Mojang Logo (Minecraft)" height="150px" width="150px" src="/img/mc.jpg">
+                                    </label>
+                                </div>
 
-                            <div class="col">
-                                <label>
-                                    <input type="radio" name="gamePref" value="RUST">
-                                    <img alt="Rust Logo" height="150px" width="150px" src="/img/rust.png">
-                                </label>
-                            </div>
+                                <div class="col">
+                                    <label>
+                                        <input type="radio" name="gamePref" value="RUST" {{ ($currentGame == 'RUST') ? 'checked' : '' }}>
+                                        <img alt="Rust Logo" height="150px" width="150px" src="/img/rust.png">
+                                    </label>
+                                </div>
 
 
-                            <div class="col">
-                                <label>
-                                    <input type="radio" name="gamePref" value="GMOD">
-                                    <img alt="Gmod Logo" height="150px" width="150px" src="/img/gmod.png">
-                                </label>
-                            </div>
+                                <div class="col">
+                                    <label>
+                                        <input type="radio" name="gamePref" value="GMOD" {{ ($currentGame == 'GMOD') ? 'checked' : '' }}>
+                                        <img alt="Gmod Logo" height="150px" width="150px" src="/img/gmod.png">
+                                    </label>
+                                </div>
 
-                            <div class="col">
-                                <label>
-                                    <input type="radio" name="gamePref" value="SE">
-                                    <img alt="Gmod Logo" height="150px" width="150px" src="/img/se.png">
-                                </label>
+                                <div class="col">
+                                    <label>
+                                        <input type="radio" name="gamePref" value="SE" {{ ($currentGame == 'SE') ? 'checked' : '' }}>
+                                        <img alt="Gmod Logo" height="150px" width="150px" src="/img/se.png">
+                                    </label>
+                                </div>
+                                
                             </div>
-                            
                         </div>
-                    </div>
+                    
+                    </form>
                 </div>
 
                 <div class="card-footer">
-                    <button type="button" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
+                    <button onclick="$('#gamePrefForm').submit()" type="button" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
                 </div>
             </div>
         </div>

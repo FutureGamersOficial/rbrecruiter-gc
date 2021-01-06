@@ -209,6 +209,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::post('settings/security/save', [SecuritySettingsController::class, 'save'])
                 ->name('saveSecuritySettings');
 
+            Route::patch('settings/game/update', [OptionsController::class, 'saveGameIntegration'])
+                ->name('saveGameIntegration');
+
             Route::post('players/ban/{user}', [BanController::class, 'insert'])
                 ->name('banUser');
 
