@@ -67,45 +67,50 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('/accounts/danger-zone/{ID}/{action}/{token}', [UserController::class, 'processDeleteConfirmation'])
         ->name('processDeleteConfirmation');
 
-    Route::group(['middleware' => ['auth', 'forcelogout', '2fa', 'verified']], function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])
+    Route::group(['middleware' => ['auth', 'forcelogout', 'passwordexpiration', '2fa', 'verified']], function () {
+        
+
+
+        Route::group(['middleware' => ['passwordredirect']], function(){
+           
+            Route::get('/dashboard', [DashboardController::class, 'index'])
             ->name('dashboard')
             ->middleware('eligibility');
 
-        Route::get('users/directory', [ProfileController::class, 'index'])
-            ->name('directory');
+            Route::get('users/directory', [ProfileController::class, 'index'])
+                ->name('directory');
 
-        Route::resource('teams', TeamController::class);
+            Route::resource('teams', TeamController::class);
 
-        Route::post('teams/{team}/invites/send', [TeamController::class, 'invite'])
-                ->name('sendInvite');
+            Route::post('teams/{team}/invites/send', [TeamController::class, 'invite'])
+                    ->name('sendInvite');
 
-        Route::get('teams/{team}/switch', [TeamController::class, 'switchTeam'])
-                ->name('switchTeam');
+            Route::get('teams/{team}/switch', [TeamController::class, 'switchTeam'])
+                    ->name('switchTeam');
 
-        Route::patch('teams/{team}/vacancies/update', [TeamController::class, 'assignVacancies'])
-                ->name('assignVacancies');
+            Route::patch('teams/{team}/vacancies/update', [TeamController::class, 'assignVacancies'])
+                    ->name('assignVacancies');
 
-        Route::get('teams/invites/{action}/{token}', [TeamController::class, 'processInviteAction'])
-            ->name('processInvite');
-
-
-
-        Route::get('team/files', [TeamFileController::class, 'index'])
-            ->name('showTeamFiles');
-
-        Route::post('team/files/upload', [TeamFileController::class, 'store'])
-            ->name('uploadTeamFile');
-
-        Route::delete('team/files/{teamFile}/delete', [TeamFileController::class, 'destroy'])
-            ->name('deleteTeamFile');
-
-        Route::get('team/files/{teamFile}/download', [TeamFileController::class, 'download'])
-            ->name('downloadTeamFile');
+            Route::get('teams/invites/{action}/{token}', [TeamController::class, 'processInviteAction'])
+                ->name('processInvite');
 
 
 
-        Route::group(['prefix' => '/applications'], function () {
+            Route::get('team/files', [TeamFileController::class, 'index'])
+                ->name('showTeamFiles');
+
+            Route::post('team/files/upload', [TeamFileController::class, 'store'])
+                ->name('uploadTeamFile');
+
+            Route::delete('team/files/{teamFile}/delete', [TeamFileController::class, 'destroy'])
+                ->name('deleteTeamFile');
+
+            Route::get('team/files/{teamFile}/download', [TeamFileController::class, 'download'])
+                ->name('downloadTeamFile');
+            
+        });
+
+        Route::group(['prefix' => '/applications', 'middleware' => ['passwordredirect']], function () {
             Route::get('/my-applications', [ApplicationController::class, 'showUserApps'])
                 ->name('showUserApps')
                 ->middleware('eligibility');
@@ -136,7 +141,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                 ->name('voteApplication');
         });
 
-        Route::group(['prefix' => 'appointments'], function () {
+        Route::group(['prefix' => 'appointments', 'middleware' => ['passwordredirect']], function () {
             Route::post('schedule/appointments/{application}', [AppointmentController::class, 'saveAppointment'])
                 ->name('scheduleAppointment');
 
@@ -144,7 +149,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                 ->name('updateAppointment');
         });
 
-        Route::group(['prefix' => 'apply', 'middleware' => ['eligibility']], function () {
+        Route::group(['prefix' => 'apply', 'middleware' => ['eligibility', 'passwordredirect']], function () {
             Route::get('positions/{vacancySlug}', [ApplicationController::class, 'renderApplicationForm'])
                 ->name('renderApplicationForm');
 
@@ -152,15 +157,21 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                 ->name('saveApplicationForm');
         });
 
+        // Further locking down the profile section by adding the middleware to everything but the required routes
         Route::group(['prefix' => '/profile'], function () {
             Route::get('/settings', [ProfileController::class, 'showProfile'])
-                ->name('showProfileSettings');
+                ->name('showProfileSettings')
+                ->middleware('passwordredirect');
 
             Route::patch('/settings/save', [ProfileController::class, 'saveProfile'])
-                ->name('saveProfileSettings');
+                ->name('saveProfileSettings')
+                ->middleware('passwordredirect');
 
             Route::get('user/{user}', [ProfileController::class, 'showSingleProfile'])
-                ->name('showSingleProfile');
+                ->name('showSingleProfile')
+                ->middleware('passwordredirect');
+
+
 
             Route::get('/settings/account', [UserController::class, 'showAccount'])
                 ->name('showAccountSettings');
@@ -169,23 +180,30 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::patch('/settings/account/change-password', [UserController::class, 'changePassword'])
                 ->name('changePassword');
 
+
+
             Route::patch('/settings/account/change-email', [UserController::class, 'changeEmail'])
-                ->name('changeEmail');
+                ->name('changeEmail')
+                ->middleware('passwordredirect');
 
             Route::post('/settings/account/flush-sessions', [UserController::class, 'flushSessions'])
-                ->name('flushSessions');
+                ->name('flushSessions')
+                ->middleware('passwordredirect');
 
             Route::patch('/settings/account/twofa/enable', [UserController::class, 'add2FASecret'])
-                ->name('enable2FA');
+                ->name('enable2FA')
+                ->middleware('passwordredirect');
 
             Route::patch('/settings/account/twofa/disable', [UserController::class, 'remove2FASecret'])
-                ->name('disable2FA');
+                ->name('disable2FA')
+                ->middleware('passwordredirect');
 
             Route::patch('/settings/account/dg/delete', [UserController::class, 'userDelete'])
-                ->name('userDelete');
+                ->name('userDelete')
+                ->middleware('passwordredirect');
         });
 
-        Route::group(['prefix' => '/hr'], function () {
+        Route::group(['prefix' => '/hr', 'middleware' => ['passwordredirect']], function () {
             Route::get('staff-members', [UserController::class, 'showStaffMembers'])
                 ->name('staffMemberList');
 
@@ -199,7 +217,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                 ->name('terminateStaffMember');
         });
 
-        Route::group(['prefix' => 'admin'], function () {
+        Route::group(['prefix' => 'admin', 'middleware' => ['passwordredirect']], function () {
             Route::get('settings', [OptionsController::class, 'index'])
                 ->name('showSettings');
 

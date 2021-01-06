@@ -100,8 +100,7 @@
                 
                     <p><b><i class="fas fa-exclamation-triangle"></i> DANGER: </b> Insecure security policy</p>
 
-                    <p>Your current password security policy is set to <b>off</b>. This allows users to choose potentially unsafe passwords.</p>
-                    <p>We strongly recommend you update this value to <b>Low</b> or <b>Medium</b>.</p>
+                    <p>Your current password security policy is set to <b>off</b>. This allows users to choose potentially unsafe passwords. We strongly recommend you update this value to <b>Medium</b>.</p>
                 
                 </div>
 

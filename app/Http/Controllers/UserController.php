@@ -172,6 +172,8 @@ class UserController extends Controller
 
         if (! is_null($user)) {
             $user->password = Hash::make($request->newPassword);
+            $user->password_last_updated = now();
+            
             $user->save();
 
             Log::info('User '.$user->name.' has changed their password', [

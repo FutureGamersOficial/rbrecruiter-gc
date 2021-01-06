@@ -205,6 +205,23 @@
 
     </div>
 
+    @if(session('passwordExpired'))
+
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-warning">
+                    <p><i class="fas fa-exclamation-triangle"></i><b> Your password has expired</b></p>
+                    <p>
+                        You've been redirected here because your <b>password has expired.</b> All users must change their password every {{ \App\Facades\Options::getOption('password_expiry') }} days.
+                        This is put in place to make sure user accounts remain secure.
+                    </p>
+
+                    <p>Please change update your password now. You won't be able to use the application until you do this.</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="row">
 
         <div class="col">
