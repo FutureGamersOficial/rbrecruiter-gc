@@ -109,15 +109,11 @@
                         @csrf
                         @foreach($options as $option)
 
-                            @if(!in_array($option->option_name, $ignoreOptions))
-
-                                <div class="form-group form-check">
-                                    <input type="hidden" name="{{$option->option_name}}" value="0">
-                                    <input type="checkbox" name="{{$option->option_name}}" value="1" id="{{$option->option_name}}" class="form-check-input" {{ ($option->option_value == 1) ? 'checked' : '' }}>
-                                    <label for="{{$option->option_name}}">{{$option->friendly_name}}</label>
-                                </div>
-
-                            @endif
+                           <div class="form-group form-check">
+                                <input type="hidden" name="{{$option->option_name}}" value="0">
+                                <input type="checkbox" name="{{$option->option_name}}" value="1" id="{{$option->option_name}}" class="form-check-input" {{ ($option->option_value == 1) ? 'checked' : '' }}>
+                                <label for="{{$option->option_name}}">{{$option->friendly_name}}</label>
+                            </div>
 
                         @endforeach
                     </form>
