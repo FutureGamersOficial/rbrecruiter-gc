@@ -25,6 +25,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -76,5 +77,18 @@ class LoginController extends Controller
         }
 
         return $this->originalAttemptLogin($request);
+    }
+
+    public function authenticated(Request $request, User $user)
+    {
+        if ($user->originalIP !== $request->ip())
+        {
+            Log::alert('User IP address changed from last login. Updating.', [
+                'prev' => $user->originalIP,
+                'new' => $request->ip()
+            ]);
+            $user->originalIP = $request->ip();
+            $user->save();
+        }
     }
 }
