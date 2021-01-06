@@ -36,6 +36,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VacancyController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\OptionsController;
+use App\Http\Controllers\SecuritySettingsController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -164,6 +165,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('/settings/account', [UserController::class, 'showAccount'])
                 ->name('showAccountSettings');
 
+
             Route::patch('/settings/account/change-password', [UserController::class, 'changePassword'])
                 ->name('changePassword');
 
@@ -203,6 +205,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::post('settings/save', [OptionsController::class, 'saveSettings'])
                 ->name('saveSettings');
+
+            Route::post('settings/security/save', [SecuritySettingsController::class, 'save'])
+                ->name('saveSecuritySettings');
 
             Route::post('players/ban/{user}', [BanController::class, 'insert'])
                 ->name('banUser');

@@ -40,7 +40,14 @@ class OptionsController extends Controller
         $options = Option::all();
 
         return view('dashboard.administration.settings')
-            ->with('options', $options);
+            ->with('options', $options)
+            ->with('security', [
+                'secPolicy' => Options::getOption('pw_security_policy'),
+                'graceperiod' => Options::getOption('graceperiod'),
+                'pwExpiry' => Options::getOption('password_expiry'),
+                'requiresPMC' => Options::getOption('requireGameLicense'),
+                'enforce2fa' => Options::getOption('force2fa')
+            ]);
     }
 
     public function saveSettings(Request $request)

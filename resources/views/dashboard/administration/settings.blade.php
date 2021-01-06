@@ -138,7 +138,7 @@
 
                 <div class="card-body">
 
-                    <form name="security" id="security" method="post">
+                    <form name="security" id="security" method="post" action={{ route('saveSecuritySettings') }}>
                         @csrf
 
                         <div class="form-group">
@@ -147,10 +147,10 @@
                             <select class="custom-select form-control" name="secPolicy">
                             
                                 <option value="nil" disabled>Choose a security policy</option>
-                                <option value="off">Disabled (default)</option>
-                                <option value="low">Low</option>
-                                <option value="low">Medium</option>
-                                <option value="low">High (╯°□°）╯︵ ┻━┻</option>
+                                <option value="off" {{ ($security['secPolicy'] == 'off') ? 'selected' : '' }}>Disabled (default)</option>
+                                <option value="low" {{ ($security['secPolicy'] == 'low') ? 'selected' : '' }}>Low</option>
+                                <option value="medium" {{ ($security['secPolicy'] == 'medium') ? 'selected' : '' }}>Medium</option>
+                                <option value="high" {{ ($security['secPolicy'] == 'high') ? 'selected' : '' }}>High (╯°□°）╯︵ ┻━┻</option>
 
                             </select>
 
@@ -158,27 +158,27 @@
 
                         <div class="form-group">
                             <label for="graceperiod">Grace period for 2FA requirement (above <code>reviewer</code>)</label>
-                            <input type="text" class="form-control" id="graceperiod" placeholder="time in days">
+                            <input type="text" class="form-control" id="graceperiod" placeholder="time in days" name="graceperiod" value="{{$security['graceperiod']}}">
                             <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> Users will be locked out after this time period if they fail to enable 2FA. Leave empty to disable.</p>
                         </div>
 
 
                         <div class="form-group">
-                            <label for="graceperiod">Password Expiry Control</label>
-                            <input type="text" class="form-control" id="graceperiod" placeholder="time in days">
+                            <label for="pwExpiry">Password Expiry Control</label>
+                            <input type="text" class="form-control" id="pwExpiry" placeholder="time in days" name="pwExpiry" value="{{ $security['pwExpiry'] }}">
                             <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> Leave this field blank to disable. Users will be forced to reset their password after the specified time.</p>
                         </div>
 
 
                         <div class="form-group form-check">
                             <input type="hidden" name="enforce2fa" value="0">
-                            <input type="checkbox" name="enforce2fa" value="1" id="enforce2fa" class="form-check-input">
+                            <input type="checkbox" name="enforce2fa" value="1" id="enforce2fa" class="form-check-input" {{ $security['enforce2fa'] == true ? 'checked' : '' }}>
                             <label for="enforceAdmin2fa">Force roles above <code>reviewer</code> to use two factor authentication?</label>
                         </div>  
 
                          <div class="form-group form-check">
                             <input type="hidden" name="requirePMC" value="0">
-                            <input type="checkbox" name="requirePMC" value="1" id="requirePMC" class="form-check-input">
+                            <input type="checkbox" name="requirePMC" value="1" id="requirePMC" class="form-check-input" {{ $security['requiresPMC'] == true ? 'checked' : '' }}>
                             <label for="requirePMC">Require a valid game license to signup?</label>
                             <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> Choose a game in the section below, if applicable.</p>
                         </div>
@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <button type="button" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
+                    <button onclick="$('#security').submit()" type="button" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
                 </div>
                 
             </div>
