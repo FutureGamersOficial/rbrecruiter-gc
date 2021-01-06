@@ -36,17 +36,17 @@ class OptionsController extends Controller
      */
     public function index()
     {
-        // TODO: Obtain this from the facade
-        $options = Option::all();
 
         return view('dashboard.administration.settings')
-            ->with('options', $options)
-            ->with('security', [
-                'secPolicy' => Options::getOption('pw_security_policy'),
-                'graceperiod' => Options::getOption('graceperiod'),
-                'pwExpiry' => Options::getOption('password_expiry'),
-                'requiresPMC' => Options::getOption('requireGameLicense'),
-                'enforce2fa' => Options::getOption('force2fa')
+            ->with([
+                'options' => Options::getCategory('notifications'),
+                'security' => [ // We could use the method above, but we need to set these names here for greater control in the template. This would nto be feasible for many options, we'd need to use a loop and the category method.
+                    'secPolicy' => Options::getOption('pw_security_policy'),
+                    'graceperiod' => Options::getOption('graceperiod'),
+                    'pwExpiry' => Options::getOption('password_expiry'),
+                    'requiresPMC' => Options::getOption('requireGameLicense'),
+                    'enforce2fa' => Options::getOption('force2fa')
+                ]
             ]);
     }
 

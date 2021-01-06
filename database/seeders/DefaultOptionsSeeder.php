@@ -33,25 +33,25 @@ class DefaultOptionsSeeder extends Seeder
      */
     public function run()
     {
-        Options::setOption('notify_new_application_email', true, 'Notify when a new application comes through'); // done
-        Options::setOption('notify_application_comment', false, 'Notify when someone comments on an application'); // done
+        Options::setOption('notify_new_application_email', true, 'Notify when a new application comes through', 'notifications'); // done
+        Options::setOption('notify_application_comment', false, 'Notify when someone comments on an application' , 'notifications'); // done
         Options::setOption('notify_new_user', true, 'Notify when someone signs up'); // done
-        Options::setOption('notify_application_status_change', true, 'Notify when an application changes status'); // done
-        Options::setOption('notify_applicant_approved', true, 'Notify when an applicant is approved'); // done
-        Options::setOption('notify_vacancystatus_change', false, 'Notify when a vacancy\'s status changes'); // done
+        Options::setOption('notify_application_status_change', true, 'Notify when an application changes status' , 'notifications'); // done
+        Options::setOption('notify_applicant_approved', true, 'Notify when an applicant is approved' , 'notifications'); // done
+        Options::setOption('notify_vacancystatus_change', false, 'Notify when a vacancy\'s status changes' , 'notifications'); // done
 
-        Options::setOption('enable_slack_notifications', true, 'Enable slack notifications');
-        Options::setOption('enable_email_notifications', true, 'Enable e-mail notifications');
+        Options::setOption('enable_slack_notifications', true, 'Enable slack notifications' , 'notifications');
+        Options::setOption('enable_email_notifications', true, 'Enable e-mail notifications' , 'notifications');
 
         // added in 0.6.2
-        Options::setOption('pw_security_policy', 'low', 'Describes the current password security policy.');
-        Options::setOption('graceperiod', 7, '2FA Grace Period');
-        Options::setOption('password_expiry', 'disabled', 'Defines wether passwords must be reset after $value');
-        Options::setOption('force2fa', false, 'Defines whether 2fa is forced upon users');
-        Options::setOption('force2faRole', 'reviewer', 'Defines which role to force 2fa for');
-        Options::setOption('requireGameLicense', true, 'Defines whether people need to validate their game license');
+        Options::setOption('pw_security_policy', 'low', 'Describes the current password security policy.', 'app_security');
+        Options::setOption('graceperiod', 7, '2FA Grace Period', 'app_security');
+        Options::setOption('password_expiry', 'disabled', 'Defines wether passwords must be reset after $value', 'app_security');
+        Options::setOption('force2fa', false, 'Defines whether 2fa is forced upon users', 'app_security');
+        Options::setOption('force2faRole', 'reviewer', 'Defines which role to force 2fa for', 'app_security');
+        Options::setOption('requireGameLicense', true, 'Defines whether people need to validate their game license', 'app_security');
 
-        Options::setOption('currentGame', 'MINECRAFT', 'Defines what game we\'re working with');
+        Options::setOption('currentGame', 'MINECRAFT', 'Defines what game we\'re working with', 'app_integration');
 
     }
 }

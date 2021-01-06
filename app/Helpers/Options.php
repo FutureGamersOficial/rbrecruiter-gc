@@ -22,11 +22,33 @@
 namespace App\Helpers;
 
 use App\Options as Option;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * The options class. A simple wrapper around the model. Could be a repository, but we're not using that design pattern just yet
+ */
 class Options
 {
+
+    /**
+     * Returns an assortment of settings found in the mentioned category
+     * 
+     * @param $category The category
+     * @return Collection The settings in this category
+     */
+    public function getCategory(string $category): Collection
+    {
+        $options = Option::where('option_category', $category)->get();
+        if ($options->isEmpty())
+        {
+           throw new \Exception('There are no options in category ' . $category);
+        }
+        return $options;
+    }
+
+
     public function getOption(string $option): string
     {
         $value = Cache::get($option);
@@ -47,12 +69,14 @@ class Options
         return $value;
     }
 
-    public function setOption(string $option, string $value, string $description)
+    // Null categories are settings without categories and will appear ungrouped
+    public function setOption(string $option, string $value, string $description, string $category = null)
     {
         Option::create([
             'option_name' => $option,
             'option_value' => $value,
             'friendly_name' => $description,
+            'option_category' => $category
         ]);
 
         Cache::put($option, $value, now()->addDay());
