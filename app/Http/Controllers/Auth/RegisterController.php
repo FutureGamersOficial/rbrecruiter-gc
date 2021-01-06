@@ -98,7 +98,7 @@ class RegisterController extends Controller
                 break;
 
             case 'high':
-                $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{20,}$/']    
+                $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{20,}$/'];
         }
 
         return Validator::make($data, [
