@@ -10,6 +10,12 @@
 
 @section('js')
 
+       <script>
+            jQuery(window).bind('beforeunload', function(){
+                return 'Are you sure you want to leave the form builder? You might have unsaved work.';
+            });
+        </script>
+
     @if (session()->has('success'))
 
         <script>
