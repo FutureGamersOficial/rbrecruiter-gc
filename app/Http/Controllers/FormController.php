@@ -82,6 +82,23 @@ class FormController extends Controller
     public function destroy(Request $request, Form $form)
     {
         $this->authorize('delete', $form);
+
+        $request->session()->put('pendingObjectID', $form->id);
+        $request->session()->put('openConfirmationDialog', true);
+
+        return redirect()->back();
+                
+    }
+
+    public function performConfirmedDeletion(Request $request, Form $form)
+    {
+        $this->authorize('delete', $form);
+        if (!$request->has('confirmed') && $request->confirmed !== 'yes')
+        {
+            $request->session()->flash('error', 'You must confirm this action.');
+            return redirect()->back();
+        }
+
         $deletable = true;
 
         if (! is_null($form) && ! is_null($form->vacancies) && $form->vacancies->count() !== 0 || ! is_null($form->responses)) {
@@ -96,6 +113,9 @@ class FormController extends Controller
             $request->session()->flash('error', 'You cannot delete this form because it\'s tied to one or more applications and ranks, or because it doesn\'t exist.');
         }
 
+        $request->session()->forget('pendingObjectID');
+        $request->session()->forget('openConfirmationDialog');
+        
         return redirect()->back();
     }
 
