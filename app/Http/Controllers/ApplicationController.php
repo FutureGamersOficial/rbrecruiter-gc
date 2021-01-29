@@ -38,14 +38,14 @@ class ApplicationController extends Controller
 
     private function processOSLinebreaks(array $structuredResponses)
     {
-        $processedResponses = $structuredResponses;
-
-       foreach ($structuredResponses as $responseKey => $response)
+       $processedResponses = $structuredResponses;
+       foreach ($structuredResponses as $field)
        {
-           // We can't use nl2br because it preserves the line breaks and doesn't include all line breaks used by other operating systems
-           $originalResponse = $response['response'];
-           $processedResponses[$responseKey]['response'] = str_replace(["\r\n", "\r", "\n"], "<br/>", $originalResponse);
-       }
+           foreach($field as $fieldKey => $fieldData)
+           {
+                $originalResponse = $fieldData['response'];
+                $processedResponses['responses'][$fieldKey]['response'] = str_replace(["\r\n", "\r", "\n"], "<br/>", $$           }
+           // We can't use nl2br because it preserves the line breaks and doesn't include all line breaks used by othe$       }
 
        return $processedResponses;
     }
@@ -79,7 +79,7 @@ class ApplicationController extends Controller
                     [
                         'application' => $application,
                         'comments' => $application->comments,
-                        'structuredResponses' => json_decode($application->response->responseData, true),
+                        'structuredResponses' => $this->processOSLinebreaks(json_decode($application->response->responseData, true)),
                         'formStructure' => $application->response->form,
                         'vacancy' => $application->response->vacancy,
                         'canVote'  => $this->canVote($application->votes),
