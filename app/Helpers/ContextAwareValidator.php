@@ -71,7 +71,7 @@ class ContextAwareValidator
         $validator = [];
 
         if ($includeFormName) {
-            $validator['formName'] = 'required|string|max:100';
+            $validator['formName'] = 'required|string';
         }
 
         foreach ($fields as $fieldName => $field) {
