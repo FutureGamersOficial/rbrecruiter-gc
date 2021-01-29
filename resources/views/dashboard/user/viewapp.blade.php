@@ -104,7 +104,7 @@
 
                             <h5>{{$content['title']}}</h5>
                             
-                            <p>{{ GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($content['response']) }}</p>
+                            <p>{!! GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($content['response']) !!}</p>
 
                         </div>
 
