@@ -79,7 +79,7 @@ class ApplicationController extends Controller
                     [
                         'application' => $application,
                         'comments' => $application->comments,
-                        'structuredResponses' => %this->processOSLinebreaks(json_decode($application->response->responseData, true)),
+                        'structuredResponses' => $this->processOSLinebreaks(json_decode($application->response->responseData, true)),
                         'formStructure' => $application->response->form,
                         'vacancy' => $application->response->vacancy,
                         'canVote'  => $this->canVote($application->votes),
