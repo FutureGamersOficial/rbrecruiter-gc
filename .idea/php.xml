@@ -153,6 +153,7 @@
       <path value="$PROJECT_DIR$/vendor/awssat/discord-notification-channel" />
       <path value="$PROJECT_DIR$/vendor/berkayk/onesignal-laravel" />
       <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/vendor/laravel/sanctum" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />

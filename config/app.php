@@ -244,6 +244,7 @@ return [
         \App\Providers\MojangStatusProvider::class,
         \App\Providers\OptionsProvider::class,
         App\Providers\DigitalStorageProvider::class,
+        App\Providers\JSONProvider::class,
 
     ],
 
@@ -301,6 +302,7 @@ return [
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
         'ContextAwareValidator' => App\Facades\ContextAwareValidation::class,
         'Settings' => App\Facades\Options::class,
+        'JSON' => App\Facades\JSON::class
 
     ],
 
