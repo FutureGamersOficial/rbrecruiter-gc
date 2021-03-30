@@ -21,6 +21,21 @@ class ApiKeyController extends Controller
             ->with('keys', Auth::user()->keys);
     }
 
+    public function adminKeys()
+    {
+        if (Auth::user()->hasRole('admin'))
+        {
+            return view('dashboard.administration.keys')
+                ->with('keys', ApiKey::all());
+        }
+        else
+        {
+            return redirect()
+                ->back()
+                ->with('error', 'You do not have permission to access this page.');
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

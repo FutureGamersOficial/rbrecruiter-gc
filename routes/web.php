@@ -229,6 +229,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('settings', [OptionsController::class, 'index'])
                 ->name('showSettings');
 
+            Route::get('keys', [ApiKeyController::class, 'adminKeys'])
+                ->name('adminKeys');
+
             Route::post('settings/save', [OptionsController::class, 'saveSettings'])
                 ->name('saveSettings');
 
