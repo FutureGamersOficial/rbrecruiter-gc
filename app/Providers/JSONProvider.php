@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App;
 use App\Helpers\JSON;
 use Illuminate\Support\ServiceProvider;
 

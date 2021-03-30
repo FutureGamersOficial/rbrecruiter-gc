@@ -92,6 +92,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\TeamFile', 'uploaded_by');
     }
 
+    public function keys()
+    {
+        return $this->hasMany('App\ApiKey', 'owner_user_id');
+    }
+
     // UTILITY LOGIC
 
     public function isBanned()

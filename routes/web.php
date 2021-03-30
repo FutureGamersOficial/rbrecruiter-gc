@@ -19,6 +19,7 @@
  *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\TwofaController;
@@ -68,11 +69,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         ->name('processDeleteConfirmation');
 
     Route::group(['middleware' => ['auth', 'forcelogout', 'passwordexpiration', '2fa', 'verified']], function () {
-        
+
 
 
         Route::group(['middleware' => ['passwordredirect']], function(){
-           
+
             Route::get('/dashboard', [DashboardController::class, 'index'])
             ->name('dashboard')
             ->middleware('eligibility');
@@ -107,7 +108,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::get('team/files/{teamFile}/download', [TeamFileController::class, 'download'])
                 ->name('downloadTeamFile');
-            
+
         });
 
         Route::group(['prefix' => '/applications', 'middleware' => ['passwordredirect']], function () {
@@ -161,6 +162,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::group(['prefix' => '/profile'], function () {
             Route::get('/settings', [ProfileController::class, 'showProfile'])
                 ->name('showProfileSettings')
+                ->middleware('passwordredirect');
+
+            Route::resource('keys', ApiKeyController::class)
+                ->middleware('passwordredirect');
+
+            Route::patch('keys/revoke/{key}', [ApiKeyController::class, 'revokeKey'])
+                ->name('revokeKey')
                 ->middleware('passwordredirect');
 
             Route::patch('/settings/save', [ProfileController::class, 'saveProfile'])
