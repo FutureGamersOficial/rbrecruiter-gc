@@ -33,6 +33,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['api'])->group(function (){
+
+    Route::get('applications', [\App\Http\Controllers\ApplicationController::class, 'showAllApps']);
+    Route::get('applications/view/{application}', [\App\Http\Controllers\ApplicationController::class, 'showUserApp']);
+
 });

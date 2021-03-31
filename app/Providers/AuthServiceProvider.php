@@ -21,10 +21,12 @@
 
 namespace App\Providers;
 
+use App\ApiKey;
 use App\Application;
 use App\Appointment;
 use App\Ban;
 use App\Form;
+use App\Policies\ApiKeyPolicy;
 use App\Policies\ApplicationPolicy;
 use App\Policies\AppointmentPolicy;
 use App\Policies\BanPolicy;
@@ -61,7 +63,8 @@ class AuthServiceProvider extends ServiceProvider
         Ban::class => BanPolicy::class,
         Appointment::class => AppointmentPolicy::class,
         Team::class => TeamPolicy::class,
-        TeamFile::class, TeamFilePolicy::class
+        TeamFile::class => TeamFilePolicy::class,
+        ApiKey::class => ApiKeyPolicy::class
     ];
 
     /**

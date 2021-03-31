@@ -11,29 +11,13 @@ use Illuminate\Support\Facades\Hash;
 
 class ApiKeyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     */
+
     public function index()
     {
-        return view('dashboard.user.api.index')
-            ->with('keys', Auth::user()->keys);
-    }
+        $this->authorize('viewAny', ApiKey::class);
 
-    public function adminKeys()
-    {
-        if (Auth::user()->hasRole('admin'))
-        {
-            return view('dashboard.administration.keys')
-                ->with('keys', ApiKey::all());
-        }
-        else
-        {
-            return redirect()
-                ->back()
-                ->with('error', 'You do not have permission to access this page.');
-        }
+        return view('dashboard.administration.keys')
+            ->with('keys', ApiKey::all());
     }
 
     /**
@@ -43,6 +27,8 @@ class ApiKeyController extends Controller
      */
     public function store(CreateApiKeyRequest $request)
     {
+        $this->authorize('create', ApiKey::class);
+
         $discriminator = "#" . bin2hex(openssl_random_pseudo_bytes(7));
         $secret = bin2hex(openssl_random_pseudo_bytes(32));
 
@@ -71,28 +57,24 @@ class ApiKeyController extends Controller
 
    public function revokeKey(Request $request, ApiKey $key)
    {
-       if (Auth::user()->is($key->user) || Auth::user()->hasRole('admin'))
-       {
-           if ($key->status == 'active')
-           {
-               $key->status = 'disabled';
-               $key->save();
-           }
-           else
-           {
-               return redirect()
-                   ->back()
-                   ->with('error', 'Key already revoked.');
-           }
+       $this->authorize('update', $key);
 
+       if ($key->status == 'active')
+       {
+           $key->status = 'disabled';
+           $key->save();
+       }
+       else
+       {
            return redirect()
                ->back()
-               ->with('success', 'Key revoked. Apps using this key will stop working.');
+               ->with('error', 'Key already revoked.');
        }
 
        return redirect()
            ->back()
-           ->with('error', 'You do not have permission to modify this key.');
+           ->with('success', 'Key revoked. Apps using this key will stop working.');
+
    }
 
     /**
@@ -101,18 +83,13 @@ class ApiKeyController extends Controller
     public function destroy($id)
     {
         $key = ApiKey::findOrFail($id);
+        $this->authorize('delete', $key);
 
-        if (Auth::user()->is($key->user) || Auth::user()->hasRole('admin'))
-        {
-            $key->delete();
-
-            return redirect()
-                ->back()
-                ->with('success', 'Key deleted successfully. Apps using this key will stop working.');
-        }
+        $key->delete();
 
         return redirect()
             ->back()
-            ->with('error', 'You do not have permission to modify this key.');
+            ->with('success', 'Key deleted successfully. Apps using this key will stop working.');
+
     }
 }

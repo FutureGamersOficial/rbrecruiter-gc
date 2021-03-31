@@ -164,13 +164,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                 ->name('showProfileSettings')
                 ->middleware('passwordredirect');
 
-            Route::resource('keys', ApiKeyController::class)
-                ->middleware('passwordredirect');
-
-            Route::patch('keys/revoke/{key}', [ApiKeyController::class, 'revokeKey'])
-                ->name('revokeKey')
-                ->middleware('passwordredirect');
-
             Route::patch('/settings/save', [ProfileController::class, 'saveProfile'])
                 ->name('saveProfileSettings')
                 ->middleware('passwordredirect');
@@ -229,8 +222,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('settings', [OptionsController::class, 'index'])
                 ->name('showSettings');
 
-            Route::get('keys', [ApiKeyController::class, 'adminKeys'])
-                ->name('adminKeys');
+            Route::resource('keys', ApiKeyController::class);
+
+            Route::patch('keys/revoke/{key}', [ApiKeyController::class, 'revokeKey'])
+                ->name('revokeKey');
 
             Route::post('settings/save', [OptionsController::class, 'saveSettings'])
                 ->name('saveSettings');

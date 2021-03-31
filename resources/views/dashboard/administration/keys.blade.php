@@ -16,6 +16,24 @@
 
 @section('content')
 
+    <x-modal id="createKeyModal" modal-label="createKeyModalLabel" modal-title="New API Key" include-close-button="true">
+
+        <form id="createKey" method="post" action="{{ route('keys.store') }}">
+            @csrf
+
+            <div class="form-group">
+                <label for="name">Give your new API key a name to easily identify it.</label>
+                <input type="text" name="keyName" class="form-control" id="name" required>
+            </div>
+
+        </form>
+
+        <x-slot name="modalFooter">
+            <button onclick="$('#createKey').submit()" type="button" class="btn btn-success"><i class="fas fa-key"></i> Register new key</button>
+        </x-slot>
+
+    </x-modal>
+
     <div class="row">
         <div class="col">
             <div class="alert alert-primary">
@@ -23,6 +41,17 @@
             </div>
         </div>
     </div>
+
+    @if (session()->has('finalKey'))
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-success">
+                    <p><i class="fas fa-key"></i> This is your API key: {{ session('finalKey') }}</p>
+                    <p>Please copy it <b>now</b> as it'll only appear once.</p>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col">
@@ -68,6 +97,12 @@
                                     @else
                                         <button disabled type="button" class="btn btn-danger btn-sm ml-2"><i class="fas fa-lock"></i> Revoke</button>
                                     @endif
+                                    <form class="d-inline-block" action="{{ route('keys.destroy', ['key' => $key->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm ml-2"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -82,8 +117,8 @@
 
 
                 <x-slot name="cardFooter">
-                    <button onclick="window.location.href='{{ route('keys.index') }}'" type="button" class="btn btn-success ml-2"><i class="fas fa-key"></i> Your Keys</button>
-                    <button type="button" onclick="window.location.href='/admin/maintenance/system-logs'" class="btn btn-secondary"><i class="fas fa-clipboard"></i> Search Logs</button>
+                    <button onclick="$('#createKeyModal').modal('show')" type="button" class="btn btn-secondary ml-2"><i class="fas fa-plus"></i> New API Key</button>
+                    <button type="button" onclick="window.location.href='/admin/maintenance/system-logs'" class="btn btn-secondary ml-2"><i class="fas fa-clipboard"></i> Search Logs</button>
                 </x-slot>
 
             </x-card>

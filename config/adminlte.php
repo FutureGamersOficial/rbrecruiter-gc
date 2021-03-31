@@ -269,11 +269,6 @@ return [
             'url' => '/profile/settings/account',
         ],
         [
-            'text' => 'Programmatic Access',
-            'icon' => 'fas fa-wrench',
-            'route' => 'keys.index'
-        ],
-        [
             'header' => 'h_app_management',
             'can' => ['applications.view.all', 'applications.vote'],
         ],
@@ -374,7 +369,7 @@ return [
                     'text' => 'API Keys',
                     'icon' => 'fas fa-user-shield',
                     'can' => 'admin.settings.view',
-                    'route' => 'adminKeys'
+                    'route' => 'keys.index'
                 ]
             ],
         ],

@@ -23,6 +23,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Events\ApplicationDeniedEvent;
+use App\Http\Resources\ApplicationResource;
 use App\Notifications\ApplicationMoved;
 use App\Notifications\NewApplicant;
 use App\Response;
@@ -56,39 +57,58 @@ class ApplicationController extends Controller
 
     public function showUserApp(Request $request, Application $application)
     {
-        $this->authorize('view', $application);
+        if (!$request->wantsJson())
+        {
+            $this->authorize('view', $application);
 
-        if (! is_null($application)) {
-            return view('dashboard.user.viewapp')
-                ->with(
-                    [
-                        'application' => $application,
-                        'comments' => $application->comments,
-                        'structuredResponses' => json_decode($application->response->responseData, true),
-                        'formStructure' => $application->response->form,
-                        'vacancy' => $application->response->vacancy,
-                        'canVote'  => $this->canVote($application->votes),
-                    ]
-                );
-        } else {
-            $request->session()->flash('error', 'The application you requested could not be found.');
+            if (! is_null($application)) {
+                return view('dashboard.user.viewapp')
+                    ->with(
+                        [
+                            'application' => $application,
+                            'comments' => $application->comments,
+                            'structuredResponses' => json_decode($application->response->responseData, true),
+                            'formStructure' => $application->response->form,
+                            'vacancy' => $application->response->vacancy,
+                            'canVote'  => $this->canVote($application->votes),
+                        ]
+                    );
+            } else {
+                $request->session()->flash('error', 'The application you requested could not be found.');
+            }
+
+            return redirect()->back();
         }
 
-        return redirect()->back();
+        return (new ApplicationResource($application))->additional([
+            'meta' => [
+                'code' => 200,
+                'status' => 'success'
+            ]
+        ]);
     }
 
-    public function showAllApps()
+    public function showAllApps(Request $request)
     {
-        $this->authorize('viewAny', Application::class);
+        if (!$request->wantsJson())
+        {
+            $this->authorize('viewAny', Application::class);
 
-        return view('dashboard.appmanagement.all')
-          ->with('applications', Application::paginate(6));
+            return view('dashboard.appmanagement.all')
+                ->with('applications', Application::paginate(6));
+        }
+
+
+        // todo: eager load all relationships used
+        return ApplicationResource::collection(Application::paginate(6))->additional([
+            'code' => '200',
+            'status' => 'success',
+        ]);
     }
 
 
     public function renderApplicationForm(Request $request, $vacancySlug)
     {
-        // FIXME: Get rid of references to first(), this is a wonky query
         $vacancyWithForm = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
 
         $firstVacancy = $vacancyWithForm->first();
@@ -96,10 +116,8 @@ class ApplicationController extends Controller
         if (! $vacancyWithForm->isEmpty() && $firstVacancy->vacancyCount !== 0 && $firstVacancy->vacancyStatus == 'OPEN') {
             return view('dashboard.application-rendering.apply')
                 ->with([
-
                     'vacancy' => $vacancyWithForm->first(),
                     'preprocessedForm' => json_decode($vacancyWithForm->first()->forms->formStructure, true),
-
                 ]);
         } else {
             abort(404, 'The application you\'re looking for could not be found or it is currently unavailable.');

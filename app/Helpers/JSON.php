@@ -103,11 +103,13 @@ class JSON
 
     public function build($headers = [])
     {
+        // Uses the same structure as model resources, for consistency when they aren't used.
         $response = [
-            'status' => $this->getStatus(),
-            'message' => $this->getMessage(),
-            'type' => $this->getType(),
-            'response' => $this->getData()
+            'data' => $this->getData(),
+            'meta' => [
+                'status' => $this->getStatus(),
+                'message' => $this->getMessage(),
+            ],
         ];
 
         return response($response, $this->getCode(), $headers);
