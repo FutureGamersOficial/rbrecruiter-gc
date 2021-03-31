@@ -10,7 +10,7 @@ namespace App\Helpers;
 class JSON
 {
 
-    protected $type, $status, $message, $code, $data;
+    protected $type, $status, $message, $code, $data, $additional;
 
     /**
      * @param mixed $type
@@ -19,6 +19,23 @@ class JSON
     {
         $this->type = $type;
         return $this;
+    }
+
+    /**
+     * @param mixed $additional
+     */
+    public function setAdditional($additional)
+    {
+        $this->additional = $additional;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdditional()
+    {
+        return $this->additional;
     }
 
     /**
@@ -109,9 +126,16 @@ class JSON
             'meta' => [
                 'status' => $this->getStatus(),
                 'message' => $this->getMessage(),
-            ],
+            ]
         ];
 
+        if (!empty($this->additional))
+        {
+            foreach($this->additional as $additionalKeyName => $key)
+            {
+                $response[$additionalKeyName] = $key;
+            }
+        }
         return response($response, $this->getCode(), $headers);
     }
 

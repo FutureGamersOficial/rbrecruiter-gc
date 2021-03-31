@@ -19,6 +19,7 @@
  *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use App\Http\Controllers\ApplicationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['api'])->group(function (){
 
-    Route::get('applications', [\App\Http\Controllers\ApplicationController::class, 'showAllApps']);
-    Route::get('applications/view/{application}', [\App\Http\Controllers\ApplicationController::class, 'showUserApp']);
+
+    Route::group(['prefix' => 'applications'], function () {
+
+        Route::get('/', [ApplicationController::class, 'showAllApps']);
+        Route::get('view/{application}', [ApplicationController::class, 'showUserApp']);
+        Route::post('apply/{vacancySlug}', [ApplicationController::class, 'saveApplicationAnswers']);
+        Route::patch('update/{application}/{newStatus}', [ApplicationController::class, 'updateApplicationStatus']);
+        Route::delete('delete/{application}', [ApplicationController::class, 'delete']);
+
+    });
 
 });
