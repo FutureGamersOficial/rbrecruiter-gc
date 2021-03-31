@@ -271,7 +271,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::delete('forms/destroy/{form}', [FormController::class, 'destroy'])
                 ->name('destroyForm');
-
+                
             Route::get('forms', [FormController::class, 'index'])
                 ->name('showForms');
 

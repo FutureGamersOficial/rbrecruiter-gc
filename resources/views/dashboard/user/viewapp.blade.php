@@ -103,7 +103,8 @@
                         <div class="mt-4 mb-3">
 
                             <h5>{{$content['title']}}</h5>
-                            <p>{{$content['response']}}</p>
+                            
+                            <p>{!! GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($content['response']) !!}</p>
 
                         </div>
 

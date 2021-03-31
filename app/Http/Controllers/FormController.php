@@ -82,6 +82,7 @@ class FormController extends Controller
     public function destroy(Request $request, Form $form)
     {
         $this->authorize('delete', $form);
+
         $deletable = true;
 
         if (! is_null($form) && ! is_null($form->vacancies) && $form->vacancies->count() !== 0 || ! is_null($form->responses)) {
@@ -97,6 +98,7 @@ class FormController extends Controller
         }
 
         return redirect()->back();
+                
     }
 
     public function preview(Request $request, Form $form)
