@@ -9,6 +9,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class APIAuthenticationMiddleware
@@ -34,12 +35,15 @@ class APIAuthenticationMiddleware
 
             if ($keyRecord && Hash::check($loneKey, $keyRecord->secret) && $keyRecord->status == 'active')
             {
-                Log::alert('API Authentication Success', [
-                    'discriminator' => $discriminator
-                ]);
-
                 $keyRecord->last_used = Carbon::now();
                 $keyRecord->save();
+
+                Log::info('Recording API call, see context', [
+                    'uri' => $request->url(),
+                    'name' => Route::currentRouteName(),
+                    'discriminator' => $discriminator,
+                    'ip' => $request->ip()
+                ]);
 
                 return $next($request);
             }
