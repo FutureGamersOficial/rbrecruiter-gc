@@ -21,6 +21,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\JSON;
 use App\Form;
 use App\Http\Requests\VacancyEditRequest;
 use App\Http\Requests\VacancyRequest;
@@ -45,7 +46,11 @@ class VacancyController extends Controller
 
     public function store(VacancyRequest $request)
     {
+        $messageIsError = false;
         $this->authorize('create', Vacancy::class);
+
+
+
         $form = Form::find($request->vacancyFormID);
 
         if (! is_null($form)) {
@@ -67,12 +72,16 @@ class VacancyController extends Controller
 
             ]);
 
-            $request->session()->flash('success', 'Vacancy successfully opened. It will now show in the home page.');
+            $message = __('Vacancy successfully opened. It will now show in the home page.');
+
         } else {
-            $request->session()->flash('error', 'You cannot create a vacancy without a valid form.');
+            $message = __('You cannot create a vacancy without a valid form.');
+            $messageIsError = true;
         }
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with(($messageIsError) ? 'error' : 'success', $message);
     }
 
     public function updatePositionAvailability(Request $request, $status, Vacancy $vacancy)
@@ -85,13 +94,13 @@ class VacancyController extends Controller
             switch ($status) {
                 case 'open':
                     $vacancy->open();
-                    $message = 'Position successfully opened!';
+                    $message = __('Position successfully opened!');
 
                     break;
 
                 case 'close':
                     $vacancy->close();
-                    $message = 'Position successfully closed!';
+                    $message = __('Position successfully closed!');
 
                     foreach (User::all() as $user) {
                         if ($user->isStaffMember()) {
@@ -101,18 +110,19 @@ class VacancyController extends Controller
                     break;
 
                 default:
-                    $message = "Please do not tamper with the button's URLs. To report a bug, please contact an administrator.";
+                    $message = __("Please do not tamper with the URLs. To report a bug, please contact an administrator.");
                     $type = 'error';
 
             }
         } else {
-            $message = "The position you're trying to update doesn't exist!";
+            $message = __("The position you're trying to update doesn't exist!");
             $type = 'error';
         }
 
-        $request->session()->flash($type, $message);
+        return redirect()
+            ->back()
+            ->with($type, $message);
 
-        return redirect()->back();
     }
 
     public function edit(Request $request, Vacancy $vacancy)
@@ -127,14 +137,14 @@ class VacancyController extends Controller
     {
         $this->authorize('update', $vacancy);
 
-        $vacancy->vacancyFullDescription = $request->vacancyFullDescription;
+        $vacancy->vacancyFullDescription =  $request->vacancyFullDescription;
         $vacancy->vacancyDescription = $request->vacancyDescription;
         $vacancy->vacancyCount = $request->vacancyCount;
 
         $vacancy->save();
 
-        $request->session()->flash('success', 'Vacancy successfully updated.');
-
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', __('Vacancy successfully updated.'));
     }
 }

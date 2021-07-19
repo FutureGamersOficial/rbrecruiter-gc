@@ -77,15 +77,15 @@ class OptionsController extends Controller
                     report($ex);
 
                     $errorCond = true;
-                    $request->session()->flash('error', 'An error occurred while trying to save settings: '.$ex->getMessage());
+                    $request->session()->flash('error', __('An error occurred while trying to save settings: :message ', ['message' => $ex->getMessage()]));
                 }
             }
 
             if (! isset($errorCond)) {
-                $request->session()->flash('success', 'Settings saved successfully!');
+                $request->session()->flash('success', __('Settings saved successfully!'));
             }
         } else {
-            $request->session()->flash('error', 'You do not have permission to update this resource.');
+            $request->session()->flash('error', __('You do not have permission to update this resource.'));
         }
 
         return redirect()->back();
@@ -103,13 +103,13 @@ class OptionsController extends Controller
         if (!is_null($request->gamePref) && in_array($request->gamePref, $supportedGames))
         {
             Options::changeOption('currentGame', $request->gamePref);
-            $request->session()->flash('success', 'Updated current game.');
+            $request->session()->flash('success', __('Updated current game.'));
 
             return redirect()->back();
         }
 
-        $request->session()->flash('error', 'Unsupported game ' . $request->gamePref . '.');
-        
+        $request->session()->flash('error', __('Unsupported game :game.', ['game' => $request->gamePref ]));
+
         return redirect()->back();
     }
 }

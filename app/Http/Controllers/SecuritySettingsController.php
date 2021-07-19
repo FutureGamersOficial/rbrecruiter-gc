@@ -41,7 +41,7 @@ class SecuritySettingsController extends Controller
         Options::changeOption('force2fa', $request->enforce2fa);
         Options::changeOption('requireGameLicense', $request->requirePMC);
 
-        $request->session()->flash('success', 'Settings saved successfully.');
+        $request->session()->flash('success', __('Settings saved successfully.'));
         return redirect()->back();
 
     }

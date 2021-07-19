@@ -42,7 +42,7 @@ trait ReceivesAccountTokens
         $user->delete();
         Auth::logout();
 
-        $request->session()->flash('success', 'Please check your email to finish deleting your account.');
+        $request->session()->flash('success', __('Please check your email to finish deleting your account.'));
 
         return redirect()->to('/');
     }
@@ -68,7 +68,7 @@ trait ReceivesAccountTokens
 
                     $user->forceDelete();
 
-                    $request->session()->flash('success', 'Account permanently deleted. Thank you for using our service.');
+                    $request->session()->flash('success', __('Account permanently deleted. Thank you for using our service.'));
 
                     return redirect()->to('/');
                 }
@@ -79,7 +79,7 @@ trait ReceivesAccountTokens
 
                 if ($user->verifyAccountToken($token, 'cancelToken')) {
                     $user->restore();
-                    $request->session()->flash('success', 'Account deletion cancelled! You may now login.');
+                    $request->session()->flash('success', __('Account deletion cancelled! You may now login.'));
 
                     return redirect()->to(route('login'));
                 }
@@ -88,7 +88,7 @@ trait ReceivesAccountTokens
 
             default:
 
-                abort(404, 'The page you were trying to access may not exist or may be expired.');
+                abort(404, __('The page you were trying to access may not exist or may be expired.'));
         }
     }
 }

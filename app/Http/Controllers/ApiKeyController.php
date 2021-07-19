@@ -29,8 +29,8 @@ class ApiKeyController extends Controller
     {
         $this->authorize('create', ApiKey::class);
 
-        $discriminator = "#" . bin2hex(openssl_random_pseudo_bytes(7));
-        $secret = bin2hex(openssl_random_pseudo_bytes(32));
+        $discriminator = "#" . bin2hex(random_bytes(7));
+        $secret = bin2hex(random_bytes(32));
 
         $key = ApiKey::create([
             'name' => $request->keyName,

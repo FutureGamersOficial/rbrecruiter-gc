@@ -173,7 +173,7 @@ class UserController extends Controller
         if (! is_null($user)) {
             $user->password = Hash::make($request->newPassword);
             $user->password_last_updated = now();
-            
+
             $user->save();
 
             Log::info('User '.$user->name.' has changed their password', [
@@ -204,9 +204,9 @@ class UserController extends Controller
             ]);
             $user->notify(new EmailChanged());
 
-            $request->session()->flash('success', 'Your email address has been changed!');
+            $request->session()->flash('success', __('Your email address has been changed!'));
         } else {
-            $request->session()->flash('error', 'There has been an error whilst trying to update your account. Please contact administrators.');
+            $request->session()->flash('error', __('There has been an error whilst trying to update your account. Please contact administrators.'));
         }
 
         return redirect()->back();
@@ -218,9 +218,9 @@ class UserController extends Controller
 
         if ($request->confirmPrompt == 'DELETE ACCOUNT') {
             $user->forceDelete();
-            $request->session()->flash('success', 'User deleted successfully. PII has been erased.');
+            $request->session()->flash('success', __('User deleted successfully.'));
         } else {
-            $request->session()->flash('error', 'Wrong confirmation text! Try again.');
+            $request->session()->flash('error', __('Wrong confirmation text! Try again.'));
         }
 
         return redirect()->route('registeredPlayerList');
@@ -287,9 +287,9 @@ class UserController extends Controller
                 $request->session()->forget('twofaAttemptFailed');
             }
 
-            $request->session()->flash('success', '2FA succesfully enabled! You\'ll now be prompted for an OTP each time you log in.');
+            $request->session()->flash('success', __('2FA succesfully enabled! You\'ll now be prompted for an OTP each time you log in.'));
         } else {
-            $request->session()->flash('error', 'Incorrect code. Please reopen the 2FA settings panel and try again.');
+            $request->session()->flash('error', __('Incorrect code. Please reopen the 2FA settings panel and try again.'));
             $request->session()->put('twofaAttemptFailed', true);
         }
 
@@ -306,7 +306,7 @@ class UserController extends Controller
         $request->user()->twofa_secret = null;
         $request->user()->save();
 
-        $request->session()->flash('success', 'Two-factor authentication disabled.');
+        $request->session()->flash('success', __('Two-factor authentication disabled.'));
 
         return redirect()->back();
     }
@@ -317,7 +317,7 @@ class UserController extends Controller
 
         // TODO: move logic to policy
         if (! $user->isStaffMember() || $user->is(Auth::user())) {
-            $request->session()->flash('error', 'You cannot terminate this user.');
+            $request->session()->flash('error', __('You cannot terminate this user.'));
 
             return redirect()->back();
         }
@@ -331,7 +331,7 @@ class UserController extends Controller
         }
 
         Log::info('User '.$user->name.' has just been demoted.');
-        $request->session()->flash('success', 'User terminated successfully.');
+        $request->session()->flash('success', __('User terminated successfully.'));
 
         //TODO: Dispatch event
         return redirect()->back();

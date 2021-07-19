@@ -32,7 +32,7 @@ class DevToolsController extends Controller
     protected function isolatedAuthorise()
     {
         if (! Auth::user()->can('admin.developertools.use')) {
-            abort(403, 'You\'re not authorized to access this page.');
+            abort(403, __('You\'re not authorized to access this page.'));
         }
     }
 
@@ -52,9 +52,9 @@ class DevToolsController extends Controller
         if (! is_null($application)) {
             event(new ApplicationApprovedEvent($application));
 
-            $request->session()->flash('success', 'Event dispatched! Please check the debug logs for more info');
+            $request->session()->flash('success', __('Event dispatched! Please check the debug logs for more info'));
         } else {
-            $request->session()->flash('error', 'Application doesn\'t exist!');
+            $request->session()->flash('error', __('Application doesn\'t exist!'));
         }
 
         return redirect()->back();

@@ -54,7 +54,7 @@ class ContactController extends Controller
         $response = json_decode($verifyrequest->getBody(), true);
 
         if (! $response['success']) {
-            $request->session()->flash('error', 'Beep beep boop... Robot? Submission failed.');
+            $request->session()->flash('error', __('Beep beep boop... Robot? Submission failed.'));
 
             return redirect()->back();
         }
@@ -69,7 +69,7 @@ class ContactController extends Controller
             }
         }
 
-        $request->session()->flash('success', 'Message sent successfully! We usually respond within 48 hours.');
+        $request->session()->flash('success', __('Message sent successfully! We usually respond within 48 hours.'));
 
         return redirect()->back();
     }

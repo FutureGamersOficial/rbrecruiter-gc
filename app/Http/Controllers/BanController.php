@@ -73,9 +73,9 @@ class BanController extends Controller
             ]);
 
             event(new UserBannedEvent($user, $ban));
-            $request->session()->flash('success', 'User banned successfully! Ban ID:  #'.$ban->id);
+            $request->session()->flash('success', 'User suspended successfully! Ban ID:  #'.$ban->id);
         } else {
-            $request->session()->flash('error', 'User already banned!');
+            $request->session()->flash('error', 'User already suspended!');
         }
 
         return redirect()->back();
@@ -87,9 +87,9 @@ class BanController extends Controller
 
         if (! is_null($user->bans)) {
             $user->bans->delete();
-            $request->session()->flash('success', 'User unbanned successfully!');
+            $request->session()->flash('success', __('User unsuspended successfully!'));
         } else {
-            $request->session()->flash('error', 'This user isn\'t banned!');
+            $request->session()->flash('error', __('This user isn\'t suspended!'));
         }
 
         return redirect()->back();

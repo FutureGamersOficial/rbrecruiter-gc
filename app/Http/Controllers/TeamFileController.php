@@ -140,11 +140,11 @@ class TeamFileController extends Controller
             Storage::delete($teamFile->fs_location);
             $teamFile->delete();
 
-            $request->session()->flash('success', 'File deleted successfully.');
+            $request->session()->flash('success', __('File deleted successfully.'));
         }
         catch (\Exception $ex)
         {
-            $request->session()->flash('error', 'There was an error deleting the file: ' . $ex->getMessage());
+            $request->session()->flash('error', __('There was an error deleting the file: :msg', ['msg' => $ex->getMessage()]));
         }
 
         return redirect()->back();

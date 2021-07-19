@@ -70,7 +70,7 @@ class TeamController extends Controller
 
         Auth::user()->teams()->attach($team->id);
 
-        $request->session()->flash('success', 'Team successfully created.');
+        $request->session()->flash('success', __('Team successfully created.'));
 
         return redirect()->back();
     }
@@ -110,8 +110,7 @@ class TeamController extends Controller
         $team->openJoin = $request->joinType;
 
         $team->save();
-
-        $request->session()->flash('success', 'Team edited successfully.');
+        $request->session()->flash('success', __('Team edited successfully.'));
 
         return redirect()->to(route('teams.index'));
     }
@@ -139,12 +138,12 @@ class TeamController extends Controller
                     Mail::to($user)->send(new InviteToTeam($invite));
                 });
 
-                $request->session()->flash('success', 'Invite sent! They can now accept or deny it.');
+                $request->session()->flash('success', __('Invite sent! They can now accept or deny it.'));
             } else {
-                $request->session()->flash('error', 'This user has already been invited.');
+                $request->session()->flash('error', __('This user has already been invited.'));
             }
         } else {
-            $request->session()->flash('error', 'You can\'t invite users to public teams.');
+            $request->session()->flash('error', __('You can\'t invite users to public teams.'));
         }
 
         return redirect()->back();
@@ -159,9 +158,9 @@ class TeamController extends Controller
 
                 if ($invite && $invite->user->is(Auth::user())) {
                     Teamwork::acceptInvite($invite);
-                    $request->session()->flash('success', 'Invite accepted! You have now joined '.$invite->team->name.'.');
+                    $request->session()->flash('success', __('Invite accepted! You have now joined :teamName.', ['teamName' => $invite->team->name]));
                 } else {
-                    $request->session()->flash('error', 'Invalid or expired invite URL.');
+                    $request->session()->flash('error', __('Invalid or expired invite URL.'));
                 }
 
                break;
@@ -172,9 +171,9 @@ class TeamController extends Controller
 
                 if ($invite && $invite->user->is(Auth::user())) {
                     Teamwork::denyInvite($invite);
-                    $request->session()->flash('success', 'Invite denied! Ask for another invite if this isn\'t what you meant.');
+                    $request->session()->flash('success', __('Invite denied! Ask for another invite if this isn\'t what you meant.'));
                 } else {
-                    $request->session()->flash('error', 'Invalid or expired invite URL.');
+                    $request->session()->flash('error', __('Invalid or expired invite URL.'));
                 }
 
                 break;
@@ -195,9 +194,9 @@ class TeamController extends Controller
         try {
             Auth::user()->switchTeam($team);
 
-            $request->session()->flash('success', 'Switched teams! Your team dashboard will now use this context.');
+            $request->session()->flash('success', __('Switched teams! Your team dashboard will now use this context.'));
         } catch (UserNotInTeamException $ex) {
-            $request->session()->flash('error', 'You can\'t switch to a team you don\'t belong to.');
+            $request->session()->flash('error', __('You can\'t switch to a team you don\'t belong to.'));
         }
 
         return redirect()->back();
@@ -220,7 +219,7 @@ class TeamController extends Controller
                 $team->vacancies()->detach($vacancy->id);
             }
 
-            $request->session()->flash('success', 'Removed all vacancy associations.');
+            $request->session()->flash('success', __('Removed all vacancy associations.'));
 
             return redirect()->back();
         }
@@ -240,7 +239,7 @@ class TeamController extends Controller
             $team->vacancies()->attach($requestVacancies);
         }
 
-        $request->session()->flash('success', 'Assignments changed successfully.');
+        $request->session()->flash('success', __('Assignments changed successfully.'));
 
         return redirect()->back();
     }

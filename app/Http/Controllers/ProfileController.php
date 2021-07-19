@@ -84,7 +84,7 @@ class ProfileController extends Controller
                     'roles' => $roleList,
                 ]);
         } else {
-            abort(403, 'You cannot view someone else\'s profile.');
+            abort(403, __('You cannot view someone else\'s profile.'));
         }
     }
 
@@ -117,7 +117,7 @@ class ProfileController extends Controller
 
             $newProfile = $profile->save();
 
-            $request->session()->flash('success', 'Profile settings saved successfully.');
+            $request->session()->flash('success', __('Profile settings saved successfully.'));
         }
 
         return redirect()->back();

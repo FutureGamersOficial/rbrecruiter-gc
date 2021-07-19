@@ -45,9 +45,9 @@ class CommentController extends Controller
         ]);
 
         if ($comment) {
-            $request->session()->flash('success', 'Comment posted! (:');
+            $request->session()->flash('success', __('Comment posted! (:'));
         } else {
-            $request->session()->flash('error', 'Something went wrong while posting your comment!');
+            $request->session()->flash('error', __('Something went wrong while posting your comment!'));
         }
 
         return redirect()->back();
@@ -58,7 +58,7 @@ class CommentController extends Controller
         $this->authorize('delete', $comment);
 
         $comment->delete();
-        $request->session()->flash('success', 'Comment deleted!');
+        $request->session()->flash('success', __('Comment deleted!'));
 
         return redirect()->back();
     }

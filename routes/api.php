@@ -47,4 +47,8 @@ Route::middleware(['api'])->group(function (){
 
     });
 
+    Route::group(['prefix' => 'vacancies'], function () {
+
+    });
+
 });

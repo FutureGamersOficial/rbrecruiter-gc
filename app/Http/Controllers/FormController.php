@@ -51,7 +51,7 @@ class FormController extends Controller
         if (count($fields) == 2) {
             // form is probably empty, since forms with fields will alawys have more than 2 items
 
-            $request->session()->flash('error', 'Sorry, but you may not create empty forms.');
+            $request->session()->flash('error', __('Sorry, but you may not create empty forms.'));
 
             return redirect()->to(route('showForms'));
         }
@@ -69,7 +69,7 @@ class FormController extends Controller
                 ]
             );
 
-            $request->session()->flash('success', 'Form created! You can now link this form to a vacancy.');
+            $request->session()->flash('success', __('Form created! You can now link this form to a vacancy.'));
 
             return redirect()->to(route('showForms'));
         }
@@ -92,13 +92,13 @@ class FormController extends Controller
         if ($deletable) {
             $form->delete();
 
-            $request->session()->flash('success', 'Form deleted successfully.');
+            $request->session()->flash('success', __('Form deleted successfully.'));
         } else {
-            $request->session()->flash('error', 'You cannot delete this form because it\'s tied to one or more applications and ranks, or because it doesn\'t exist.');
+            $request->session()->flash('error', __('You cannot delete this form because it\'s tied to one or more applications and ranks, or because it doesn\'t exist.'));
         }
 
         return redirect()->back();
-                
+
     }
 
     public function preview(Request $request, Form $form)
@@ -135,7 +135,7 @@ class FormController extends Controller
             $form->formStructure = $contextValidation->get('structure');
             $form->save();
 
-            $request->session()->flash('success', 'Hooray! Your form was updated. New applications for it\'s vacancy will use it.');
+            $request->session()->flash('success', __('Hooray! Your form was updated. New applications for it\'s vacancy will use it.'));
         } else {
             $request->session()->flash('errors', $contextValidation->get('validator')->errors()->getMessages());
         }
