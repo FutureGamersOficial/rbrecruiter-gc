@@ -21,7 +21,7 @@
 
 namespace App\Console;
 
-use App\Jobs\CleanBans;
+use App\Jobs\ProcessDueSuspensions;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -50,7 +50,7 @@ class Kernel extends ConsoleKernel
             ->daily();
         // Production value: Every day
 
-        $schedule->job(new CleanBans)
+        $schedule->job(new ProcessDueSuspensions)
             ->daily();
         // Production value: Every day
     }

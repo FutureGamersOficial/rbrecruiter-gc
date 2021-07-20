@@ -71,6 +71,17 @@ class ProfileController extends Controller
             }
         }
 
+        $suspensionInfo = null;
+        if ($user->isBanned())
+        {
+            $suspensionInfo = [
+
+                'isPermanent' => $user->bans->isPermanent,
+                'reason' => $user->bans->reason,
+                'bannedUntil' => $user->bans->bannedUntil
+            ];
+        }
+
         if (Auth::user()->is($user) || Auth::user()->can('profiles.view.others')) {
             return view('dashboard.user.profile.displayprofile')
                 ->with([
@@ -82,6 +93,7 @@ class ProfileController extends Controller
                     'since' => $createdDate->englishMonth.' '.$createdDate->year,
                     'ipInfo' => IP::lookup($user->originalIP),
                     'roles' => $roleList,
+                    'suspensionInfo' => $suspensionInfo
                 ]);
         } else {
             abort(403, __('You cannot view someone else\'s profile.'));

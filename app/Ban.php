@@ -30,13 +30,13 @@ class Ban extends Model
         'userID',
         'reason',
         'bannedUntil',
-        'userAgent',
+        'isPermanent',
         'authorUserID',
 
     ];
 
     public $dates = [
-        'bannedUntil',
+        'suspendedUntil',
     ];
 
     public function user()

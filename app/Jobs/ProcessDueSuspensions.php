@@ -30,7 +30,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class CleanBans implements ShouldQueue
+class ProcessDueSuspensions implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -52,15 +52,15 @@ class CleanBans implements ShouldQueue
      */
     public function handle()
     {
-        Log::debug('Running automatic ban cleaner...');
+        Log::debug('Running automatic suspension cleaner...');
         $bans = Ban::all();
 
         if (! is_null($bans)) {
             foreach ($this->bans as $ban) {
                 $bannedUntil = Carbon::parse($ban->bannedUntil);
 
-                if ($bannedUntil->equalTo(now())) {
-                    Log::debug('Deleted ban '.$ban->id.' belonging to '.$ban->user->name);
+                if ($bannedUntil->isToday()) {
+                    Log::debug('Lifted expired suspension ID '.$ban->id.' for '.$ban->user->name);
                     $ban->delete();
                 }
             }

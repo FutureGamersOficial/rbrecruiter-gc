@@ -45,8 +45,15 @@ class BanUserRequest extends FormRequest
     {
         return [
             'reason' => 'required|string',
-            'durationOperand' => 'nullable|string',
-            'durationOperator' => 'nullable|string',
+            'suspensionType' => 'required|string',
+            'duration' => 'required_if:suspensionType,on|nullable|integer',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+          'duration.required_if' => __('You must provide a duration if the suspension is temporary.')
         ];
     }
 }

@@ -34,48 +34,26 @@ class BanController extends Controller
     {
         $this->authorize('create', [Ban::class, $user]);
 
-        // FIXME: Needs refactoring to a simpler format, e.g. parse the user's given date directly.
 
         if (is_null($user->bans)) {
+
+            $duration = $request->duration;
             $reason = $request->reason;
-            $duration = strtolower($request->durationOperator);
-            $durationOperand = $request->durationOperand;
+            $type = $request->suspensionType; // ON: Temporary | OFF: Permanent
 
-            $expiryDate = now();
-
-            if (! empty($duration)) {
-                switch ($duration) {
-                    case 'days':
-                        $expiryDate->addDays($durationOperand);
-                        break;
-
-                    case 'weeks':
-                        $expiryDate->addWeeks($durationOperand);
-                        break;
-
-                    case 'months':
-                        $expiryDate->addMonths($durationOperand);
-                        break;
-
-                    case 'years':
-                        $expiryDate->addYears($durationOperand);
-                        break;
-                }
-            } else {
-                // Essentially permanent
-                $expiryDate->addYears(40);
+            if ($type == "on") {
+                $expiryDate = now()->addDays($duration);
             }
 
             $ban = Ban::create([
                 'userID' => $user->id,
                 'reason' => $reason,
-                'bannedUntil' => $expiryDate->format('Y-m-d H:i:s'),
-                'userAgent' => 'Unknown',
+                'bannedUntil' => ($type == "on") ? $expiryDate->format('Y-m-d H:i:s') : null,
                 'authorUserID' => Auth::user()->id,
+                'isPermanent' => ($type == "off") ? true : false
             ]);
 
-            event(new UserBannedEvent($user, $ban));
-            $request->session()->flash('success', __('Account suspended. Suspension ID #:susId', ['susId', $ban->id]));
+            $request->session()->flash('success', __('Account suspended.'));
         } else {
             $request->session()->flash('error', __('Account already suspended!'));
         }
