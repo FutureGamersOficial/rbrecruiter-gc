@@ -42,7 +42,7 @@ class VoteController extends Controller
         Log::info('User '.Auth::user()->name.' has voted in applicant '.$application->user->name.'\'s application', [
             'voteType' => $voteRequest->voteType,
         ]);
-        $voteRequest->session()->flash('success', 'Your vote has been registered!');
+        $voteRequest->session()->flash('success', __('Your vote has been counted!'));
 
         // Cron job will run command that processes votes
         return redirect()->back();

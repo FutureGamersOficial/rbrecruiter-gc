@@ -62,7 +62,7 @@ class AppointmentController extends Controller
         ]);
 
         $application->user->notify(new AppointmentScheduled($appointment));
-        $request->session()->flash('success', 'Appointment successfully scheduled @ '.$appointmentDate->toDateTimeString());
+        $request->session()->flash('success', __('Appointment successfully scheduled @ :appointmentTime', ['appointmentTime', $appointmentDate->toDateTimeString()]));
 
         return redirect()->back();
     }
@@ -83,7 +83,7 @@ class AppointmentController extends Controller
         $application->setStatus('STAGE_PEERAPPROVAL');
         $application->user->notify(new ApplicationMoved());
 
-        $request->session()->flash('success', 'Interview finished! Staff members can now vote on it.');
+        $request->session()->flash('success', __('Interview finished! Staff members can now vote on it.'));
 
         return redirect()->back();
     }
@@ -97,9 +97,9 @@ class AppointmentController extends Controller
             $application->appointment->meetingNotes = $request->noteText;
             $application->appointment->save();
 
-            $request->session()->flash('success', 'Meeting notes have been saved.');
+            $request->session()->flash('success', __('Meeting notes have been saved.'));
         } else {
-            $request->session()->flash('error', 'There\'s no appointment to save notes to!');
+            $request->session()->flash('error', __('There\'s no appointment to save notes to!'));
         }
 
         return redirect()->back();

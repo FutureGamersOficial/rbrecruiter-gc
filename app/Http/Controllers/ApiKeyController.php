@@ -42,7 +42,7 @@ class ApiKeyController extends Controller
 
         if ($key)
         {
-            $request->session()->flash('success', 'Key successfully registered!');
+            $request->session()->flash('success', __('Key successfully registered!'));
             $request->session()->flash('finalKey', $discriminator . '.' . $secret);
 
             return redirect()
@@ -51,7 +51,7 @@ class ApiKeyController extends Controller
 
         return redirect()
             ->back()
-            ->with('error', 'An error occurred whilst trying to create an API key.');
+            ->with('error', __('An error occurred whilst trying to create an API key.'));
     }
 
 
@@ -68,12 +68,12 @@ class ApiKeyController extends Controller
        {
            return redirect()
                ->back()
-               ->with('error', 'Key already revoked.');
+               ->with('error', __('Key already revoked.'));
        }
 
        return redirect()
            ->back()
-           ->with('success', 'Key revoked. Apps using this key will stop working.');
+           ->with('success', __('Key revoked. Apps using this key will stop working.'));
 
    }
 
@@ -89,7 +89,7 @@ class ApiKeyController extends Controller
 
         return redirect()
             ->back()
-            ->with('success', 'Key deleted successfully. Apps using this key will stop working.');
+            ->with('success', __('Key deleted successfully. Apps using this key will stop working.'));
 
     }
 }

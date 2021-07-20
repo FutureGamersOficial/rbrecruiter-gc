@@ -110,7 +110,7 @@ class UserController extends Controller
             ->get();
 
         if (! $matchingUsers->isEmpty()) {
-            $request->session()->flash('success', 'There were '.$matchingUsers->count().' user(s) matching your search.');
+            $request->session()->flash('success', __('There were :usersCount user(s) matching your search.', ['usersCount' => $matchingUsers->count()]));
 
             return view('dashboard.administration.players')
             ->with([
@@ -118,7 +118,7 @@ class UserController extends Controller
                 'bannedUserCount' => Ban::all()->count(),
             ]);
         } else {
-            $request->session()->flash('error', 'Your search term did not return any results.');
+            $request->session()->flash('error', __('Your search term did not return any results.'));
 
             return redirect(route('registeredPlayerList'));
         }
@@ -161,7 +161,7 @@ class UserController extends Controller
             'timestamp' => now(),
         ]);
 
-        $request->session()->flash('success', 'Successfully logged out other devices. Remember to change your password if you think you\'ve been compromised.');
+        $request->session()->flash('success', __('Successfully logged out other devices. Remember to change your password if you think you\'ve been compromised.'));
 
         return redirect()->back();
     }
@@ -236,8 +236,8 @@ class UserController extends Controller
         $user->uuid = $request->uuid;
 
         $existingRoles = Role::all()
-        ->pluck('name')
-        ->all();
+            ->pluck('name')
+            ->all();
 
         $roleDiff = array_diff($existingRoles, $request->roles);
 
@@ -255,7 +255,7 @@ class UserController extends Controller
         }
 
         $user->save();
-        $request->session()->flash('success', 'User updated successfully!');
+        $request->session()->flash('success', __('User updated successfully!'));
 
         return redirect()->back();
     }

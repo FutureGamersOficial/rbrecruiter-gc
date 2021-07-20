@@ -34,6 +34,8 @@ class BanController extends Controller
     {
         $this->authorize('create', [Ban::class, $user]);
 
+        // FIXME: Needs refactoring to a simpler format, e.g. parse the user's given date directly.
+
         if (is_null($user->bans)) {
             $reason = $request->reason;
             $duration = strtolower($request->durationOperator);
@@ -61,7 +63,7 @@ class BanController extends Controller
                 }
             } else {
                 // Essentially permanent
-                $expiryDate->addYears(5);
+                $expiryDate->addYears(40);
             }
 
             $ban = Ban::create([
@@ -73,9 +75,9 @@ class BanController extends Controller
             ]);
 
             event(new UserBannedEvent($user, $ban));
-            $request->session()->flash('success', 'User suspended successfully! Ban ID:  #'.$ban->id);
+            $request->session()->flash('success', __('Account suspended. Suspension ID #:susId', ['susId', $ban->id]));
         } else {
-            $request->session()->flash('error', 'User already suspended!');
+            $request->session()->flash('error', __('Account already suspended!'));
         }
 
         return redirect()->back();

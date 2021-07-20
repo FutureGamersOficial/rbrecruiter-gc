@@ -29,10 +29,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function index()
-    {
-        //
-    }
 
     public function insert(NewCommentRequest $request, Application $application)
     {
@@ -45,7 +41,7 @@ class CommentController extends Controller
         ]);
 
         if ($comment) {
-            $request->session()->flash('success', __('Comment posted! (:'));
+            $request->session()->flash('success', __('Comment posted!'));
         } else {
             $request->session()->flash('error', __('Something went wrong while posting your comment!'));
         }
