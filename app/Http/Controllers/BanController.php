@@ -24,37 +24,34 @@ namespace App\Http\Controllers;
 use App\Ban;
 use App\Events\UserBannedEvent;
 use App\Http\Requests\BanUserRequest;
+use App\Services\AccountSuspensionService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BanController extends Controller
 {
+
+    protected $suspensionService;
+
+    public function __construct(AccountSuspensionService $suspensionService)
+    {
+        // Inject the service via DI
+        $this->suspensionService = $suspensionService;
+    }
+
     public function insert(BanUserRequest $request, User $user)
     {
         $this->authorize('create', [Ban::class, $user]);
 
 
-        if (is_null($user->bans)) {
+        if (!$this->suspensionService->isSuspended($user)) {
 
-            $duration = $request->duration;
-            $reason = $request->reason;
-            $type = $request->suspensionType; // ON: Temporary | OFF: Permanent
-
-            if ($type == "on") {
-                $expiryDate = now()->addDays($duration);
-            }
-
-            $ban = Ban::create([
-                'userID' => $user->id,
-                'reason' => $reason,
-                'bannedUntil' => ($type == "on") ? $expiryDate->format('Y-m-d H:i:s') : null,
-                'authorUserID' => Auth::user()->id,
-                'isPermanent' => ($type == "off") ? true : false
-            ]);
-
+            $this->suspensionService->suspend($request->reason, $request->duration, $user, $request->suspensionType);
             $request->session()->flash('success', __('Account suspended.'));
+
         } else {
+
             $request->session()->flash('error', __('Account already suspended!'));
         }
 
@@ -65,11 +62,13 @@ class BanController extends Controller
     {
         $this->authorize('delete', $user->bans);
 
-        if (! is_null($user->bans)) {
-            $user->bans->delete();
-            $request->session()->flash('success', __('User unsuspended successfully!'));
+        if ($this->suspensionService->isSuspended($user)) {
+
+            $this->suspensionService->unsuspend($user);
+            $request->session()->flash('success', __('Account unsuspended successfully!'));
+
         } else {
-            $request->session()->flash('error', __('This user isn\'t suspended!'));
+            $request->session()->flash('error', __('This account isn\'t suspended!'));
         }
 
         return redirect()->back();
