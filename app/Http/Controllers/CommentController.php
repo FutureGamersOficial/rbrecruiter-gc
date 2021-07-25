@@ -24,21 +24,22 @@ namespace App\Http\Controllers;
 use App\Application;
 use App\Comment;
 use App\Http\Requests\NewCommentRequest;
+use App\Services\CommentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    private $commentService;
+
+    public function __construct(CommentService $commentService) {
+        $this->commentService = $commentService;
+    }
 
     public function insert(NewCommentRequest $request, Application $application)
     {
         $this->authorize('create', Comment::class);
-
-        $comment = Comment::create([
-            'authorID' => Auth::user()->id,
-            'applicationID' => $application->id,
-            'text' => $request->comment,
-        ]);
+        $comment = $this->commentService->addComment($application, $request->comment);
 
         if ($comment) {
             $request->session()->flash('success', __('Comment posted!'));
@@ -52,10 +53,10 @@ class CommentController extends Controller
     public function delete(Request $request, Comment $comment)
     {
         $this->authorize('delete', $comment);
+        $this->commentService->deleteComment($comment);
 
-        $comment->delete();
-        $request->session()->flash('success', __('Comment deleted!'));
-
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', __('Comment deleted!'));
     }
 }

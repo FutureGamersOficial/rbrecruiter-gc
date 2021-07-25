@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/hrm-mcserver.iml" filepath="$PROJECT_DIR$/.idea/hrm-mcserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../rbrecruiter/.idea/rbrecruiter.iml" filepath="$PROJECT_DIR$/../rbrecruiter/.idea/rbrecruiter.iml" />
     </modules>
   </component>
 </project>

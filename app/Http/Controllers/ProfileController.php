@@ -23,6 +23,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\IP;
 use App\Http\Requests\ProfileSave;
+use App\Services\ProfileService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,6 +32,12 @@ use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
+    private $profileService;
+
+    public function __construct(ProfileService $profileService) {
+        $this->profileService = $profileService;
+    }
+
     public function index()
     {
         return view('dashboard.user.directory')
@@ -39,6 +46,7 @@ class ProfileController extends Controller
 
     public function showProfile()
     {
+        // TODO: Come up with cleaner social media solution, e.g. social media object
         $socialLinks = Auth::user()->profile->socialLinks ?? '[]';
         $socialMediaProfiles = json_decode($socialLinks, true);
 
@@ -52,8 +60,7 @@ class ProfileController extends Controller
             ]);
     }
 
-    // Route model binding
-    public function showSingleProfile(Request $request, User $user)
+    public function showSingleProfile(User $user)
     {
         $socialMediaProfiles = json_decode($user->profile->socialLinks, true);
         $createdDate = Carbon::parse($user->created_at);
@@ -102,36 +109,9 @@ class ProfileController extends Controller
 
     public function saveProfile(ProfileSave $request)
     {
-        $profile = User::find(Auth::user()->id)->profile;
-        $social = [];
-
-        if (! is_null($profile)) {
-            switch ($request->avatarPref) {
-                case 'MOJANG':
-                    $avatarPref = 'crafatar';
-
-                    break;
-                case 'GRAVATAR':
-                    $avatarPref = strtolower($request->avatarPref);
-
-                    break;
-            }
-
-            $social['links']['github'] = $request->socialGithub;
-            $social['links']['twitter'] = $request->socialTwitter;
-            $social['links']['insta'] = $request->socialInsta;
-            $social['links']['discord'] = $request->socialDiscord;
-
-            $profile->profileShortBio = $request->shortBio;
-            $profile->profileAboutMe = $request->aboutMe;
-            $profile->avatarPreference = $avatarPref;
-            $profile->socialLinks = json_encode($social);
-
-            $newProfile = $profile->save();
-
-            $request->session()->flash('success', __('Profile settings saved successfully.'));
-        }
-
-        return redirect()->back();
+        $this->profileService->updateProfile(Auth::user()->id, $request);
+        return redirect()
+            ->back()
+            ->with('success', __('Profile updated.'));
     }
 }

@@ -25,6 +25,8 @@ use App\Vacancy;
 
 class HomeController extends Controller
 {
+    // doesn't need a service, because it doesn't contain major logic.
+
     /**
      * Show the application dashboard.
      *

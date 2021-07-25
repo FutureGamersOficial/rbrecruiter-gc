@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Options;
 use App\Http\Requests\SaveSecuritySettings;
+use App\Services\SecuritySettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -11,38 +12,24 @@ use function PHPSTORM_META\map;
 
 class SecuritySettingsController extends Controller
 {
+    private $securityService;
+
+    public function __construct(SecuritySettingsService $securityService) {
+        $this->securityService = $securityService;
+    }
+
     public function save(SaveSecuritySettings $request)
     {
-        $validPolicies = [
-            'off',
-            'low',
-            'medium',
-            'high'
-        ];
+        $this->securityService->save($request->secPolicy, [
+           'graceperiod' => $request->graceperiod,
+           'pwExpiry' => $request->pwExpiry,
+           'enforce2fa' => $request->enforce2fa,
+           'requirePMC' => $request->requirePMC
+        ]);
 
-        if (in_array($request->secPolicy, $validPolicies))
-        {
-            Options::changeOption('pw_security_policy', $request->secPolicy);
-
-            Log::debug('[Options] Changing option pw_security_policy', [
-                'new_value' => $request->secPolicy
-            ]);
-        }
-        else
-        {
-            Log::debug('[WARN] Ignoring bogus policy', [
-                'avaliable' => $validPolicies,
-                'given' >= $request->secPolicy
-            ]);
-        }
-
-        Options::changeOption('graceperiod', $request->graceperiod);
-        Options::changeOption('password_expiry', $request->pwExpiry);
-        Options::changeOption('force2fa', $request->enforce2fa);
-        Options::changeOption('requireGameLicense', $request->requirePMC);
-
-        $request->session()->flash('success', __('Settings saved successfully.'));
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', __('Settings saved.'));
 
     }
 }

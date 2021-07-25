@@ -21,14 +21,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InvalidGamePreferenceException;
+use App\Exceptions\OptionNotFoundException;
 use App\Facades\Options;
 use App\Options as Option;
+use App\Services\ConfigurationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class OptionsController extends Controller
 {
+    private $configurationService;
+
+    public function __construct(ConfigurationService $configurationService) {
+
+        $this->configurationService = $configurationService;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +47,7 @@ class OptionsController extends Controller
      */
     public function index()
     {
-
+        // TODO: Replace with settings package
         return view('dashboard.administration.settings')
             ->with([
                 'options' => Options::getCategory('notifications'),
@@ -51,65 +62,44 @@ class OptionsController extends Controller
             ]);
     }
 
-    public function saveSettings(Request $request)
+    public function saveSettings(Request $request): \Illuminate\Http\RedirectResponse
     {
-        if (Auth::user()->can('admin.settings.edit')) {
-            Log::debug('Updating application options', [
-                'ip' => $request->ip(),
-                'ua' => $request->userAgent(),
-                'username' => Auth::user()->username,
-            ]);
-            foreach ($request->all() as $optionName => $option) {
-                try {
-                    Log::debug('Going through option '.$optionName);
-                    if (Options::optionExists($optionName)) {
-                        Log::debug('Option exists, updating to new values', [
-                            'opt' => $optionName,
-                            'new_value' => $option,
-                        ]);
-                        Options::changeOption($optionName, $option);
-                    }
-                } catch (\Exception $ex) {
-                    Log::error('Unable to update options!', [
-                        'msg' => $ex->getMessage(),
-                        'trace' => $ex->getTraceAsString(),
-                    ]);
-                    report($ex);
+        try {
 
-                    $errorCond = true;
-                    $request->session()->flash('error', __('An error occurred while trying to save settings: :message ', ['message' => $ex->getMessage()]));
-                }
+            if (Auth::user()->can('admin.settings.edit')) {
+                $this->configurationService->saveConfiguration($request->all());
+
+                return redirect()
+                    ->back()
+                    ->with('success', __('Options updated successfully!'));
             }
 
-            if (! isset($errorCond)) {
-                $request->session()->flash('success', __('Settings saved successfully!'));
-            }
-        } else {
-            $request->session()->flash('error', __('You do not have permission to update this resource.'));
+        } catch (OptionNotFoundException | \Exception $ex) {
+
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
+
         }
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('error', __('You do not have permission to update this resource.'));
     }
 
     public function saveGameIntegration(Request $request)
     {
-        $supportedGames = [
-            'RUST',
-            'MINECRAFT',
-            'SE',
-            'GMOD'
-        ];
+        try {
 
-        if (!is_null($request->gamePref) && in_array($request->gamePref, $supportedGames))
-        {
-            Options::changeOption('currentGame', $request->gamePref);
-            $request->session()->flash('success', __('Updated current game.'));
+            $this->configurationService->saveGameIntegration($request->gamePref);
+            return redirect()
+                ->back()
+                ->with('success', __('Game preference updated.'));
 
-            return redirect()->back();
+        } catch (InvalidGamePreferenceException $ex) {
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
         }
-
-        $request->session()->flash('error', __('Unsupported game :game.', ['game' => $request->gamePref ]));
-
-        return redirect()->back();
     }
 }

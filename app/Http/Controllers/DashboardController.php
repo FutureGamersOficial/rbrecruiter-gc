@@ -27,6 +27,8 @@ use App\Vacancy;
 
 class DashboardController extends Controller
 {
+    // Note: The dashboard doesn't need a service because it doesn't contain any significant business logic
+
     public function index()
     {
         $totalPeerReview = Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get()->count();

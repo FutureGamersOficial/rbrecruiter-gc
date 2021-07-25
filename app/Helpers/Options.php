@@ -21,6 +21,8 @@
 
 namespace App\Helpers;
 
+use App\Exceptions\EmptyOptionsException;
+use App\Exceptions\OptionNotFoundException;
 use App\Options as Option;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -34,7 +36,7 @@ class Options
 
     /**
      * Returns an assortment of settings found in the mentioned category
-     * 
+     *
      * @param $category The category
      * @return Collection The settings in this category
      */
@@ -43,7 +45,7 @@ class Options
         $options = Option::where('option_category', $category)->get();
         if ($options->isEmpty())
         {
-           throw new \Exception('There are no options in category ' . $category);
+           throw new EmptyOptionsException('There are no options in category ' . $category);
         }
         return $options;
     }
@@ -52,13 +54,13 @@ class Options
     public function getOption(string $option): string
     {
         $value = Cache::get($option);
-        
+
 
         if (is_null($value)) {
             Log::debug('Option '.$option.'not found in cache, refreshing from database');
             $value = Option::where('option_name', $option)->first();
             if (is_null($value)) {
-                throw new \Exception('This option does not exist.');
+                throw new OptionNotFoundException('This option does not exist.');
             }
             Cache::put($option, $value->option_value);
             Cache::put($option.'_desc', 'Undefined description');
@@ -118,7 +120,7 @@ class Options
 
             Cache::put('option_name', $newValue, now()->addDay());
         } else {
-            throw new \Exception('This option does not exist.');
+            throw new OptionNotFoundException('This option does not exist.');
         }
     }
 

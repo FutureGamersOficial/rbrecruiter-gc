@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 // Most of these namespaces have no effect on the code, however, they're used by IDEs so they can resolve return types and for PHPDocumentor as well
 
 
+use App\Exceptions\FileUploadException;
+use App\Services\TeamFileService;
 use App\TeamFile;
 use App\Http\Requests\UploadFileRequest;
 
@@ -24,11 +26,16 @@ use Illuminate\Http\Response;
 
 class TeamFileController extends Controller
 {
+    private $fileService;
+
+    public function __construct(TeamFileService $fileService) {
+        $this->fileService = $fileService;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Application|Factory|View|Response
      */
     public function index(Request $request)
     {
@@ -55,32 +62,23 @@ class TeamFileController extends Controller
     {
         $this->authorize('store', TeamFile::class);
 
-        $upload = $request->file('file');
+        try {
+            $caption = $request->caption;
+            $description = $request->description;
 
-        $file = $upload->store('uploads');
-        $originalFileName = $upload->getClientOriginalName();
-        $originalFileExtension = $upload->extension();
-        $originalFileSize = $upload->getSize();
+            $this->fileService->addFile($request->file('file'), Auth::user()->id, Auth::user()->currentTeam->id, $caption, $description);
 
-        $fileEntry = TeamFile::create([
-            'uploaded_by' => Auth::user()->id,
-            'team_id' => Auth::user()->currentTeam->id,
-            'name' => $originalFileName,
-            'caption' => $request->caption,
-            'description' => $request->description,
-            'fs_location' => $file,
-            'extension' => $originalFileExtension,
-            'size' => $originalFileSize
-        ]);
+            return redirect()
+                ->back()
+                ->with('success', __('File uploaded successfully.'));
 
-        if ($fileEntry && !is_bool($file))
-        {
-            $request->session()->flash('success', 'File uploaded successfully!');
-            return redirect()->back();
+        } catch (FileUploadException $uploadException) {
+
+            return redirect()
+                ->back()
+                ->with('error', $uploadException->getMessage());
+
         }
-
-        $request->session()->flash('error', 'There was an unknown error whilst trying to upload your file.');
-        return redirect()->back();
 
     }
 
@@ -99,29 +97,6 @@ class TeamFileController extends Controller
            return redirect()->back();
 
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TeamFile  $teamFile
-     * @return Response
-     */
-    public function edit(TeamFile $teamFile)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TeamFile  $teamFile
-     * @return Response
-     */
-    public function update(Request $request, TeamFile $teamFile)
-    {
-        //
     }
 
     /**

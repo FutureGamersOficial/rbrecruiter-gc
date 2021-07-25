@@ -23,85 +23,79 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Appointment;
+use App\Exceptions\InvalidAppointmentException;
+use App\Exceptions\InvalidAppointmentStatusException;
 use App\Http\Requests\SaveNotesRequest;
-use App\Notifications\ApplicationMoved;
-use App\Notifications\AppointmentScheduled;
+use App\Services\AppointmentService;
+use App\Services\MeetingNoteService;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
 {
-    private $allowedPlatforms = [
 
-        'ZOOM',
-        'DISCORD',
-        'SKYPE',
-        'MEET',
-        'TEAMSPEAK',
+    private $appointmentService;
+    private $meetingNoteService;
 
-    ];
 
-    public function saveAppointment(Request $request, Application $application)
-    {
-        $this->authorize('create', Appointment::class);
-        $appointmentDate = Carbon::parse($request->appointmentDateTime);
+    public function __construct(AppointmentService $appointmentService, MeetingNoteService $meetingNoteService) {
 
-        $appointment = Appointment::create([
-            'appointmentDescription' => $request->appointmentDescription,
-            'appointmentDate' => $appointmentDate->toDateTimeString(),
-            'applicationID' => $application->id,
-            'appointmentLocation' => (in_array($request->appointmentLocation, $this->allowedPlatforms)) ? $request->appointmentLocation : 'DISCORD',
-        ]);
-        $application->setStatus('STAGE_INTERVIEW_SCHEDULED');
-
-        Log::info('User '.Auth::user()->name.' has scheduled an appointment with '.$application->user->name.' for application ID'.$application->id, [
-            'datetime' => $appointmentDate->toDateTimeString(),
-            'scheduled' => now(),
-        ]);
-
-        $application->user->notify(new AppointmentScheduled($appointment));
-        $request->session()->flash('success', __('Appointment successfully scheduled @ :appointmentTime', ['appointmentTime', $appointmentDate->toDateTimeString()]));
-
-        return redirect()->back();
+        $this->appointmentService = $appointmentService;
+        $this->meetingNoteService = $meetingNoteService;
     }
 
-    public function updateAppointment(Request $request, Application $application, $status)
+    public function saveAppointment(Request $request, Application $application): RedirectResponse
+    {
+        $this->authorize('create', Appointment::class);
+
+        $appointmentDate = Carbon::parse($request->appointmentDateTime);
+        $this->appointmentService->createAppointment($application, $appointmentDate, $request->appointmentDescription, $request->appointmentLocation);
+
+        return redirect()
+            ->back()
+            ->with('success',__('Appointment successfully scheduled @ :appointmentTime', ['appointmentTime', $appointmentDate->toDateTimeString()]));
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function updateAppointment(Application $application, $status): RedirectResponse
     {
         $this->authorize('update', $application->appointment);
 
-        $validStatuses = [
-            'SCHEDULED',
-            'CONCLUDED',
-        ];
+        try {
+            $this->appointmentService->updateAppointment($application, $status);
 
-        // NOTE: This is a little confusing, refactor
-        $application->appointment->appointmentStatus = (in_array($status, $validStatuses)) ? strtoupper($status) : 'SCHEDULED';
-        $application->appointment->save();
+            return redirect()
+                ->back()
+                ->with('success', __("Interview finished! Staff members can now vote on it."));
 
-        $application->setStatus('STAGE_PEERAPPROVAL');
-        $application->user->notify(new ApplicationMoved());
-
-        $request->session()->flash('success', __('Interview finished! Staff members can now vote on it.'));
-
-        return redirect()->back();
-    }
-
-    // also updates
-    public function saveNotes(SaveNotesRequest $request, Application $application)
-    {
-        if (! is_null($application)) {
-            $application->load('appointment');
-
-            $application->appointment->meetingNotes = $request->noteText;
-            $application->appointment->save();
-
-            $request->session()->flash('success', __('Meeting notes have been saved.'));
-        } else {
-            $request->session()->flash('error', __('There\'s no appointment to save notes to!'));
+        }
+        catch (InvalidAppointmentStatusException $ex) {
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
         }
 
-        return redirect()->back();
+
+    }
+
+    public function saveNotes(SaveNotesRequest $request, Application $application)
+    {
+        try {
+
+            $this->meetingNoteService->addToApplication($application, $request->noteText);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Saved notes.');
+
+        } catch (InvalidAppointmentException $ex) {
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
+        }
     }
 }

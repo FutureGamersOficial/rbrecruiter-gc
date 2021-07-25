@@ -21,13 +21,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InvalidInviteException;
+use App\Exceptions\PublicTeamInviteException;
+use App\Exceptions\UserAlreadyInvitedException;
 use App\Http\Requests\EditTeamRequest;
 use App\Http\Requests\NewTeamRequest;
 use App\Http\Requests\SendInviteRequest;
 use App\Mail\InviteToTeam;
+use App\Services\TeamService;
 use App\Team;
 use App\User;
 use App\Vacancy;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -37,10 +42,15 @@ use Mpociot\Teamwork\TeamInvite;
 
 class TeamController extends Controller
 {
+    private $teamService;
+
+    public function __construct(TeamService $teamService) {
+        $this->teamService = $teamService;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -56,23 +66,17 @@ class TeamController extends Controller
      * Store a newly created resource in storage.
      *
      * @param NewTeamRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(NewTeamRequest $request)
     {
         $this->authorize('create', Team::class);
+        $this->teamService->createTeam($request->teamName, Auth::user()->id);
 
-        $team = Team::create([
-            'name' => $request->teamName,
-            'owner_id' => Auth::user()->id,
-        ]);
-
-        Auth::user()->teams()->attach($team->id);
-
-        $request->session()->flash('success', __('Team successfully created.'));
-
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', __('Team successfully created.'));
     }
 
     /**
@@ -98,21 +102,24 @@ class TeamController extends Controller
      *
      * @param EditTeamRequest $request
      * @param Team $team
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(EditTeamRequest $request, Team $team): \Illuminate\Http\Response
+    public function update(EditTeamRequest $request, Team $team): RedirectResponse
     {
         $this->authorize('update', $team);
+        $team = $this->teamService->updateTeam($team, $request->teamDescription, $team->joinType);
 
 
-        $team->description = $request->teamDescription;
-        $team->openJoin = $request->joinType;
+        if ($team) {
+            return redirect()
+                ->to(route('teams.index'))
+                ->with('success', __('Team updated.'));
+        }
 
-        $team->save();
-        $request->session()->flash('success', __('Team edited successfully.'));
-
-        return redirect()->to(route('teams.index'));
+        return redirect()
+            ->back()
+            ->with('error', __('An error ocurred while trying to update this team.'));
     }
 
     /**
@@ -126,68 +133,45 @@ class TeamController extends Controller
         // wip
     }
 
-    public function invite(SendInviteRequest $request, Team $team): \Illuminate\Http\RedirectResponse
+    public function invite(SendInviteRequest $request, Team $team): RedirectResponse
     {
         $this->authorize('invite', $team);
 
-        $user = User::findOrFail($request->user);
+        try {
 
-        if (! $team->openJoin) {
-            if (! Teamwork::hasPendingInvite($user->email, $team)) {
-                Teamwork::inviteToTeam($user, $team, function (TeamInvite $invite) use ($user) {
-                    Mail::to($user)->send(new InviteToTeam($invite));
-                });
+            $this->teamService->inviteUser($team, $request->user);
 
-                $request->session()->flash('success', __('Invite sent! They can now accept or deny it.'));
-            } else {
-                $request->session()->flash('error', __('This user has already been invited.'));
-            }
-        } else {
-            $request->session()->flash('error', __('You can\'t invite users to public teams.'));
+            return redirect()
+                ->back()
+                ->with('success', __('User invited successfully!'));
+
+        } catch (UserAlreadyInvitedException | PublicTeamInviteException $ex) {
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
         }
-
-        return redirect()->back();
     }
 
-    public function processInviteAction(Request $request, $action, $token): \Illuminate\Http\RedirectResponse
+    public function processInviteAction(Request $request, $action, $token): RedirectResponse
     {
-        switch ($action) {
-            case 'accept':
+        try {
 
-                $invite = Teamwork::getInviteFromAcceptToken($token);
+            $this->teamService->processInvite(Auth::user(), $action, $token);
 
-                if ($invite && $invite->user->is(Auth::user())) {
-                    Teamwork::acceptInvite($invite);
-                    $request->session()->flash('success', __('Invite accepted! You have now joined :teamName.', ['teamName' => $invite->team->name]));
-                } else {
-                    $request->session()->flash('error', __('Invalid or expired invite URL.'));
-                }
+            return redirect()
+                ->to(route('teams.index'))
+                ->with('success', __('Invite processed successfully!'));
 
-               break;
+        } catch (InvalidInviteException $e) {
 
-            case 'deny':
-
-                $invite = Teamwork::getInviteFromDenyToken($token);
-
-                if ($invite && $invite->user->is(Auth::user())) {
-                    Teamwork::denyInvite($invite);
-                    $request->session()->flash('success', __('Invite denied! Ask for another invite if this isn\'t what you meant.'));
-                } else {
-                    $request->session()->flash('error', __('Invalid or expired invite URL.'));
-                }
-
-                break;
-
-            default:
-                $request->session()->flash('error', 'Sorry, but the invite URL you followed was malformed. Try asking for another invite, or submit a bug report.');
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
 
         }
-
-        // This page will show the user's current teams
-        return redirect()->to(route('teams.index'));
     }
 
-    public function switchTeam(Request $request, Team $team): \Illuminate\Http\RedirectResponse
+    public function switchTeam(Request $request, Team $team): RedirectResponse
     {
         $this->authorize('switchTeam', $team);
 
@@ -203,44 +187,13 @@ class TeamController extends Controller
     }
 
     // Since it's a separate form, we shouldn't use the same update method
-    public function assignVacancies(Request $request, Team $team): \Illuminate\Http\RedirectResponse
+    public function assignVacancies(Request $request, Team $team): RedirectResponse
     {
         $this->authorize('update', $team);
+        $message = $this->teamService->updateVacancies($team, $request->assocVacancies);
 
-        // P.S. To future developers
-        // This method gave me a lot of trouble lol. It's hard to write code when you're half asleep.
-        // There may be an n+1 query in the view and I don't think there's a way to avoid that without writing a lot of extra code.
-
-        $requestVacancies = $request->assocVacancies;
-        $currentVacancies = $team->vacancies->pluck('id')->all();
-
-        if (is_null($requestVacancies)) {
-            foreach ($team->vacancies as $vacancy) {
-                $team->vacancies()->detach($vacancy->id);
-            }
-
-            $request->session()->flash('success', __('Removed all vacancy associations.'));
-
-            return redirect()->back();
-        }
-
-        $vacancyDiff = array_diff($requestVacancies, $currentVacancies);
-        $deselectedDiff = array_diff($currentVacancies, $requestVacancies);
-
-        if (! empty($vacancyDiff) || ! empty($deselectedDiff)) {
-            foreach ($vacancyDiff as $selectedVacancy) {
-                $team->vacancies()->attach($selectedVacancy);
-            }
-
-            foreach ($deselectedDiff as $deselectedVacancy) {
-                $team->vacancies()->detach($deselectedVacancy);
-            }
-        } else {
-            $team->vacancies()->attach($requestVacancies);
-        }
-
-        $request->session()->flash('success', __('Assignments changed successfully.'));
-
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', $message);
     }
 }

@@ -21,12 +21,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\FormHasConstraintsException;
 use App\Form;
+use App\Services\FormManagementService;
 use ContextAwareValidator;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
 {
+    private $formService;
+
+    public function __construct(FormManagementService $formService) {
+        $this->formService = $formService;
+    }
+
     public function index()
     {
         $forms = Form::all();
@@ -45,60 +53,38 @@ class FormController extends Controller
 
     public function saveForm(Request $request)
     {
-        $this->authorize('create', Form::class);
-        $fields = $request->all();
+        $form = $this->formService->addForm($request->all());
 
-        if (count($fields) == 2) {
-            // form is probably empty, since forms with fields will alawys have more than 2 items
-
-            $request->session()->flash('error', __('Sorry, but you may not create empty forms.'));
-
-            return redirect()->to(route('showForms'));
+        // Form is boolean or array
+        if ($form)
+        {
+            return redirect()
+                ->back()
+                ->with('success', __('Form created!'));
         }
 
-        $contextValidation = ContextAwareValidator::getValidator($fields, true, true);
-
-        if (! $contextValidation->get('validator')->fails()) {
-            $storableFormStructure = $contextValidation->get('structure');
-
-            Form::create(
-                [
-                    'formName' => $fields['formName'],
-                    'formStructure' => $storableFormStructure,
-                    'formStatus' => 'ACTIVE',
-                ]
-            );
-
-            $request->session()->flash('success', __('Form created! You can now link this form to a vacancy.'));
-
-            return redirect()->to(route('showForms'));
-        }
-
-        $request->session()->flash('errors', $contextValidation->get('validator')->errors()->getMessages());
-
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('errors', $form);
     }
 
     public function destroy(Request $request, Form $form)
     {
         $this->authorize('delete', $form);
+        try {
 
-        $deletable = true;
+            $this->formService->deleteForm($form);
+            return redirect()
+                ->back()
+                ->with('success', __('Form deleted successfuly'));
 
-        if (! is_null($form) && ! is_null($form->vacancies) && $form->vacancies->count() !== 0 || ! is_null($form->responses)) {
-            $deletable = false;
+        } catch (FormHasConstraintsException $ex) {
+
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
+
         }
-
-        if ($deletable) {
-            $form->delete();
-
-            $request->session()->flash('success', __('Form deleted successfully.'));
-        } else {
-            $request->session()->flash('error', __('You cannot delete this form because it\'s tied to one or more applications and ranks, or because it doesn\'t exist.'));
-        }
-
-        return redirect()->back();
-
     }
 
     public function preview(Request $request, Form $form)
@@ -124,22 +110,15 @@ class FormController extends Controller
     public function update(Request $request, Form $form)
     {
         $this->authorize('update', $form);
+        $updatedForm = $this->formService->updateForm($form, $request->all());
 
-        $contextValidation = ContextAwareValidator::getValidator($request->all(), true);
-        $this->authorize('update', $form);
-
-        if (! $contextValidation->get('validator')->fails()) {
-            // Add the new structure into the form. New, subsquent fields will be identified by the "new" prefix
-            // This prefix doesn't actually change the app's behavior when it receives applications.
-            // Additionally, old applications won't of course display new and updated fields, because we can't travel into the past and get data for them
-            $form->formStructure = $contextValidation->get('structure');
-            $form->save();
-
-            $request->session()->flash('success', __('Hooray! Your form was updated. New applications for it\'s vacancy will use it.'));
-        } else {
-            $request->session()->flash('errors', $contextValidation->get('validator')->errors()->getMessages());
+        if ($updatedForm instanceof Form) {
+            return redirect()->to(route('previewForm', ['form' => $updatedForm->id]));
         }
 
-        return redirect()->to(route('previewForm', ['form' => $form->id]));
+        // array of errors
+        return redirect()
+            ->back()
+            ->with('errors', $updatedForm);
     }
 }

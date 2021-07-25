@@ -22,34 +22,23 @@
 namespace App\Http\Controllers;
 
 use App\Application;
-use App\Events\ApplicationDeniedEvent;
-use App\Facades\JSON;
-use App\Notifications\ApplicationMoved;
-use App\Notifications\NewApplicant;
-use App\Response;
-use App\User;
-use App\Vacancy;
-use ContextAwareValidator;
+use App\Exceptions\IncompleteApplicationException;
+use App\Exceptions\UnavailableApplicationException;
+use App\Exceptions\VacancyNotFoundException;
+use App\Services\ApplicationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
 
+    private $applicationService;
 
-    private function canVote($votes): bool
-    {
-        $allvotes = collect([]);
+    public function __construct(ApplicationService $applicationService) {
 
-        foreach ($votes as $vote) {
-            if ($vote->userID == Auth::user()->id) {
-                $allvotes->push($vote);
-            }
-        }
-
-        return !(($allvotes->count() == 1));
+        $this->applicationService = $applicationService;
     }
+
 
     public function showUserApps()
     {
@@ -70,7 +59,7 @@ class ApplicationController extends Controller
                         'structuredResponses' => json_decode($application->response->responseData, true),
                         'formStructure' => $application->response->form,
                         'vacancy' => $application->response->vacancy,
-                        'canVote' => $this->canVote($application->votes),
+                        'canVote' => $this->applicationService->canVote($application->votes),
                     ]
                 );
         } else {
@@ -90,91 +79,27 @@ class ApplicationController extends Controller
     }
 
 
-    public function renderApplicationForm(Request $request, $vacancySlug)
+    public function renderApplicationForm($vacancySlug)
     {
-        $vacancyWithForm = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
-
-        $firstVacancy = $vacancyWithForm->first();
-
-        if (!$vacancyWithForm->isEmpty() && $firstVacancy->vacancyCount !== 0 && $firstVacancy->vacancyStatus == 'OPEN') {
-            return view('dashboard.application-rendering.apply')
-                ->with([
-                    'vacancy' => $vacancyWithForm->first(),
-                    'preprocessedForm' => json_decode($vacancyWithForm->first()->forms->formStructure, true),
-                ]);
-        } else {
-            abort(404, __('The application you\'re looking for could not be found or it is currently unavailable.'));
-        }
+        return $this->applicationService->renderForm($vacancySlug);
     }
 
     public function saveApplicationAnswers(Request $request, $vacancySlug)
     {
-        $vacancy = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
+        try {
 
-        if ($vacancy->isEmpty()) {
+            $this->applicationService->fillForm(Auth::user(), $request->all(), $vacancySlug);
 
-            return redirect()
-                ->back()
-                ->with('error', __('This vacancy doesn\'t exist; Please use the proper buttons to apply to one.'));
-        }
-
-        if ($vacancy->first()->vacancyCount == 0 || $vacancy->first()->vacancyStatus !== 'OPEN') {
+        } catch (VacancyNotFoundException | IncompleteApplicationException | UnavailableApplicationException $e) {
 
             return redirect()
                 ->back()
-                ->with('error', __('This application is unavailable'));
+                ->with('error', $e->getMessage());
         }
-
-        Log::info('Processing new application!');
-
-        $formStructure = json_decode($vacancy->first()->forms->formStructure, true);
-        $responseValidation = ContextAwareValidator::getResponseValidator($request->all(), $formStructure);
-        $applicant = Auth::user();
-
-        // API users may specify ID 1 for an anonymous application, but they'll have to submit contact details for it to become active.
-        // User ID 1 is exempt from application rate limits
-
-        Log::info('Built response & validator structure!');
-
-        if (!$responseValidation->get('validator')->fails()) {
-            $response = Response::create([
-                'responseFormID' => $vacancy->first()->forms->id,
-                'associatedVacancyID' => $vacancy->first()->id, // Since a form can be used by multiple vacancies, we can only know which specific vacancy this response ties to by using a vacancy ID
-                'responseData' => $responseValidation->get('responseStructure'),
-            ]);
-
-            Log::info('Registered form response!', [
-                'applicant' => $applicant->name,
-                'vacancy' => $vacancy->first()->vacancyName
-            ]);
-
-            $application = Application::create([
-                'applicantUserID' => $applicant->id,
-                'applicantFormResponseID' => $response->id,
-                'applicationStatus' => 'STAGE_SUBMITTED',
-            ]);
-
-            Log::info('Submitted an application!', [
-                'responseID' => $response->id,
-                'applicant' => $applicant->name
-            ]);
-
-            foreach (User::all() as $user) {
-                if ($user->hasRole('admin')) {
-                    $user->notify((new NewApplicant($application, $vacancy->first()))->delay(now()->addSeconds(10)));
-                }
-            }
-
-            $request->session()->flash('success', __('Thank you for your application! It will be reviewed as soon as possible.'));
-            return redirect(route('showUserApps'));
-
-        }
-
-        Log::warning('Application form for ' . $applicant->name . ' contained errors, resetting!');
 
         return redirect()
             ->back()
-            ->with('error', __('There are one or more errors in your application. Please make sure none of your fields are empty, since they are all required.'));
+            ->with('success', __('Thank you! Your application has been processed and our team will get to it shortly.'));
     }
 
     public function updateApplicationStatus(Request $request, Application $application, $newStatus)
@@ -182,36 +107,28 @@ class ApplicationController extends Controller
         $messageIsError = false;
         $this->authorize('update', Application::class);
 
-
-        switch ($newStatus) {
-            case 'deny':
-
-                event(new ApplicationDeniedEvent($application));
-                $message = __("Application denied successfully.");
-
-                break;
-
-            case 'interview':
-                Log::info(' Moved application ID ' . $application->id . 'to interview stage!');
-                $message = __('Application moved to interview stage!');
-
-                $application->setStatus('STAGE_INTERVIEW');
-                $application->user->notify(new ApplicationMoved());
-
-                break;
-
-            default:
-                $message = __("There are no suitable statuses to update to.");
-                $messageIsError = true;
+        try {
+            $status = $this->applicationService->updateStatus($application, $newStatus);
+        } catch (\LogicException $ex)
+        {
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
         }
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', $status);
     }
 
+    /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Exception
+     */
     public function delete(Request $request, Application $application)
     {
         $this->authorize('delete', $application);
-        $application->delete(); // observers will run, cleaning it up
+        $this->applicationService->delete($application);
 
         return redirect()
             ->back()
