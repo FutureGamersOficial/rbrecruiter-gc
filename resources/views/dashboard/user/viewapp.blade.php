@@ -103,7 +103,7 @@
                         <div class="mt-4 mb-3">
 
                             <h5>{{$content['title']}}</h5>
-                            
+
                             <p>{!! GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($content['response']) !!}</p>
 
                         </div>
@@ -132,7 +132,7 @@
 
                             <p><b>{{__('messages.application_m.applicant_name')}} </b> <span class="badge badge-primary">{{$application->user->name}}</span></p>
                             @if (Auth::user()->hasRole('hiringManager'))
-                                <p><b>{{__('messages.view_app.appl_ip')}}</b> <span class="badge badge-primary">{{$application->user->originalIP}}</span></p>
+                                <p><b>{{__('messages.view_app.appl_ip')}}</b> <span class="badge badge-primary">{{ ($demoActive) ? '0.0.0.0 (censored)' : $application->user->originalIP }}</span></p>
                             @endif
                             <p><b>{{__('messages.application_m.application_date')}}</b> <span class="badge badge-primary">{{$application->created_at}}</span></p>
                             <p><b>{{__('messages.last_updated')}}</b><span class="badge badge-primary">{{$application->updated_at}}</span></p>

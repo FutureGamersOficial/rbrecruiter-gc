@@ -14,7 +14,7 @@
                 <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo">{{ config('adminlte.logo') }}
               </div> <!-- main content start -->
               <p class="login-card-description">{{__('messages.register_acc')}}</p>
-              
+
               @if(\App\Facades\Options::getOption('pw_security_policy') !== 'off')
 
                   <div class="alert alert-warning alert-dismissible">
@@ -25,7 +25,7 @@
                     <p>{{__('messages.pwsec.line3')}} </p>
                     <ul>
                       @switch(\App\Facades\Options::getOption('pw_security_policy'))
-                        
+
                         @case('low')
                           <li>A minimum of 10 characters</li>
                           @break
@@ -34,20 +34,29 @@
                           <li>A minimum of 12 characters;</li>
                           <li>At least one special character;</li>
                           <li>Lower case and upper case characters</li>
-                          @break  
+                          @break
 
                         @case('high')
                           <li>A minimum of 20 characters;</li>
                           <li>At least one special character;</li>
                           <li>Lower case and upper case characters</li>
                           <li>At least one numerical character</li>
-                          @break  
+                          @break
 
                       @endswitch
                     </ul>
                   </div>
 
               @endif
+
+                @if($demoActive)
+                    <div class="alert alert-warning">
+                        <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i>{{ __('Warning') }}</p>
+                        <p>{{ __('Do not use real credentials here. The application is in demo mode. Additionally, the database is wiped every six hours.') }}</p>
+
+                        <p>{{ __('Also note: If a game license is required to sign up, you may find valid MC usernames at NameMC') }}</p>
+                    </div>
+                @endif
 
               <form action="{{ route('register') }}" method="POST" id="registerForm">
                   @csrf
@@ -68,7 +77,7 @@
                     <input type="password" id="passwordc" name="password_confirmation" class="form-control" placeholder="{{__('messages.sronly_confirmpassword')}}" />
                   </div>
 
-                  
+
                   @if(\App\Facades\Options::getOption('requireGameLicense') && \App\Facades\Options::getOption('currentGame') == 'MINECRAFT')
                       <div class="form-group mt-5">
                         <label for="mcusername" class="sr-only">{{__('messages.sronly_mcusername')}}</label>

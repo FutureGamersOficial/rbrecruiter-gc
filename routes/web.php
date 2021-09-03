@@ -53,7 +53,9 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
     Route::group(['prefix' => 'auth', 'middleware' => ['usernameUUID']], function () {
-        Auth::routes(['verify' => true]);
+        Auth::routes([
+            'verify' => true
+        ]);
 
         Route::post('/twofa/authenticate', [TwofaController::class, 'verify2FA'])
             ->name('verify2FA');
@@ -271,7 +273,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::delete('forms/destroy/{form}', [FormController::class, 'destroy'])
                 ->name('destroyForm');
-                
+
             Route::get('forms', [FormController::class, 'index'])
                 ->name('showForms');
 

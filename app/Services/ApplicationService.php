@@ -47,7 +47,7 @@ class ApplicationService
      * @throws VacancyNotFoundException Thrown when the associated vacancy is not found
      * @throws IncompleteApplicationException Thrown when there are missing fields
      */
-    public function fillForm(Authenticatable $applicant, array $formData, $vacancySlug): bool
+    public function fillForm(User $applicant, array $formData, $vacancySlug): bool
     {
         $vacancy = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
 

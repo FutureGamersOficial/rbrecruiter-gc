@@ -35,32 +35,34 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-       
+
         /**
          * Rationale:
          *  A ghost account is an account used by deleted users.
          *  Essentially, when users are deleted, their content is re-assigned to the
          *  ghost account.
-         *  Also used by one-off apps. 
-         * 
+         *  Also used by one-off apps.
+         *
          *  The ghost account was inspired by Github's ghost account.
          */
         $ghostAccount = User::create([
-            'uuid' => '069a79f444e94726a5befca90e38aaf5', // Notch
+            'uuid' => 'b741345057274a519144881927be0290', // Ghost
             'name' => 'Ghost (deleted account)',
-            'email' => 'blackhole@spacejewel-hosting.com',
+            'email' => 'blackhole@example.com',
+            'email_verified_at' => now(),
             'username' => 'ghost',
             'originalIP' => '0.0.0.0',
-            'password' => 'locked' 
+            'password' => 'locked'
         ])->assignRole('user'); // There can't be role-less users
 
 
         $admin = User::create([
-            'uuid' => '6102256abd284dd7b68e4c96ef313734',
+            'uuid' => '069a79f444e94726a5befca90e38aaf5', // Notch
             'name' => 'Admin',
             'email' => 'admin@example.com',
+            'email_verified_at' => now(),
             'username' => 'admin',
-            'originalIP' => '217.1.189.34',
+            'originalIP' => '0.0.0.0',
             'password' => Hash::make('password'),
 
         ])->assignRole([ // all privileges
@@ -68,7 +70,33 @@ class UserSeeder extends Seeder
             'reviewer',
             'admin',
             'hiringManager',
-            'developer'
+        ]);
+
+        $staffmember = User::create([
+            'uuid' => '853c80ef3c3749fdaa49938b674adae6', // Jeb__
+            'name' => 'Staff Member',
+            'email' => 'staffmember@example.com',
+            'email_verified_at' => now(),
+            'username' => 'staffmember',
+            'originalIP' => '0.0.0.0',
+            'password' => Hash::make('password'),
+
+        ])->assignRole([ // all privileges
+            'user',
+            'reviewer',
+        ]);
+
+        $user = User::create([
+            'uuid' => 'f7c77d999f154a66a87dc4a51ef30d19', // hypixel
+            'name' => 'End User',
+            'email' => 'enduser@example.com',
+            'email_verified_at' => now(),
+            'username' => 'enduser',
+            'originalIP' => '0.0.0.0',
+            'password' => Hash::make('password'),
+
+        ])->assignRole([ // all privileges
+            'user',
         ]);
 
     }

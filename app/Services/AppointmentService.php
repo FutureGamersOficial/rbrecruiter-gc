@@ -56,12 +56,7 @@ class AppointmentService
      */
     public function updateAppointment(Application $application, $status, $updateApplication = true)
     {
-        $validStatuses = [
-            'SCHEDULED',
-            'CONCLUDED',
-        ];
-
-        if ($status == 'SCHEDULED' || $status == 'CONCLUDED')
+        if ($status == 'SCHEDULED' || $status == 'concluded')
         {
             $application->appointment->appointmentStatus = strtoupper($status);
             $application->appointment->save();

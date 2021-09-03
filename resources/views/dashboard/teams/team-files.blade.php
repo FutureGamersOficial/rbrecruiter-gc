@@ -13,42 +13,55 @@
 
 @section('content')
 
-    <x-modal id="upload-dropzone" modal-label="upload-dropzone-modal" modal-title="Upload Files" include-close-button="true">
+    @if(!$demoActive)
+        <x-modal id="upload-dropzone" modal-label="upload-dropzone-modal" modal-title="Upload Files" include-close-button="true">
 
-        <form action="{{route('uploadTeamFile')}}" enctype="multipart/form-data" method="POST" id="newFile">
-            @csrf
-            <div class="form-group">
+            <form action="{{route('uploadTeamFile')}}" enctype="multipart/form-data" method="POST" id="newFile">
+                @csrf
+                <div class="form-group">
 
-                <label for="caption">Caption</label>
-                <input id="caption" type="text" class="form-control" name="caption" required>
+                    <label for="caption">Caption</label>
+                    <input id="caption" type="text" class="form-control" name="caption" required>
 
-                <label for="description">File description (optional)</label>
-                <textarea rows="5" name="description" id="description" class="form-control"></textarea>
+                    <label for="description">File description (optional)</label>
+                    <textarea rows="5" name="description" id="description" class="form-control"></textarea>
 
-            </div>
+                </div>
 
 
-            <label class="btn btn-primary" for="file-selector">
-                <input id="file-selector" name="file" type="file" style="display:none"
-                       onchange="$('#upload-file-info').html(this.files[0].name)">
-                Choose File (max {{ini_get('post_max_size')}})
-            </label>
-            <span class='label label-info' id="upload-file-info"></span>
+                <label class="btn btn-primary" for="file-selector">
+                    <input id="file-selector" name="file" type="file" style="display:none"
+                           onchange="$('#upload-file-info').html(this.files[0].name)">
+                    Choose File (max {{ini_get('post_max_size')}})
+                </label>
+                <span class='label label-info' id="upload-file-info"></span>
 
-        </form>
+            </form>
 
-        <x-slot name="modalFooter">
-            <button onclick="$('#newFile').submit()" type="button" class="btn btn-warning" rel="buttonTxtTooltip" title="Upload chosen file" data-placement="top"><i class="fas fa-upload"></i></button>
-        </x-slot>
-    </x-modal>
+            <x-slot name="modalFooter">
+                <button onclick="$('#newFile').submit()" type="button" class="btn btn-warning" rel="buttonTxtTooltip" title="Upload chosen file" data-placement="top"><i class="fas fa-upload"></i></button>
+            </x-slot>
+        </x-modal>
+    @endif
 
     <div class="row">
 
-        <div class="col-3 offset-3">
+        <div class="col-3 offset-4">
             <img src="/img/files.svg" width="230px" height="230px" alt="Team files illustration">
         </div>
 
     </div>
+
+    @if($demoActive)
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-warning">
+                    <p class="text-bold"><i class="fa fa-info-circle"></i> Warning</p>
+                    <p>Since many users may use the app at any given time, file uploads are disabled whilst demo mode is on.</p>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="row">
 
@@ -119,7 +132,7 @@
                 </div>
 
                 <div class="card-footer text-center">
-                    <button type="button" class="btn btn-warning ml-3" onclick="$('#upload-dropzone').modal('show')"><i class="fas fa-upload"></i> Upload Files</button>
+                    <button {{ ($demoActive) ? 'disabled' : ''  }} type="button" class="btn btn-warning ml-3" onclick="$('#upload-dropzone').modal('show')"><i class="fas fa-upload"></i> Upload Files</button>
                     <button type="button" class="btn btn-success ml-3" onclick="window.location.href='{{route('teams.index')}}'"><i class="fas fa-arrow-circle-left"></i> Back</button>
                     {{ $files->links() }}
                 </div>

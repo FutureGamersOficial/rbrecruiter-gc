@@ -62,6 +62,13 @@ class TeamFileController extends Controller
     {
         $this->authorize('store', TeamFile::class);
 
+        if (config('demo.is_enabled'))
+        {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
+
         try {
             $caption = $request->caption;
             $description = $request->description;
@@ -109,6 +116,13 @@ class TeamFileController extends Controller
     public function destroy(Request $request, TeamFile $teamFile)
     {
         $this->authorize('delete', $teamFile);
+
+        if (config('demo.is_enabled'))
+        {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
 
         try
         {

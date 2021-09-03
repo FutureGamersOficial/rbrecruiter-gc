@@ -33,6 +33,13 @@ trait ReceivesAccountTokens
 {
     public function userDelete(UserDeleteRequest $request)
     {
+        if (config('demo.is_enabled'))
+        {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
+
         // a little verbose
         $user = User::find(Auth::user()->id);
         $tokens = $user->generateAccountTokens();
@@ -49,6 +56,13 @@ trait ReceivesAccountTokens
 
     public function processDeleteConfirmation(Request $request, $ID, $action, $token)
     {
+        if (config('demo.is_enabled'))
+        {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
+
         // We can't rely on Laravel's route model injection, because it'll ignore soft-deleted models,
         // so we have to use a special scope to find them ourselves.
         $user = User::withTrashed()->findOrFail($ID);

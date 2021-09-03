@@ -42,6 +42,12 @@ class BanController extends Controller
 
     public function insert(BanUserRequest $request, User $user)
     {
+        if (config('demo.is_enabled')) {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
+
         $this->authorize('create', [Ban::class, $user]);
 
 
@@ -60,6 +66,12 @@ class BanController extends Controller
 
     public function delete(Request $request, User $user)
     {
+        if (config('demo.is_enabled')) {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
+
         $this->authorize('delete', $user->bans);
 
         if ($this->suspensionService->isSuspended($user)) {

@@ -43,6 +43,12 @@
             <form id="banAccountForm" name="banAccount" method="POST" action="{{route('banUser', ['user' => $profile->user->id])}}">
                @csrf
 
+                @if($demoActive)
+                    <div class="alert alert-danger">
+                        <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                    </div>
+                @endif
+
                 <div class="row">
 
                     <div class="col">
@@ -69,13 +75,19 @@
             </form>
 
             <x-slot name="modalFooter">
-                <button id="banAccountButton" type="button" class="btn btn-danger"><i class="fa fa-gavel"></i> {{__('Confirm')}}</button>
+                <button id="banAccountButton" type="button" class="btn btn-danger" {{ ($demoActive) ? 'disabled' : '' }} ><i class="fa fa-gavel"></i> {{__('Confirm')}}</button>
             </x-slot>
 
         </x-modal>
 
         @if (!Auth::user()->is($profile->user) && $profile->user->isStaffMember())
             <x-modal id="terminateUser" modal-label="terminateUser" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
+
+                @if($demoActive)
+                    <div class="alert alert-danger">
+                        <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                    </div>
+                @endif
 
               <p><i class="fa fa-exclamation-triangle"></i> <b>{{__('messages.profile.terminate_notice')}}</b></p>
               <p>
@@ -91,7 +103,7 @@
                   <form method="POST" action="{{route('terminateStaffMember', ['user' => $profile->user->id])}}" id="terminateUserForm">
                     @csrf
                     @method('PATCH')
-                    <button type="submit" class="btn btn-warning"><i class="fas fa-exclamation-circle"></i> {{__('messages.reusable.confirm')}}</button>
+                    <button type="submit" class="btn btn-warning" {{ ($demoActive) ? 'disabled' : '' }}><i class="fas fa-exclamation-circle"></i> {{__('messages.reusable.confirm')}}</button>
 
                   </form>
 
@@ -101,6 +113,12 @@
         @endif
 
         <x-modal id="deleteAccount" modal-label="deleteAccount" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
+
+            @if($demoActive)
+                <div class="alert alert-danger">
+                    <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                </div>
+            @endif
 
             <p><i class="fa fa-exclamation-triangle"></i><b> {{__('messages.profile.delete_acc_warn')}}</b></p>
 
@@ -118,12 +136,12 @@
 
             <x-slot name="modalFooter">
 
-                <button type="button" class="btn btn-danger" onclick="document.getElementById('deleteAccountForm').submit()"><i class="fa fa-trash"></i> {{strtoupper(__('messages.reusable.confirm'))}}</button>
+                <button type="button" class="btn btn-danger" {{ ($demoActive) ? 'disabled' : '' }} onclick="document.getElementById('deleteAccountForm').submit()"><i class="fa fa-trash"></i> {{strtoupper(__('messages.reusable.confirm'))}}</button>
 
             </x-slot>
         </x-modal>
 
-        <x-modal id="ipInfo" modal-label="ipInfo" modal-title="{{__('messages.reusable.ip_info')}} {{$ipInfo->ip ?? 'Unknown'}}" include-close-button="true">
+        <x-modal id="ipInfo" modal-label="ipInfo" modal-title="{{__('IP Address Information')}}" include-close-button="true">
 
             <h4 class="text-center">{{__('messages.profile.search_result')}}</h3>
 
@@ -209,18 +227,24 @@
 
         <x-modal id="editUser" modal-label="editUser" modal-title="{{__('messages.profile.edituser')}}" include-close-button="true">
 
+            @if($demoActive)
+                <div class="alert alert-danger">
+                    <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                </div>
+            @endif
+
           <form id="updateUserForm" method="post" action="{{ route('updateUser', ['user' => $profile->user->id]) }}">
             @csrf
             @method('PATCH')
 
             <label for="email">{{__('messages.contactlabel_email')}}</label>
-            <input id="email" type="text" name="email" class="form-control" required value="{{ $profile->user->email }}" />
+            <input {{ ($demoActive) ? 'disabled' : '' }} id="email" type="text" name="email" class="form-control" required value="{{ $profile->user->email }}" />
 
             <label for="name">{{__('messages.contactlabel_name')}}</label>
-            <input id="name" type="text" name="name" class="form-control" required value="{{ $profile->user->name }}" />
+            <input {{ ($demoActive) ? 'disabled' : '' }} id="name" type="text" name="name" class="form-control" required value="{{ $profile->user->name }}" />
 
             <label for="uuid">Mojang UUID</label>
-            <input id="uuid" type="text" name="uuid" class="form-control" required value="{{ $profile->user->uuid }}" />
+            <input {{ ($demoActive) ? 'disabled' : '' }} id="uuid" type="text" name="uuid" class="form-control" required value="{{ $profile->user->uuid }}" />
             <p class="text-muted text-sm">
               <i class="fas fa-exclamation-triangle"></i> {{__('messages.profile.edituser_consequence')}}
             </p>
@@ -233,7 +257,7 @@
 
                   @foreach($roles as $roleName => $status)
                     <tr>
-                      <th><input type="checkbox" name="roles[]" value="{{ $roleName }}" {{ ($status) ? 'checked' : '' }}></th>
+                      <th><input {{ ($demoActive) ? 'disabled' : '' }} type="checkbox" name="roles[]" value="{{ $roleName }}" {{ ($status) ? 'checked' : '' }}></th>
                       <td class="col-md-2">{{ ucfirst($roleName) }}</td>
                     </tr>
 
@@ -250,7 +274,7 @@
 
           <x-slot name="modalFooter">
 
-              <button type="button" class="btn btn-warning" onclick="$('#updateUserForm').submit()"><i class="fa fa-exclamation-cicle"></i> {{__('messages.vacancy.save')}}</button>
+              <button type="button" {{ ($demoActive) ? 'disabled' : '' }} class="btn btn-warning" onclick="$('#updateUserForm').submit()"><i class="fa fa-exclamation-cicle"></i> {{__('messages.vacancy.save')}}</button>
 
           </x-slot>
 
@@ -293,7 +317,7 @@
                     <p class="text-muted">{{$profile->profileShortBio}}</p>
                     <p class="text-muted">{{__('messages.reusable.member_since', ['date' => $since])}}</p>
                     @if (Auth::user()->hasRole('admin'))
-                        <button type="button" class="btn btn-sm btn-info" onclick="$('#ipInfo').modal('show')">{{__('messages.reusable.lookup', ['ipAddress' => $profile->user->originalIP])}}</button>
+                        <button type="button" class="btn btn-sm btn-info" onclick="$('#ipInfo').modal('show')">{{__('messages.reusable.lookup', ['ipAddress' => (!$demoActive) ? $profile->user->originalIP : '0.0.0.0'])}}</button>
                     @endif
 
                     @if ($profile->user->is(Auth::user()))

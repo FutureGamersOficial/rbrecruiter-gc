@@ -34,6 +34,12 @@
 
     @endif
 
+    @if(session()->has('exception'))
+        <script>
+            toastr.error("{{session('exception')}}")
+        </script>
+    @endif
+
 @stop
 
 @section('content')

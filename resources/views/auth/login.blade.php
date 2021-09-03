@@ -16,6 +16,22 @@
               <p class="login-card-description">{{__('messages.signin_cta')}}</p>
               <form action="{{ route('login') }}" method="POST" id="loginForm">
                   @csrf
+                  @if ($demoActive)
+                      <div class="alert alert-warning">
+                          <p class="font-weight-bold"></i>{{__('Warning')}}</p>
+                          <p>{{ __('Do not use real credentials; The application is in demo mode.') }}</p>
+
+                          <p class="font-weight-bold">{{ __('Demo accounts:') }}</p>
+                          <ul>
+                              <li>admin@example.com</li>
+                              <li>staffmember@example.com</li>
+                              <li>enduser@example.com</li>
+                          </ul>
+                          <p>{{ __('The password is ":password" for all accounts.', ['password' => 'password']) }}</p>
+
+                      </div>
+                  @endif
+
                   <div class="form-group">
                     <label for="email" class="sr-only">{{__('messages.contactlabel_email')}}</label>
                     <input type="email" name="email" id="email" class="form-control" placeholder="Email address">

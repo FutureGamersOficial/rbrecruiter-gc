@@ -43,7 +43,7 @@ class SecuritySettingsService
         }
 
         Options::changeOption('graceperiod', $options['graceperiod']);
-        Options::changeOption('password_expiry', $options['pwexpiry']);
+        Options::changeOption('password_expiry', $options['pwExpiry']);
         Options::changeOption('force2fa', $options['enforce2fa']);
         Options::changeOption('requireGameLicense', $options['requirePMC']);
 

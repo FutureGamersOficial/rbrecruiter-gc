@@ -32,6 +32,7 @@ use App\Http\Requests\SearchPlayerRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Notifications\ChangedPassword;
 use App\Notifications\EmailChanged;
+use App\Traits\DisablesFeatures;
 use App\Traits\ReceivesAccountTokens;
 use App\User;
 use Google2FA;
@@ -168,6 +169,11 @@ class UserController extends Controller
 
     public function changePassword(ChangePasswordRequest $request)
     {
+        if (config('demo.is_enabled')) {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
         $user = User::find(Auth::user()->id);
 
         if (! is_null($user)) {
@@ -191,6 +197,12 @@ class UserController extends Controller
 
     public function changeEmail(ChangeEmailRequest $request)
     {
+        if (config('demo.is_enabled')) {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
+
         $user = User::find(Auth::user()->id);
 
         if (! is_null($user)) {
@@ -214,6 +226,12 @@ class UserController extends Controller
 
     public function delete(DeleteUserRequest $request, User $user)
     {
+        if (config('demo.is_enabled')) {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
+
         $this->authorize('delete', $user);
 
         if ($request->confirmPrompt == 'DELETE ACCOUNT') {
@@ -228,6 +246,11 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        if (config('demo.is_enabled')) {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
         $this->authorize('adminEdit', $user);
 
         // Mass update would not be possible here without extra code, making route model binding useless
@@ -262,6 +285,12 @@ class UserController extends Controller
 
     public function add2FASecret(Add2FASecretRequest $request)
     {
+        if (config('demo.is_enabled')) {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
+
         $currentSecret = $request->session()->get('current2FA');
         $isValid = Google2FA::verifyKey($currentSecret, $request->otp);
 
@@ -314,6 +343,11 @@ class UserController extends Controller
     public function terminate(Request $request, User $user)
     {
         $this->authorize('terminate', User::class);
+        if (config('demo.is_enabled')) {
+            return redirect()
+                ->back()
+                ->with('error', 'This feature is disabled');
+        }
 
         // TODO: move logic to policy
         if (! $user->isStaffMember() || $user->is(Auth::user())) {

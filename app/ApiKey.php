@@ -20,6 +20,6 @@ class ApiKey extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'id');
+        return $this->belongsTo('App\User', 'owner_user_id', 'id');
     }
 }

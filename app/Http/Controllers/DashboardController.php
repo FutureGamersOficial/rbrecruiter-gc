@@ -24,6 +24,7 @@ namespace App\Http\Controllers;
 use App\Application;
 use App\User;
 use App\Vacancy;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -34,14 +35,27 @@ class DashboardController extends Controller
         $totalPeerReview = Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get()->count();
         $totalNewApplications = Application::where('applicationStatus', 'STAGE_SUBMITTED')->get()->count();
         $totalDenied = Application::where('applicationStatus', 'DENIED')->get()->count();
+        $vacancies = Vacancy::where('vacancyStatus', '<>', 'CLOSED')->get();
+
+        $totalDeniedSingle = Application::where([
+            ['applicationStatus', '=', 'DENIED'],
+            ['applicantUserID', '=', Auth::user()->id]
+        ])->get();
+
+        $totalNewSingle = Application::where([
+            ['applicationStatus', '=', 'STAGE_SUBMITTED'],
+            ['applicantUserID', '=', Auth::user()->id]
+        ])->get();
 
         return view('dashboard.dashboard')
             ->with([
-                'vacancies' => Vacancy::all(),
+                'vacancies' => $vacancies,
                 'totalUserCount' => User::all()->count(),
                 'totalDenied' => $totalDenied,
                 'totalPeerReview' => $totalPeerReview,
                 'totalNewApplications' => $totalNewApplications,
+                'totalNewSingle' => $totalNewSingle->count(),
+                'totalDeniedSingle' => $totalDeniedSingle->count()
             ]);
     }
 }

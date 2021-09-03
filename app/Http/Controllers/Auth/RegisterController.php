@@ -92,7 +92,7 @@ class RegisterController extends Controller
             case 'low':
                 $password = ['required', 'string', 'min:10', 'confirmed'];
                 break;
-                
+
             case 'medium':
                 $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{12,}$/'];
                 break;
@@ -124,11 +124,11 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'originalIP' => request()->ip(),
+            'originalIP' => config('demo.is_enabled') ? '0.0.0.0' : request()->ip(),
         ]);
 
         // It's not the registration controller's concern to create a profile for the user,
-        // so this code has been moved to it's respective observer, following the separation of concerns pattern.
+        // so this code has been moved to its respective observer, following the separation of concerns pattern.
 
         $user->assignRole('user');
 

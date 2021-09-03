@@ -41,6 +41,19 @@
 
 	  <div class="container-fluid">
 
+          @if ($demoActive)
+              <div class="row">
+                  <div class="col">
+                      <div class="alert alert-warning">
+                          <p class="font-weight-bold"><i class="fas fa-exclamation-circle"></i> Attention</p>
+                          <p>Demo mode is active on this instance. The database is refreshed daily and some features are disabled for security reasons.</p>
+
+                          <p>If you're seeing this message in error, please contact your system administrator.</p>
+                      </div>
+                  </div>
+              </div>
+          @endif
+
           <div class="row">
 
               <div class="col text-center">

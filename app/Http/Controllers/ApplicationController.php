@@ -22,6 +22,7 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Exceptions\ApplicationNotFoundException;
 use App\Exceptions\IncompleteApplicationException;
 use App\Exceptions\UnavailableApplicationException;
 use App\Exceptions\VacancyNotFoundException;
@@ -74,14 +75,22 @@ class ApplicationController extends Controller
     {
         $this->authorize('viewAny', Application::class);
 
-        return view('dashboard.appmanagement.all');
+        return view('dashboard.appmanagement.all')
+            ->with('applications', Application::all());
 
     }
 
 
     public function renderApplicationForm($vacancySlug)
     {
-        return $this->applicationService->renderForm($vacancySlug);
+        try {
+            return $this->applicationService->renderForm($vacancySlug);
+        }
+        catch (ApplicationNotFoundException $ex) {
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
+        }
     }
 
     public function saveApplicationAnswers(Request $request, $vacancySlug)
@@ -98,7 +107,7 @@ class ApplicationController extends Controller
         }
 
         return redirect()
-            ->back()
+            ->to(route('showUserApps'))
             ->with('success', __('Thank you! Your application has been processed and our team will get to it shortly.'));
     }
 

@@ -38,13 +38,18 @@ class IP
             'ip' => $IP,
         ];
 
-        // TODO: Maybe unwrap this?  Methods are chained here
 
-        return json_decode(Cache::remember($IP, 3600, function () use ($IP) {
-            return Http::get(config('general.urls.ipapi.ipcheck'), [
-                'apiKey' => config('general.keys.ipapi.apikey'),
-                'ip' => $IP,
-            ])->body();
-        }));
+        if (!config('demo.is_enabled')) {
+            return json_decode(Cache::remember($IP, 3600, function () use ($IP) {
+                return Http::get(config('general.urls.ipapi.ipcheck'), [
+                    'apiKey' => config('general.keys.ipapi.apikey'),
+                    'ip' => $IP,
+                ])->body();
+            }));
+        }
+
+        return new class {
+            public $message = "This feature is disabled.";
+        };
     }
 }

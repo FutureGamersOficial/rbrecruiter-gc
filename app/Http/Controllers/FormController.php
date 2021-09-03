@@ -21,6 +21,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\EmptyFormException;
 use App\Exceptions\FormHasConstraintsException;
 use App\Form;
 use App\Services\FormManagementService;
@@ -53,7 +54,15 @@ class FormController extends Controller
 
     public function saveForm(Request $request)
     {
-        $form = $this->formService->addForm($request->all());
+        try {
+            $form = $this->formService->addForm($request->all());
+        }
+        catch (EmptyFormException $ex)
+        {
+            return redirect()
+                ->back()
+                ->with('exception', $ex->getMessage());
+        }
 
         // Form is boolean or array
         if ($form)

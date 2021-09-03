@@ -27,6 +27,7 @@ use App\Observers\UserObserver;
 use App\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Sentry;
 
@@ -67,5 +68,7 @@ class AppServiceProvider extends ServiceProvider
             $https = true;
 
         $this->app['request']->server->set('HTTPS', $https);
+
+        View::share('demoActive', config('demo.is_enabled'));
     }
 }

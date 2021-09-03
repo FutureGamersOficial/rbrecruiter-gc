@@ -22,6 +22,14 @@
 
     <x-modal id="deleteAccountModal" modal-label="deleteAccountModalLabel" modal-title="Close account" include-close-button="true">
 
+        @if ($demoActive)
+
+            <div class="alert alert-danger">
+                <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+            </div>
+
+        @endif
+
         <p>Deleting your account is an irreversible process. The following data will be deleted (including personally identifiable data):</p>
         <ul>
             <li>Last IP address</li>
@@ -66,7 +74,7 @@
 
         <x-slot name="modalFooter">
 
-            <button onclick="$('#deleteAccountForm').submit()" type="button" class="btn btn-warning"><i class="fas fa-exclamation-triangle"></i> Continue</button>
+            <button {{ ($demoActive) ? 'disabled' : '' }} onclick="$('#deleteAccountForm').submit()" type="button" class="btn btn-warning"><i class="fas fa-exclamation-triangle"></i> Continue</button>
 
         </x-slot>
 
@@ -74,9 +82,15 @@
 
     @if (!Auth::user()->has2FA())
 
-    
+
 
       <x-modal id="twoFactorAuthModal" modal-label="2faLabel" modal-title="{{__('messages.2fa_txt')}}" include-close-button="true">
+
+          @if($demoActive)
+              <div class="alert alert-danger">
+                  <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> This feature is disabled</p>
+              </div>
+          @endif
 
         <h3><i class="fas fa-user-shield"></i> {{__('messages.profile.2fa_welcome')}}</h3>
 
@@ -118,7 +132,7 @@
 
         <x-slot name="modalFooter">
 
-          <button type="button" class="btn btn-success" onclick="$('#enable2Fa').submit()"><i class="fas fa-key"></i> {{__('messages.profile.2fa_enable')}}</button>
+          <button {{ ($demoActive) ? 'disabled' : '' }} type="button" class="btn btn-success" onclick="$('#enable2Fa').submit()"><i class="fas fa-key"></i> {{__('messages.profile.2fa_enable')}}</button>
 
         </x-slot>
 
@@ -248,6 +262,12 @@
 
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active p-3" id="accountSecurity" role="tabpanel" aria-labelledby="accountSecurityTab">
+                        @if($demoActive)
+                            <div class="alert alert-danger">
+                                <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> This feature is disabled</p>
+                            </div>
+                        @endif
+
                         <h5 class="card-title">{{__('messages.profile.change_password')}}</h5>
                         <p class="card-text">{{__('messages.profile.change_password_exp')}}</p>
 
@@ -271,7 +291,7 @@
 
                         </form>
 
-                        <button class="btn btn-success" type="button" onclick="document.getElementById('changePassword').submit()">{{__('messages.profile.change_password')}}</button>
+                        <button {{ ($demoActive) ? 'disabled' : '' }} class="btn btn-success" type="button" onclick="document.getElementById('changePassword').submit()">{{__('messages.profile.change_password')}}</button>
                     </div>
                     <div class="tab-pane fade p-3" id="twofa" role="tabpanel" aria-labelledby="twofaTab">
                         <h5 class="card-title">{{__('messages.profile.2fa')}}</h5>
@@ -289,10 +309,15 @@
                     <div class="tab-pane fade p-3" id="sessions" role="tabpanel" aria-labelledby="sessionsTab">
                         <h5 class="card-title">{{__('messages.profile.session_manager')}}</h5>
                         <p class="card-text">{{__('messages.profile.terminate_others')}}</p>
-                        <p>{{__('messages.profile.current_session', ['ipAddress' => $ip])}}</p>
+                        <p>{{__('messages.profile.current_session', ['ipAddress' => ($demoActive) ? '0.0.0.0 (censored)' : $ip])}}</p>
                         <button type="button" class="btn btn-warning" onclick="$('#authenticationForm').modal('show')">{{__('messages.profile.flush_session')}}</button>
                     </div>
                     <div class="tab-pane fade p-3" id="contactSettings" role="tabpanel" aria-labelledby="contactSettingsTab">
+                        @if($demoActive)
+                            <div class="alert alert-danger">
+                                <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> This feature is disabled</p>
+                            </div>
+                        @endif
                         <h5 class="card-title">{{__('messages.profile.contact_settings')}}</h5>
                         <p class="card-text">{{__('messages.profile.personal_data_change')}}</p>
 
@@ -320,7 +345,7 @@
                                 </div>
                             </form>
 
-                        <button class="btn btn-success" type="button" onclick="document.getElementById('changeEmail').submit()">{{__('messages.profile.change_email')}}</button>
+                        <button {{ ($demoActive) ? 'disabled' : '' }} class="btn btn-success" type="button" onclick="document.getElementById('changeEmail').submit()">{{__('messages.profile.change_email')}}</button>
                     </div>
 
 
