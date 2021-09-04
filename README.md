@@ -1,6 +1,6 @@
-# THIS IS A DEVELOPMENT BUILD. USE OF THIS BRANCH IS NOT SUPPORTED.
+### Warning: This is an unstable development branch. You may find crashes and undiscovered bugs while using it.
 
-## RB Recruiter - The Simple Staff Application Manager v 0.6.2 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager)
+## RB Recruiter - The Simple Staff Application Manager v 0.7.0 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager)
 
 ## The quick and pain-free staff application manager
 
@@ -69,6 +69,7 @@ Tech stack:
 
 # Currently broken features
  - User deletion is not working at the moment.
+ - Bootstrap switches aren't toggling
  - Notifications are semi-broken; Sometimes they work, sometimes they don't. Scheduled to be fixed on next release.
 
  # PHP Extension Requirements
@@ -89,4 +90,4 @@ Configuration is currently done via the installer. Alternatively, you may also e
 
 # Bug reports
 
-Please report any bugs you find to the issues section. Since this project is being tracked on JIRA Software, the issue tracker will be moved to JIRA Service Desk. Atlassian has a great suite of products for software developers and RB Recruiter could benefit from this workflow, especially when more developers are added down the line.
+Please report any bugs you find to the issues section. Include steps to reproduce the issue please!
