@@ -81,14 +81,16 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, User $user)
     {
-        if ($user->originalIP !== $request->ip())
-        {
-            Log::alert('User IP address changed from last login. Updating.', [
-                'prev' => $user->originalIP,
-                'new' => $request->ip()
-            ]);
-            $user->originalIP = $request->ip();
-            $user->save();
+        if (!config('demo.is_enabled')) {
+            if ($user->originalIP !== $request->ip())
+            {
+                Log::alert('User IP address changed from last login. Updating.', [
+                    'prev' => $user->originalIP,
+                    'new' => $request->ip()
+                ]);
+                $user->originalIP = $request->ip();
+                $user->save();
+            }
         }
     }
 }
