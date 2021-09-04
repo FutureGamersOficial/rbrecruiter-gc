@@ -108,7 +108,7 @@ class TeamController extends Controller
     public function update(EditTeamRequest $request, Team $team): RedirectResponse
     {
         $this->authorize('update', $team);
-        $team = $this->teamService->updateTeam($team, $request->teamDescription, $team->joinType);
+        $team = $this->teamService->updateTeam($team, $request->teamDescription, $request->joinType);
 
 
         if ($team) {
