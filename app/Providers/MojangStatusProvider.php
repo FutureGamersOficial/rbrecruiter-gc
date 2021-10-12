@@ -28,6 +28,8 @@ class MojangStatusProvider extends ServiceProvider
      */
     public function boot()
     {
+        $unknown_status = '[{"minecraft.net":"red"},{"session.minecraft.net":"red"},{"account.mojang.com":"red"},{"authserver.mojang.com":"red"},{"sessionserver.mojang.com":"red"},{"api.mojang.com":"red"},{"textures.minecraft.net":"red"},{"mojang.com":"red"}]';
+
         // TODO: (IMPORTANT) Switch this to Middleware
         if (!Cache::has('mojang_status'))
         {
@@ -40,6 +42,10 @@ class MojangStatusProvider extends ServiceProvider
             }
             catch(ConnectionException $connectException)
             {
+                // Shorter TTL because mojang status server might have recovered
+                Cache::put('mojang_status', base64_encode($unknown_status), now()->addMinutes(60));
+                
+                Log::alert('Writing unknown Mojang status placeholder to cache');
                 Log::critical('Could not connect to Mojang servers: Cannot check/refresh status', [
                     'message' => $connectException->getMessage()
                 ]);
