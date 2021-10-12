@@ -21,6 +21,10 @@
 
 define('LARAVEL_START', microtime(true));
 
+if (file_exists(__DIR__.'/../storage/framework/maintenance.php')) {
+    require __DIR__.'/../storage/framework/maintenance.php';
+}
+
 /*
 |--------------------------------------------------------------------------
 | Check If Application Is Under Maintenance
