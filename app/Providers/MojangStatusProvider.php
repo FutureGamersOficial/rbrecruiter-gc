@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Http\Client\ConnectionException;
 
 class MojangStatusProvider extends ServiceProvider
 {
@@ -38,7 +38,7 @@ class MojangStatusProvider extends ServiceProvider
                 $mcstatus = Http::get(config('general.urls.mojang.statuscheck'));
                 Cache::put('mojang_status', base64_encode($mcstatus->body()), now()->addDays(3));
             }
-            catch(ConnectException $connectException)
+            catch(ConnectionException $connectException)
             {
                 Log::critical('Could not connect to Mojang servers: Cannot check/refresh status', [
                     'message' => $connectException->getMessage()
