@@ -1,59 +1,57 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Http\Controllers;
 
 use App\Application;
-
-use App\Response;
-use App\Vacancy;
-use App\User;
-
-use App\Events\ApplicationDeniedEvent;
-use App\Notifications\NewApplicant;
-use App\Notifications\ApplicationMoved;
-
+use App\Exceptions\ApplicationNotFoundException;
+use App\Exceptions\IncompleteApplicationException;
+use App\Exceptions\UnavailableApplicationException;
+use App\Exceptions\VacancyNotFoundException;
+use App\Services\ApplicationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
-
-use ContextAwareValidator;
 
 class ApplicationController extends Controller
 {
 
-    private function canVote($votes)
-    {
-        $allvotes = collect([]);
+    private $applicationService;
 
-        foreach ($votes as $vote)
-        {
-            if ($vote->userID == Auth::user()->id)
-            {
-                $allvotes->push($vote);
-            }
-        }
+    public function __construct(ApplicationService $applicationService) {
 
-        return ($allvotes->count() == 1) ? false : true;
+        $this->applicationService = $applicationService;
     }
-
 
 
     public function showUserApps()
     {
-
         return view('dashboard.user.applications')
             ->with('applications', Auth::user()->applications);
     }
-
 
     public function showUserApp(Request $request, Application $application)
     {
         $this->authorize('view', $application);
 
-        if (!is_null($application))
-        {
+        if (!is_null($application)) {
             return view('dashboard.user.viewapp')
                 ->with(
                     [
@@ -62,210 +60,88 @@ class ApplicationController extends Controller
                         'structuredResponses' => json_decode($application->response->responseData, true),
                         'formStructure' => $application->response->form,
                         'vacancy' => $application->response->vacancy,
-                        'canVote'  => $this->canVote($application->votes)
+                        'canVote' => $this->applicationService->canVote($application->votes),
                     ]
                 );
-        }
-        else
-        {
-            $request->session()->flash('error', 'The application you requested could not be found.');
+        } else {
+            $request->session()->flash('error', __('The application you requested could not be found.'));
         }
 
         return redirect()->back();
+
     }
 
-
-
-    public function showAllApps()
+    public function showAllApps(Request $request)
     {
         $this->authorize('viewAny', Application::class);
 
         return view('dashboard.appmanagement.all')
-          ->with('applications', Application::paginate(6));
+            ->with('applications', Application::all());
+
     }
 
 
-    public function showAllPendingApps()
+    public function renderApplicationForm($vacancySlug)
     {
-        $this->authorize('viewAny', Application::class);
-
-        return view('dashboard.appmanagement.outstandingapps')
-            ->with('applications', Application::where('applicationStatus', 'STAGE_SUBMITTED')->get());
-    }
-
-
-    public function showPendingInterview()
-    {
-        $this->authorize('viewAny', Application::class);
-        $applications = Application::with('appointment', 'user')->get();
-        $count = 0;
-
-        $pendingInterviews = collect([]);
-        $upcomingInterviews = collect([]);
-
-
-        foreach ($applications as $application)
-        {
-            if (!is_null($application->appointment) && $application->appointment->appointmentStatus == 'CONCLUDED')
-            {
-                $count =+ 1;
-            }
-
-            switch ($application->applicationStatus)
-            {
-                case 'STAGE_INTERVIEW':
-                    $upcomingInterviews->push($application);
-
-                    break;
-
-                case 'STAGE_INTERVIEW_SCHEDULED':
-                    $pendingInterviews->push($application);
-
-                    break;
-            }
-
+        try {
+            return $this->applicationService->renderForm($vacancySlug);
         }
-
-        return view('dashboard.appmanagement.interview')
-            ->with([
-                'finishedCount' => $count,
-                'applications' => $pendingInterviews,
-                'upcomingApplications' => $upcomingInterviews
-            ]);
-    }
-
-
-
-    public function showPeerReview()
-    {
-        $this->authorize('viewAny', Application::class);
-        return view('dashboard.appmanagement.peerreview')
-            ->with('applications', Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get());
-
-    }
-
-
-
-    public function renderApplicationForm(Request $request, $vacancySlug)
-    {
-        // FIXME: Get rid of references to first(), this is a wonky query
-        $vacancyWithForm = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
-
-        $firstVacancy = $vacancyWithForm->first();
-
-        if (!$vacancyWithForm->isEmpty() && $firstVacancy->vacancyCount !== 0 && $firstVacancy->vacancyStatus == 'OPEN')
-        {
-
-            return view('dashboard.application-rendering.apply')
-                ->with([
-
-                    'vacancy' => $vacancyWithForm->first(),
-                    'preprocessedForm' => json_decode($vacancyWithForm->first()->forms->formStructure, true)
-
-                ]);
+        catch (ApplicationNotFoundException $ex) {
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
         }
-        else
-        {
-            abort(404, 'The application you\'re looking for could not be found or it is currently unavailable.');
-        }
-
     }
-
-
 
     public function saveApplicationAnswers(Request $request, $vacancySlug)
     {
-        $vacancy = Vacancy::with('forms')->where('vacancySlug', $vacancySlug)->get();
+        try {
 
-        if ($vacancy->first()->vacancyCount == 0 || $vacancy->first()->vacancyStatus !== 'OPEN')
-        {
+            $this->applicationService->fillForm(Auth::user(), $request->all(), $vacancySlug);
 
-          $request->session()->flash('error', 'This application is unavailable.');
-          return redirect()->back();
+        } catch (VacancyNotFoundException | IncompleteApplicationException | UnavailableApplicationException $e) {
 
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
         }
 
-        Log::info('Processing new application!');
-
-        $formStructure = json_decode($vacancy->first()->forms->formStructure, true);
-        $responseValidation = ContextAwareValidator::getResponseValidator($request->all(), $formStructure);
-
-        Log::info('Built response & validator structure!');
-
-        if (!$responseValidation->get('validator')->fails())
-        {
-            $response = Response::create([
-                'responseFormID' => $vacancy->first()->forms->id,
-                'associatedVacancyID' => $vacancy->first()->id, // Since a form can be used by multiple vacancies, we can only know which specific vacancy this response ties to by using a vacancy ID
-                'responseData' => $responseValidation->get('responseStructure')
-            ]);
-
-            Log::info('Registered form response for user ' . Auth::user()->name . ' for vacancy ' . $vacancy->first()->vacancyName);
-
-            $application = Application::create([
-                'applicantUserID' => Auth::user()->id,
-                'applicantFormResponseID' => $response->id,
-                'applicationStatus' => 'STAGE_SUBMITTED',
-            ]);
-
-            Log::info('Submitted application for user ' . Auth::user()->name . ' with response ID' . $response->id);
-
-            foreach(User::all() as $user)
-            {
-              if ($user->hasRole('admin'))
-              {
-                $user->notify((new NewApplicant($application, $vacancy->first()))->delay(now()->addSeconds(10)));
-              }
-            }
-
-            $request->session()->flash('success', 'Thank you for your application! It will be reviewed as soon as possible.');
-            return redirect()->to(route('showUserApps'));
-        }
-        else
-        {
-            Log::warning('Application form for ' . Auth::user()->name . ' contained errors, resetting!');
-            $request->session()->flash('error', 'There are one or more errors in your application. Please make sure none of your fields are empty, since they are all required.');
-
-        }
-
-        return redirect()->back();
+        return redirect()
+            ->to(route('showUserApps'))
+            ->with('success', __('Thank you! Your application has been processed and our team will get to it shortly.'));
     }
 
     public function updateApplicationStatus(Request $request, Application $application, $newStatus)
     {
+        $messageIsError = false;
         $this->authorize('update', Application::class);
 
-        switch ($newStatus)
+        try {
+            $status = $this->applicationService->updateStatus($application, $newStatus);
+        } catch (\LogicException $ex)
         {
-            case 'deny':
-
-                event(new ApplicationDeniedEvent($application));
-                break;
-
-            case 'interview':
-                Log::info('User ' . Auth::user()->name . ' has moved application ID ' . $application->id . 'to interview stage');
-                $request->session()->flash('success', 'Application moved to interview stage! (:');
-                $application->setStatus('STAGE_INTERVIEW');
-
-                $application->user->notify(new ApplicationMoved());
-                break;
-
-            default:
-                $request->session()->flash('error', 'There are no suitable statuses to update to. Do not mess with the URL.');
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
         }
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', $status);
     }
 
+    /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Exception
+     */
     public function delete(Request $request, Application $application)
     {
+        $this->authorize('delete', $application);
+        $this->applicationService->delete($application);
 
-      $this->authorize('delete', $application);
-      $application->delete(); // observers will run, cleaning it up
-
-      $request->session()->flash('success', 'Application deleted. Comments, appointments and responses have also been deleted.');
-      return redirect()->back();
+        return redirect()
+            ->back()
+            ->with('success', __('Application deleted. Comments, appointments and responses have also been deleted.'));
 
     }
-
 }

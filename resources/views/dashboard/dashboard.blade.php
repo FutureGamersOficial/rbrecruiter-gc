@@ -9,10 +9,45 @@
 @section('js')
 
   <script src="js/dashboard.js"></script>
+  <x-global-errors></x-global-errors>
 
 @endsection
 
 @section('content')
+
+    @if ($demoActive)
+
+        <div class="alert alert-info">
+            <p class="font-weight-bold"><i class="fas fa-info-circle"></i> {{__('Reminder')}}</p>
+            <p>{{__('The application is in demo mode.')}}</p>
+            <p>{{ __('Demo mode disables some app features in order to preserve it\'s integrity for everyone who wants to test it. Here\'s what\'s disabled: ') }}</p>
+            <ul>
+                <li>{{ __('All user account operations such as: ') }}
+                    <ul>
+                        <li>{{ __('Password change') }}</li>
+                        <li>{{ __('Two factor authentication') }}</li>
+                        <li>{{ __('Email change') }}</li>
+                        <li>{{ __('Account deletion') }}</li>
+                    </ul>
+                </li>
+                <li>{{ __('Administrative actions such as:') }}
+                    <ul>
+                        <li>{{__('Account suspension')}}</li>
+                        <li>{{ __('Termination') }}</li>
+                        <li>{{ __('Account deletion') }}</li>
+                        <li>{{ __('Privilege editing') }}</li>
+                    </ul>
+                </li>
+                <li>{{ __('Team file uploads') }}</li>
+                <li>{{__('Developer mode')}}</li>
+                <li>{{ __('Admin logs') }}</li>
+            </ul>
+            <p>To keep everyone safe, IP addresses are censored everywhere in the app, and they're also not collected during registration. The IP address lookup feature is also disabled.</p>
+            <p>Only system administrators can disable demo mode - it cannot be disabled via app settings.</p>
+            <p class="font-weight-bold">Note! The database is wiped every six hours during demo mode.</p>
+        </div>
+
+    @endif
 
     @if (!$vacancies->isEmpty())
 
@@ -80,7 +115,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{ $openApplications ?? 0 }}</h3>
+                  <h3>{{ $totalNewSingle ?? 0 }}</h3>
 
                   <p>{{__('messages.ongoing_apps')}}</p>
                 </div>
@@ -95,7 +130,7 @@
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>{{ $deniedApplications ?? 0 }}</h3>
+                  <h3>{{ $totalDeniedSingle ?? 0 }}</h3>
 
                   <p>{{__('messages.denied_apps')}}</p>
                 </div>
@@ -124,7 +159,8 @@
               @if (Auth::user()->hasRole('admin'))
 
                 <a href="{{ route('registeredPlayerList') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
-
+              @else
+              <a class="small-box-footer"><i class="fas"></i></a>
               @endif
             </div>
           </div>
@@ -140,6 +176,12 @@
               <div class="icon">
                 <i class="fas fa-user-slash"></i>
               </div>
+              @if (Auth::user()->hasRole('admin'))
+
+                <a href="{{ route('allApplications') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+              @else
+              <a class="small-box-footer"><i class="fas"></i></a>
+              @endif
             </div>
           </div>
           <!-- ./col -->
@@ -154,7 +196,12 @@
               <div class="icon">
                 <i class="fas fa-plus"></i>
               </div>
-              <a href="{{ route('staffPendingApps') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+              @if (Auth::user()->hasRole('admin'))
+
+                <a href="{{ route('allApplications') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+              @else
+              <a class="small-box-footer"><i class="fas"></i></a>
+              @endif
             </div>
           </div>
           <!-- ./col -->
@@ -169,7 +216,7 @@
               <div class="icon">
                 <i class="fas fa-vote-yea"></i>
               </div>
-              <a href="{{ route('peerReview') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+              <a class="small-box-footer"><i class="fas"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -178,7 +225,7 @@
     @endif
 
 
-      @if ($isEligibleForApplication && !Auth::user()->isStaffMember())
+      @if (!$vacancies->isEmpty() && $isEligibleForApplication && !Auth::user()->isStaffMember())
         <div class="row mt-5 mb-5">
 
             <div class="col text-center">

@@ -41,6 +41,19 @@
 
 	  <div class="container-fluid">
 
+          @if ($demoActive)
+              <div class="row">
+                  <div class="col">
+                      <div class="alert alert-warning">
+                          <p class="font-weight-bold"><i class="fas fa-exclamation-circle"></i> Attention</p>
+                          <p>Demo mode is active on this instance. The database is refreshed daily and some features are disabled for security reasons.</p>
+
+                          <p>If you're seeing this message in error, please contact your system administrator.</p>
+                      </div>
+                  </div>
+              </div>
+          @endif
+
           <div class="row">
 
               <div class="col text-center">
@@ -81,7 +94,7 @@
                                   @auth
                                       <button {{($isEligibleForApplication) ? '' : 'disabled'}} type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('messages.txt_apply')}}</button>
                                       @if(!$isEligibleForApplication)
-                                          <span class="badge-warning badge"><i class="fa fa-info"></i> {{__('messages.ineligible_days_remaining', ['days' => $elegibilityDaysRemaining])}}</span>
+                                          <span class="badge-warning badge"><i class="fa fa-info"></i> {{__('messages.ineligible_days_remaining', ['days' => $eligibilityDaysRemaining])}}</span>
                                       @endif
                                   @endauth
 
@@ -143,7 +156,7 @@
 
           <div class="row mt-5 mb-5">
 
-              <div id="carouselControls" class="carousel slide" data-ride="carousel">
+              <div id="carouselControls" class="carousel slide w-100" data-ride="carousel">
                   <div class="carousel-inner">
                       <div class="carousel-item active">
                           <img class="d-block w-100" src="/slides/01.png"

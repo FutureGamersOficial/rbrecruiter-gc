@@ -69,6 +69,8 @@
                     <p>{{__('messages.application_r.welcome.line2', ['agerqr' => '18 ' . __('messages.application_r.welcome.yrs_old')])}}.</p>
                     <p class="text-bold">{{__('messages.application_r.welcome.line3')}}.</p>
 
+                    <p><i class="fab fa-markdown"></i> All fields support <a target="_blank" href="https://www.markdownguide.org/cheat-sheet/">Markdown</a></p>
+
                 </div>
 
             </div>

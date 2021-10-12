@@ -1,5 +1,24 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 return [
 
     /*
@@ -15,7 +34,6 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-
     /*
     |--------------------------------------------------------------------------
     | Application Homepage
@@ -27,6 +45,37 @@ return [
     |
     */
     'sitehomepage' => env('APP_SITEHOMEPAGE', 'https://google.com'),
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This value is the application's version.
+    | It's used for informational purposes, and it'll be used for an auto-update system
+    | in the near future.
+    | Should always be the latest minor release.
+    |
+    */
+    'release' => env('RELEASE', '(unknown)'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | SSL for non-production environments
+    |--------------------------------------------------------------------------
+    |
+    | If you're a developer, and need to use SSL locally for testing,
+    | enable this setting.
+    | It forces Laravel to load all assets via HTTPS, even when the environment is
+    | set to "local". This setting is useless in production because it's already enforced.
+    | If you don't enable this when using SSL locally, the pages won't load properly.
+    | If you're a regular user, don't touch this setting.
+    |
+    */
+    'force_secure' => env('NONPROD_FORCE_SECURE', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -193,7 +242,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         \App\Providers\MojangStatusProvider::class,
-        \App\Providers\OptionsProvider::class
+        \App\Providers\OptionsProvider::class,
+        App\Providers\DigitalStorageProvider::class,
+        App\Providers\JSONProvider::class,
 
     ],
 
@@ -250,7 +301,8 @@ return [
         'IP' => App\Facades\IP::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
         'ContextAwareValidator' => App\Facades\ContextAwareValidation::class,
-        'Settings' => App\Facades\Options::class
+        'Settings' => App\Facades\Options::class,
+        'JSON' => App\Facades\JSON::class
 
     ],
 
