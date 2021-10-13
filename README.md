@@ -42,11 +42,13 @@ Many other features are currently planned for this app, such as:
 # Technical overview
 
 Tech stack:
- - [Laravel 7](https://laravel.com/)
- - Eloquent ORM
- - AdminLTE / Bootstrap 4
- - jQuery / Plain Javascript
- - vueJS (in the future)
+ - [Laravel 8](https://laravel.com/)
+ - [Eloquent ORM](https://laravel.com/docs/5.0/eloquent)
+ - [AdminLTE](https://adminlte.io/) / 
+ - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
+ - [jQuery](https://jquery.com/)
+ - [Bootstrap 4](https://getbootstrap.com/)
+ - [Icons by FontAwesome](https://fontawesome.com/)
  
  # Stability
  
@@ -63,7 +65,7 @@ Tech stack:
 # Software Requirements
  - ``composer`` (min version: 1.8.4)
  - ``npm`` (tested w/ v 5.8.0)
- - ``php`` (required PHP 7 or newer - lower versions unsupported!)
+ - ``php`` (required PHP 8 or newer - lower versions unsupported!)
 
  # PHP Extension Requirements
 

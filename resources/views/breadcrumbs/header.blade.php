@@ -6,7 +6,7 @@
 
     <meta charset="utf-8">
     <meta name="description" content="{{ config('app.name') }} Staff Member Management Tool">
-    <meta name="author" content="Miguel Nogueira">
+    <meta name="author" content="Miguel N.">
     <meta name="tags" content="minecraft, minecraft server staff, minecraft staff, minecraft servers">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 

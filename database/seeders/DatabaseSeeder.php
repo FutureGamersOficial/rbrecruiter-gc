@@ -36,5 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\UserSeeder::class);
         $this->call(\Database\Seeders\DefaultOptionsSeeder::class);
         $this->call(\Database\Seeders\NewPermissions::class);
+        $this->call(\Database\Seeders\TeamSeeder::class);
     }
 }
