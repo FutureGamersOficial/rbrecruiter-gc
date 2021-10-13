@@ -1,5 +1,24 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -39,103 +58,87 @@ class Install extends Command
     public function handle()
     {
         $basePath = base_path();
-        if (Storage::disk('local')->missing('INSTALLED'))
-        {
+        if (Storage::disk('local')->missing('INSTALLED')) {
+            $this->info('[!! Welcome to Rasberry Teams !!]');
+            $this->info('>> Installing...');
+            $this->call('down');
 
+            copy($basePath.'/.env.example', $basePath.'/.env');
+            $this->call('key:generate');
 
-           $this->info('[!! Welcome to Rasberry Teams !!]');
-           $this->info('>> Installing...');
-           $this->call('down', [
-             '--message' => 'Down for maintenance. We\'ll be right back!'
-           ]);
+            $this->info('>> Installing and preparing dependencies. This may take a while, depending on your computer.');
 
-           copy($basePath . '/.env.example', $basePath . '/.env');
-           $this->call('key:generate');
+            $npmOut = 0;
+            $npmMessages = [];
 
-           $this->info('>> Installing and preparing dependencies. This may take a while, depending on your computer.');
+            $npmBuildOut = 0;
+            $npmBuildMessages = [];
 
-           $npmOut = 0;
-           $npmMessages = [];
+            exec('cd '.$basePath.' && npm install --silent', $npmBuildOut, $npmOut);
+            exec('cd '.$basePath.'&& npm run dev --silent', $npmBuildMessages, $npmBuildOut);
 
-           $npmBuildOut = 0;
-           $npmBuildMessages = [];
+            if ($npmOut !== 0 && $npmBuildOut !== 0) {
+                $this->error('[!] One or more errors have ocurred whilst attempting to install dependencies.');
+                $this->error('[!] It is recommended to run this command again, and report a bug if it keeps happening.');
 
-           exec('cd ' . $basePath . ' && npm install --silent', $npmBuildOut, $npmOut);
-           exec('cd ' . $basePath . '&& npm run dev --silent', $npmBuildMessages, $npmBuildOut);
+                return false;
+            }
 
+            $settings = [];
 
-           if($npmOut !== 0 && $npmBuildOut !== 0)
-           {
-             $this->error('[!] One or more errors have ocurred whilst attempting to install dependencies.');
-             $this->error('[!] It is recommended to run this command again, and report a bug if it keeps happening.');
+            $this->info('>> Configuring application - We\'re going to ask a few questions here!');
+            do {
+                $this->info('== Database Settings (1/6) ==');
 
-             return false;
-           }
+                $settings['DB_USERNAME'] = $this->ask('Database username');
+                $settings['DB_PASSWORD'] = $this->secret('Database password (Input won\'t be seen)');
+                $settings['DB_DATABASE'] = $this->ask('Database name');
+                $settings['DB_PORT'] = $this->ask('Database port');
+                $settings['DB_HOST'] = $this->ask('Database hostname');
 
+                $this->info('== Antispam Settings (2/6) (Recaptcha v2) ==');
+                $settings['RECAPTCHA_SITE_KEY'] = $this->ask('Site key');
+                $settings['RECAPTCHA_PRIVATE_KEY'] = $this->ask('Private site key');
 
+                $this->info('== IP Geolocation Settings (3/6) (refer to README.md) ==');
+                $settings['IPGEO_API_KEY'] = $this->ask('API Key');
 
-           $settings = [];
+                $this->info('== Notification Settings (4/6) (Email) ==');
+                $settings['MAIL_USERNAME'] = $this->ask('SMTP Username');
+                $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen)');
+                $settings['MAIL_PORT'] = $this->ask('SMTP Server Port');
+                $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname');
+                $settings['MAIL_FROM'] = $this->ask('E-mail address to send from: ');
 
-           $this->info('>> Configuring application - We\'re going to ask a few questions here!');
-           do
-           {
-               $this->info('== Database Settings (1/6) ==');
+                $this->info('== Notification Settings (5/6) (Slack) ==');
+                $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL');
 
-               $settings['DB_USERNAME'] = $this->ask('Database username');
-               $settings['DB_PASSWORD'] = $this->secret('Database password (Input won\'t be seen)');
-               $settings['DB_DATABASE'] = $this->ask('Database name');
-               $settings['DB_PORT'] = $this->ask('Database port');
-               $settings['DB_HOST'] = $this->ask('Database hostname');
+                $this->info('== Web Settings (6/6) ==');
+                $settings['APP_URL'] = $this->ask('Application\'s URL (ex. https://where.you.installed.theapp.com): ');
+                $settings['APP_LOGO'] = $this->ask('App logo (Link to an image): ');
+                $settings['APP_SITEHOMEPAGE'] = $this->ask('Site homepage (appears in the main header): ');
+            } while (! $this->confirm('Are you sure you want to save these settings? You can always go back and try again.'));
 
-               $this->info('== Antispam Settings (2/6) (Recaptcha v2) ==');
-               $settings['RECAPTCHA_SITE_KEY'] = $this->ask('Site key');
-               $settings['RECAPTCHA_PRIVATE_KEY'] = $this->ask('Private site key');
+            foreach ($settings as $keyname => $value) {
+                $this->call('environment:modify', [
+                    'key' => $keyname,
+                    'value' => $value,
+                ]);
+            }
 
-               $this->info('== IP Geolocation Settings (3/6) (refer to README.md) ==');
-               $settings['IPGEO_API_KEY'] = $this->ask('API Key');
+            $this->info('>> Saved configuration settings!');
+            $this->info('>> Preparing database...');
 
-               $this->info('== Notification Settings (4/6) (Email) ==');
-               $settings['MAIL_USERNAME'] = $this->ask('SMTP Username');
-               $settings['MAIL_PASSWORD'] = $this->secret('SMTP Password (Input won\'t be seen)');
-               $settings['MAIL_PORT'] = $this->ask('SMTP Server Port');
-               $settings['MAIL_HOST'] = $this->ask('SMTP Server Hostname');
-               $settings['MAIL_FROM_ADDRESS'] = $this->ask('E-mail address to send from');
+            $this->callSilent('config:cache');
+            $this->call('migrate');
+            $this->call('db:seed');
 
-               $this->info('== Notification Settings (5/6) (Slack) ==');
-               $settings['SLACK_INTEGRATION_WEBHOOK'] = $this->ask('Integration webhook URL');
+            touch($basePath.'/INSTALLED');
 
-               $this->info('== Web Settings (6/6) ==');
-               $settings['APP_URL'] = $this->ask('Application\'s URL (ex. https://where.you.installed.theapp.com): ');
-               $settings['APP_LOGO'] = $this->ask('App logo (Link to an image): ');
-               $settings['APP_SITEHOMEPAGE'] = $this->ask('Site homepage (appears in the main header): ');
-
-
-           } while(!$this->confirm('Are you sure you want to save these settings? You can always go back and try again.'));
-
-           foreach($settings as $keyname => $value)
-           {
-              $this->call('environment:modify', [
-                  'key' => $keyname,
-                  'value' => $value
-              ]);
-           }
-
-           $this->info('>> Saved configuration settings!');
-           $this->info('>> Preparing database...');
-
-           $this->callSilent('config:cache');
-           $this->call('migrate');
-           $this->call('db:seed');
-
-           touch($basePath . '/INSTALLED');
-
-           $this->call('up');
-           $this->info('>> All done! Visit ' . $basePath . ' to start using your brand new installation of Raspberry Teams!');
-
-        }
-        else
-        {
-           $this->error('[!] The application is already installed!');
+            $this->call('up');
+            $this->info('>> All done! Visit '.$basePath.' to start using your brand new installation of Raspberry Teams!');
+        } else {
+            $this->error('[!] The application is already installed!');
         }
     }
 }
