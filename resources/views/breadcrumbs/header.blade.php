@@ -10,6 +10,11 @@
     <meta name="tags" content="minecraft, minecraft server staff, minecraft staff, minecraft servers">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
     <title>{{config('app.name')}} | {{__('messages.home')}}</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -44,7 +49,9 @@
 <header>
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#"><strong>{{config('app.name')}}</strong></a>
+        <a class="navbar-brand" href="#">
+            <img class="rounded" src="/logo-gc.png" alt="Logo Gamesclub" height="50px">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -106,10 +113,12 @@
                 <div class="container text-center white-text">
                     <div class="white-text text-center wow fadeInUp">
                         <h2>{{config('app.name')}}</h2>
-                        <h5> {{__('messages.homepage_welcome')}}</h5>
+                        <h5>Seja bem-vindo ao site oficial da Games Club!</h5>
                         <br>
-                        <p>{{__('messages.homepage_explainer_line1')}}</p>
-                        <p>{{__('messages.homepage_explainer_line2')}}</p>
+                        <p>A Games Club é uma comunidade brasileira que busca trazer um experiência própria e exclusiva para cada participante, temos o intuito de se tornar uma comunidade forte, grande, bem respeitada e, além disso tudo se tornar uma segunda família para muitas pessoas.</p>
+                        <br>
+                        <p>Aqui você se preocupará apenas nas gameplays e em fazer novas amizades para suas jogatinas, até mesmo para trocar ideias e jogar conversa fora.</p>
+                        <p>Atendemos todos os públicos, somos uma comunidade de jogos mais não se limitamos somente a jogos.</p>
                     </div>
                 </div>
             </div>
