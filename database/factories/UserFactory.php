@@ -19,8 +19,6 @@
  *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Database\Factories;
-
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
