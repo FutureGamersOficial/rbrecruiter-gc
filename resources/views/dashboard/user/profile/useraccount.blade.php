@@ -105,9 +105,7 @@
         <div class="row">
           <div class="col-3 offset-3">
             <div class="qr-code-container text-center">
-
-                <img src="{{ $twofaQRCode }}" alt="2FA Security key" />
-
+                {!! $twofaQRCode !!}
             </div>
           </div>
         </div>
