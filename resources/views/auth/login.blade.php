@@ -11,7 +11,7 @@
           <div class="col-md-7">
             <div class="card-body">
               <div class="brand-wrapper">
-                <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo">{{ config('adminlte.logo') }}
+                <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo rounded mr-2">{{ config('adminlte.logo') }}
               </div>
               <p class="login-card-description">{{__('messages.signin_cta')}}</p>
               <form action="{{ route('login') }}" method="POST" id="loginForm">
