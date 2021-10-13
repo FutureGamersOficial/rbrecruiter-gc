@@ -1,13 +1,11 @@
-### Warning: This is an unstable development branch. You may find crashes and undiscovered bugs while using it.
 
-## RB Recruiter - The Simple Staff Application Manager v 0.7.0 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager)
+# RB Recruiter v 0.6.2 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager)
+## The quick and pain-free form management solution for communities
 
-## The quick and pain-free staff application manager
-
-Have you ever gotten tired of managing your community's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
+Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
 
 
-Wish you had a better application managemet strategy? Well, then RB Recruiter is for you!
+Wish you had a better application managemet strategy? Well, then Raspberry Teams is for you! It was originally designed and developed for internal use for a gameserver network, but sharing is caring!
 
 
 # Features (not exhaustive)
@@ -33,61 +31,54 @@ Wish you had a better application managemet strategy? Well, then RB Recruiter is
 # Roadmap
 
 Many other features are currently planned for this app, such as:
-  - Customisable front page
-  - REST API (underway)
-  - Support more game servers and communities
-  - Editable homepage
-  - CKEditor 5 for all text fields
-  - More form field types
-  - Check out this [pull request](https://code.spacejewel-hosting.com/spacejewelhosting/staffmanager/pulls/1) for more planned features.
-  - ~~Web installer~~
+  - Discord role management (approved applicants)
+  - Luckperms/PEX integration - For now, you'll have to promote users manually in-game
+  - Flexibility - This app is built on a flexible concept! It will be able to be used for other purposes other than MC staff members.
+  - Customisable front page (**priority**)
+  - Auto provisioning - Sign up on a website and get your instance of Raspberry Teams up and running in no time
+  - Suggestions accepted!
 
-Next release: v0.7.0, which brings a number of fixes and a REST API to the table.
 
 # Technical overview
 
 Tech stack:
- - [Laravel 8](https://laravel.com/)
- - [Eloquent ORM](https://laravel.com/docs/5.0/eloquent)
- - [AdminLTE](https://adminlte.io/) / [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
- - [jQuery](https://jquery.com/)
- - [Bootstrap 4](https://getbootstrap.com/)
- - [Icons by FontAwesome](https://fontawesome.com/)
+ - [Laravel 7](https://laravel.com/)
+ - Eloquent ORM
+ - AdminLTE / Bootstrap 4
+ - jQuery / Plain Javascript
+ - vueJS (in the future)
  
  # Stability
  
- Currently, the ``master`` branch is unusable. It's currently broken and bug-ridden, and it's also protected to prevent more broken commits. The development branch is currently the stable enough branch to be used, however, please note that it's still actively updated, albeit with less frequency. Rest assured that no broken commits will be uploaded to develop without testing first.
+ Currently, the ``master`` branch is highly unstable, since it's under active development. Expect it to break with each commit. Even though I make an effort to make sure each commit is good to go before pushing, things might still break unexpectedly, and you may find a lot of bugs (which you should report).
  
- After 1.0.0, master will be used as the main branch, receiving new, tested features from develop as pull requests. The master branch will only be usable and fixed after it's merged with develop.
+ Every released version is currently pre-release. If you really want to run this before version ``1.0.0`` comes out, always stay on the latest version, as those will always be tested before release, ensuring less chaos.
  
- *Note: This application is NOT production ready! It won't be until the first stable release comes out, which might take a bit longer, due to me having other responsabilities outside this project.
+ *Note: This application is NOT production ready! It won't be until the first stable release comes out, which might take a bit longer.
 
 # Operating System Requirements
 
- Currently, this application is only supported on Linux (any distro). No support will be provided for Windows installs. Sorry!
+ Currently, this application is only supported on Linux environments (Ubuntu 20.04 or derivatives are recommended).
 
-
-# Currently broken features
- - User deletion is not working at the moment.
- - Bootstrap switches aren't toggling
- - Notifications are semi-broken; Sometimes they work, sometimes they don't. Scheduled to be fixed on next release.
+# Software Requirements
+ - ``composer`` (min version: 1.8.4)
+ - ``npm`` (tested w/ v 5.8.0)
+ - ``php`` (required PHP 7 or newer - lower versions unsupported!)
 
  # PHP Extension Requirements
 
- - ImageMagick (imagick) for 2FA support
-
- Most of these extensions are already enabled by default so you don't need to worry.
+ - JSON
+ - Curl (highly recommended)
+ - Image Magick (imagick) for 2FA support
 
  # Installation
 
-The automatic installer may not work, but it's still worth to give it a try. If after the installation you find errors, clear the config cache. This is something the installer doesn't do correctly yet.
-
-If errors presist, please install the app the traditional Laravel way. Execute the install script to start.
+ Make sure all prerequisites are installed. Afterwards, clone this repository, make ``install.sh``executable and run it.
 
  # Configuration
 Configuration is currently done via the installer. Alternatively, you may also edit the ``.env`` file directly.
-~~This process will be moved to the browser later.~~
+This process will be moved to the browser later.
 
 # Bug reports
 
-Please report any bugs you find to the issues section. Include steps to reproduce the issue please!
+Please report any bugs you find to the issues section here! It'd be immensely helpful. PRs are also accepted.

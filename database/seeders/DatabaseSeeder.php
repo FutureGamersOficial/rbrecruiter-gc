@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright © 2020 Miguel Nogueira
  *
@@ -21,6 +20,7 @@
 
 namespace Database\Seeders;
 
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,10 +32,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(PermissionSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(DefaultOptionsSeeder::class);
-        $this->call(NewPermissions::class);
-        $this->call(TeamSeeder::class);
+        $this->call(\Database\Seeders\PermissionSeeder::class);
+        $this->call(\Database\Seeders\UserSeeder::class);
+        $this->call(\Database\Seeders\DefaultOptionsSeeder::class);
+        $this->call(\Database\Seeders\NewPermissions::class);
     }
 }
