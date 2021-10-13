@@ -77256,30 +77256,31 @@ __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
-flatpickr__WEBPACK_IMPORTED_MODULE_0___default()("#appointmentDateTime", {
-  enableTime: true,
-  dateFormat: "Y-m-d H:i",
-  "static": false
+$(document).ready(function () {
+  flatpickr__WEBPACK_IMPORTED_MODULE_0___default()("#appointmentDateTime", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    "static": false
+  });
+  $("#banAccountTrigger").on("click", function (event) {
+    $("#banAccountModal").modal('show');
+  });
+  $("#durationDropdown").dropdown();
+  $(".dropdown-menu a").on("click", function (e) {
+    $(".duration-btn").text(this.innerHTML);
+    $("#operator").val(this.innerHTML);
+  });
+  $("#banAccountButton").on("click", function () {
+    $("#banAccountForm").submit();
+  });
+  $("#comment").keyup(function () {
+    $("#charcount").text($("#comment").val().length);
+  });
+  $("#submitComment").on('click', function () {
+    $("#newComment").submit();
+  });
+  $("#jointype").bootstrapToggle();
 });
-$("#banAccountTrigger").on("click", function (event) {
-  $("#banAccountModal").modal('show');
-});
-$("#durationDropdown").dropdown();
-$(".dropdown-menu a").on("click", function (e) {
-  $(".duration-btn").text(this.innerHTML);
-  $("#operator").val(this.innerHTML);
-});
-$("#banAccountButton").on("click", function () {
-  $("#banAccountForm").submit();
-});
-$("#comment").keyup(function () {
-  $("#charcount").text($("#comment").val().length);
-});
-$("#submitComment").on('click', function () {
-  $("#newComment").submit();
-});
-$("#jointype").bootstrapToggle();
-$("#associatedVacancies").multiselect();
 
 /***/ }),
 
@@ -77375,7 +77376,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     broadcaster: 'pusher',
 //     key: process.env.MIX_PUSHER_APP_KEY,
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
+//     forceTLS: true
 // });
 
 /***/ }),
@@ -77409,10 +77410,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/miguel456/Desktop/Projects/staffmanager/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /home/miguel456/Desktop/Projects/staffmanager/resources/js/application_charts.js */"./resources/js/application_charts.js");
-__webpack_require__(/*! /home/miguel456/Desktop/Projects/staffmanager/resources/js/calendar.js */"./resources/js/calendar.js");
-module.exports = __webpack_require__(/*! /home/miguel456/Desktop/Projects/staffmanager/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/miguel456/Desktop/Projects/rbrecruiter/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /home/miguel456/Desktop/Projects/rbrecruiter/resources/js/application_charts.js */"./resources/js/application_charts.js");
+__webpack_require__(/*! /home/miguel456/Desktop/Projects/rbrecruiter/resources/js/calendar.js */"./resources/js/calendar.js");
+module.exports = __webpack_require__(/*! /home/miguel456/Desktop/Projects/rbrecruiter/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

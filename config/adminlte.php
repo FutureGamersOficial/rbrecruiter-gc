@@ -578,22 +578,6 @@ return [
                 ],
             ],
               ],
-              [
-                  'name' => 'BootstrapToggleButton',
-                  'active' => true,
-                  'files' => [
-                      [
-                          'type' => 'css',
-                          'asset' => false,
-                          'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css',
-                      ],
-                      [
-                          'type' => 'js',
-                          'asset' => false,
-                          'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js',
-                      ],
-                  ],
-            ],
             [
                 'name' => 'BootstrapMultiselectDropdown',
                 'active' => true,
@@ -626,6 +610,22 @@ return [
                         'location' => 'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css'
                     ]
                 ]
-            ]
+            ],
+        [
+            'name' => 'BootstrapToggleButton',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js',
+                ],
+            ],
+        ],
     ],
 ];
