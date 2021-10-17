@@ -22,6 +22,7 @@
     <script>
         $('.dropdown-toggle').dropdown()
     </script>
+    <script src="https://cdn.jsdelivr.net/combine/npm/lightgallery@2.2.1,npm/lightgallery@2.2.1/plugins/zoom/lg-zoom.umd.min.js,npm/lightgallery@2.2.1/plugins/fullscreen/lg-fullscreen.umd.min.js"></script>
 	</body>
 
 </html>

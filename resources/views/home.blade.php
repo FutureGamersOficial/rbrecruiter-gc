@@ -1,6 +1,6 @@
 @extends('breadcrumbs.app')
 
-@section('content')
+@section('content') 
 
 	@if(!$positions->isEmpty())
 
@@ -192,24 +192,40 @@
               <div id="carouselControls" class="carousel slide w-100" data-ride="carousel">
                   <div class="carousel-inner">
                       <div class="carousel-item active">
-                          <img class="d-block w-100" src="/slides/01.png"
-                               alt="Hub Side View">
+                          <img class="d-block w-100" src="/slides/ets2.01.jpg"
+                               alt="Pic from ETS2">
                       </div>
                       <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/02.png"
-                               alt="Hub Top View">
+                          <img class="d-block w-100" src="/slides/ets2.02.png"
+                               alt="Pic from ETS2">
                       </div>
                       <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/03.png"
-                               alt="Network Servers">
+                          <img class="d-block w-100" src="/slides/ets2.03.png"
+                               alt="Pic from ETS2">
                       </div>
                       <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/04.png"
-                               alt="Prison Mines">
+                          <img class="d-block w-100" src="/slides/fs19.01.png"
+                               alt="Pic from Farming Sim">
                       </div>
                       <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/carousel1.png"
-                               alt="Modified Survival">
+                          <img class="d-block w-100" src="/slides/fs19.02.png"
+                               alt="Pic from Farming Sim">
+                      </div>
+                      <div class="carousel-item">
+                          <img class="d-block w-100" src="/slides/fs19.03.png"
+                               alt="Pic from Farming Sim">
+                      </div>
+                      <div class="carousel-item">
+                          <img class="d-block w-100" src="/slides/gtav.01.png"
+                               alt="Pic from GTAV">
+                      </div>
+                      <div class="carousel-item">
+                          <img class="d-block w-100" src="/slides/gtav.02.png"
+                               alt="Pic from GTAV">
+                      </div>
+                      <div class="carousel-item">
+                          <img class="d-block w-100" src="/slides/gtav.03.png"
+                               alt="Pic from GTAV">
                       </div>
                   </div>
                   <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
@@ -222,6 +238,13 @@
                   </a>
               </div>
 
+
+          </div>
+
+          <div class="row">
+            <div class="col">
+                <p class="text-muted text-center">Créditos: Ryan Gabriel#8868 (Farming Simulator), BruceThompsonN#4217 (GTA V), CaioSFela2TI#5555 e Oliveira#3800 (ETS2)</p>
+            </div>
           </div>
 
 
