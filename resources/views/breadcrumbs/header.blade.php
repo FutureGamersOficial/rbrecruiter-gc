@@ -59,28 +59,6 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link " href="{{config('app.sitehomepage')}}">{{__('messages.homepagetxt')}}</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle"><i class="fas fa-language"></i> Language</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item text-center">
-                            <a target="_blank" href="https://crowdin.com/project/raspberry-staff-manager"><img src="https://badges.crowdin.net/raspberry-staff-manager/localized.svg"></a>
-                        </li>
-                        @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                            <li class="dropdown-item">
-                                <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                    <img src="https://www.countryflags.io/{{($localeCode == 'en') ? 'gb' : $localeCode}}/flat/24.png"> {{ $properties['native'] }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto float-right">
                 @guest
                     <li class="nav-item">
