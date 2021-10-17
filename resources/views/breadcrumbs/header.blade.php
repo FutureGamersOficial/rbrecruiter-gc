@@ -115,7 +115,7 @@
                 <div class="container text-center white-text">
                     <div class="white-text text-center wow fadeInUp">
                         <h2>{{config('app.name')}}</h2>
-                        <h5>Seja bem-vindo ao site oficial da Games Club!</h5>
+                        <h5>Seja bem-vindo ao site oficial da Games Club</h5>
                         <br>
                         <p>A Games Club é uma comunidade brasileira que busca trazer um experiência própria e exclusiva para cada participante, temos o intuito de se tornar uma comunidade forte, grande, bem respeitada e, além disso tudo se tornar uma segunda família para muitas pessoas.</p>
                         <br>
