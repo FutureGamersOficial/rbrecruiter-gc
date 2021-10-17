@@ -24,7 +24,7 @@ Wish you had a better application managemet strategy? Well, then Raspberry Teams
  - Termination - Has a staff member met their untimely demise? Terminate them. This will strip their permissions and roles.
  - Controllable permissions - Every user has permissions! Control who has access to what (You can skip the application process and add staff members directly here).
  - Ban system - Having trouble with pesky spammers? Ban them! This will publicly shame their profile and keep them from signing up or logging in.
- - Notifications: Notifies slack and email primarily
+ - Notifications: Notifies slack and email primarily (Slack notifications currently broken)
 
  And many more features!
 
