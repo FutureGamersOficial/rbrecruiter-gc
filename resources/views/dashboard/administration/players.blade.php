@@ -114,8 +114,7 @@
                       <thead>
                       <tr>
                           <th>#</th>
-                          <th>{{__('messages.players.ign')}}</th>
-                          <th>UUID</th>
+                          <th>{{__('Name')}}</th>
                           <th>{{__('messages.contactlabel_email')}}</th>
                           <th>{{__('messages.reusable.status')}}</th>
                           <th>{{__('messages.players.reg_date')}}</th>
@@ -129,8 +128,7 @@
 
                             <tr>
                                 <td>{{$user->id}}</td>
-                                <td>{{UUID::toUsername($user->uuid)}}</td>
-                                <td>{{$user->uuid}}</td>
+                                <td>{{$user->name}}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     @if ($user->isBanned())

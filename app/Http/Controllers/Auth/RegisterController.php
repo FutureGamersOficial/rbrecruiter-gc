@@ -120,15 +120,12 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'uuid' => $data['uuid'],
+            'uuid' => $data['uuid'] ?? "disabled",
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'originalIP' => config('demo.is_enabled') ? '0.0.0.0' : request()->ip(),
         ]);
-
-        // It's not the registration controller's concern to create a profile for the user,
-        // so this code has been moved to its respective observer, following the separation of concerns pattern.
 
         $user->assignRole('user');
 

@@ -47,7 +47,6 @@
                       <tr>
                           <th>#</th>
                           <th>{{__('messages.staff.f_name')}}</th>
-                          <th>UUID</th>
                           <th>{{__('messages.staff.rank')}}</th>
                           <th>{{__('messages.contactlabel_email')}}</th>
                           <th>{{__('messages.reusable.status')}}</th>
@@ -63,7 +62,6 @@
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td>{{$user->name}}</td>
-                            <td>{{UUID::toUsername($user->uuid)}}</td>
                             <td>
                                 @foreach($user->roles as $role)
                                     <span class="badge badge-info badge-sm">{{$role->name}}</span>

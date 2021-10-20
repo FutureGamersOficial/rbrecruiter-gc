@@ -21,6 +21,7 @@
 
 namespace App\Providers;
 
+use App\Facades\Options;
 use App\Application;
 use App\Observers\ApplicationObserver;
 use App\Observers\UserObserver;
@@ -56,7 +57,6 @@ class AppServiceProvider extends ServiceProvider
 
         Schema::defaultStringLength(191);
 
-        // Keep using Bootstrap; Laravel 8 has the paginator use Tailwind. Quite opinionated tbh
         Paginator::useBootstrap();
 
         User::observe(UserObserver::class);

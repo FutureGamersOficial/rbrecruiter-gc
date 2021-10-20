@@ -244,7 +244,7 @@
             <input {{ ($demoActive) ? 'disabled' : '' }} id="name" type="text" name="name" class="form-control" required value="{{ $profile->user->name }}" />
 
             <label for="uuid">Mojang UUID</label>
-            <input {{ ($demoActive) ? 'disabled' : '' }} id="uuid" type="text" name="uuid" class="form-control" required value="{{ $profile->user->uuid }}" />
+            <input {{ ($demoActive) ? 'disabled' : '' }} id="uuid" type="text" name="uuid" class="form-control" required value="{{ $profile->user->uuid ?? "disabled" }}" />
             <p class="text-muted text-sm">
               <i class="fas fa-exclamation-triangle"></i> {{__('messages.profile.edituser_consequence')}}
             </p>
