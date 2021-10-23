@@ -77,6 +77,23 @@ return [
     */
     'force_secure' => env('NONPROD_FORCE_SECURE', false),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | IP address anonymity
+    |--------------------------------------------------------------------------
+    |
+    | RB Recruiter collects IP addresses and stores them in the database in order to
+    | display them to site admins.
+    |
+    | This feature allows you to disable the display and collection of IP addresses,
+    | just like in demo mode, without needing to be in demo mode.
+    |
+    | If enabled, demo mode will override this feature if it's set to false.
+    |
+    */
+    'hide_ips' => env('HIDE_IPS'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

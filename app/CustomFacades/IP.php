@@ -23,9 +23,38 @@ namespace App\CustomFacades;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class IP
 {
+    // Central source of truth for all operations that deal with IP addresses.
+    // For views, this is in a service provider, and is shared with all of them
+    /**
+     * Determines whether you should collect/display IP addresses in the app.
+     * @return bool Whether you should collect/display IPs, in the context in which this is called
+     */
+    public function shouldCollect(): bool
+    {
+        // should collect or display IPs?
+
+        // demo mode = true
+        // hide ips = false
+
+        if (config('demo.is_enabled') || config('app.hide_ips'))
+        {
+            Log::debug('Global shouldCollect: ', [
+                'shouldCollect' => false
+            ]);
+            return false; // do not collect!
+        }
+
+        Log::debug('Global shouldCollect: ', [
+            'shouldCollect' => true
+        ]);
+
+        return true;
+    }
+
     /**
      * Looks up information on a specified IP address. Caches results automatically.
      * @param string $IP IP address to lookup
@@ -38,14 +67,16 @@ class IP
             'ip' => $IP,
         ];
 
+        if ($this->shouldCollect()) {
 
-        if (!config('demo.is_enabled')) {
+
             return json_decode(Cache::remember($IP, 3600, function () use ($IP) {
                 return Http::get(config('general.urls.ipapi.ipcheck'), [
                     'apiKey' => config('general.keys.ipapi.apikey'),
                     'ip' => $IP,
                 ])->body();
             }));
+
         }
 
         return new class {

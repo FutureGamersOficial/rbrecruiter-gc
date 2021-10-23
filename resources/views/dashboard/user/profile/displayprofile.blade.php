@@ -317,7 +317,7 @@
                     <p class="text-muted">{{$profile->profileShortBio}}</p>
                     <p class="text-muted">{{__('messages.reusable.member_since', ['date' => $since])}}</p>
                     @if (Auth::user()->hasRole('admin'))
-                        <button type="button" class="btn btn-sm btn-info" onclick="$('#ipInfo').modal('show')">{{__('messages.reusable.lookup', ['ipAddress' => (!$demoActive) ? $profile->user->originalIP : '0.0.0.0'])}}</button>
+                        <button type="button" class="btn btn-sm btn-info" onclick="$('#ipInfo').modal('show')">{{__('messages.reusable.lookup', ['ipAddress' => ($shouldCollect) ? $profile->user->originalIP : '0.0.0.0'])}}</button>
                     @endif
 
                     @if ($profile->user->is(Auth::user()))

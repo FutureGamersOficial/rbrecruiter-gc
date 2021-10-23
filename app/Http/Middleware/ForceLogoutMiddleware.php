@@ -38,7 +38,7 @@ class ForceLogoutMiddleware
         if (Auth::user()->isBanned()) {
             Auth::logout();
 
-            $request->session()->flash('error', 'Error: Your session has been forcefully terminated. Please try again in a few days.');
+            $request->session()->flash('error', __('Your account is suspended. You will not be able to login or register until the suspension is lifted.'));
 
             return redirect('/');
         }

@@ -124,7 +124,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'originalIP' => config('demo.is_enabled') ? '0.0.0.0' : request()->ip(),
+            'originalIP' => IP::shouldCollect() ? '0.0.0.0' : request()->ip(),
         ]);
 
         $user->assignRole('user');

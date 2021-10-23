@@ -26,6 +26,7 @@ use App\Exceptions\ApplicationNotFoundException;
 use App\Exceptions\IncompleteApplicationException;
 use App\Exceptions\UnavailableApplicationException;
 use App\Exceptions\VacancyNotFoundException;
+use App\Facades\IP;
 use App\Services\ApplicationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

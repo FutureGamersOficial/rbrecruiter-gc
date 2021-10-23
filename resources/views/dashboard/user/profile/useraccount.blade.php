@@ -307,7 +307,7 @@
                     <div class="tab-pane fade p-3" id="sessions" role="tabpanel" aria-labelledby="sessionsTab">
                         <h5 class="card-title">{{__('messages.profile.session_manager')}}</h5>
                         <p class="card-text">{{__('messages.profile.terminate_others')}}</p>
-                        <p>{{__('messages.profile.current_session', ['ipAddress' => ($demoActive) ? '0.0.0.0 (censored)' : $ip])}}</p>
+                        <p>{{__('messages.profile.current_session', ['ipAddress' => (!$shouldCollect) ? '0.0.0.0 (censored)' : $ip])}}</p>
                         <button type="button" class="btn btn-warning" onclick="$('#authenticationForm').modal('show')">{{__('messages.profile.flush_session')}}</button>
                     </div>
                     <div class="tab-pane fade p-3" id="contactSettings" role="tabpanel" aria-labelledby="contactSettingsTab">
