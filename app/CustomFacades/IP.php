@@ -37,9 +37,6 @@ class IP
     {
         // should collect or display IPs?
 
-        // demo mode = true
-        // hide ips = false
-
         if (config('demo.is_enabled') || config('app.hide_ips'))
         {
             Log::debug('Global shouldCollect: ', [
