@@ -6,7 +6,7 @@
       <div class="card login-card">
         <div class="row no-gutters">
           <div class="col-md-5">
-            <img src="/img/login.jpg" alt="login" class="login-card-img">
+            <img src="{{ asset(config('customization.authbanner')) }}" alt="login" class="login-card-img">
           </div>
           <div class="col-md-7">
             <div class="card-body">
