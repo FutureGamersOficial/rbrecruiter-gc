@@ -1,6 +1,6 @@
 @extends('breadcrumbs.app')
 
-@section('content') 
+@section('content')
 
 	@if(!$positions->isEmpty())
 
@@ -55,7 +55,7 @@
           @endif
 
         <div class="row">
-        
+
             <div class="col-8">
 
                 <div class="jumbotron">
@@ -83,9 +83,9 @@
                 <iframe src="https://discord.com/widget?id=866521211550433301&theme=dark" width="350px" height="95%" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
 
-        </div>  
+        </div>
 
-        
+
           <div class="row mt-5">
 
               <div class="col text-center">
@@ -131,9 +131,10 @@
                                       @endif
                                   @endauth
 
+                                  <button type="button" class="btn btn-info" onclick="$('#{{ $position->vacancySlug }}-details').modal('show')">{{__('messages.txt_learn_more')}}</button>
+
                                   @guest
                                           <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('messages.txt_apply')}}</button>
-                                          <button type="button" class="btn btn-info" onclick="$('#{{ $position->vacancySlug }}-details').modal('show')">{{__('messages.txt_learn_more')}}</button>
                                   @endguest
 
                               </div>
