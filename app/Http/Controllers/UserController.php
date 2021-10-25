@@ -235,7 +235,7 @@ class UserController extends Controller
         $this->authorize('delete', $user);
 
         if ($request->confirmPrompt == 'DELETE ACCOUNT') {
-            $user->forceDelete();
+            $user->delete();
             $request->session()->flash('success', __('User deleted successfully.'));
         } else {
             $request->session()->flash('error', __('Wrong confirmation text! Try again.'));

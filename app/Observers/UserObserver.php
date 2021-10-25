@@ -63,6 +63,7 @@ class UserObserver
 
     public function deleting(User $user)
     {
+        Log::debug("Deleting observer running");
         if ($user->isForceDeleting()) {
             $user->profile->delete();
             Log::debug('Referential integrity cleanup: Deleted profile!');
