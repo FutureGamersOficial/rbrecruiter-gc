@@ -131,11 +131,7 @@
                                 <td>{{$user->name}}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    @if ($user->isBanned())
-                                        <span class="badge badge-danger"><i class="fa fa-ban"></i> {{__('messages.players.banned')}}</span>
-                                    @else
-                                        <span class="badge badge-success">{{__('messages.players.active')}}</span>
-                                    @endif
+                                    <x-account-status user-id="{{ $user->id }}"></x-account-status>
                                 </td>
                                 <td>{{$user->created_at}}</td>
                                 <td>

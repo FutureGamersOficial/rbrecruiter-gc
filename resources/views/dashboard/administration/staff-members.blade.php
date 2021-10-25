@@ -68,7 +68,9 @@
                                 @endforeach
                             </td>
                             <td>{{ $user->email }}</td>
-                            <td><span class="badge badge-success">{{__('messages.players.active')}}</span></td>
+                            <td>
+                                <x-account-status user-id="{{ $user->id }}"></x-account-status>
+                            </td>
                             <td>{{$user->created_at}}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-success mr-2" onclick="window.location.href='{{route('showSingleProfile', ['user' => $user->id])}}'"><i class="fa fa-eye"></i></button>
