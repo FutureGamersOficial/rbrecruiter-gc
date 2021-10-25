@@ -314,8 +314,8 @@ return [
             'url' => '/hr/staff-members',
             'can' => 'admin.stafflist',
         ],
-        [    // players who haven't been promoted yet
-            'text' => 'm_reg_players',
+        [
+            'text' => 'Registered users',
             'icon' => 'fas fa-fw fa-user-friends',
             'url' => '/hr/players',
             'can' => 'admin.userlist',

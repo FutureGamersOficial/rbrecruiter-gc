@@ -33,7 +33,6 @@
         @endforeach
 
     @endif
-
 @stop
 
 @section('content')
@@ -161,8 +160,6 @@
                             <tr>
                                 <th>{{__('messages.contactlabel_name')}}</th>
                                 <th>{{__('messages.reusable.description')}}</th>
-                                <th>{{__('messages.vacancy.discord_roleid')}}</th>
-                                <th>{{__('messages.vacancy.permission_group')}}</th>
                                 <th>{{__('messages.vacancy.free_slots')}}</th>
                                 <th>{{__('messages.reusable.status')}}</th>
                                 <th>{{__('messages.reusable.created_at')}}</th>
@@ -178,8 +175,6 @@
                                 <tr>
                                     <td>{{$vacancy->vacancyName}}</td>
                                     <td>{{substr($vacancy->vacancyDescription, 0, 20)}}...</td>
-                                    <td><span class="badge badge-success">{{$vacancy->discordRoleID}}</span></td>
-                                    <td><span class="badge badge-success">{{$vacancy->permissionGroupName}}</span></td>
                                     <td>{{$vacancy->vacancyCount}}</td>
                                     @if($vacancy->vacancyStatus == 'OPEN')
                                         <td><span class="badge badge-success">{{__('messages.open')}}</span></td>
@@ -189,14 +184,14 @@
                                     <td>{{$vacancy->created_at}}</td>
                                     <td>
 
-                                        <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='{{ route('editPosition', ['vacancy' => $vacancy->id]) }}'"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{ route('editPosition', ['vacancy' => $vacancy->id]) }}'"><i class="fas fa-edit"></i></button>
 
                                         @if ($vacancy->vacancyStatus == 'OPEN')
 
                                             <form action="{{route('updatePositionAvailability', ['status' => 'close', 'vacancy' => $vacancy->id])}}" method="POST" id="closePosition" style="display: inline">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i></button>
+                                                <button type="submit" class="btn btn-sm btn-warning"><i class="fa fa-lock"></i></button>
                                             </form>
 
                                         @else
@@ -204,10 +199,16 @@
                                             <form action="{{route('updatePositionAvailability', ['status' => 'open', 'vacancy' => $vacancy->id])}}" method="POST" id="openPosition" style="display: inline">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check"></i></button>
+                                                <button type="submit" class="btn btn-sm btn-warning"><i class="fa fa-unlock"></i></button>
                                             </form>
 
                                         @endif
+
+                                        <form action="{{route('deletePosition', ['vacancy' => $vacancy->id])}}" method="POST" id="{{ 'deleteVacancy' . $vacancy->id  }}" style="display: inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="$('#deleteVacancyModal').modal('show')"><i class="fa fa-trash"></i></button>
+                                        </form>
 
                                     </td>
                                 </tr>
@@ -217,6 +218,7 @@
                             </tbody>
 
                         </table>
+                        <p class="mt-3 text-bold"><i class="fas fa-info-circle"></i> {{ __('Note: If you delete a vacancy, all its applications are also deleted') }}</p>
 
                     @else
 

@@ -85,7 +85,7 @@ class VacancyPolicy
      */
     public function delete(User $user, Vacancy $vacancy)
     {
-        //
+        return $user->hasAnyRole('admin', 'hiringManager');
     }
 
     /**

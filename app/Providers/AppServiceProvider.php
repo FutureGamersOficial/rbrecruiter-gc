@@ -25,7 +25,9 @@ use App\Facades\Options;
 use App\Application;
 use App\Observers\ApplicationObserver;
 use App\Observers\UserObserver;
+use App\Observers\VacancyObserver;
 use App\User;
+use App\Vacancy;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -59,8 +61,11 @@ class AppServiceProvider extends ServiceProvider
 
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
+
+        // Register observers
         User::observe(UserObserver::class);
         Application::observe(ApplicationObserver::class);
+        Vacancy::observe(VacancyObserver::class);
 
         $https = ($this->app->environment() != 'local');
         $collect = true;

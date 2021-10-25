@@ -262,6 +262,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::patch('positions/update/{vacancy}', [VacancyController::class, 'update'])
                 ->name('updatePosition');
 
+            Route::delete('positions/delete/{vacancy}', [VacancyController::class, 'delete'])
+                ->name('deletePosition');
+
             Route::patch('positions/availability/{status}/{vacancy}', [VacancyController::class, 'updatePositionAvailability'])
                 ->name('updatePositionAvailability');
 

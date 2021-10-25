@@ -21,7 +21,9 @@
 
 namespace App\Observers;
 
+use App\Application;
 use App\Vacancy;
+use Illuminate\Support\Facades\Log;
 
 class VacancyObserver
 {
@@ -47,6 +49,16 @@ class VacancyObserver
         //
     }
 
+    public function deleting(Vacancy $vacancy)
+    {
+        foreach(Application::with('response.vacancy')->get() as $app) {
+            if ($app->response->vacancy->id == $vacancy->id)
+            {
+                $app->delete();
+            }
+        }
+    }
+
     /**
      * Handle the vacancy "deleted" event.
      *
@@ -55,7 +67,7 @@ class VacancyObserver
      */
     public function deleted(Vacancy $vacancy)
     {
-        // TODO: Handle deletion of children's data
+
     }
 
     /**

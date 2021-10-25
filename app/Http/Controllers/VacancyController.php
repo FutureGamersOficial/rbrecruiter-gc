@@ -147,4 +147,14 @@ class VacancyController extends Controller
             ->back()
             ->with('success', __('Vacancy successfully updated.'));
     }
+
+    public function delete(Request $request, Vacancy $vacancy)
+    {
+        $this->authorize('delete', $vacancy);
+        $vacancy->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', __('Vacancy deleted. All applications associated with it are now gone too.'));
+    }
 }
