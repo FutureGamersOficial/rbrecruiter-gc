@@ -38,6 +38,7 @@ use App\Http\Controllers\VacancyController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\OptionsController;
 use App\Http\Controllers\SecuritySettingsController;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -51,6 +52,22 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/uptime', function () {
+
+    Log::debug('Received uptime hit');
+
+    return response()->json([
+        'app' => config('app.name'),
+        'status' => 'up',
+        'version' => '0.7.2',
+        'meta' => [
+            'demo_enabled' => config('demo.is_enabled'),
+        ]
+    ]);
+
+})->name('uptime');
+
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
     Route::group(['prefix' => 'auth', 'middleware' => ['usernameUUID']], function () {
         Auth::routes([
