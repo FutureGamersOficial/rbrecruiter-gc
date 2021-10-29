@@ -365,12 +365,6 @@ return [
                     'url' => '/admin/devtools',
                     'can' => 'admin.developertools.use',
                 ],
-                [
-                    'text' => 'API Keys',
-                    'icon' => 'fas fa-user-shield',
-                    'can' => 'admin.settings.view',
-                    'route' => 'keys.index'
-                ]
             ],
         ],
         [
