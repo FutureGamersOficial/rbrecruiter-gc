@@ -303,12 +303,24 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::patch('forms/update/{form}', [FormController::class, 'update'])
                 ->name('updateForm');
 
-            Route::get('devtools', [DevToolsController::class, 'index'])
-                ->name('devTools');
 
-            // we could use route model binding
-            Route::post('devtools/vote-evaluation/force', [DevToolsController::class, 'forceVoteCount'])
-                ->name('devToolsForceVoteCount');
+            Route::group(['prefix' => 'devtools'], function () {
+
+                Route::get('/', [DevToolsController::class, 'index'])
+                    ->name('devTools');
+
+
+                Route::post('/applications/force-approval', [DevToolsController::class, 'forceApprovalEvent'])
+                    ->name('devForceApprovalEvent');
+
+                Route::post('/applications/count-votes', [DevToolsController::class, 'evaluateVotes'])
+                    ->name('devForceEvaluateVotes');
+
+                Route::delete('/suspensions/purge-expired', [DevToolsController::class, 'purgeSuspensions'])
+                    ->name('devPurgeExpired');
+
+            });
+
         });
     });
 });

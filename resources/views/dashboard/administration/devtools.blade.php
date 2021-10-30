@@ -17,7 +17,7 @@
     <x-modal id="confirmForceEventDispatch" modal-label="confirmForceEventDispatch" modal-title="{{__('messages.choose_app')}}" include-close-button="true">
 
         <p>{{__('messages.forceeval')}}</p>
-        <form method="POST" id="forceEval" action="{{route('devToolsForceVoteCount')}}">
+        <form method="POST" id="forceEval" action="{{route('devForceApprovalEvent')}}">
             @csrf
             <select name="application" class="custom-select">
                 @if(!$applications->isEmpty())
@@ -53,15 +53,25 @@
 
     <div class="row">
 
-        <div class="col">
+        <div class="col text-center">
 
-            <x-card id="tools" card-title="{{__('messages.devtools_evn')}}" footer-style="text-center">
+            <x-card id="tools" card-title="Commands & Actions" footer-style="text-center">
 
                 <x-slot name="cardHeader">
 
                 </x-slot>
-                    <button type="button" class="btn btn-danger" onclick="$('#confirmForceEventDispatch').modal('show')">{{__('messages.override_votes')}}</button>
-                    <button type="button" class="btn btn-warning ml-3">{{__('messages.artisan_evaluate')}}</button>
+                    <button data-toggle="tooltip" data-placement="top" title="Forces a selected application to be approved, regardless of how many votes it has." type="button" class="btn btn-primary" onclick="$('#confirmForceEventDispatch').modal('show')"><i class="fas fa-bullhorn"></i> Force application approval</button>
+
+                    <form name="evalvotes" method="post" action="{{ route('devForceEvaluateVotes') }}" class="d-inline">
+                        @csrf
+                        <button data-toggle="tooltip" data-placement="top" title="Counts and processes all backlogged votes, for all applications." type="submit" class="btn btn-primary ml-3"><i class="fas fa-redo"></i> Count all votes now</button>
+                    </form>
+
+                    <form name="purgebans" method="post" action="{{ route('devPurgeExpired') }}" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button data-toggle="tooltip" data-placement="top" title="Cleans the database of old, expired suspensions, therefore unbanning certain users." type="submit" class="btn btn-primary ml-3"><i class="far fa-trash-alt"></i> Purge expired bans</button>
+                    </form>
 
                 <x-slot name="cardFooter">
                     <p class="text-muted"> .</p>
