@@ -53,6 +53,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ProcessDueSuspensions)
             ->daily();
         // Production value: Every day
+        // Development value: Every minute
     }
 
     /**

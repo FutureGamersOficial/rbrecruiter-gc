@@ -18,8 +18,6 @@
  *     You should have received a copy of the GNU General Public License
  *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\TwofaController;
@@ -41,6 +39,7 @@ use App\Http\Controllers\SecuritySettingsController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 /*
 |--------------------------------------------------------------------------

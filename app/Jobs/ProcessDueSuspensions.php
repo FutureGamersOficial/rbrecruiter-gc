@@ -22,6 +22,7 @@
 namespace App\Jobs;
 
 use App\Ban;
+use App\Services\AccountSuspensionService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,8 +34,6 @@ use Illuminate\Support\Facades\Log;
 class ProcessDueSuspensions implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    public $bans;
 
     /**
      * Create a new job instance.
@@ -50,20 +49,10 @@ class ProcessDueSuspensions implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(AccountSuspensionService $service)
     {
-        Log::debug('Running automatic suspension cleaner...');
-        $bans = Ban::all();
+        Log::info('(suspension cleaner) Purging all expired suspension records.');
 
-        if (! is_null($bans)) {
-            foreach ($this->bans as $ban) {
-                $bannedUntil = Carbon::parse($ban->bannedUntil);
-
-                if ($bannedUntil->isToday()) {
-                    Log::debug('Lifted expired suspension ID '.$ban->id.' for '.$ban->user->name);
-                    $ban->delete();
-                }
-            }
-        }
+        $service->purgeExpired();
     }
 }
