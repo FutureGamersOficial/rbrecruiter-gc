@@ -8,6 +8,7 @@ use App\Application;
 use App\Appointment;
 use App\Exceptions\InvalidAppointmentStatusException;
 use App\Notifications\ApplicationMoved;
+use App\Notifications\AppointmentCancelled;
 use App\Notifications\AppointmentScheduled;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,15 @@ class AppointmentService
 
     ];
 
+    /**
+     * Schedules an appointment for the provided application.
+     *
+     * @param Application $application The target application.
+     * @param Carbon $appointmentDate The appointment's date and time.
+     * @param string $appointmentDescription The appointment description.
+     * @param string $appointmentLocation The appointment location.
+     * @return bool Whether the appointment was scheduled.
+     */
     public function createAppointment(Application $application, Carbon $appointmentDate, $appointmentDescription, $appointmentLocation)
     {
         $appointment = Appointment::create([
@@ -44,6 +54,32 @@ class AppointmentService
 
 
         return true;
+    }
+
+
+    /**
+     * Cancels an appointment for the provided application.
+     *
+     * @param Application $application The target application.
+     * @param string $reason The reason for cancelling the appointment.
+     * @throws \Exception Thrown when there's no appointment to cancel
+     */
+    public function deleteAppointment(Application $application, string $reason): bool
+    {
+        if (!empty($application->appointment))
+        {
+            $application->user->notify(new AppointmentCancelled($application, Carbon::parse($application->appointment->appointmentDate), $reason));
+            $application->appointment->delete();
+
+            $application->setStatus('STAGE_INTERVIEW');
+
+            Log::info('User '.Auth::user()->name.' cancelled an appointment with '.$application->user->name.' for application ID'.$application->id);
+
+            return true;
+        }
+
+        throw new \Exception("This application doesn't have an appointment!");
+
     }
 
     /**

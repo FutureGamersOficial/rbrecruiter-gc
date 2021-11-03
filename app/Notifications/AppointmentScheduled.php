@@ -64,11 +64,11 @@ class AppointmentScheduled extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name').' - Interview scheduled')
+                    ->subject(config('app.name').' - Interview Scheduled')
                     ->line('A voice interview has been scheduled for you @ '.$this->appointment->appointmentDate.'.')
                     ->line('With the following details: '.$this->appointment->appointmentDescription)
                     ->line('This meeting will take place @ '.$this->appointment->appointmentLocation.'. You will receive an email soon with details on how to join this meeting.')
-                    ->line('You are expected to show up at least 5 minutes before the scheduled date.')
+                    ->line('Please join a public voice channel (or another platform if specified) at around this time.')
                     ->action('Sign in', url(route('login')))
                     ->line('Thank you!');
     }

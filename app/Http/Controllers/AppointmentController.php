@@ -25,6 +25,7 @@ use App\Application;
 use App\Appointment;
 use App\Exceptions\InvalidAppointmentException;
 use App\Exceptions\InvalidAppointmentStatusException;
+use App\Http\Requests\CancelAppointmentRequest;
 use App\Http\Requests\SaveNotesRequest;
 use App\Services\AppointmentService;
 use App\Services\MeetingNoteService;
@@ -61,7 +62,7 @@ class AppointmentController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function updateAppointment(Application $application, $status): RedirectResponse
+    public function updateAppointment(Application $application, string $status): RedirectResponse
     {
         $this->authorize('update', $application->appointment);
 
@@ -78,9 +79,31 @@ class AppointmentController extends Controller
                 ->back()
                 ->with('error', $ex->getMessage());
         }
+    }
+
+    public function deleteAppointment(CancelAppointmentRequest $request, Application $application)
+    {
+        $this->authorize('update', $application->appointment);
+
+        try {
+
+            $this->appointmentService->deleteAppointment($application, $request->reason);
+
+            return redirect()
+                ->back()
+                ->with('success', __('Appointment cancelled.'));
+
+        }
+        catch (\Exception $ex) {
+            return redirect()
+                ->back()
+                ->with('error', $ex->getMessage());
+        }
 
 
     }
+
+
 
     public function saveNotes(SaveNotesRequest $request, Application $application)
     {

@@ -166,6 +166,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::patch('update/appointments/{application}/{status}', [AppointmentController::class, 'updateAppointment'])
                 ->name('updateAppointment');
+
+            Route::delete('delete/appointments/{application}', [AppointmentController::class, 'deleteAppointment'])
+                ->name('deleteAppointment');
         });
 
         Route::group(['prefix' => 'apply', 'middleware' => ['eligibility', 'passwordredirect']], function () {
@@ -310,6 +313,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                     ->name('devTools');
 
 
+                Route::post('/applications/force-approval', [DevToolsController::class, 'forceApprovalEvent']);
                 Route::post('/applications/force-approval', [DevToolsController::class, 'forceApprovalEvent'])
                     ->name('devForceApprovalEvent');
 

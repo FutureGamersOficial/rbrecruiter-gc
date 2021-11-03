@@ -67,11 +67,36 @@
                         @method('PATCH')
                         <button type="submit" class="btn btn-danger">{{__('messages.view_app.deny_confirm_btn')}}</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.modal_close')}}</button>
-
                 </x-slot>
 
             </x-modal>
+
+
+        <x-modal id="cancelAppointmentModal" modal-label="cancelAppointmentModalLabel" modal-title="{{__('Cancel appointment?')}}" include-close-button="true">
+
+            <div class="alert alert-warning">
+                <p class="text-bold"><i class="fas fa-exclamation-triangle"></i> {{ __('Caution') }}</p>
+
+                <p>{{__('Are you sure you want to cancel this appointment? The user will be notified of this via email, and you will be able to reschedule.')}}</p>
+                <p>{{ __('Before you can cancel this appointment, you\'ll need to provide a reason in writing. ') }}</p>
+            </div>
+
+            <form id="confirmCancelAppointment" method="POST" action="{{ route('deleteAppointment', ['application' => $application->id]) }}">
+                @method('DELETE')
+                @csrf
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                    </div>
+                    <input type="text" name="reason" id="reason" class="form-control" placeholder="{{ __('Cancellation reason...') }}" required>
+                </div>
+            </form>
+
+            <x-slot name="modalFooter">
+                <button type="button" class="btn btn-warning" onclick="$('#confirmCancelAppointment').submit()"><i class="fas fa-calendar-times""></i> {{ __('Finish cancelling appointment') }}</button>
+            </x-slot>
+
+        </x-modal>
 
         @endhasrole
 
@@ -290,12 +315,13 @@
                                     <form style="white-space: nowrap;display:inline-block" class="footer-button" action="{{route('updateAppointment', ['application' => $application->id, 'status' => 'concluded'])}}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success">{{__('messages.view_app.finish_meeting')}}</button>
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> {{__('messages.view_app.finish_meeting')}}</button>
                                     </form>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="$('#cancelAppointmentModal').modal('show')"><i class="far fa-calendar-times"></i> {{__('Cancel meeting')}}</button>
                                 @endcan
 
                                 @can('applications.vote')
-                                    <button class="btn btn-warning mr-3" onclick="$('#notes').modal('show')">{{__('messages.view_app.view_notes')}}</button>
+                                    <button class="btn btn-warning mr-3 btn-sm" onclick="$('#notes').modal('show')"><i class="fas fa-clipboard"></i> {{__('messages.view_app.view_notes')}}</button>
                                 @endcan
 
                             </x-slot>
