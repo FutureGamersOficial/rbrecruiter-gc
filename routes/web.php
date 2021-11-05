@@ -54,8 +54,6 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::get('/uptime', function () {
 
-    Log::debug('Received uptime hit');
-
     return response()->json([
         'app' => config('app.name'),
         'status' => 'up',
