@@ -73,7 +73,11 @@ class AppointmentService
 
             $application->setStatus('STAGE_INTERVIEW');
 
-            Log::info('User '.Auth::user()->name.' cancelled an appointment with '.$application->user->name.' for application ID'.$application->id);
+            Log::info('An interview appointment has just been cancelled.', [
+                'actor' => Auth::user()->name,
+                'applicant' => $application->user->name,
+                'reason' => $reason
+            ]);
 
             return true;
         }
