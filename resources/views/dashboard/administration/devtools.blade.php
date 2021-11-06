@@ -89,7 +89,7 @@
                 </x-slot>
                     <button data-toggle="tooltip" data-placement="top" title="Dispatches an approval event for the selected application" type="button" class="btn btn-primary" onclick="$('#confirmForceEventDispatch').modal('show')"><i class="fas fa-bullhorn"></i> Dispatch approval event</button>
 
-                    <button data-toggle="tooltip" data-placement="top" title="Dispatches a rejection event for the selected application" type="button" class="btn btn-primary" onclick="$('#confirmDispatchRejection').modal('show')"><i class="fas fa-bullhorn"></i> Dispatch rejection event</button>
+                    <button data-toggle="tooltip" data-placement="top" title="Dispatches a rejection event for the selected application" type="button" class="btn btn-primary ml-2" onclick="$('#confirmDispatchRejection').modal('show')"><i class="fas fa-bullhorn"></i> Dispatch rejection event</button>
 
 
                     <form name="evalvotes" method="post" action="{{ route('devForceEvaluateVotes') }}" class="d-inline">
