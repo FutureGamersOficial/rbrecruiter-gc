@@ -48,9 +48,9 @@
             @csrf
             <select name="application" class="custom-select">
                 @if(!$rejectApplications->isEmpty())
-                    @foreach($applications as $application)
+                    @foreach($rejectApplications as $application)
 
-                        <option value="{{$application->id}}">{{__('messages.appid')}} {{$application->id}} ({{$application->user->name}})</option>
+                        <option value="{{$application->id}}">{{__('messages.appid')}} {{$application->id}} ({{$application->user->name}}) ({{ $application->applicationStatus }})</option>
 
                     @endforeach
                 @else
