@@ -311,9 +311,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                     ->name('devTools');
 
 
-                Route::post('/applications/force-approval', [DevToolsController::class, 'forceApprovalEvent']);
                 Route::post('/applications/force-approval', [DevToolsController::class, 'forceApprovalEvent'])
                     ->name('devForceApprovalEvent');
+                    
+                Route::post('/applications/force-rejection', [DevToolsController::class, 'forceRejectionEvent'])
+                    ->name('devForceRejectionEvent');    
 
                 Route::post('/applications/count-votes', [DevToolsController::class, 'evaluateVotes'])
                     ->name('devForceEvaluateVotes');

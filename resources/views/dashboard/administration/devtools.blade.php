@@ -60,7 +60,7 @@
                 <x-slot name="cardHeader">
 
                 </x-slot>
-                    <button data-toggle="tooltip" data-placement="top" title="Forces a selected application to be approved, regardless of how many votes it has." type="button" class="btn btn-primary" onclick="$('#confirmForceEventDispatch').modal('show')"><i class="fas fa-bullhorn"></i> Force application approval</button>
+                    <button data-toggle="tooltip" data-placement="top" title="Dispatches a specific event for the selected application" type="button" class="btn btn-primary" onclick="$('#confirmForceEventDispatch').modal('show')"><i class="fas fa-bullhorn"></i> Dispatch application event</button>
 
                     <form name="evalvotes" method="post" action="{{ route('devForceEvaluateVotes') }}" class="d-inline">
                         @csrf

@@ -47,20 +47,33 @@ class DevToolsController extends Controller
             ->with('applications', Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get());
     }
 
+    /**
+     * Force an application to be approved.
+     */
     public function forceApprovalEvent(Request $request) {
         $this->singleAuthorise();
-
         $application = Application::find($request->application);
 
-        if (! is_null($application)) {
-            event(new ApplicationApprovedEvent($application));
+        event(new ApplicationApprovedEvent($application));
 
-            $request->session()->flash('success', __('Event dispatched! Please check the debug logs for more info'));
-        } else {
-            $request->session()->flash('error', __('Application doesn\'t exist!'));
-        }
+        return redirect()
+            ->back()
+            ->with('success', __('Event dispatched; Candidate approval sequence initiated.'));
+    }
 
-        return redirect()->back();
+    /**
+     * Force an application to be rejected.
+     */
+    public function forceRejectionEvent(Request $request)
+    {
+        $this->singleAuthorise();
+        $application = Application::findOrFail($request->application);
+
+        event(new ApplicationDeniedEvent($application));
+
+        return redirect()
+            ->back()
+            ->with('success', __('Event dispatched; Candidate rejection sequence initiated.'));
     }
 
     public function evaluateVotes() {
