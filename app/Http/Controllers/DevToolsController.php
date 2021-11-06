@@ -44,7 +44,8 @@ class DevToolsController extends Controller
         $this->singleAuthorise();
 
         return view('dashboard.administration.devtools')
-            ->with('applications', Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get());
+            ->with('applications', Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get())
+            ->with('rejectApplications', Application::all());
     }
 
     /**

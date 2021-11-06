@@ -16,7 +16,8 @@
 
     <x-modal id="confirmForceEventDispatch" modal-label="confirmForceEventDispatch" modal-title="{{__('messages.choose_app')}}" include-close-button="true">
 
-        <p>{{__('messages.forceeval')}}</p>
+        <p>{{__('Please choose an application to force approve')}}</p>
+        <p>{{ __('Note that this process overrides users\'s votes.') }}</p>
         <form method="POST" id="forceEval" action="{{route('devForceApprovalEvent')}}">
             @csrf
             <select name="application" class="custom-select">
@@ -35,6 +36,32 @@
 
         <x-slot name="modalFooter">
             <button type="button" class="btn btn-danger" onclick="document.getElementById('forceEval').submit()">{{__('messages.dispatch_event')}}</button>
+        </x-slot>
+
+    </x-modal>
+
+    <x-modal id="confirmDispatchRejection" modal-label="confirmDispatchRejection" modal-title="{{__('messages.choose_app')}}" include-close-button="true">
+
+        <p>{{__('Please choose an application to force reject')}}</p>
+        <p>{{ __('Note that this process overrides users\'s votes, and it also ignores any stages the application may be in.') }}</p>
+        <form method="POST" id="forceRejection" action="{{route('devForceRejectionEvent')}}">
+            @csrf
+            <select name="application" class="custom-select">
+                @if(!$rejectApplications->isEmpty())
+                    @foreach($applications as $application)
+
+                        <option value="{{$application->id}}">{{__('messages.appid')}} {{$application->id}} ({{$application->user->name}})</option>
+
+                    @endforeach
+                @else
+                    <option value="null" disabled>{{__('messages.no_valid_app')}}</option>
+                @endif
+            </select>
+
+        </form>
+
+        <x-slot name="modalFooter">
+            <button type="button" class="btn btn-danger" onclick="document.getElementById('forceRejection').submit()">{{__('messages.dispatch_event')}}</button>
         </x-slot>
 
     </x-modal>
@@ -60,7 +87,10 @@
                 <x-slot name="cardHeader">
 
                 </x-slot>
-                    <button data-toggle="tooltip" data-placement="top" title="Dispatches a specific event for the selected application" type="button" class="btn btn-primary" onclick="$('#confirmForceEventDispatch').modal('show')"><i class="fas fa-bullhorn"></i> Dispatch application event</button>
+                    <button data-toggle="tooltip" data-placement="top" title="Dispatches an approval event for the selected application" type="button" class="btn btn-primary" onclick="$('#confirmForceEventDispatch').modal('show')"><i class="fas fa-bullhorn"></i> Dispatch approval event</button>
+
+                    <button data-toggle="tooltip" data-placement="top" title="Dispatches a rejection event for the selected application" type="button" class="btn btn-primary" onclick="$('#confirmDispatchRejection').modal('show')"><i class="fas fa-bullhorn"></i> Dispatch rejection event</button>
+
 
                     <form name="evalvotes" method="post" action="{{ route('devForceEvaluateVotes') }}" class="d-inline">
                         @csrf
