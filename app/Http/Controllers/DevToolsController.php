@@ -23,6 +23,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Events\ApplicationApprovedEvent;
+use App\Events\ApplicationDeniedEvent;
 use App\Services\AccountSuspensionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
