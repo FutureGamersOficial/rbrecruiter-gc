@@ -22,12 +22,6 @@
                             <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo rounded mr-2">{{ config('adminlte.logo') }}
                         </div>
                         <p class="login-card-description">{{__('Set a new password')}}</p>
-                        @if(session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
                         <form action="{{ $password_reset_url }}" method="POST" id="resetset">
                             @csrf
                             {{-- Token field --}}
@@ -36,7 +30,7 @@
                             {{-- Email field --}}
                             <div class="input-group mb-3">
                                 <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                       value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
+                                       value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autocomplete="username" autofocus>
 
                                 @if($errors->has('email'))
                                     <div class="invalid-feedback">
@@ -49,7 +43,8 @@
                             <div class="input-group mb-3">
                                 <input type="password" name="password"
                                        class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                       placeholder="{{ __('adminlte::adminlte.password') }}">
+                                       placeholder="{{ __('adminlte::adminlte.password') }}"
+                                       autocomplete="new-password">
                                 @if($errors->has('password'))
                                     <div class="invalid-feedback">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -61,7 +56,8 @@
                             <div class="input-group mb-3">
                                 <input type="password" name="password_confirmation"
                                        class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
-                                       placeholder="{{ trans('adminlte::adminlte.retype_password') }}">
+                                       placeholder="{{ trans('adminlte::adminlte.retype_password') }}"
+                                       autocomplete="new-password">
 
                                 @if($errors->has('password_confirmation'))
                                     <div class="invalid-feedback">
