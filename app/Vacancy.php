@@ -89,6 +89,21 @@ class Vacancy extends Model
         Log::warning('Vacancies: Vacancy '.$this->id.' ('.$this->vacancyName.') closed by '.Auth::user()->name);
     }
 
+    public function decrease()
+    {
+        if ($this->vacancyCount !== 0)
+        {
+            $this->update([
+                'vacancyCount' => $this->vacancyCount - 1
+            ]);
+
+            Log::info('Vacancies: Decreased vacancy slots by one.', [
+                'vacancyId' => $this->id,
+                'vacancyName' => $this->vacancyName
+            ]);
+        }
+    }
+
     /**
      * Check if the Modal is attached to the $checkingTeam Model.
      *

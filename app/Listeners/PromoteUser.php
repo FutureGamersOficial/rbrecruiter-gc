@@ -47,6 +47,7 @@ class PromoteUser
     public function handle(ApplicationApprovedEvent $event)
     {
         $event->application->setStatus('APPROVED');
+        $event->application->response->vacancy->decrease();
 
         $staffProfile = StaffProfile::create([
             'userID' => $event->application->user->id,
