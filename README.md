@@ -71,7 +71,6 @@ Tech stack:
 
  - JSON
  - Curl (highly recommended)
- - Image Magick (imagick) for 2FA support
 
  # Installation
 
