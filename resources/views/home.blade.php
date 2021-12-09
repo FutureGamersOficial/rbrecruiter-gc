@@ -2,6 +2,16 @@
 
 @section('content')
 
+    <div class="row">
+
+
+        <div class="col">
+            <a class="e-widget" href="https://gleam.io/2Ytjf/giveaway-among-us-gc" rel="nofollow">Giveaway Among Us - GC</a>
+            <script type="text/javascript" src="https://widget.gleamjs.io/e.js" async="true"></script>
+        </div>
+
+    </div>
+
 	@if(!$positions->isEmpty())
 
 		<!-- todo: details component -->
