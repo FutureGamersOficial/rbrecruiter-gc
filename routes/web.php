@@ -78,6 +78,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('/', [HomeController::class, 'index'])
         ->middleware('eligibility');
 
+    Route::get('/sorteio', [HomeController::class, 'pageGiveaway'])
+        ->name('giveaway');
+
     Route::post('/form/contact', [ContactController::class, 'create'])
         ->name('sendSubmission');
 

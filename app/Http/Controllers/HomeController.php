@@ -41,4 +41,11 @@ class HomeController extends Controller
         return view('home')
             ->with('positions', $positions);
     }
+
+    public function pageGiveaway()
+    {
+
+        return view('giveaway');
+
+    }
 }
