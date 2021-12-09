@@ -20,7 +20,7 @@
 
             <div class="row mb-2">
                 <div class="col">
-                    <a class="e-widget" href="https://gleam.io/2Ytjf/giveaway-among-us-gc" rel="nofollow">Giveaway Among Us - GC</a>
+                    <a class="e-widget no-button" href="https://gleam.io/2Ytjf/giveaway-among-us-gc" rel="nofollow">Giveaway Among Us - GC</a>
                     <script type="text/javascript" src="https://widget.gleamjs.io/e.js" async="true"></script>
                 </div>
             </div>
