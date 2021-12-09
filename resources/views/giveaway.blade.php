@@ -3,7 +3,7 @@
 @section('content')
 
 	<!--Main Layout-->
-	<main class="py-5">
+	<main class="py-5" style="background: url(https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940) no-repeat center center; background-size: cover;">
 
 	    <div class="container-fluid">
 
