@@ -80,7 +80,6 @@
             <div class="col-8">
 
                 <div class="jumbotron">
-                    <img class="jumbotron-header" src="/header.png">
 
                     <h1 class="display-4">Junte-se ao nosso Discord!</h1>
                     <p class="lead">O Discord é o coração da nossa comunidade — onde toda a diversão acontece.</p>
