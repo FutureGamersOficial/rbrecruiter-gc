@@ -2,12 +2,21 @@
 
 @section('content')
 
-    <div class="row">
-
+    <div class="row mt-4 mb-2">
 
         <div class="col">
-            <a class="e-widget" href="https://gleam.io/2Ytjf/giveaway-among-us-gc" rel="nofollow">Giveaway Among Us - GC</a>
-            <script type="text/javascript" src="https://widget.gleamjs.io/e.js" async="true"></script>
+            <div class="alert alert-info">
+                <p class="text-bold"><i class="fas fa-bullhorn"></i> {{ __("Anúncio Oficial - Equipe de Direção GC") }}</p>
+
+                <p>A Games Club está finalmente pronta para começar a todo gás! A nossa inauguração ofical será celebrada na nossa comunidade Discord a 11/12/2021.</p>
+                <p>Como um incentivo a novos usuários, e para recompensar quem esteve connosco desde o inicio, a Games Club está a organizar um sorteio de <b>Among Us</b> e 2 vales-presente no valor de R$10.</p>
+
+                <p>Participe do sorteio e adira à nossa comunidade Discord!</p>
+
+                <p>Feliz natal! <i class="fas fa-gifts"></i></p>
+
+                <p class="text-bold">- A equipe de direção Games Club</p>
+            </div>
         </div>
 
     </div>
