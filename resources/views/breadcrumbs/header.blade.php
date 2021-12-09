@@ -11,11 +11,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
-    <title>{{config('app.name')}} | {{__('messages.home')}}</title>
+
+    @switch (Route::currentRouteName())
+
+        @case('home')
+
+            <title>{{config('app.name')}} | {{ __('Home') }}</title>
+            @break
+
+        @case('giveaway')
+
+            <title>{{config('app.name')}} | Sorteio oficial</title>
+
+            <meta property="og:url" content="https://gleam.io/2Ytjf/giveaway-among-us-gc"/>
+            <meta property="og:title" content="Ganhe Among Us na Steam">
+            <meta property="twitter:card" content="summary"/>
+            <meta property="fb:app_id" content="152351391599356"/>
+            <meta property="og:description" content="Estamos a dar uma cópia gratuita do Among Us para a campanha de lançamento do Games Club, no valor de R$ 28. Among Us é um jogo eletrônico online, dos gêneros jogo em grupo e sobrevivência, desenvolvido e publicado pelo estúdio de jogos estadunidense InnerSloth. A Games Club está em desenvolvimento há algum tempo, e então, de modo a celebrar esta ocasião, estamos oferecendo este jogo para você poder jogar connosco. O sorteio é apenas uma pequena parte deste evento enorme, que oferece várias atrações. Junte-se ao Discord da GC!​ ​Condições do Sorteio NOTA: Prêmio apenas válido para usuários que atualmente não têm uma licensa digital associada ao jogo, e que tenham aderido ao servidor Discord da Games Club. A GC retém o direito de iniciar o processo de escolha automático no fim da competição no caso do vencedor não obedecer a estes termos.">
+
+            @break;
+
+    @endswitch
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Google Fonts -->
