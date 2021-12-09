@@ -55,6 +55,7 @@
                     <p class="text-bold"><b>&mdash; A equipe de direção Games Club</b></p>
 
                     <a href="{{ route('giveaway') }}" class="btn btn-success"><i class="fas fa-gift"></i> Participe do sorteio!</a>
+                    <a href="https://discord.gg/xJqG28nqVT?event=914687975303032852" class="btn btn-info ml-2"><i class="far fa-calendar-alt"></i> Informações do Evento</a>
                 </div>
             </div>
 
