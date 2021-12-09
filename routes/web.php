@@ -76,7 +76,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     });
 
     Route::get('/', [HomeController::class, 'index'])
-        ->name('home');
+        ->name('home')
         ->middleware('eligibility');
 
     Route::get('/sorteio', [HomeController::class, 'pageGiveaway'])
