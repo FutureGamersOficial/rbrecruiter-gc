@@ -53,6 +53,8 @@
                     Participe do sorteio e adira à nossa comunidade Discord!
                 
                     <p class="text-bold"><b>&mdash; A equipe de direção Games Club</b></p>
+
+                    <a href="{{ route('giveaway') }}" class="btn btn-success"><i class="fas fa-gift"></i> Participe do sorteio!</a>
                 </div>
             </div>
 
