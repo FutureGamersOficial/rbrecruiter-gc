@@ -13,9 +13,9 @@
     <!-- End Google Tag Manager -->
 
     <meta charset="utf-8">
-    <meta name="description" content="{{ config('app.name') }} Staff Member Management Tool">
-    <meta name="author" content="Miguel N.">
-    <meta name="tags" content="minecraft, minecraft server staff, minecraft staff, minecraft servers">
+    <meta name="author" content="GC">
+    <meta name="robots" content="index, follow">
+    <meta name="tags" content="gamesclub, gamescluboficial, games club oficial, games club discord, minecraft, gaming, discord">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -29,11 +29,16 @@
         @case('home')
 
             <title>{{config('app.name')}} | {{ __('Home') }}</title>
+            <meta name="title" content="Games Club Oficial | Página Inicial">
+            <meta name="description" content="Games Club Oficial - Onde sua diversão acontece!">
             @break
 
         @case('giveaway')
 
             <title>{{config('app.name')}} | Sorteio oficial</title>
+
+            <meta name="title" content="Games Club Oficial | Sorteio de Lançamento">
+            <meta name="description" content="Games Club Oficial - Participe no nosso sorteio de lançamento!">
 
             <meta property="og:url" content="https://gleam.io/2Ytjf/giveaway-among-us-gc"/>
             <meta property="og:title" content="Ganhe Among Us na Steam">
