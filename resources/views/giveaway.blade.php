@@ -11,7 +11,7 @@
             <div class="row mt-4 mb-2">
                 <div class="col text-center">
 
-                    <h3>{{ __("Sorteio de Lançamento - 09/12/2021-14/12/2021") }}</h3>
+                    <h3>{{ __("Sorteio de Lançamento - 09/12/2021-16/12/2021") }}</h3>
                     
                     <p>Participe no sorteio abaixo para se habilitar aos variados prémios. Adira ao nosso Discord e venha-se divertir com a nossa comunidade!</p>
                 </div>
