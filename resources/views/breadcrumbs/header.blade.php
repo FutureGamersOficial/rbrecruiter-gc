@@ -4,6 +4,14 @@
 
 <head>
 
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T47K5CG');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="utf-8">
     <meta name="description" content="{{ config('app.name') }} Staff Member Management Tool">
     <meta name="author" content="Miguel N.">
