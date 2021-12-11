@@ -2,7 +2,7 @@
 
 @section('content')
 
-    
+
 
 	@if(!$positions->isEmpty())
 
@@ -49,9 +49,9 @@
                 <div class="alert alert-success">
                     <h4 class="text-bold"><i class="fas fa-bullhorn"></i> {{ __("Anúncio Oficial - Equipe de Direção GC") }}</h4>
 
-                    <p>A Games Club está finalmente pronta para começar a todo gás! A nossa inauguração ofical será celebrada na nossa comunidade Discord a 11/12/2021. Como um incentivo a novos usuários, e para recompensar quem esteve connosco desde o inicio, a Games Club está a organizar um sorteio de <b>Among Us</b> e 2 vales-presente no valor de R$10.
+                    <p>A Games Club está finalmente pronta para começar a todo gás! A nossa inauguração ofical será celebrada na nossa comunidade Discord de 17/12/2021 a 18/12/2021. Como um incentivo a novos usuários, e para recompensar quem esteve connosco desde o inicio, a Games Club está a organizar um sorteio de <b>Among Us</b> e 2 vales-presente no valor de R$10.
                     Participe do sorteio e adira à nossa comunidade Discord!
-                
+
                     <p class="text-bold"><b>&mdash; A equipe de direção Games Club</b></p>
 
                     <a href="{{ route('giveaway') }}" class="btn btn-success"><i class="fas fa-gift"></i> Participe do sorteio!</a>
