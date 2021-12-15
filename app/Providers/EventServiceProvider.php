@@ -49,6 +49,10 @@ class EventServiceProvider extends ServiceProvider
         Login::class => [
             LogAuthenticationSuccess::class,
         ],
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            // ... other providers
+            \SocialiteProviders\Discord\DiscordExtendSocialite::class.'@handle',
+        ],
         'App\Events\ApplicationApprovedEvent' => [
             'App\Listeners\PromoteUser',
         ],

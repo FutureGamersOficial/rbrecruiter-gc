@@ -71,6 +71,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             'verify' => true
         ]);
 
+        //Route::get('auth/redirect/discord',)
+
         Route::post('/twofa/authenticate', [TwofaController::class, 'verify2FA'])
             ->name('verify2FA');
     });
@@ -317,9 +319,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
                 Route::post('/applications/force-approval', [DevToolsController::class, 'forceApprovalEvent'])
                     ->name('devForceApprovalEvent');
-                    
+
                 Route::post('/applications/force-rejection', [DevToolsController::class, 'forceRejectionEvent'])
-                    ->name('devForceRejectionEvent');    
+                    ->name('devForceRejectionEvent');
 
                 Route::post('/applications/count-votes', [DevToolsController::class, 'evaluateVotes'])
                     ->name('devForceEvaluateVotes');
