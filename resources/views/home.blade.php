@@ -70,7 +70,7 @@
 
                 <script type="text/javascript">
                 new Twitch.Embed("twitch-embed", {
-                    width: 854,
+                    width: '100%',
                     height: 480,
                     channel: "gamesclub_oficial",
                     muted: true, // don't annoy chrome with autoplay w/audio
