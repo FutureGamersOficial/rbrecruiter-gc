@@ -61,6 +61,27 @@
 
         </div>
 
+        <div class="row mt-2 mb-2">
+
+            <div class="col">
+                <div id="twitch-embed"></div>
+
+                <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+                <script type="text/javascript">
+                new Twitch.Embed("twitch-embed", {
+                    width: 854,
+                    height: 480,
+                    channel: "gamesclub_oficial",
+                    muted: true, // don't annoy chrome with autoplay w/audio
+                    theme: 'light',
+                    layout: 'video'
+                });
+                </script>
+            </div>
+
+        </div>
+
 
           @if ($demoActive)
               <div class="row">
