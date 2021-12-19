@@ -20,6 +20,7 @@
  */
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\TwofaController;
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\CommentController;
@@ -71,18 +72,22 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             'verify' => true
         ]);
 
-        //Route::get('auth/redirect/discord',)
-
         Route::post('/twofa/authenticate', [TwofaController::class, 'verify2FA'])
             ->name('verify2FA');
+
+
+        Route::get('/auth/redirect/discord', [LoginController::class, 'discordRedirect'])
+            ->name('discordRedirect');
+
+        Route::get('/auth/callback/discord', [LoginController::class, 'discordCallback'])
+            ->name('discordCallback');
+
     });
 
     Route::get('/', [HomeController::class, 'index'])
         ->name('home')
         ->middleware('eligibility');
 
-    Route::get('/sorteio', [HomeController::class, 'pageGiveaway'])
-        ->name('giveaway');
 
     Route::post('/form/contact', [ContactController::class, 'create'])
         ->name('sendSubmission');
