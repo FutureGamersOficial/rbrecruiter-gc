@@ -48,6 +48,13 @@
             <li>Server logs of your visits, including IP addresses</li>
         </ul>
 
+        <x-alert alert-type="danger">
+            <p class="text-bold"><i class="fas fa-exclamation-triangle"></i> Feature temporarily unavailable</p>
+
+            <p>This feature has been temporarily made unavailable while we work to fix underlying issues that are causing our backoffice to crash. We apologize for the inconvenience, and any account/data deletion requests should be forwarded to our data protection officer below.</p>
+            <p><i class="fas fa-user"></i> <a href="mailto:dpo@gamescluboficial.com.br?subject=GDPR%20Request%20-%20Games%20Club">dpo@gamescluboficial.com.br</a></p>
+        </x-alert>
+
 
         <form id="deleteAccountForm" method="POST" action="{{ route('userDelete') }}">
 
@@ -56,7 +63,7 @@
 
             <div class="form-group">
                 <label for="currentPassword">Re-enter your password</label>
-                <input class="form-control" autocomplete="current-password" type="password" name="currentPassword" id="currentPassword" required>
+                <input disabled class="form-control" autocomplete="current-password" type="password" name="currentPassword" id="currentPassword" required>
                 <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> For your security, your password is always required for sensitive operations. <a href="{{ route('password.request') }}">Forgot your password?</a></p>
             </div>
 
@@ -64,7 +71,7 @@
                 <div class="form-group mt-5">
 
                     <label for="otp">Two-factor authentication code</label>
-                    <input type="text" id="otp" name="otp" class="form-control">
+                    <input disabled type="text" id="otp" name="otp" class="form-control">
                     <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> You cannot recover lost 2FA secrets.</p>
 
                 </div>
@@ -74,7 +81,7 @@
 
         <x-slot name="modalFooter">
 
-            <button {{ ($demoActive) ? 'disabled' : '' }} onclick="$('#deleteAccountForm').submit()" type="button" class="btn btn-warning"><i class="fas fa-exclamation-triangle"></i> Continue</button>
+            <button {{ ($demoActive) ? 'disabled' : 'disabled' }} onclick="$('#deleteAccountForm').submit()" type="button" class="btn btn-warning"><i class="fas fa-exclamation-triangle"></i> Continue</button>
 
         </x-slot>
 

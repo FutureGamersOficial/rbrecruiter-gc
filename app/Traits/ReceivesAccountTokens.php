@@ -33,6 +33,11 @@ trait ReceivesAccountTokens
 {
     public function userDelete(UserDeleteRequest $request)
     {
+        //Fixme: TEMPORARY, PLEASE REMOVE UNTIL FIXED OR DURING DEVELOPMENT
+        return redirect()
+            ->back()
+            ->with('error', 'This feature is disabled');
+
         if (config('demo.is_enabled'))
         {
             return redirect()
