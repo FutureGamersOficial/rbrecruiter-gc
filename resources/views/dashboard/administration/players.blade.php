@@ -99,9 +99,8 @@
 
                       <thead>
                       <tr>
-                          <th>#</th>
                           <th>{{__('Name')}}</th>
-                          <th>{{__('messages.contactlabel_email')}}</th>
+                          <th>{{ __('Rank') }}</th>
                           <th>{{__('messages.reusable.status')}}</th>
                           <th>{{__('messages.players.reg_date')}}</th>
                           <th>{{__('messages.reusable.actions')}}</th>
@@ -113,9 +112,14 @@
                           @foreach($users as $user)
 
                             <tr>
-                                <td>{{$user->id}}</td>
                                 <td>{{$user->name}}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>
+                                    @if ($user->hasRole('reviewer'))
+                                        <span class="badge badge-warning"><i class="fas fa-user"></i> Staff</span>
+                                    @else
+                                        <span class="badge-warning badge"><i class="fas fa-user"></i> Member</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <x-account-status user-id="{{ $user->id }}"></x-account-status>
                                 </td>
