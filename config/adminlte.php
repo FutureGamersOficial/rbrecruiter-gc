@@ -309,15 +309,9 @@ return [
             ],
         ],
         [
-            'text' => 'm_staff_m',
-            'icon' => 'fas fa-fw fa-users',
-            'url' => '/hr/staff-members',
-            'can' => 'admin.stafflist',
-        ],
-        [
-            'text' => 'Registered users',
+            'text' => 'Users',
             'icon' => 'fas fa-fw fa-user-friends',
-            'url' => '/hr/players',
+            'route' => 'registeredPlayerList',
             'can' => 'admin.userlist',
         ],
         [

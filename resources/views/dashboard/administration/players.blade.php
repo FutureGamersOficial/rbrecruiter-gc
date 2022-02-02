@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('messages.players.reg_players'))
+@section('title', config('app.name') . ' | ' . __('Registered users'))
 
 @section('content_header')
 
-    <h4>{{__('messages.adm')}} / {{__('messages.players.reg_players')}}</h4>
+    <h4>{{__('messages.adm')}} / {{__('Users')}}</h4>
 
 @stop
 
@@ -21,9 +21,9 @@
         <div class="col">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>{{$users->count()}}</h3>
+                    <h3>{{ $numUsers }}</h3>
 
-                    <p>{{__('messages.players.reg_players')}}</p>
+                    <p>{{__('Registered users')}}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-users"></i>
@@ -37,7 +37,7 @@
                 <div class="inner">
                     <h3>{{$bannedUserCount}}</h3>
 
-                    <p>{{__('messages.players.total_banned')}}</p>
+                    <p>{{__('Suspended users')}}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-ban"></i>
@@ -55,7 +55,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <div class="card-title"><h4><i class="fas fa-search"></i>{{__('messages.players.search')}}</h4></div>
+                    <div class="card-title"><h4><i class="fas fa-search"></i>{{__('Search users')}}</h4></div>
                 </div>
 
                 <div class="card-body">
@@ -81,20 +81,6 @@
 
     </div>
 
-
-    <div class="row mt-5">
-
-        <div class="col">
-
-            <div class="alert alert-warning">
-                <p>{{__('messages.players.p_disclaimer')}}</p>
-            </div>
-
-        </div>
-
-    </div>
-
-
     <div class="row">
 
         <div class="col">
@@ -103,7 +89,7 @@
 
               <div class="card-header bg-indigo">
 
-                  <div class="card-title"><h4 class="text-bold">{{__('messages.players.listing')}}</h4></div>
+                  <div class="card-title"><h4 class="text-bold">{{__('Registered users')}}</h4></div>
 
               </div>
 
@@ -158,7 +144,7 @@
 
               <div class="card-footer">
 
-                  <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route("staffMemberList")}}'">{{__('messages.players.see_staff')}}</button>
+                  {{ $users->links() }}
 
               </div>
 

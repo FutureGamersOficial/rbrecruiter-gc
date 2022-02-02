@@ -46,56 +46,14 @@ class UserController extends Controller
 {
     use ReceivesAccountTokens;
 
-    public function showStaffMembers()
-    {
-        $this->authorize('viewStaff', User::class);
-
-        $staffRoles = [
-            'reviewer',
-            'hiringManager',
-            'admin',
-        ]; // TODO: Un-hardcode this, move to config/roles.php
-        $users = User::with('roles')->get();
-        $staffMembers = collect([]);
-
-        foreach ($users as $user) {
-            if (empty($user->roles)) {
-                Log::debug($user->role->name);
-                Log::debug('Staff list: User without role detected; Ignoring');
-                continue;
-            }
-
-            foreach ($user->roles as $role) {
-                if (in_array($role->name, $staffRoles)) {
-                    $staffMembers->push($user);
-                    continue 2; // Skip directly to the next user instead of comparing more roles for the current user
-                }
-            }
-        }
-
-        return view('dashboard.administration.staff-members')
-            ->with([
-                'users' => $staffMembers,
-            ]);
-    }
-
-    public function showPlayers()
+    public function showUsers()
     {
         $this->authorize('viewPlayers', User::class);
 
-        $users = User::with('roles')->get();
-        $players = collect([]);
-
-        foreach ($users as $user) {
-            // TODO: Might be problematic if we don't check if the role is user
-            if (count($user->roles) == 1) {
-                $players->push($user);
-            }
-        }
-
         return view('dashboard.administration.players')
             ->with([
-                'users' => $players,
+                'users' => User::with('roles')->paginate('6'),
+                'numUsers' => count(User::all()),
                 'bannedUserCount' => Ban::all()->count(),
             ]);
     }

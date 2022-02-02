@@ -235,10 +235,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         });
 
         Route::group(['prefix' => '/hr', 'middleware' => ['passwordredirect']], function () {
-            Route::get('staff-members', [UserController::class, 'showStaffMembers'])
-                ->name('staffMemberList');
 
-            Route::get('players', [UserController::class, 'showPlayers'])
+            Route::get('users', [UserController::class, 'showUsers'])
                 ->name('registeredPlayerList');
 
             Route::post('players/search', [UserController::class, 'showPlayersLike'])

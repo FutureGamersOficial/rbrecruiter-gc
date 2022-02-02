@@ -25,31 +25,31 @@
         @if ($demoActive)
 
             <div class="alert alert-danger">
-                <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> {{ __('This feature is disabled') }}</p>
             </div>
 
         @endif
 
-        <p>Deleting your account is an irreversible process. The following data will be deleted (including personally identifiable data):</p>
+        <p>{{ __('Deleting your account is an irreversible process. The following data will be deleted (including personally identifiable data):') }}</p>
         <ul>
-            <li>Last IP address</li>
-            <li>Name, Email and MC Username</li>
-            <li>Your previous applications</li>
-            <li>Your profile data and preferences</li>
-            <li>If you were a staff member:</li>
+            <li>{{ __('Last IP address') }}</li>
+            <li>{{ __('Name, Email and MC Username') }}</li>
+            <li>{{ __('Your previous applications') }}</li>
+            <li>{{ __('Your profile data and preferences') }}</li>
+            <li>{{ __('If you were a staff member:') }}</li>
             <ul>
-                <li>Your comments</li>
-                <li>Any votes</li>
-                <li>Your roles</li>
+                <li>{{ __('Your comments') }}</li>
+                <li>{{ __('Any votes') }}</li>
+                <li>{{ __('Your roles') }}</li>
             </ul>
         </ul>
-        <p>What is not deleted:</p>
+        <p>{{ __('What is not deleted:') }}</p>
         <ul>
-            <li>Server logs of your visits, including IP addresses</li>
+            <li>{{ __('Server logs of your visits, including IP addresses') }}</li>
         </ul>
 
         <x-alert alert-type="danger">
-            <p class="text-bold"><i class="fas fa-exclamation-triangle"></i> Feature temporarily unavailable</p>
+            <p class="text-bold"><i class="fas fa-exclamation-triangle"></i> {{ __('Feature temporarily unavailable') }}</p>
 
             <p>This feature has been temporarily made unavailable while we work to fix underlying issues that are causing our backoffice to crash. We apologize for the inconvenience, and any account/data deletion requests should be forwarded to our data protection officer below.</p>
             <p><i class="fas fa-user"></i> <a href="mailto:dpo@gamescluboficial.com.br?subject=GDPR%20Request%20-%20Games%20Club">dpo@gamescluboficial.com.br</a></p>
@@ -62,17 +62,17 @@
             @method('PATCH')
 
             <div class="form-group">
-                <label for="currentPassword">Re-enter your password</label>
+                <label for="currentPassword">{{ __('Re-enter your password') }}</label>
                 <input disabled class="form-control" autocomplete="current-password" type="password" name="currentPassword" id="currentPassword" required>
-                <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> For your security, your password is always required for sensitive operations. <a href="{{ route('password.request') }}">Forgot your password?</a></p>
+                <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> {{ __('For your security, your password is always required for sensitive operations.') }} <a href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a></p>
             </div>
 
             @if (Auth::user()->has2FA())
                 <div class="form-group mt-5">
 
-                    <label for="otp">Two-factor authentication code</label>
+                    <label for="otp">{{ __('Two-factor authentication code') }}</label>
                     <input disabled type="text" id="otp" name="otp" class="form-control">
-                    <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> You cannot recover lost 2FA secrets.</p>
+                    <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> {{ __('You cannot recover lost 2FA secrets.') }}</p>
 
                 </div>
             @endif
@@ -81,7 +81,7 @@
 
         <x-slot name="modalFooter">
 
-            <button {{ ($demoActive) ? 'disabled' : 'disabled' }} onclick="$('#deleteAccountForm').submit()" type="button" class="btn btn-warning"><i class="fas fa-exclamation-triangle"></i> Continue</button>
+            <button {{ ($demoActive) ? 'disabled' : 'disabled' }} onclick="$('#deleteAccountForm').submit()" type="button" class="btn btn-warning"><i class="fas fa-exclamation-triangle"></i> {{ __('Continue') }}</button>
 
         </x-slot>
 
@@ -95,7 +95,7 @@
 
           @if($demoActive)
               <div class="alert alert-danger">
-                  <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> This feature is disabled</p>
+                  <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> {{ __('This feature is disabled') }}</p>
               </div>
           @endif
 
@@ -229,13 +229,12 @@
         <div class="row">
             <div class="col">
                 <div class="alert alert-warning">
-                    <p><i class="fas fa-exclamation-triangle"></i><b> Your password has expired</b></p>
+                    <p><i class="fas fa-exclamation-triangle"></i><b> {{ __('Your password has expired') }}</b></p>
                     <p>
-                        You've been redirected here because your <b>password has expired.</b> All users must change their password every {{ \App\Facades\Options::getOption('password_expiry') }} days.
-                        This is put in place to make sure user accounts remain secure.
+                        {{ __('You\'ve been redirected here because your password has expired. All users must change their password every :numDaysChangePw days. This is put in place to make sure user accounts remain secure.', ['numDaysChangePw' => \App\Facades\Options::getOption('password_expiry')]) }}
                     </p>
 
-                    <p>Please change update your password now. You won't be able to use the application until you do this.</p>
+                    <p>{{ __('Please change update your password now. You won\'t be able to use the site until you do this.') }}</p>
                 </div>
             </div>
         </div>
@@ -260,7 +259,7 @@
                             <a class="nav-link" id="contactSettingsTab" data-toggle="tab" href="#contactSettings" role="tab" aria-controls="ContactSettings" aria-selected="false">{{__('messages.profile.contact_settings')}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="dangerZoneTab" data-toggle="tab" href="#dangerZone" role="tab" aria-controls="DangerZone" aria-selected="false">Danger Zone</a>
+                            <a class="nav-link" id="dangerZoneTab" data-toggle="tab" href="#dangerZone" role="tab" aria-controls="DangerZone" aria-selected="false">{{ __('Danger Zone') }}</a>
                         </li>
                     </ul>
                 </div>
@@ -269,7 +268,7 @@
                     <div class="tab-pane fade show active p-3" id="accountSecurity" role="tabpanel" aria-labelledby="accountSecurityTab">
                         @if($demoActive)
                             <div class="alert alert-danger">
-                                <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> This feature is disabled</p>
+                                <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> {{ __('This feature is disabled') }}</p>
                             </div>
                         @endif
 
@@ -320,7 +319,7 @@
                     <div class="tab-pane fade p-3" id="contactSettings" role="tabpanel" aria-labelledby="contactSettingsTab">
                         @if($demoActive)
                             <div class="alert alert-danger">
-                                <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> This feature is disabled</p>
+                                <p class="font-weight-bold"><i class="fa fa-exclamation-triangle"></i> {{ __('This feature is disabled') }}</p>
                             </div>
                         @endif
                         <h5 class="card-title">{{__('messages.profile.contact_settings')}}</h5>
@@ -355,8 +354,8 @@
 
 
                     <div class="tab-pane fade p-3" id="dangerZone" role="tabpanel" aria-labelledby="dangerZoneTab">
-                        <h5 class="card-title">Danger Zone</h5>
-                        <p class="card-text text-bold"><i class="fas fa-radiation"></i> Careful! Actions in these tab might result in irreversible loss of data.</p>
+                        <h5 class="card-title">{{ __('Danger Zone') }}</h5>
+                        <p class="card-text text-bold"><i class="fas fa-radiation"></i> {{ __('Careful! Actions in these tab might result in irreversible loss of data.') }}</p>
 
                         <button onclick="$('#deleteAccountModal').modal('show')" rel="buttonTxtTooltip" data-toggle="tooltip" data-placement="top" title="This action will delete your account permanently." class="btn btn-danger" type="button"><i class="fas fa-user-slash"></i> Close Account</button>
 
