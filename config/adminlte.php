@@ -649,6 +649,17 @@ return [
                     'location' => 'https://cdn.jsdelivr.net/npm/flatpickr'
                 ]
             ]
+        ],
+        [
+            'name' => 'Pusher',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://js.pusher.com/beams/1.0/push-notifications-cdn.js'
+                ]
+            ]
         ]
     ],
 ];

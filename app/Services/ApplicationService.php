@@ -95,7 +95,7 @@ class ApplicationService
 
             foreach (User::all() as $user) {
                 if ($user->hasRole('admin')) {
-                    $user->notify((new NewApplicant($application, $vacancy->first()))->delay(now()->addSeconds(10)));
+                    $user->notify((new NewApplicant($application, $vacancy->first())));
                 }
             }
 
