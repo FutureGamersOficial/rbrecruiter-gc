@@ -42,9 +42,9 @@
                 <li>{{__('Developer mode')}}</li>
                 <li>{{ __('Admin logs') }}</li>
             </ul>
-            <p>To keep everyone safe, IP addresses are censored everywhere in the app, and they're also not collected during registration. The IP address lookup feature is also disabled.</p>
-            <p>Only system administrators can disable demo mode - it cannot be disabled via app settings.</p>
-            <p class="font-weight-bold">Note! The database is wiped every six hours during demo mode.</p>
+            <p>{{ __('To keep everyone safe, IP addresses are censored everywhere in the app, and they\'re also not collected during registration. The IP address lookup feature is also disabled.') }}</p>
+            <p>{{ __('Only system administrators can disable demo mode - it cannot be disabled via app settings.') }}</p>
+            <p class="font-weight-bold">{{ __('Note! The database is wiped every six hours during demo mode.') }}</p>
         </div>
 
     @endif
