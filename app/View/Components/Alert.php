@@ -25,20 +25,26 @@ use Illuminate\View\Component;
 
 class Alert extends Component
 {
-    public $alertType;
-
-    public $extraStyling;
+    public
+        $alertType,
+        $extraStyling,
+        $title,
+        $icon;
 
     /**
      * Create a new component instance.
      *
-     * @param $alertType
-     * @param string $extraStyling
+     * @param string $alertType The color the alert should have.
+     * @param string $title The alert's title
+     * @param string $icon The alert's icon, placed before the title
+     * @param string $extraStyling Any extra CSS classes to add
      */
-    public function __construct($alertType, $extraStyling = '')
+    public function __construct(string $alertType, string $title = '', string $icon = '', string $extraStyling = '')
     {
         $this->alertType = $alertType;
         $this->extraStyling = $extraStyling;
+        $this->icon = $icon;
+        $this->title = $title;
     }
 
     /**

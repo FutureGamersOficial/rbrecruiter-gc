@@ -269,6 +269,36 @@ return [
             'url' => '/profile/settings/account',
         ],
         [
+            'header' => 'Human Resources',
+            'can' => 'reviewer.requestAbsence'
+        ],
+        [
+            'text' => 'Absence Management',
+            'icon' => 'fas fa-user-clock',
+            'can' => 'reviewer.requestAbsence',
+            'submenu' => [
+                [
+                    'text' => 'Request LOA',
+                    'icon' => 'far fa-clock',
+                    'can' => 'reviewer.requestAbsence',
+                    'url' => 'tba'
+                ],
+                [
+                    'text' => 'My LOA Requests',
+                    'icon' => 'fas fa-business-time',
+                    'can' => 'reviewer.viewAbsence',
+                    'url' => 'tba'
+                ],
+
+            ],
+        ],
+        [
+            'text' => 'Absence Requests',
+            'icon' => 'fas fa-address-card',
+            'can' => 'admin.manageAbsences',
+            'route' => 'absences.index'
+        ],
+        [
             'header' => 'h_app_management',
             'can' => ['applications.view.all', 'applications.vote'],
         ],
@@ -518,17 +548,6 @@ return [
             ],
         ],
         [
-            'name' => 'DatePickApp',
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '/js/datepick.js',
-                ],
-            ],
-        ],
-        [
             'name' => 'Fullcalendar',
             'active' => true,
             'files' => [
@@ -615,5 +634,21 @@ return [
                 ],
             ],
         ],
+        [
+            'name' => 'Flatpickr',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://cdn.jsdelivr.net/npm/flatpickr'
+                ]
+            ]
+        ]
     ],
 ];

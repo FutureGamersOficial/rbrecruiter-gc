@@ -59,6 +59,7 @@ class PermissionSeeder extends Seeder
         ]);
 
         // Spatie wildcard permissions (same concept of MC permissions)
+        // TODO: Wildcard permissions are not suitable for the app, switch to simpler permission model, starting with permissions for new features
 
         $permissions = [
             'applications.submit',
@@ -75,6 +76,12 @@ class PermissionSeeder extends Seeder
 
             'profiles.view.others',
             'profiles.edit.others',
+
+            'admin.viewAllAbsences',
+            'admin.manageAbsences',
+            'reviewer.viewAbsence',
+            'reviewer.requestAbsence',
+            'reviewer.withdrawAbsence',
 
             'admin.userlist',
             'admin.stafflist',
@@ -104,7 +111,10 @@ class PermissionSeeder extends Seeder
         // Able to view applications and vote on them once they reach the right stage, but not approve applications up to said stage
         $reviewer->givePermissionTo([
             'applications.view.all',
-            'applications.vote'
+            'applications.vote',
+            'reviewer.viewAbsence',
+            'reviewer.requestAbsence',
+            'reviewer.withdrawAbsence',
         ]);
 
         $hiringManager->givePermissionTo('appointments.*', 'applications.*', 'admin.hiring.*');
@@ -117,7 +127,8 @@ class PermissionSeeder extends Seeder
             'admin.notificationsettings.*',
             'profiles.view.others',
             'profiles.edit.others',
-            'admin.maintenance.logs.view'
+            'admin.viewAllAbsences',
+            'admin.manageAbsences',
         ]);
     }
 }

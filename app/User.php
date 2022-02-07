@@ -92,10 +92,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\TeamFile', 'uploaded_by');
     }
 
-    public function keys()
+    public function absences()
     {
-        return $this->hasMany('App\ApiKey', 'owner_user_id');
+        return $this->hasMany('App\Absence', 'requesterID');
     }
+
+
 
     // UTILITY LOGIC
 
@@ -128,6 +130,7 @@ class User extends Authenticatable implements MustVerifyEmail
             throw new \InvalidArgumentException('Please pass either a Team object or an integer identifying a Team.');
         }
     }
+
 
     public function routeNotificationForSlack($notification)
     {

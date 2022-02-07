@@ -244,6 +244,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::patch('staff-members/terminate/{user}', [UserController::class, 'terminate'])
                 ->name('terminateStaffMember');
+
+            Route::resource('absences', \App\Http\Controllers\AbsenceController::class);
         });
 
         Route::group(['prefix' => 'admin', 'middleware' => ['passwordredirect']], function () {
