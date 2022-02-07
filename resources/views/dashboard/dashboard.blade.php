@@ -81,34 +81,25 @@
 
     @endif
 
-    <div class="row mt-5">
+    @if (!Auth::user()->isStaffMember())
 
-      <div class="col">
+        <div class="row mb-3">
+            <div class="col">
+                @if ($isEligibleForApplication)
+                    <x-alert id="eligibleAlertCard" alert-type="success" title="{{ __('Account status notification') }}" icon="fa-info-circle">
+                        <p>{{ __('You do not have any active applications, therefore your account is authorized to submit an application at this time. Feel free to submit one when you\'re ready.') }}</p>
+                    </x-alert>
+                @else
+                    <x-alert id="eligibleAlertCard" alert-type="warning" title="{{ __('Account status notification') }}" icon="fa-exclamation-triangle">
+                        <p>{{ __('Since you already submitted an application, you will not be able to submit a new one. If our team did not approve your application, you will be able submit another one in :daysRemaining days.', ['daysRemaining' => $eligibilityDaysRemaining]) }}</p>
 
-          <div class="text-center">
-
-              <h4>{{__('messages.welcome_back')}} {{ Auth::user()->name }}!</h4>
-
-          </div>
-
-      </div>
-
-
-    </div>
-
-
-    <div class="row mb-3">
-
-        <div class="col">
-            <div class="alert alert-info">
-                <p>{{__('messages.eligibility_status', ['badgeStatus' => '<span class="badge badge-warning"> ' . ($isEligibleForApplication) ? __('messages.eligible') : __('messages.ineligible') .'</span>'])}}</p>
+                        <x-button id="viewApplications" link="{{ route('showUserApps') }}" type="button" color="info" icon="fas fa-arrow-right">
+                            {{ __('My applications') }}
+                        </x-button>
+                    </x-alert>
+                @endif
             </div>
         </div>
-
-    </div>
-
-
-    @if (!Auth::user()->isStaffMember())
 
       <div class="row">
             <div class="col-lg-3 col-3 offset-3">
