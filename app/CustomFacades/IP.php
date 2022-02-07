@@ -39,15 +39,8 @@ class IP
 
         if (config('demo.is_enabled') || config('app.hide_ips'))
         {
-            Log::debug('Global shouldCollect: ', [
-                'shouldCollect' => false
-            ]);
             return false; // do not collect!
         }
-
-        Log::debug('Global shouldCollect: ', [
-            'shouldCollect' => true
-        ]);
 
         return true;
     }
