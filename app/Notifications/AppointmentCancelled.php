@@ -51,7 +51,7 @@ class AppointmentCancelled extends Notification
         // TODO: Switch to HTML & Blade.
 
         return (new MailMessage)
-            ->salutation("Hi " . $notifiable->name . ",")
+            ->greeting("Hi " . $notifiable->name . ",")
             ->from(config('notification.sender.address'), config('notification.sender.name'))
             ->subject(config('app.name').' - interview cancelled')
             ->line('The interview that was previously scheduled with you has been cancelled.')
@@ -60,7 +60,7 @@ class AppointmentCancelled extends Notification
             ->line('A team member may contact you to reschedule within a new timeframe - you may also let us know of a date and time that suits you.')
             ->line('Your application will likely be declined if you do not reschedule an interview.')
             ->action('View active applications', url(route('showUserApps')))
-            ->line('The team at ' . config('app.name'));
+            ->salutation('The team at ' . config('app.name'));
     }
 
     /**

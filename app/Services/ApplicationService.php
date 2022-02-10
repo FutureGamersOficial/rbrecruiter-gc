@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Notifications\ApplicationConfirmed;
 use ContextAwareValidator;
 use App\Application;
 use App\Events\ApplicationDeniedEvent;
@@ -98,6 +99,7 @@ class ApplicationService
                     $user->notify((new NewApplicant($application, $vacancy->first())));
                 }
             }
+            $application->user->notify(new ApplicationConfirmed($application));
 
             return true;
 

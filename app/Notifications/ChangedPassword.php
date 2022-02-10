@@ -60,13 +60,13 @@ class ChangedPassword extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->salutation('Hi ' . $notifiable->name . ',')
+                    ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - Account password changed')
                     ->line('The password for the account registered to this email address has just been changed.')
                     ->line('If this was not you, please contact an administrator immediately.')
                     ->action('Sign in', url(route('login')))
-                    ->line('The team at ' . config('app.name'));
+                    ->salutation('The team at ' . config('app.name'));
     }
 
     /**

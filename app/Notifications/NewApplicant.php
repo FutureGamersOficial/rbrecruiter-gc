@@ -73,7 +73,7 @@ class NewApplicant extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->salutation('Hi ' . $notifiable->name . ',')
+                    ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - New application')
                     ->line('Someone has just applied for a position. Check it out!')

@@ -77,7 +77,7 @@ class ApplicationApproved extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->salutation('Hi ' . $notifiable->name . ',')
+                    ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - '.$this->application->response->vacancy->vacancyName.' application approved')
                     ->line('<br />')
@@ -87,7 +87,7 @@ class ApplicationApproved extends Notification implements ShouldQueue
                     ->line('<br />')
                     ->line('Good luck and welcome aboard!')
                     ->action('Sign in', url(route('login')))
-                    ->line('The team at ' . config('app.name'));
+                    ->salutation('The team at ' . config('app.name'));
     }
 
     public function toSlack($notifiable)

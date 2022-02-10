@@ -66,7 +66,7 @@ class NewUser extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->salutation('Hi ' . $notifiable->name . ',')
+                    ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - New user')
                     ->line($this->user->name.' has just registered to our site.')

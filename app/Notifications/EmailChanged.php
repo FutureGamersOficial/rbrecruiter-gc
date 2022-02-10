@@ -60,13 +60,13 @@ class EmailChanged extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->salutation('Hi ' . $notifiable->name . ',')
+                    ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - Email address changed')
                     ->line('The email address for your account has just been updated.')
                     ->line('If this was not you, please change your password immediately. We recommend you also activate multi-factor authentication.')
                     ->action('Sign in', url(route('login')))
-                    ->line('The team at ' . config('app.name'));
+                    ->salutation('The team at ' . config('app.name'));
     }
 
     /**

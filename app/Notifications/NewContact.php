@@ -67,7 +67,7 @@ class NewContact extends Notification
             'email',
         ])) {
             return (new MailMessage)
-                      ->salutation('Hi ' . $notifiable->name . ',')
+                      ->greeting('Hi ' . $notifiable->name . ',')
                       ->line('We\'ve received a new contact form submission in the StaffManagement app center.')
                       ->line('This is what they sent: ')
                       ->line('')

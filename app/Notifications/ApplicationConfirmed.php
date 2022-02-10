@@ -44,13 +44,13 @@ class ApplicationConfirmed extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->salutation('Hi' . $notifiable->name . ',')
+            ->greeting('Hi ' . $notifiable->name . ',')
             ->from(config('notification.sender.address'), config('notification.sender.name'))
             ->subject(config('app.name') . ' - application confirmed')
             ->line('We\'re writing you to let you know that your recent application with us has been received, and will be processed in 24/48 hours.')
             ->line('You will receive regular notifications about your application\'s status.')
             ->action('View active applications', url(route('showUserApps')))
-            ->line('The team at ' . config('app.name'));
+            ->salutation('The team at ' . config('app.name'));
     }
 
     /**
