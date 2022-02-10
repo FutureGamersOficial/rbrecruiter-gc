@@ -67,12 +67,13 @@ class UserBanned extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->line('Hello, ')
                     ->line('Moderators have just banned user '.$this->user->name.' for '.$this->ban->reason)
                     ->line('This ban will remain in effect until '.$this->ban->bannedUntil.'.')
                     ->action('View profile', url(route('showSingleProfile', ['user' => $this->user->id])))
-                    ->line('Thank you!');
+                    ->salutation('The team at ' . config('app.name'));
     }
 
     /**

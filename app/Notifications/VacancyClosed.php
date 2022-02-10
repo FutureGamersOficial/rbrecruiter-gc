@@ -60,12 +60,13 @@ class VacancyClosed extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - Vacancy Closed')
                     ->line('The vacancy '.$this->vacancy->vacancyName.', with '.$this->vacancy->vacancyCount.' remaining slots, has just been closed.')
                     ->line('Please be aware that this position may be deleted/reopened any time.')
                     ->action('View positions', url(route('showPositions')))
-                    ->line('Thank you!');
+                    ->salutation('The team at ' . config('app.name'));
     }
 
     /**

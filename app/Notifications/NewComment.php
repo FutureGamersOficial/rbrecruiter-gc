@@ -60,12 +60,13 @@ class NewComment extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - New comment')
                     ->line('Someone has just posted a new comment on an application you follow.')
                     ->line('You\'re receiving this email because you\'ve voted/commented on this application.')
                     ->action('Check it out', url(route('showUserApp', ['application' => $this->application->id])))
-                    ->line('Thank you!');
+                    ->salutation('The team at ' . config('app.name'));
     }
 
     /**

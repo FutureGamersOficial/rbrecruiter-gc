@@ -63,14 +63,14 @@ class AppointmentScheduled extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name').' - Interview Scheduled')
-                    ->line('A voice interview has been scheduled for you @ '.$this->appointment->appointmentDate.'.')
+                    ->subject(config('app.name').' - Interview scheduled')
+                    ->line('An interview has been scheduled for you @ '.$this->appointment->appointmentDate.'.')
                     ->line('With the following details: '.$this->appointment->appointmentDescription)
-                    ->line('This meeting will take place @ '.$this->appointment->appointmentLocation.'. You will receive an email soon with details on how to join this meeting.')
-                    ->line('Please join a public voice channel (or another platform if specified) at around this time.')
+                    ->line('This meeting will take place @ '.$this->appointment->appointmentLocation.'.')
                     ->action('Sign in', url(route('login')))
-                    ->line('Thank you!');
+                    ->line('The team at ' . config('app.name'));
     }
 
     /**

@@ -64,13 +64,14 @@ class ApplicationDenied extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name').' - '.$this->application->response->vacancy->vacancyName.' application denied')
-                    ->line('Your most recent application has been denied.')
-                    ->line('Our review team denies applications for several reasons, including poor answers.')
-                    ->line('Please review your application and try again in 30 days.')
+                    ->subject(config('app.name').' - application denied')
+                    ->line('We\'re sorry to inform you that your application with us has been reviewed and declined.')
+                    ->line('Our review team denies applications for several reasons, including poor answers, missing information, or lacking qualifications.')
+                    ->line('Please review your application and try again later. You can view your account\'s eligibility status in your dashboard.')
                     ->action('Review application', url(route('showUserApp', ['application' => $this->application->id])))
-                    ->line('Better luck next time!');
+                    ->line('The team at ' . config('app.name'));
     }
 
     public function toSlack($notifiable)

@@ -60,12 +60,14 @@ class AppointmentFinished extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation("Hi " . $notifiable->name . ",")
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name').' - Appointment completed')
+                    ->subject(config('app.name').' - appointment completed')
                     ->line('Your appointment has been marked as completed!')
                     ->line('Please allow an additional day for your application to be fully processed.')
                     ->action('View applications', url(route('showUserApps')))
-                    ->line('Thank you!');
+                    ->line('The team at ' . config('app.name'));
+
     }
 
     /**

@@ -66,12 +66,13 @@ class NewUser extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - New user')
                     ->line($this->user->name.' has just registered to our site.')
                     ->line('You are receiving this email because you opted to receive new user notifications.')
                     ->action('View profile', url(route('showSingleProfile', ['user' => $this->user->id])))
-                    ->line('Thank you!');
+                    ->salutation('The team at ' . config('app.name'));
     }
 
     public function toSlack($notifiable)

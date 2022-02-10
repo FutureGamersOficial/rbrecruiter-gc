@@ -3,30 +3,25 @@
 namespace App\Notifications;
 
 use App\Application;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AppointmentCancelled extends Notification
+class ApplicationConfirmed extends Notification
 {
     use Queueable;
 
-    private $application;
-    private $reason;
-    private $appointmentDate;
+    protected $application;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Application $app, Carbon $appointmentDate, $reason)
+    public function __construct(Application $application)
     {
-        $this->application = $app;
-        $this->reason = $reason;
-        $this->appointmentDate = $appointmentDate;
+        $this->application = $application;
     }
 
     /**
@@ -48,17 +43,12 @@ class AppointmentCancelled extends Notification
      */
     public function toMail($notifiable)
     {
-        // TODO: Switch to HTML & Blade.
-
         return (new MailMessage)
-            ->salutation("Hi " . $notifiable->name . ",")
+            ->salutation('Hi' . $notifiable->name . ',')
             ->from(config('notification.sender.address'), config('notification.sender.name'))
-            ->subject(config('app.name').' - interview cancelled')
-            ->line('The interview that was previously scheduled with you has been cancelled.')
-            ->line('Date and time of the old appointment:  '.$this->appointmentDate)
-            ->line('Your appointment was cancelled for the following reason: ' . $this->reason)
-            ->line('A team member may contact you to reschedule within a new timeframe - you may also let us know of a date and time that suits you.')
-            ->line('Your application will likely be declined if you do not reschedule an interview.')
+            ->subject(config('app.name') . ' - application confirmed')
+            ->line('We\'re writing you to let you know that your recent application with us has been received, and will be processed in 24/48 hours.')
+            ->line('You will receive regular notifications about your application\'s status.')
             ->action('View active applications', url(route('showUserApps')))
             ->line('The team at ' . config('app.name'));
     }

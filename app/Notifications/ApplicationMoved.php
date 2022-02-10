@@ -56,12 +56,13 @@ class ApplicationMoved extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name').' - Application Updated')
-                    ->line('Your most recent application has been moved up a stage.')
-                    ->line('This means our team has reviewed it and an interview will be scheduled ASAP.')
+                    ->subject(config('app.name').' - application updated')
+                    ->line('Your application has been moved to the next step.')
+                    ->line('This means our team has reviewed it and an interview will be scheduled soon.')
                     ->action('Sign in', url(route('login')))
-                    ->line('Thank you!');
+                    ->line('The team at ' . config('app.name'));
     }
 
     /**

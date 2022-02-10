@@ -67,6 +67,7 @@ class NewContact extends Notification
             'email',
         ])) {
             return (new MailMessage)
+                      ->salutation('Hi ' . $notifiable->name . ',')
                       ->line('We\'ve received a new contact form submission in the StaffManagement app center.')
                       ->line('This is what they sent: ')
                       ->line('')
@@ -74,7 +75,7 @@ class NewContact extends Notification
                       ->line('')
                       ->line('This message was received from '.$this->message->get('ip').' and submitted by '.$this->message->get('email').'.')
                       ->action('Sign in', url(route('login')))
-                      ->line('Thank you!');
+                      ->salutation('The team at ' . config('app.name'));
         }
 
         throw new \InvalidArgumentException('Invalid arguments supplied to NewContact!');

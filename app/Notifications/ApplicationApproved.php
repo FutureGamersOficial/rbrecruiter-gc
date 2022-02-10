@@ -24,6 +24,7 @@ namespace App\Notifications;
 use App\Application;
 use App\Facades\Options;
 use App\Traits\Cancellable;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -34,16 +35,27 @@ class ApplicationApproved extends Notification implements ShouldQueue
 {
     use Queueable, Cancellable;
 
-    public $application;
+
+    /**
+     * @var Application The application we're notifying about
+     */
+    public Application $application;
+
+
+    /**
+     * @var User The candidate
+     */
+    public User $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Application $application)
+    public function __construct(User $user, Application $application)
     {
         $this->application = $application;
+        $this->user = $user;
     }
 
     public function channels()
@@ -65,17 +77,17 @@ class ApplicationApproved extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->salutation('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - '.$this->application->response->vacancy->vacancyName.' application approved')
                     ->line('<br />')
-                    ->line('Congratulations! Our Staff team has reviewed your application today, and your application has been approved.')
+                    ->line('Congratulations! Your most recent application has been approved by the reviewing team.')
                     ->line('You have just received the Reviewer role, which allows you to view and vote on other applications.')
-                    ->line('Your in-game rank should be updated network-wide in the next few minutes, allowing you to perform staff duties.')
-                    ->line('Please join a voice channel when possible for your training meeting, if this has been mentioned by your interviewer.')
+                    ->line('You should have received more information about your onboarding process by now.')
                     ->line('<br />')
                     ->line('Good luck and welcome aboard!')
                     ->action('Sign in', url(route('login')))
-                    ->line('Thank you!');
+                    ->line('The team at ' . config('app.name'));
     }
 
     public function toSlack($notifiable)

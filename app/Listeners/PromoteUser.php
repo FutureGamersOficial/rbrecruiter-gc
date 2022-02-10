@@ -23,7 +23,6 @@ namespace App\Listeners;
 
 use App\Events\ApplicationApprovedEvent;
 use App\Notifications\ApplicationApproved;
-use App\StaffProfile;
 use Illuminate\Support\Facades\Log;
 
 class PromoteUser
@@ -46,14 +45,11 @@ class PromoteUser
      */
     public function handle(ApplicationApprovedEvent $event)
     {
+        Log::info('User '.$event->application->user->name . 'has just been promoted (application approved)');
+
         $event->application->setStatus('APPROVED');
         $event->application->response->vacancy->decrease();
-
         $event->application->user->assignRole('reviewer');
-
-        Log::info('User '.$event->application->user->name.' has just been promoted!', [
-            'newRank' => $event->application->response->vacancy->permissionGroupName,
-        ]);
 
         $event->application->user->notify(new ApplicationApproved($event->application));
     }
