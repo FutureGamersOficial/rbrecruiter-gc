@@ -25,10 +25,11 @@ use App\Facades\JSON;
 use App\Form;
 use App\Http\Requests\VacancyEditRequest;
 use App\Http\Requests\VacancyRequest;
-use App\Notifications\VacancyClosed;
+use App\Notifications\VacancyStatusUpdated;
 use App\User;
 use App\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class VacancyController extends Controller
@@ -102,11 +103,6 @@ class VacancyController extends Controller
                     $vacancy->close();
                     $message = __('Position successfully closed!');
 
-                    foreach (User::all() as $user) { // Avoid the ghost account
-                        if ($user->isStaffMember() && $user->id != 1) {
-                            $user->notify(new VacancyClosed($vacancy));
-                        }
-                    }
                     break;
 
                 default:
@@ -114,9 +110,15 @@ class VacancyController extends Controller
                     $type = 'error';
 
             }
+
+
         } else {
             $message = __("The position you're trying to update doesn't exist!");
             $type = 'error';
+        }
+
+        if ($type !== 'error') {
+            Notification::send(User::role('reviewer')->get(), new VacancyStatusUpdated($vacancy, $status));
         }
 
         return redirect()

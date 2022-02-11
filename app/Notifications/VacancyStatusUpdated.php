@@ -30,20 +30,30 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Queue\SerializesModels;
 
-class VacancyClosed extends Notification implements ShouldQueue
+class VacancyStatusUpdated extends Notification implements ShouldQueue
 {
     use Queueable, SerializesModels, Cancellable;
 
-    protected $vacancy;
+    protected string $status;
+
+
+    protected Vacancy $vacancy;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Vacancy $vacancy)
+    public function __construct(Vacancy $vacancy, $status)
     {
+        // there's no simpler solution to this for now, but an array works
+        $statusDict = [
+            'open' => 'opened',
+            'close' => 'closed'
+        ];
+
         $this->vacancy = $vacancy;
+        $this->status = $statusDict[$status];
     }
 
     public function optOut($notifiable)
@@ -59,12 +69,14 @@ class VacancyClosed extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+
         return (new MailMessage)
                     ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name').' - Vacancy Closed')
-                    ->line('The vacancy '.$this->vacancy->vacancyName.', with '.$this->vacancy->vacancyCount.' remaining slots, has just been closed.')
-                    ->line('Please be aware that this position may be deleted/reopened any time.')
+                    ->subject(config('app.name').' - Vacancy ' . $this->status)
+                    ->line('The vacancy '.$this->vacancy->vacancyName.', with '.$this->vacancy->vacancyCount.' remaining slots, has just been ' . $this->status . '.')
+                    ->line('Please be aware that this position may be change at any time.')
+                    ->line('You are receiving this email because you currently have staff/team member privileges. Depending on your access level, you may not be able to view the list of positions on the backoffice.')
                     ->action('View positions', url(route('showPositions')))
                     ->salutation('The team at ' . config('app.name'));
     }
