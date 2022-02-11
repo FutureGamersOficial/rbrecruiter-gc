@@ -9,6 +9,7 @@ use App\Appointment;
 use App\Exceptions\InvalidAppointmentStatusException;
 use App\Notifications\ApplicationMoved;
 use App\Notifications\AppointmentCancelled;
+use App\Notifications\AppointmentFinished;
 use App\Notifications\AppointmentScheduled;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -104,7 +105,7 @@ class AppointmentService
             if ($updateApplication)
             {
                 $application->setStatus('STAGE_PEERAPPROVAL');
-                $application->user->notify(new ApplicationMoved());
+                $application->user->notify(new AppointmentFinished($application->appointment));
             }
         }
         else

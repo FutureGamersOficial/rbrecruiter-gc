@@ -27,6 +27,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationMoved extends Notification implements ShouldQueue
 {
@@ -42,9 +43,21 @@ class ApplicationMoved extends Notification implements ShouldQueue
         //
     }
 
+    public function channels()
+    {
+        Log::debug('Application moved notification: channels chosen', [
+            'channels' => $this->chooseChannelsViaOptions()
+        ]);
+        return $this->chooseChannelsViaOptions();
+    }
+
     public function optOut($notifiable)
     {
-        return Options::getOption('notify_application_status_change') !== 1;
+        Log::debug('Application moved notification: opt out verified', [
+            'opt-out' => Options::getOption('notify_application_status_change') != 1
+        ]);
+
+        return Options::getOption('notify_application_status_change') != 1;
     }
 
     /**

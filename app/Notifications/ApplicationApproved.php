@@ -52,10 +52,9 @@ class ApplicationApproved extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(User $user, Application $application)
+    public function __construct(Application $application)
     {
         $this->application = $application;
-        $this->user = $user;
     }
 
     public function channels()
@@ -65,7 +64,7 @@ class ApplicationApproved extends Notification implements ShouldQueue
 
     public function optOut($notifiable)
     {
-        return Options::getOption('notify_applicant_approved') !== 1;
+        return Options::getOption('notify_applicant_approved') != 1;
     }
 
     /**
@@ -79,12 +78,10 @@ class ApplicationApproved extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
-                    ->subject(config('app.name').' - '.$this->application->response->vacancy->vacancyName.' application approved')
-                    ->line('<br />')
+                    ->subject(config('app.name').' - application approved')
                     ->line('Congratulations! Your most recent application has been approved by the reviewing team.')
                     ->line('You have just received the Reviewer role, which allows you to view and vote on other applications.')
                     ->line('You should have received more information about your onboarding process by now.')
-                    ->line('<br />')
                     ->line('Good luck and welcome aboard!')
                     ->action('Sign in', url(route('login')))
                     ->salutation('The team at ' . config('app.name'));

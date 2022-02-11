@@ -48,7 +48,7 @@ class NewComment extends Notification implements ShouldQueue
 
     public function optOut($notifiable)
     {
-        return Options::getOption('notify_application_comment') !== 1;
+        return Options::getOption('notify_application_comment') != 1;
     }
 
     /**

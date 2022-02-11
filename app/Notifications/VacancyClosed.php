@@ -48,7 +48,7 @@ class VacancyClosed extends Notification implements ShouldQueue
 
     public function optOut($notifiable)
     {
-        return Options::getOption('notify_vacancystatus_change') !== 1;
+        return Options::getOption('notify_vacancystatus_change') != 1;
     }
 
     /**

@@ -22,18 +22,23 @@
 namespace App\Traits;
 
 use App\Facades\Options;
+use Illuminate\Support\Facades\Log;
 
 trait Cancellable
 {
     public function chooseChannelsViaOptions()
     {
         $channels = [];
-
+        // FIXME: This is not letting Slack and Email work at the same time
         if (Options::getOption('enable_slack_notifications') == 1) {
             array_push($channels, 'slack');
         } elseif (Options::getOption('enable_email_notifications') == 1) {
-            array_push($channels, 'email');
+            array_push($channels, 'mail');
         }
+
+        Log::debug('Cancellable: current channels list', [
+            'channels' => $channels
+        ]);
 
         return $channels;
     }

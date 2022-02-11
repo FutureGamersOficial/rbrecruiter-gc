@@ -21,6 +21,7 @@
 
 namespace App\Notifications;
 
+use App\Appointment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -30,14 +31,17 @@ class AppointmentFinished extends Notification implements ShouldQueue
 {
     use Queueable;
 
+
+    public $appointment;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Appointment $appointment)
     {
-        //
+        $this->appointment = $appointment;
     }
 
     /**
@@ -63,7 +67,7 @@ class AppointmentFinished extends Notification implements ShouldQueue
                     ->greeting("Hi " . $notifiable->name . ",")
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - appointment completed')
-                    ->line('Your appointment has been marked as completed!')
+                    ->line('Your appointment, "' . $this->appointment->appointmentDescription . '", has been marked as completed!')
                     ->line('Please allow an additional day for your application to be fully processed.')
                     ->action('View applications', url(route('showUserApps')))
                     ->salutation('The team at ' . config('app.name'));
