@@ -102,8 +102,8 @@ class VacancyController extends Controller
                     $vacancy->close();
                     $message = __('Position successfully closed!');
 
-                    foreach (User::all() as $user) {
-                        if ($user->isStaffMember()) {
+                    foreach (User::all() as $user) { // Avoid the ghost account
+                        if ($user->isStaffMember() && $user->id != 1) {
                             $user->notify(new VacancyClosed($vacancy));
                         }
                     }
