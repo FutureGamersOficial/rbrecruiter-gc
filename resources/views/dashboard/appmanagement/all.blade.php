@@ -210,18 +210,19 @@
 
         </div>
 
+          @if (!$applications->isEmpty())
+
+              <div class="card-footer">
+
+                  {{ $applications->links() }}
+
+              </div>
+
+      @endif
         <!-- end main content card -->
       </div>
 
-       @if (!$applications->isEmpty() && isset($applications->links))
 
-         <div class="card-footer">
-
-           {{ $applications->links }}
-
-         </div>
-
-       @endif
 
     </div>
 

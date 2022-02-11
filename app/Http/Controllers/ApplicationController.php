@@ -77,7 +77,7 @@ class ApplicationController extends Controller
         $this->authorize('viewAny', Application::class);
 
         return view('dashboard.appmanagement.all')
-            ->with('applications', Application::all());
+            ->with('applications', Application::orderBy('applicationStatus', 'ASC')->paginate(6));
 
     }
 
