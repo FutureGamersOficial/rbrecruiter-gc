@@ -252,8 +252,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('settings', [OptionsController::class, 'index'])
                 ->name('showSettings');
 
-            Route::patch('keys/revoke/{key}', [ApiKeyController::class, 'revokeKey'])
-                ->name('revokeKey');
 
             Route::post('settings/save', [OptionsController::class, 'saveSettings'])
                 ->name('saveSettings');
