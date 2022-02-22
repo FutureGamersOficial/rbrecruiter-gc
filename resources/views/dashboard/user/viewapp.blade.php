@@ -423,7 +423,7 @@
                             <div class="col-md-2">
 
                                 <div class="text-center">
-                                    @if($application->user->avatarPreference == 'gravatar')
+                                    @if($comment->user->profile->avatarPreference == 'gravatar')
                                         <img class="profile-user-img img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($comment->user->email)}}" alt="User profile picture">
                                     @else
                                         <img class="profile-user-img img-fluid img-circle" src="https://crafatar.com/avatars/{{$comment->user->uuid}}" alt="User profile picture">
