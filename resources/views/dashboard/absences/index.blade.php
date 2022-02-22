@@ -85,7 +85,7 @@
                                             @endswitch
                                         </td>
                                         <td>{{ $absence->created_at }}</td>
-                                        <td><button class="btn btn-warning btn-sm"><i class="fas fa-search"></i> Review</button></td>
+                                        <td><a href="{{ route('absences.show', ['absence' => $absence->id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-search"></i> {{ __('Review') }}</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

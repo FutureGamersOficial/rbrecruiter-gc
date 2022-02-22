@@ -43,7 +43,7 @@ class Remove2FASecretRequest extends FormRequest
     public function rules()
     {
         return [
-            'currentPassword' => 'required|password',
+            'currentPassword' => 'required|current_password',
             'consent' => 'required|accepted',
         ];
     }

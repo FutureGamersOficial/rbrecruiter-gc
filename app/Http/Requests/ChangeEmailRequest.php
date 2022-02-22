@@ -43,7 +43,7 @@ class ChangeEmailRequest extends FormRequest
     public function rules()
     {
         return [
-            'currentPassword' => 'required|password',
+            'currentPassword' => 'required|current_password',
             'newEmail' => 'required|email|unique:users,email',
         ];
     }

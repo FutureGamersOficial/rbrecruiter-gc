@@ -43,7 +43,7 @@ class FlushSessionsRequest extends FormRequest
     public function rules()
     {
         return [
-            'currentPasswordFlush' => 'required|password',
+            'currentPasswordFlush' => 'required|current_password',
         ];
     }
 }

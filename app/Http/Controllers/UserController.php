@@ -74,6 +74,7 @@ class UserController extends Controller
             return view('dashboard.administration.players')
             ->with([
                 'users' => $matchingUsers,
+                'numUsers' => count(User::all()),
                 'bannedUserCount' => Ban::all()->count(),
             ]);
         } else {

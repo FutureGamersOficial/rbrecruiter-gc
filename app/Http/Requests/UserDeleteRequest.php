@@ -45,13 +45,13 @@ class UserDeleteRequest extends FormRequest
     {
         if (Auth::user()->has2FA()) {
             return [
-                'currentPassword' => 'required|password:web',
+                'currentPassword' => 'required|current_password:web',
                 'otp' => 'required|integer|max:6',
             ];
         }
 
         return [
-            'currentPassword' => 'required|password:web',
+            'currentPassword' => 'required|current_password:web',
         ];
     }
 }
