@@ -58,23 +58,6 @@
                     <div class="card-title"><h4><i class="fas fa-search"></i>{{__('Search users')}}</h4></div>
                 </div>
 
-                <div class="card-body">
-
-                    <form name="search" method="POST" action="{{route('searchRegisteredPLayerList')}}">
-                        @csrf
-                        <div class="input-group">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="{{__('messages.players.f_p_search')}}">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-
-                    </form>
-
-                </div>
-
             </div>
 
         </div>
@@ -90,7 +73,19 @@
               <div class="card-header bg-indigo">
 
                   <div class="card-title"><h4 class="text-bold">{{__('Registered users')}}</h4></div>
-
+                  <div class="card-tools mt-2">
+                      <form name="search" action="{{ route('searchRegisteredPLayerList') }}" method="post">
+                          @csrf
+                          <div class="input-group input-group-sm" style="width: 200px;">
+                              <input type="text" name="searchTerm" class="form-control float-right" placeholder="{{ __('Search') }}">
+                              <div class="input-group-append">
+                                  <button type="submit" class="btn btn-default">
+                                      <i class="fas fa-search"></i>
+                                  </button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
               </div>
 
               <div class="card-body">
