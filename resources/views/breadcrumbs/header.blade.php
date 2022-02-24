@@ -169,7 +169,8 @@
 
                                 @endswitch
 
-                                    <a class="mt-3 btn btn-primary btn-lg" href="{{route('home')}}" role="button"><i class="fas fa-home"></i> {{ __('Back to safety') }}</a>
+                                    <a class="mt-3 ml-3 btn btn-primary btn-lg" href="{{route('home')}}" role="button"><i class="fas fa-home"></i> {{ __('Back to safety') }}</a>
+                                    <a class="mt-3 ml-3 btn btn-primary btn-lg" href="https://status.gamescluboficial.com.br" role="button"><i class="fas fa-home"></i> {{ __('System status') }}</a>
 
 
                             </div>
