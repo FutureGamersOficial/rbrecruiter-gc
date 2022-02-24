@@ -156,7 +156,7 @@
 
     <div class="row mt-3">
         <div class="col text-center">
-            <x-button type="submit" id="backToAbsences" color="secondary" icon="fas fa-angle-double-left" link="{{ route('absences.index') }}">
+            <x-button type="submit" id="backToAbsences" color="secondary" icon="fas fa-angle-double-left" link="{{ route('showUserAbsences') }}">
                 {{ __('Back to Absence list') }}
             </x-button>
         </div>
