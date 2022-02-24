@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('Member absence management'))
+@section('title', config('app.name') . ' | ' . __('Member absence requests'))
 
 @section('content_header')
 
-    <h4>{{__('Human Resources')}} / {{ __('Admin') }} / {{__('Absence management')}}</h4>
+    <h4>{{__('Human Resources')}} / {{ __('Reviewer') }} / {{__('Absence management')}}</h4>
 
 @stop
 
@@ -56,38 +56,38 @@
                             </thead>
 
                             <tbody>
-                                @foreach($absences as $absence)
-                                    <tr>
-                                        <td>{{ $absence->requester->name }}</td>
-                                        <td><span class="badge badge-warning"><i class="fas fa-exclamation-circle"></i> {{ __('None yet') }}</span></td>
-                                        <td>
-                                            @switch($absence->getRawOriginal('status'))
+                            @foreach($absences as $absence)
+                                <tr>
+                                    <td>{{ $absence->requester->name }}</td>
+                                    <td><span class="badge badge-warning"><i class="fas fa-exclamation-circle"></i> {{ __('None yet') }}</span></td>
+                                    <td>
+                                        @switch($absence->getRawOriginal('status'))
 
-                                                @case('PENDING')
-                                                <span class="badge badge-warning"><i class="fas fa-clock"></i> {{ __('Pending') }}</span>
-                                                @break
+                                            @case('PENDING')
+                                            <span class="badge badge-warning"><i class="fas fa-clock"></i> {{ __('Pending') }}</span>
+                                            @break
 
-                                                @case('APPROVED')
-                                                <span class="badge badge-success"><i class="far fa-thumbs-up"></i> {{ __('Approved') }}</span>
-                                                @break
+                                            @case('APPROVED')
+                                            <span class="badge badge-success"><i class="far fa-thumbs-up"></i> {{ __('Approved') }}</span>
+                                            @break
 
-                                                @case('DECLINED')
-                                                <span class="badge badge-danger"><i class="far fa-thumbs-down"></i> {{ __('Declined') }}</span>
-                                                @break
+                                            @case('DECLINED')
+                                            <span class="badge badge-danger"><i class="far fa-thumbs-down"></i> {{ __('Declined') }}</span>
+                                            @break
 
-                                                @case('CANCELLED')
-                                                <span class="badge badge-secondary"><i class="fas fa-ban"></i> {{ __('Cancelled') }}</span>
-                                                @break
+                                            @case('CANCELLED')
+                                            <span class="badge badge-secondary"><i class="fas fa-ban"></i> {{ __('Cancelled') }}</span>
+                                            @break
 
-                                                @case('ENDED')
-                                                <span class="badge badge-info"><i class="fas fa-history"></i> {{ __('Ended') }}</span>
-                                                @break
-                                            @endswitch
-                                        </td>
-                                        <td>{{ $absence->created_at }}</td>
-                                        <td><a href="{{ route('absences.show', ['absence' => $absence->id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-search"></i> {{ __('Review') }}</a></td>
-                                    </tr>
-                                @endforeach
+                                            @case('ENDED')
+                                            <span class="badge badge-info"><i class="fas fa-history"></i> {{ __('Ended') }}</span>
+                                            @break
+                                        @endswitch
+                                    </td>
+                                    <td>{{ $absence->created_at }}</td>
+                                    <td><a href="{{ route('absences.show', ['absence' => $absence->id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-search"></i> {{ __('Review') }}</a></td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     @else
@@ -95,7 +95,7 @@
 
                             <i class="fas fa-exclamation-triangle"></i><span> {{__('No requests')}}</span>
                             <p>
-                                {{__('There are no registered requests, of any status (declined, approved, pending).')}}
+                                {{__('You haven\'t submitted any requests yet! Remember that you can only have one active request.')}}
                             </p>
 
                         </div>
@@ -112,8 +112,4 @@
     </div>
 
 
-@stop
-
-@section('footer')
-    @include('breadcrumbs.dashboard.footer')
 @stop

@@ -21,10 +21,20 @@ class AbsencePolicy
     {
         if ($user->hasPermissionTo('admin.viewAllAbsences'))
         {
-            return \Illuminate\Auth\Access\Response::allow();
+            return true;
         }
 
-        return \Illuminate\Auth\Access\Response::deny('Forbidden');
+        return false;
+    }
+
+
+    public function viewOwn(User $user): bool
+    {
+        if ($user->hasPermissionTo('reviewer.viewAbsence')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -36,7 +46,7 @@ class AbsencePolicy
      */
     public function view(User $user, Absence $absence)
     {
-        if ($user->hasPermissionTo('reviewer.viewAbsence') && $user->id == $absence->requesterID)
+        if ($user->hasPermissionTo('reviewer.viewAbsence') && $user->is($absence->requester) || $user->hasPermissionTo('admin.manageAbsences'))
         {
             return true;
         }
@@ -55,16 +65,49 @@ class AbsencePolicy
         return $user->hasPermissionTo('reviewer.requestAbsence');
     }
 
+
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can approve the absence request
      *
-     * @param  \App\User  $user
-     * @param  \App\Absence  $absence
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param Absence $absence
+     * @return bool
      */
-    public function update(User $user, Absence $absence)
+    public function approve(User $user, Absence $absence): bool
     {
-        return $user->hasPermissionTo('admin.manageAbsences');
+        if ($user->can('admin.manageAbsences') && $user->isNot($absence->requester))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function decline(User $user, Absence $absence): bool
+    {
+        if ($user->can('admin.manageAbsences') && $user->isNot($absence->requester))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine whether the user can cancel the absence request
+     *
+     * @param User $user
+     * @param Absence $absence
+     * @return bool
+     */
+    public function cancel(User $user, Absence $absence): bool {
+
+        if($user->is($absence->requester) && $user->can('reviewer.withdrawAbsence')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -76,7 +119,8 @@ class AbsencePolicy
      */
     public function delete(User $user, Absence $absence)
     {
-        return $user->hasPermissionTo('admin.manageAbsences') || $user->hasPermissionTo('reviewer.withdrawAbsence') && $user->id == $absence->requesterID;
+        return $user->hasPermissionTo('admin.manageAbsences');
     }
+
 
 }

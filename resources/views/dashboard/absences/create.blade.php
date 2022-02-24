@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <x-button id="btnCancelRequest" color="info" icon="fas fa-info-circle">
+                    <x-button link="{{ route('absences.index') }}" id="btnCancelRequest" color="info" icon="fas fa-info-circle">
                         {{ __('Cancel request') }}
                     </x-button>
                 </div>
@@ -116,4 +116,8 @@
     </div>
 
 
+@stop
+
+@section('footer')
+    @include('breadcrumbs.dashboard.footer')
 @stop

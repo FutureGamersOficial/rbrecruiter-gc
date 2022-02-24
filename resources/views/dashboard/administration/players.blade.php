@@ -47,23 +47,6 @@
         </div>
     </div>
 
-
-    <div class="row">
-
-        <div class="col-md-4 offset-md-4">
-
-            <div class="card">
-
-                <div class="card-header">
-                    <div class="card-title"><h4><i class="fas fa-search"></i>{{__('Search users')}}</h4></div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
     <div class="row">
 
         <div class="col">

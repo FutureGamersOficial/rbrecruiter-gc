@@ -18,6 +18,8 @@
  *     You should have received a copy of the GNU General Public License
  *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\LoginController;
@@ -245,7 +247,26 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::patch('staff-members/terminate/{user}', [UserController::class, 'terminate'])
                 ->name('terminateStaffMember');
 
-            Route::resource('absences', \App\Http\Controllers\AbsenceController::class);
+
+
+            Route::resource('absences', AbsenceController::class);
+
+            Route::controller(AbsenceController::class)->group(function () {
+
+                Route::get('my-absences', 'showUserAbsences')
+                    ->name('showUserAbsences');
+
+                Route::patch('absences/{absence}/approve', 'approveAbsence')
+                    ->name('approveAbsence');
+
+                Route::patch('absences/{absence}/decline', 'declineAbsence')
+                    ->name('declineAbsence');
+
+                Route::patch('absences/{absence}/cancel', 'cancelAbsence')
+                    ->name('cancelAbsence');
+
+            });
+
         });
 
         Route::group(['prefix' => 'admin', 'middleware' => ['passwordredirect']], function () {

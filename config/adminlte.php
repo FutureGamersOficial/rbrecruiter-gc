@@ -278,22 +278,22 @@ return [
             'can' => 'reviewer.requestAbsence',
             'submenu' => [
                 [
-                    'text' => 'Request LOA',
-                    'icon' => 'far fa-clock',
+                    'text' => 'New request',
+                    'icon' => 'fas fa-plus',
                     'can' => 'reviewer.requestAbsence',
-                    'url' => 'tba'
+                    'route' => 'absences.create'
                 ],
                 [
-                    'text' => 'My LOA Requests',
+                    'text' => 'My requests',
                     'icon' => 'fas fa-business-time',
                     'can' => 'reviewer.viewAbsence',
-                    'url' => 'tba'
+                    'route' => 'showUserAbsences'
                 ],
 
             ],
         ],
         [
-            'text' => 'Absence Requests',
+            'text' => 'Absence requests',
             'icon' => 'fas fa-address-card',
             'can' => 'admin.manageAbsences',
             'route' => 'absences.index'
