@@ -39,6 +39,10 @@
 
                     <div class="card-title"><h4 class="text-bold">{{__('Leave of absence requests')}}</h4></div>
 
+                    <div class="card-tools">
+                        <a href="{{ route('absences.create') }}"><button class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> New request</button></a>
+                    </div>
+
                 </div>
 
                 <div class="card-body">
@@ -85,7 +89,7 @@
                                         @endswitch
                                     </td>
                                     <td>{{ $absence->created_at }}</td>
-                                    <td><a href="{{ route('absences.show', ['absence' => $absence->id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-search"></i> {{ __('Review') }}</a></td>
+                                    <td><a href="{{ route('absences.show', ['absence' => $absence->id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-search"></i> {{ __('View') }}</a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -103,7 +107,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="{{ route('absences.create') }}"><button class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> New request</button></a>
+                    {{ $absences->links() }}
                 </div>
 
             </div>

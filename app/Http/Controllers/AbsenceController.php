@@ -49,7 +49,7 @@ class AbsenceController extends Controller
         $this->authorize('viewAny', Absence::class);
 
         return view('dashboard.absences.index')
-            ->with('absences', Absence::all());
+            ->with('absences', Absence::paginate(6));
     }
 
 
@@ -63,8 +63,11 @@ class AbsenceController extends Controller
     {
         $this->authorize('viewOwn', Absence::class);
 
+        // We can't paginate on the relationship found on the user model
+        $absences = Absence::where('requesterID', Auth::user()->id)->paginate(6);
+
         return view('dashboard.absences.own')
-            ->with('absences', Auth::user()->absences);
+            ->with('absences', $absences);
 
     }
 
