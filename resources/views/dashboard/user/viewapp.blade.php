@@ -67,11 +67,36 @@
                         @method('PATCH')
                         <button type="submit" class="btn btn-danger">{{__('messages.view_app.deny_confirm_btn')}}</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.modal_close')}}</button>
-
                 </x-slot>
 
             </x-modal>
+
+
+        <x-modal id="cancelAppointmentModal" modal-label="cancelAppointmentModalLabel" modal-title="{{__('Cancel appointment?')}}" include-close-button="true">
+
+            <div class="alert alert-warning">
+                <p class="text-bold"><i class="fas fa-exclamation-triangle"></i> {{ __('Caution') }}</p>
+
+                <p>{{__('Are you sure you want to cancel this appointment? The user will be notified of this via email, and you will be able to reschedule.')}}</p>
+                <p>{{ __('Before you can cancel this appointment, you\'ll need to provide a reason in writing. ') }}</p>
+            </div>
+
+            <form id="confirmCancelAppointment" method="POST" action="{{ route('deleteAppointment', ['application' => $application->id]) }}">
+                @method('DELETE')
+                @csrf
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                    </div>
+                    <input type="text" name="reason" id="reason" class="form-control" placeholder="{{ __('Cancellation reason...') }}" required>
+                </div>
+            </form>
+
+            <x-slot name="modalFooter">
+                <button type="button" class="btn btn-warning" onclick="$('#confirmCancelAppointment').submit()"><i class="fas fa-calendar-times""></i> {{ __('Finish cancelling appointment') }}</button>
+            </x-slot>
+
+        </x-modal>
 
         @endhasrole
 
@@ -103,7 +128,8 @@
                         <div class="mt-4 mb-3">
 
                             <h5>{{$content['title']}}</h5>
-                            <p>{{$content['response']}}</p>
+
+                            <p>{!! GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($content['response']) !!}</p>
 
                         </div>
 
@@ -131,7 +157,7 @@
 
                             <p><b>{{__('messages.application_m.applicant_name')}} </b> <span class="badge badge-primary">{{$application->user->name}}</span></p>
                             @if (Auth::user()->hasRole('hiringManager'))
-                                <p><b>{{__('messages.view_app.appl_ip')}}</b> <span class="badge badge-primary">{{$application->user->originalIP}}</span></p>
+                                <p><b>{{__('messages.view_app.appl_ip')}}</b> <span class="badge badge-primary">{{ (!$shouldCollect) ? '0.0.0.0 (censored)' : $application->user->originalIP }}</span></p>
                             @endif
                             <p><b>{{__('messages.application_m.application_date')}}</b> <span class="badge badge-primary">{{$application->created_at}}</span></p>
                             <p><b>{{__('messages.last_updated')}}</b><span class="badge badge-primary">{{$application->updated_at}}</span></p>
@@ -289,12 +315,13 @@
                                     <form style="white-space: nowrap;display:inline-block" class="footer-button" action="{{route('updateAppointment', ['application' => $application->id, 'status' => 'concluded'])}}" method="POST">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="btn btn-success">{{__('messages.view_app.finish_meeting')}}</button>
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> {{__('messages.view_app.finish_meeting')}}</button>
                                     </form>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="$('#cancelAppointmentModal').modal('show')"><i class="far fa-calendar-times"></i> {{__('Cancel meeting')}}</button>
                                 @endcan
 
                                 @can('applications.vote')
-                                    <button class="btn btn-warning mr-3" onclick="$('#notes').modal('show')">{{__('messages.view_app.view_notes')}}</button>
+                                    <button class="btn btn-warning mr-3 btn-sm" onclick="$('#notes').modal('show')"><i class="fas fa-clipboard"></i> {{__('messages.view_app.view_notes')}}</button>
                                 @endcan
 
                             </x-slot>
@@ -348,7 +375,7 @@
 
                     <div class="col text-center">
 
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('staffPendingApps')}}'">{{__('messages.view_app.view_more')}}</button>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{route('allApplications')}}'">{{__('messages.view_app.view_more')}}</button>
 
                     </div>
 
@@ -396,7 +423,7 @@
                             <div class="col-md-2">
 
                                 <div class="text-center">
-                                    @if($application->user->avatarPreference == 'gravatar')
+                                    @if($comment->user->profile->avatarPreference == 'gravatar')
                                         <img class="profile-user-img img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($comment->user->email)}}" alt="User profile picture">
                                     @else
                                         <img class="profile-user-img img-fluid img-circle" src="https://crafatar.com/avatars/{{$comment->user->uuid}}" alt="User profile picture">

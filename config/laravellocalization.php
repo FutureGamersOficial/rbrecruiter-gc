@@ -1,14 +1,33 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 return [
 
     // Uncomment the languages that your site supports - or add new ones.
     // These are sorted by the native name, which is the order you might show them in a language selector.
     // Regional languages are sorted by their base language, so "British English" sorts as "English, British"
     'supportedLocales' => [
+        'pt'          => ['name' => 'Portuguese',             'script' => 'Latn', 'native' => 'Português', 'regional' => 'pt_PT'],
         'en'          => ['name' => 'English',                'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB'],
         'es'          => ['name' => 'Spanish',                'script' => 'Latn', 'native' => 'Español', 'regional' => 'es_ES'],
-        'pt'          => ['name' => 'Portuguese',             'script' => 'Latn', 'native' => 'Português', 'regional' => 'pt_PT'],
         'fr'          => ['name' => 'French',                 'script' => 'Latn', 'native' => 'Français', 'regional' => 'fr_FR'],
     ],
 
@@ -45,7 +64,7 @@ return [
     // If you want to display the locales in particular order in the language selector you should write the order here.
     //CAUTION: Please consider using the appropriate locale code otherwise it will not work
     //Example: 'localesOrder' => ['es','en'],
-    'localesOrder' => ['en', 'pt', 'fr', 'es'],
+    'localesOrder' => ['pt', 'en', 'fr', 'es'],
 
     //  If you want to use custom lang url segments like 'at' instead of 'de-AT', you can use the mapping to tallow the LanguageNegotiator to assign the descired locales based on HTTP Accept Language Header. For example you want ot use 'at', so map HTTP Accept Language Header 'de-AT' to 'at' (['de-AT' => 'at']).
     'localesMapping' => [],
@@ -64,7 +83,7 @@ return [
         '/app.css',
         '/robots.txt',
         '/slides/*',
-        '/auth/logout'
+        '/auth/logout',
     ],
 
 ];

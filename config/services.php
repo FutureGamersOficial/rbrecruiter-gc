@@ -1,5 +1,24 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 return [
 
     /*
@@ -13,6 +32,16 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+
+    'discord' => [
+        'client_id' => env('DISCORD_CLIENT_ID'),
+        'client_secret' => env('DISCORD_CLIENT_SECRET'),
+        'redirect' => env('DISCORD_REDIRECT_URI'),
+
+        // optional
+        'allow_gif_avatars' => (bool)env('DISCORD_AVATAR_GIF', true),
+        'avatar_default_extension' => env('DISCORD_EXTENSION_DEFAULT', 'jpg'), // only pick from jpg, png, webp
+    ],
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -28,6 +57,11 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    ],
+
+    'pusher' => [
+        'beams_instance_id' => env(''),
+        'beams_secret_key' => 'Your Secret Key',
     ],
 
 ];

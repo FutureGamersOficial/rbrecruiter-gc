@@ -4,13 +4,31 @@
 
 <head>
 
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T47K5CG');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="utf-8">
-    <meta name="description" content="The Minecraft Staff Member Management Tool">
-    <meta name="author" content="Miguel Nogueira">
-    <meta name="tags" content="minecraft, minecraft server staff, minecraft staff, minecraft servers">
+    <meta name="author" content="GC">
+    <meta name="robots" content="index, follow">
+    <meta name="tags" content="gamesclub, gamescluboficial, games club oficial, games club discord, minecraft, gaming, discord">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{config('app.name')}} | {{__('messages.home')}}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+
+    <title>{{config('app.name')}} | {{ __('Home') }}</title>
+    <meta name="title" content="Games Club Oficial | Página Inicial">
+    <meta name="description" content="Games Club Oficial - Onde sua diversão acontece!">
+
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Google Fonts -->
@@ -21,6 +39,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
 
     <link href="https:////cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.2.1/css/lightgallery-bundle.min.css" integrity="sha256-Uxm/PH2he1eJjDjL9GpZSqxO3+ibyFsbhGupVTc9qLg=" crossorigin="anonymous">
 
     <link href="/app.css" rel="stylesheet">
 
@@ -35,6 +55,8 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    <script src="https://betteruptime.com/widgets/announcement.js" data-id="131937" async="async" type="text/javascript"></script>
+
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 
@@ -44,33 +66,13 @@
 <header>
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#"><strong>{{config('app.name')}}</strong></a>
+        <a class="navbar-brand" href="#">
+            <img class="rounded" src="/logo-gc.png" alt="Logo Gamesclub" height="50px">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link " href="{{config('app.sitehomepage')}}">{{__('messages.homepagetxt')}}</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle"><i class="fas fa-language"></i> Language</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item text-center">
-                            <a target="_blank" href="https://crowdin.com/project/raspberry-staff-manager"><img src="https://badges.crowdin.net/raspberry-staff-manager/localized.svg"></a>
-                        </li>
-                        @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                            <li class="dropdown-item">
-                                <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                    <img src="https://www.countryflags.io/{{($localeCode == 'en') ? 'gb' : $localeCode}}/flat/24.png"> {{ $properties['native'] }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
-            </ul>
-        </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto float-right">
                 @guest
@@ -100,20 +102,83 @@
         </div>
     </nav>
 
-    <div class="view intro-2">
-        <div class="full-bg-img">
-            <div class="mask rgba-black-light flex-center">
-                <div class="container text-center white-text">
-                    <div class="white-text text-center wow fadeInUp">
-                        <h2>{{config('app.name')}}</h2>
-                        <h5> {{__('messages.homepage_welcome')}}</h5>
-                        <br>
-                        <p>{{__('messages.homepage_explainer_line1')}}</p>
-                        <p>{{__('messages.homepage_explainer_line2')}}</p>
+    <!-- hero -->
+    @if (!isset($code))
+
+        <div class="view intro-2">
+            <div class="full-bg-img">
+                <div class="mask rgba-black-light flex-center">
+                    <div class="container text-center white-text">
+                        <div class="white-text text-center wow fadeInUp">
+                            <h2>{{config('app.name')}}</h2>
+                            <h5>Seja bem-vindo ao site oficial da Games Club</h5>
+                            <br>
+                            <p>A Games Club é uma comunidade brasileira que busca trazer um experiência própria e exclusiva para cada participante, temos o intuito de se tornar uma comunidade forte, grande, bem respeitada e, além disso tudo se tornar uma segunda família para muitas pessoas.</p>
+                            <br>
+                            <p>Aqui você se preocupará apenas nas gameplays e em fazer novas amizades para suas jogatinas, até mesmo para trocar ideias e jogar conversa fora.</p>
+                            <p>Atendemos todos os públicos, somos uma comunidade de jogos mais não se limitamos somente a jogos.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    @else
+        <!-- this is not ideal, and the whole frontend desperately needs a redesign, it's ugly and hard to maintain -->
+            <div class="view intro-2">
+                <div class="full-bg-img">
+                    <div class="mask rgba-black-light flex-center">
+                        <div class="container text-center white-text">
+                            <div class="white-text text-center wow fadeInUp">
+                                @switch($code)
+
+                                    @case(404)
+                                        <img class="d-inline mb-4" src="{{ asset('img/404.svg') }}" width="350px" alt="404 illustration">
+
+                                        <h1>{{ __('404 - Page Not Found') }}</h1>
+                                        <p>{{ __('Uh oh! We searched far and wide, but it looks like the page you were looking for could not be found.') }}</p>
+                                        @break;
+
+                                    @case(500)
+                                        <img class="d-inline mb-4" src="{{ asset('img/500.svg') }}" width="350px" alt="500 illustration">
+
+                                        <h1>{{ __('500 - Internal Server Error') }}</h1>
+                                        <p>{{ __('Whelp! It looks like our servers went up in flames. Don\'t worry, it\'s not your fault. Our developers have been notified & are already extinguishing the flames and repairing the damage. ') }}</p>
+                                        @break;
+
+                                    @case(401)
+                                        <img class="d-inline mb-4" src="{{ asset('img/401.svg') }}" width="350px" alt="401 illustration">
+
+                                        <h1>{{ __('401 - Unauthorized') }}</h1>
+                                        <p>{{ __('You need to be authenticated to access this page. Believe this is a mistake? Contact us and let us know! ') }}</p>
+                                        @break;
+
+                                    @case(403)
+                                        <img class="d-inline mb-4" src="{{ asset('img/403.svg') }}" width="350px" alt="403 illustration">
+
+                                        <h1>{{ __('403 - Forbidden') }}</h1>
+                                        <p>{{ __('Hey there :accountName! It looks like you don\'t have permission to access this resource. Believe this is a mistake? Contact us and we\'ll sort it out!', ['accountName' => Auth::user()->name]) }}</p>
+                                        @break;
+
+                                    @case(503)
+                                        <img class="d-inline mb-4" src="{{ asset('img/503.svg') }}" width="350px" alt="503 illustration">
+
+                                        <h1>{{ __('503 - Service Unavailable') }}</h1>
+                                        <p>{{ __('Our services are currently undergoing routine maintenance. We are sorry for any inconveniences caused! We\'ll be back ASAP.') }}</p>
+                                        @break;
+
+                                @endswitch
+
+                                    <a class="mt-3 ml-3 btn btn-primary btn-lg" href="{{route('home')}}" role="button"><i class="fas fa-home"></i> {{ __('Back to safety') }}</a>
+                                    <a target="_blank" class="mt-3 ml-3 btn btn-primary btn-lg" href="https://status.gamescluboficial.com.br" role="button"><i class="fas fa-cogs"></i> {{ __('System status') }}</a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    @endif
 
 </header>

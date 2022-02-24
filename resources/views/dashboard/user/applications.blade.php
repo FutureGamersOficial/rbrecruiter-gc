@@ -19,25 +19,12 @@
     <div class="row">
 
         <div class="col">
-
             <div class="callout callout-warning">
                 <h5>{{__('messages.user.app_process.title')}}</h5>
 
                 <p>{{__('messages.user.app_process.line1')}}</p>
                 <p>{{__('messages.user.app_process.line2')}}</p>
             </div>
-
-            <div class="alert alert-info">
-                <b><i class="fa fa-info-circle"></i> {{__('messages.user.account_standing')}}</b>
-
-                <p>{{__('messages.user.account_eligibility', ['eligibility' => ($isEligibleForApplication) ? __('messages.eligible') : __('messages.ineligible')])}}</p>
-
-                @if (!$isEligibleForApplication)
-                    <p>{{__('messages.user.days_remaining_acc_alt', ['days' => $eligibilityDaysRemaining])}}</p>
-                @endif
-
-            </div>
-
         </div>
 
     </div>

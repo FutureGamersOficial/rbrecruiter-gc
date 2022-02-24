@@ -35,6 +35,7 @@
                         <h3 class="widget-user-username">{{ $user->name }}</h3>
                       <h5 class="widget-user-desc">{{ $user->profile->profileShortBio }}</h5>
                     </div>
+
                     <div class="widget-user-image">
                       @if($user->profile->avatarPreference == 'gravatar')
                           <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($user->email)}}" alt="User profile picture">

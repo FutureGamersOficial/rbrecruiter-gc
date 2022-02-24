@@ -47,7 +47,6 @@
                       <tr>
                           <th>#</th>
                           <th>{{__('messages.staff.f_name')}}</th>
-                          <th>UUID</th>
                           <th>{{__('messages.staff.rank')}}</th>
                           <th>{{__('messages.contactlabel_email')}}</th>
                           <th>{{__('messages.reusable.status')}}</th>
@@ -63,14 +62,15 @@
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td>{{$user->name}}</td>
-                            <td>{{UUID::toUsername($user->uuid)}}</td>
                             <td>
                                 @foreach($user->roles as $role)
                                     <span class="badge badge-info badge-sm">{{$role->name}}</span>
                                 @endforeach
                             </td>
                             <td>{{ $user->email }}</td>
-                            <td><span class="badge badge-success">{{__('messages.players.active')}}</span></td>
+                            <td>
+                                <x-account-status user-id="{{ $user->id }}"></x-account-status>
+                            </td>
                             <td>{{$user->created_at}}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-success mr-2" onclick="window.location.href='{{route('showSingleProfile', ['user' => $user->id])}}'"><i class="fa fa-eye"></i></button>

@@ -18,16 +18,16 @@
 
 @section('content')
 
-  @if ($profile->user->isBanned())
+  @if (is_array($suspensionInfo))
 
       <div class="alert alert-danger">
 
-          <span><i class="fa fa-ban"></i> <b>{{__('messages.profile.account_banned')}}</b></span>
+          <span><i class="fa fa-ban"></i> <b>{{__('messages.profile.account_banned')}} {{ ($suspensionInfo['isPermanent']) ? __('permanently.') : __('until :date.', ['date' => $suspensionInfo['bannedUntil']]) }}</b></span>
 
           <p>{{__('messages.profile.account_banned_exp')}}</p>
 
           <p>
-            <i class="fas fa-chevron-right"></i> <b>{{$profile->user->bans->reason}}</>
+              <i class="fas fa-chevron-right"></i> <b>{{$suspensionInfo['reason']}}</b>
           </p>
 
       </div>
@@ -43,38 +43,51 @@
             <form id="banAccountForm" name="banAccount" method="POST" action="{{route('banUser', ['user' => $profile->user->id])}}">
                @csrf
 
-                <label for="reason">{{__('messages.reusable.reason')}}</label>
-                <input type="text" name="reason" id="reason" class="form-control" placeholder="{{__('messages.profile.p_duration_exp')}}">
+                @if($demoActive)
+                    <div class="alert alert-danger">
+                        <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                    </div>
+                @endif
 
-                <div class="input-group">
-                <input type="text" class="form-control" name="durationOperator" aria-label="{{__('messages.profile.p_duration')}}">
-                <div class="input-group-append">
-                    <button id="durationDropdown" class="btn btn-outline-secondary dropdown-toggle duration-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{__('messages.profile.duration')}}</button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Days</a>
-                        <a class="dropdown-item" href="#">Weeks</a>
-                        <a class="dropdown-item" href="#">Months</a>
-                        <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Years</a>
+                <div class="row">
+
+                    <div class="col">
+                        <label for="reason">{{__('Public note')}}</label>
+                        <input type="text" name="reason" id="reason" class="form-control" placeholder="{{__('messages.profile.p_duration_exp')}}">
+                    </div>
+
+                    <div class="col">
+                        <label for="duration">{{ __('Duration') }}</label>
+                        <input type="text" name="duration" id="duration" class="form-control" placeholder="{{ __('in days') }}">
                     </div>
                 </div>
-                </div>
-                <p class="text-muted text-sm">{{__('messages.profile.leave_empty')}}</p>
 
-                <input id="operator" type="hidden" value="" name="durationOperand" class="duration-operator-fld">
+
+                <div class="mt-2">
+                    <input type="hidden" name="suspensionType" value="off">
+
+                    <label for="suspensionType">Suspension type</label><br>
+                    <input type="checkbox" id="suspensionType" name="suspensionType" checked data-toggle="toggle" data-on="Temporary" data-off="Permanent" data-onstyle="success" data-offstyle="danger" data-width="130" data-height="40">
+                    <p class="text-muted text-sm"><i class="fas fa-info-circle"></i> {{ __('Temporary suspensions will be automatically lifted. The suspension note is visible to all users. Suspended users will not be able to login or register.') }}</p>
+                </div>
+
 
             </form>
 
             <x-slot name="modalFooter">
-
-                <button id="banAccountButton" type="button" class="btn btn-danger"><i class="fa fa-ban"></i> {{__('messages.profile.ban')}}</button>
-
+                <button id="banAccountButton" type="button" class="btn btn-danger" {{ ($demoActive) ? 'disabled' : '' }} ><i class="fa fa-gavel"></i> {{__('Confirm')}}</button>
             </x-slot>
 
         </x-modal>
 
         @if (!Auth::user()->is($profile->user) && $profile->user->isStaffMember())
             <x-modal id="terminateUser" modal-label="terminateUser" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
+
+                @if($demoActive)
+                    <div class="alert alert-danger">
+                        <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                    </div>
+                @endif
 
               <p><i class="fa fa-exclamation-triangle"></i> <b>{{__('messages.profile.terminate_notice')}}</b></p>
               <p>
@@ -90,7 +103,7 @@
                   <form method="POST" action="{{route('terminateStaffMember', ['user' => $profile->user->id])}}" id="terminateUserForm">
                     @csrf
                     @method('PATCH')
-                    <button type="submit" class="btn btn-warning"><i class="fas fa-exclamation-circle"></i> {{__('messages.reusable.confirm')}}</button>
+                    <button type="submit" class="btn btn-warning" {{ ($demoActive) ? 'disabled' : '' }}><i class="fas fa-exclamation-circle"></i> {{__('messages.reusable.confirm')}}</button>
 
                   </form>
 
@@ -100,6 +113,12 @@
         @endif
 
         <x-modal id="deleteAccount" modal-label="deleteAccount" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
+
+            @if($demoActive)
+                <div class="alert alert-danger">
+                    <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                </div>
+            @endif
 
             <p><i class="fa fa-exclamation-triangle"></i><b> {{__('messages.profile.delete_acc_warn')}}</b></p>
 
@@ -117,12 +136,12 @@
 
             <x-slot name="modalFooter">
 
-                <button type="button" class="btn btn-danger" onclick="document.getElementById('deleteAccountForm').submit()"><i class="fa fa-trash"></i> {{strtoupper(__('messages.reusable.confirm'))}}</button>
+                <button type="button" class="btn btn-danger" {{ ($demoActive) ? 'disabled' : '' }} onclick="document.getElementById('deleteAccountForm').submit()"><i class="fa fa-trash"></i> {{strtoupper(__('messages.reusable.confirm'))}}</button>
 
             </x-slot>
         </x-modal>
 
-        <x-modal id="ipInfo" modal-label="ipInfo" modal-title="{{__('messages.reusable.ip_info')}} {{$ipInfo->ip ?? 'Unknown'}}" include-close-button="true">
+        <x-modal id="ipInfo" modal-label="ipInfo" modal-title="{{__('IP Address Information')}}" include-close-button="true">
 
             <h4 class="text-center">{{__('messages.profile.search_result')}}</h3>
 
@@ -208,18 +227,24 @@
 
         <x-modal id="editUser" modal-label="editUser" modal-title="{{__('messages.profile.edituser')}}" include-close-button="true">
 
+            @if($demoActive)
+                <div class="alert alert-danger">
+                    <p class="font-weight-bold"><i class="fas fa-exclamation-triangle"></i> This feature is disabled</p>
+                </div>
+            @endif
+
           <form id="updateUserForm" method="post" action="{{ route('updateUser', ['user' => $profile->user->id]) }}">
             @csrf
             @method('PATCH')
 
             <label for="email">{{__('messages.contactlabel_email')}}</label>
-            <input id="email" type="text" name="email" class="form-control" required value="{{ $profile->user->email }}" />
+            <input {{ ($demoActive) ? 'disabled' : '' }} id="email" type="text" name="email" class="form-control" required value="{{ $profile->user->email }}" />
 
             <label for="name">{{__('messages.contactlabel_name')}}</label>
-            <input id="name" type="text" name="name" class="form-control" required value="{{ $profile->user->name }}" />
+            <input {{ ($demoActive) ? 'disabled' : '' }} id="name" type="text" name="name" class="form-control" required value="{{ $profile->user->name }}" />
 
             <label for="uuid">Mojang UUID</label>
-            <input id="uuid" type="text" name="uuid" class="form-control" required value="{{ $profile->user->uuid }}" />
+            <input {{ ($demoActive) ? 'disabled' : '' }} id="uuid" type="text" name="uuid" class="form-control" required value="{{ $profile->user->uuid ?? "disabled" }}" />
             <p class="text-muted text-sm">
               <i class="fas fa-exclamation-triangle"></i> {{__('messages.profile.edituser_consequence')}}
             </p>
@@ -232,7 +257,7 @@
 
                   @foreach($roles as $roleName => $status)
                     <tr>
-                      <th><input type="checkbox" name="roles[]" value="{{ $roleName }}" {{ ($status) ? 'checked' : '' }}></th>
+                      <th><input {{ ($demoActive) ? 'disabled' : '' }} type="checkbox" name="roles[]" value="{{ $roleName }}" {{ ($status) ? 'checked' : '' }}></th>
                       <td class="col-md-2">{{ ucfirst($roleName) }}</td>
                     </tr>
 
@@ -249,7 +274,7 @@
 
           <x-slot name="modalFooter">
 
-              <button type="button" class="btn btn-warning" onclick="$('#updateUserForm').submit()"><i class="fa fa-exclamation-cicle"></i> {{__('messages.vacancy.save')}}</button>
+              <button type="button" {{ ($demoActive) ? 'disabled' : '' }} class="btn btn-warning" onclick="$('#updateUserForm').submit()"><i class="fa fa-exclamation-cicle"></i> {{__('messages.vacancy.save')}}</button>
 
           </x-slot>
 
@@ -292,7 +317,7 @@
                     <p class="text-muted">{{$profile->profileShortBio}}</p>
                     <p class="text-muted">{{__('messages.reusable.member_since', ['date' => $since])}}</p>
                     @if (Auth::user()->hasRole('admin'))
-                        <button type="button" class="btn btn-sm btn-info" onclick="$('#ipInfo').modal('show')">{{__('messages.reusable.lookup', ['ipAddress' => $profile->user->originalIP])}}</button>
+                        <button type="button" class="btn btn-sm btn-info" onclick="$('#ipInfo').modal('show')">{{__('messages.reusable.lookup', ['ipAddress' => ($shouldCollect) ? $profile->user->originalIP : '0.0.0.0'])}}</button>
                     @endif
 
                     @if ($profile->user->is(Auth::user()))
@@ -334,13 +359,13 @@
                             <div class="management-btn text-center">
 
                                 @if (!$profile->user->isBanned())
-                                    <button class="btn btn-danger mb-2" id="banAccountTrigger"><i class="fa fa-ban"></i> {{__('messages.profile.ban_acc')}}</button><br>
+                                    <button class="btn btn-danger mb-2" id="banAccountTrigger"><i class="fa fa-ban"></i> {{__('Suspend')}}</button><br>
                                 @else
                                     <form method="post" action="{{route('unbanUser', ['user' => $profile->user->id])}}">
 
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-warning mb-2"><i class="fa fa-check"></i> {{__('messages.profile.unban_acc')}}</button>
+                                        <button type="submit" class="btn btn-warning mb-2"><i class="fa fa-check"></i> {{__('Lift Suspension')}}</button>
 
                                     </form>
                                 @endif

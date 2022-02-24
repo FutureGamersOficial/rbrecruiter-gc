@@ -89,20 +89,8 @@
 
           <div class="row">
 
-            <div class="col-3">
-              <h3>{{__('messages.application_m.all_apps')}}</h3>
-            </div>
-
             <div class="col">
-
-              <div class="navbtn right" style="whitespace: nowrap">
-
-                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('staffPendingApps') }}'"><i class="far fa-folder-open"></i> {{__('messages.application_m.outstanding_apps')}}</button>
-                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('pendingInterview') }}'"><i class="fas fa-microphone-alt"></i>  {{__('messages.application_m.interview_q')}}</button>
-                <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('peerReview') }}'"><i class="fas fa-search"></i> {{__('messages.application_m.p_review')}}</button>
-
-              </div>
-
+              <h3>{{__('messages.application_m.all_apps')}}</h3>
             </div>
 
           </div>
@@ -222,18 +210,19 @@
 
         </div>
 
+          @if (!$applications->isEmpty())
+
+              <div class="card-footer">
+
+                  {{ $applications->links() }}
+
+              </div>
+
+      @endif
         <!-- end main content card -->
       </div>
 
-       @if (!$applications->isEmpty() && isset($applications->links))
 
-         <div class="card-footer">
-
-           {{ $applications->links }}
-
-         </div>
-
-       @endif
 
     </div>
 

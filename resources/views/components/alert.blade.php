@@ -1,4 +1,8 @@
 <div class="alert alert-{{$alertType}} {{$extraStyling ?? ''}}">
-    <!-- Simplicity is the essence of happiness. - Cedric Bledsoe -->
+
+    @if (!empty($title))
+        <p class="text-bold">@if (!empty($icon))<i class="fas {{ $icon }}"></i>  @endif {{ $title }}</p>
+    @endif
+
     {{$slot}}
 </div>

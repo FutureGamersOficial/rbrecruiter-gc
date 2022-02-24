@@ -1,7 +1,27 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Http;
 
+use App\Http\Middleware\APIAuthenticationMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -41,6 +61,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            APIAuthenticationMiddleware::class
         ],
     ];
 
@@ -66,10 +87,12 @@ class Kernel extends HttpKernel
         'usernameUUID' => \App\Http\Middleware\UsernameUUID::class,
         'forcelogout' => \App\Http\Middleware\ForceLogoutMiddleware::class,
         '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
+        'passwordexpiration' => \App\Http\Middleware\PasswordExpirationMiddleware::class,
+        'passwordredirect' => \App\Http\Middleware\PasswordExpirationRedirectMiddleware::class,
         'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
         'localizationRedirect'    => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
-        'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class
+        'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
     ];
 }

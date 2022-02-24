@@ -1,5 +1,5 @@
 .view {
-    background: url("/slides/06.png")no-repeat center center;
+    background: url("/slides/homepage.jpg")no-repeat center center;
     background-size: cover;
 }
 
@@ -28,4 +28,10 @@ body,
 header,
 .view {
     height: 100%;
+}
+
+.jumbotron-header {
+    height: 200px;
+    width: 100%;
+    margin-bottom: 20px;
 }

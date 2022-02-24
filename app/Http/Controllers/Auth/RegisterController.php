@@ -1,15 +1,34 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Profile;
-use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Facades\Options;
+use App\Facades\IP;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use function GuzzleHttp\Psr7\str;
 
 class RegisterController extends Controller
 {
@@ -47,10 +66,8 @@ class RegisterController extends Controller
     {
         $users = User::where('originalIP', \request()->ip())->get();
 
-        foreach($users as $user)
-        {
-            if ($user && $user->isBanned())
-            {
+        foreach ($users as $user) {
+            if ($user && $user->isBanned()) {
                 abort(403, 'You do not have permission to access this page.');
             }
         }
@@ -66,13 +83,32 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $password = ['required', 'string', 'confirmed'];
+
+        switch (Options::getOption('pw_security_policy'))
+        { // this could be better structured, switch doesn't feel right
+            case 'off':
+                $password = ['required', 'string', 'confirmed'];
+                break;
+            case 'low':
+                $password = ['required', 'string', 'min:10', 'confirmed'];
+                break;
+
+            case 'medium':
+                $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{12,}$/'];
+                break;
+
+            case 'high':
+                $password = ['required', 'string', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{20,}$/'];
+        }
+
         return Validator::make($data, [
-            'uuid' => ['required', 'string', 'unique:users', 'min:32', 'max:32'],
+            'uuid' => (Options::getOption('requireGameLicense') && Options::getOption('currentGame') == 'MINECRAFT') ? ['required', 'string', 'unique:users', 'min:32', 'max:32'] : ['nullable', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:10', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+            'password' => $password,
         ], [
-            'uuid.required' => 'Please enter a valid (and Premium) Minecraft username! We do not support cracked users.'
+            'uuid.required' => 'Please enter a valid (and Premium) Minecraft username! We do not support cracked users.',
         ]);
     }
 
@@ -84,19 +120,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
         $user = User::create([
-            'uuid' => $data['uuid'],
+            'uuid' => $data['uuid'] ?? "disabled",
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'originalIP' => request()->ip()
+            'originalIP' => IP::shouldCollect() ? request()->ip() : '0.0.0.0',
         ]);
 
-        // It's not the registration controller's concern to create a profile for the user,
-        // so this code has been moved to it's respective observer, following the separation of concerns pattern.
-
         $user->assignRole('user');
+
         return $user;
     }
 }

@@ -1,5 +1,5 @@
 
-# RB Recruiter v 0.6.2 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager)
+# RB Recruiter v 0.7.1 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/9n53.svg)](https://betteruptime.com/?utm_source=status_badge)
 ## The quick and pain-free form management solution for communities
 
 Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
@@ -24,7 +24,7 @@ Wish you had a better application managemet strategy? Well, then Raspberry Teams
  - Termination - Has a staff member met their untimely demise? Terminate them. This will strip their permissions and roles.
  - Controllable permissions - Every user has permissions! Control who has access to what (You can skip the application process and add staff members directly here).
  - Ban system - Having trouble with pesky spammers? Ban them! This will publicly shame their profile and keep them from signing up or logging in.
- - Notifications: Notifies slack and email primarily
+ - Notifications: Notifies slack and email primarily (Slack notifications currently broken)
 
  And many more features!
 
@@ -42,11 +42,13 @@ Many other features are currently planned for this app, such as:
 # Technical overview
 
 Tech stack:
- - [Laravel 7](https://laravel.com/)
- - Eloquent ORM
- - AdminLTE / Bootstrap 4
- - jQuery / Plain Javascript
- - vueJS (in the future)
+ - [Laravel 8](https://laravel.com/)
+ - [Eloquent ORM](https://laravel.com/docs/5.0/eloquent)
+ - [AdminLTE](https://adminlte.io/) / 
+ - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
+ - [jQuery](https://jquery.com/)
+ - [Bootstrap 4](https://getbootstrap.com/)
+ - [Icons by FontAwesome](https://fontawesome.com/)
  
  # Stability
  
@@ -63,13 +65,12 @@ Tech stack:
 # Software Requirements
  - ``composer`` (min version: 1.8.4)
  - ``npm`` (tested w/ v 5.8.0)
- - ``php`` (required PHP 7 or newer - lower versions unsupported!)
+ - ``php`` (required PHP 8 or newer - lower versions unsupported!)
 
  # PHP Extension Requirements
 
  - JSON
  - Curl (highly recommended)
- - Image Magick (imagick) for 2FA support
 
  # Installation
 

@@ -1,5 +1,24 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,12 +29,14 @@ class Application extends Model
 
         'applicantUserID',
         'applicantFormResponseID',
-        'applicationStatus'
+        'applicationStatus',
 
     ];
 
-
-
+    public function oneoffApplicant()
+    {
+        return $this->hasOne('App\OneoffApplicant', 'application_id', 'id');
+    }
 
     public function user()
     {
@@ -37,7 +58,6 @@ class Application extends Model
         return $this->belongsToMany('App\Vote', 'votes_has_application');
     }
 
-
     public function comments()
     {
         return $this->hasMany('App\Comment', 'applicationID', 'id');
@@ -46,8 +66,15 @@ class Application extends Model
     public function setStatus($status)
     {
         return $this->update([
-            'applicationStatus' => $status
+            'applicationStatus' => $status,
         ]);
-
     }
+
+
+    public function isOneoff()
+    {
+        return $this->user->id == 1; // ID 1 is always the ghost
+    }
+
+    
 }

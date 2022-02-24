@@ -1,5 +1,24 @@
 <?php
 
+/*
+ * Copyright © 2020 Miguel Nogueira
+ *
+ *   This file is part of Raspberry Staff Manager.
+ *
+ *     Raspberry Staff Manager is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Raspberry Staff Manager is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Raspberry Staff Manager.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 namespace App\Console\Commands;
 
 use App\Application;
@@ -43,28 +62,23 @@ class CountVotes extends Command
         $eligibleApps = Application::where('applicationStatus', 'STAGE_PEERAPPROVAL')->get();
         $pbar = $this->output->createProgressBar($eligibleApps->count());
 
-        if($eligibleApps->isEmpty())
-        {
+        if ($eligibleApps->isEmpty()) {
             $this->error('𐄂 There are no applications that need to be processed.');
 
             return false;
         }
 
-        foreach ($eligibleApps as $application)
-        {
+        foreach ($eligibleApps as $application) {
             $votes = $application->votes;
             $voteCount = $application->votes->count();
 
             $positiveVotes = 0;
             $negativeVotes = 0;
 
-            if ($voteCount > 5)
-            {
-                $this->info('Counting votes for application ID ' . $application->id);
-                foreach ($votes as $vote)
-                {
-                    switch ($vote->allowedVoteType)
-                    {
+            if ($voteCount > 5) {
+                $this->info('Counting votes for application ID '.$application->id);
+                foreach ($votes as $vote) {
+                    switch ($vote->allowedVoteType) {
                         case 'VOTE_APPROVE':
                             $positiveVotes++;
                             break;
@@ -74,7 +88,7 @@ class CountVotes extends Command
                     }
                 }
 
-                $this->info('Total votes for application ID ' . $application->id . ': ' . $voteCount);
+                $this->info('Total votes for application ID '.$application->id.': '.$voteCount);
                 $this->info('Calculating criteria...');
                 $negativeVotePercent = floor(($negativeVotes / $voteCount) * 100);
                 $positiveVotePercent = floor(($positiveVotes / $voteCount) * 100);
@@ -83,54 +97,42 @@ class CountVotes extends Command
 
                 $this->table([
                     '% of approval votes',
-                    '% of denial votes'
+                    '% of denial votes',
                 ], [ // array of arrays, e.g. rows
                     [
-                        $positiveVotePercent . "%",
-                        $negativeVotePercent . "%"
-                    ]
+                        $positiveVotePercent.'%',
+                        $negativeVotePercent.'%',
+                    ],
                 ]);
 
-                if ($pollResult)
-                {
-                    $this->info('✓ Dispatched promotion event for applicant ' . $application->user->name);
-                    if (!$this->option('dryrun'))
-                    {
-                        $application->response->vacancy->vacancyCount -= 1;
-                        $application->response->vacancy->save();
+                if ($pollResult) {
+                    $this->info('✓ Dispatched promotion event for applicant '.$application->user->name);
+                    if (! $this->option('dryrun')) {
+                        $application->response->vacancy->decrease();
 
                         event(new ApplicationApprovedEvent(Application::find($application->id)));
-                    }
-                    else
-                    {
+                    } else {
                         $this->warn('Dry run: Event won\'t be dispatched');
                     }
 
                     $pbar->advance();
-
-                }
-                else {
-
-                    if (!$this->option('dryrun'))
-                    {
+                } else {
+                    if (! $this->option('dryrun')) {
                         event(new ApplicationDeniedEvent(Application::find($application->id)));
-                    }
-                    else {
+                    } else {
                         $this->warn('Dry run: Event won\'t be dispatched');
                     }
 
                     $pbar->advance();
-                    $this->error('𐄂 Applicant ' . $application->user->name . ' does not meet vote criteria (Majority)');
+                    $this->error('𐄂 Applicant '.$application->user->name.' does not meet vote criteria (Majority)');
                 }
+            } else {
+                $this->warn('Application ID'.$application->id.' did not have enough votes for processing (min 5)');
             }
-            else
-            {
-                $this->warn("Application ID" . $application->id . " did not have enough votes for processing (min 5)");
-            }
-
         }
 
         $pbar->finish();
+
         return true;
     }
 }
