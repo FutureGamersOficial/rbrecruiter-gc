@@ -24,31 +24,11 @@
     <link rel="manifest" href="/site.webmanifest">
 
 
-    @switch (Route::currentRouteName())
+    <title>{{config('app.name')}} | {{ __('Home') }}</title>
+    <meta name="title" content="Games Club Oficial | Página Inicial">
+    <meta name="description" content="Games Club Oficial - Onde sua diversão acontece!">
 
-        @case('home')
 
-            <title>{{config('app.name')}} | {{ __('Home') }}</title>
-            <meta name="title" content="Games Club Oficial | Página Inicial">
-            <meta name="description" content="Games Club Oficial - Onde sua diversão acontece!">
-            @break
-
-        @case('giveaway')
-
-            <title>{{config('app.name')}} | Sorteio oficial</title>
-
-            <meta name="title" content="Games Club Oficial | Sorteio de Lançamento">
-            <meta name="description" content="Games Club Oficial - Participe no nosso sorteio de lançamento!">
-
-            <meta property="og:url" content="https://gleam.io/2Ytjf/giveaway-among-us-gc"/>
-            <meta property="og:title" content="Ganhe Among Us na Steam">
-            <meta property="twitter:card" content="summary"/>
-            <meta property="fb:app_id" content="152351391599356"/>
-            <meta property="og:description" content="Estamos a dar uma cópia gratuita do Among Us para a campanha de lançamento do Games Club, no valor de R$ 28. Among Us é um jogo eletrônico online, dos gêneros jogo em grupo e sobrevivência, desenvolvido e publicado pelo estúdio de jogos estadunidense InnerSloth. A Games Club está em desenvolvimento há algum tempo, e então, de modo a celebrar esta ocasião, estamos oferecendo este jogo para você poder jogar connosco. O sorteio é apenas uma pequena parte deste evento enorme, que oferece várias atrações. Junte-se ao Discord da GC!​ ​Condições do Sorteio NOTA: Prêmio apenas válido para usuários que atualmente não têm uma licensa digital associada ao jogo, e que tenham aderido ao servidor Discord da Games Club. A GC retém o direito de iniciar o processo de escolha automático no fim da competição no caso do vencedor não obedecer a estes termos.">
-
-            @break;
-
-    @endswitch
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Google Fonts -->
@@ -122,22 +102,82 @@
         </div>
     </nav>
 
-    <div class="view intro-2">
-        <div class="full-bg-img">
-            <div class="mask rgba-black-light flex-center">
-                <div class="container text-center white-text">
-                    <div class="white-text text-center wow fadeInUp">
-                        <h2>{{config('app.name')}}</h2>
-                        <h5>Seja bem-vindo ao site oficial da Games Club</h5>
-                        <br>
-                        <p>A Games Club é uma comunidade brasileira que busca trazer um experiência própria e exclusiva para cada participante, temos o intuito de se tornar uma comunidade forte, grande, bem respeitada e, além disso tudo se tornar uma segunda família para muitas pessoas.</p>
-                        <br>
-                        <p>Aqui você se preocupará apenas nas gameplays e em fazer novas amizades para suas jogatinas, até mesmo para trocar ideias e jogar conversa fora.</p>
-                        <p>Atendemos todos os públicos, somos uma comunidade de jogos mais não se limitamos somente a jogos.</p>
+    <!-- hero -->
+    @if (!isset($code))
+
+        <div class="view intro-2">
+            <div class="full-bg-img">
+                <div class="mask rgba-black-light flex-center">
+                    <div class="container text-center white-text">
+                        <div class="white-text text-center wow fadeInUp">
+                            <h2>{{config('app.name')}}</h2>
+                            <h5>Seja bem-vindo ao site oficial da Games Club</h5>
+                            <br>
+                            <p>A Games Club é uma comunidade brasileira que busca trazer um experiência própria e exclusiva para cada participante, temos o intuito de se tornar uma comunidade forte, grande, bem respeitada e, além disso tudo se tornar uma segunda família para muitas pessoas.</p>
+                            <br>
+                            <p>Aqui você se preocupará apenas nas gameplays e em fazer novas amizades para suas jogatinas, até mesmo para trocar ideias e jogar conversa fora.</p>
+                            <p>Atendemos todos os públicos, somos uma comunidade de jogos mais não se limitamos somente a jogos.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    @else
+        <!-- this is not ideal, and the whole frontend desperately needs a redesign, it's ugly and hard to maintain -->
+            <div class="view intro-2">
+                <div class="full-bg-img">
+                    <div class="mask rgba-black-light flex-center">
+                        <div class="container text-center white-text">
+                            <div class="white-text text-center wow fadeInUp">
+                                @switch($code)
+
+                                    @case(404)
+                                        <img class="d-inline mb-4" src="{{ asset('img/404.svg') }}" width="350px" alt="404 illustration">
+
+                                        <h1>{{ __('404 - Page Not Found') }}</h1>
+                                        <p>{{ __('Uh oh! We searched far and wide, but it looks like the page you were looking for could not be found.') }}</p>
+                                        @break;
+
+                                    @case(500)
+                                        <img class="d-inline mb-4" src="{{ asset('img/500.svg') }}" width="350px" alt="500 illustration">
+
+                                        <h1>{{ __('500 - Internal Server Error') }}</h1>
+                                        <p>{{ __('Whelp! It looks like our servers went up in flames. Don\'t worry, it\'s not your fault. Our developers have been notified & are already extinguishing the flames and repairing the damage. ') }}</p>
+                                        @break;
+
+                                    @case(401)
+                                        <img class="d-inline mb-4" src="{{ asset('img/401.svg') }}" width="350px" alt="401 illustration">
+
+                                        <h1>{{ __('401 - Unauthorized') }}</h1>
+                                        <p>{{ __('You need to be authenticated to access this page. Believe this is a mistake? Contact us and let us know! ') }}</p>
+                                        @break;
+
+                                    @case(403)
+                                        <img class="d-inline mb-4" src="{{ asset('img/403.svg') }}" width="350px" alt="403 illustration">
+
+                                        <h1>{{ __('403 - Forbidden') }}</h1>
+                                        <p>{{ __('Hey there :accountName! It looks like you don\'t have permission to access this resource. Believe this is a mistake? Contact us and we\'ll sort it out!', ['accountName' => Auth::user()->name]) }}</p>
+                                        @break;
+
+                                    @case(503)
+                                        <img class="d-inline mb-4" src="{{ asset('img/503.svg') }}" width="350px" alt="503 illustration">
+
+                                        <h1>{{ __('503 - Service Unavailable') }}</h1>
+                                        <p>{{ __('Our services are currently undergoing routine maintenance. We are sorry for any inconveniences caused! We\'ll be back ASAP.') }}</p>
+                                        @break;
+
+                                @endswitch
+
+                                    <a class="mt-3 btn btn-primary btn-lg" href="{{route('home')}}" role="button"><i class="fas fa-home"></i> {{ __('Back to safety') }}</a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    @endif
 
 </header>
