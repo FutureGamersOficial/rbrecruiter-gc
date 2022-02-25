@@ -1,11 +1,11 @@
 
-# RB Recruiter v 0.7.1 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/9n53.svg)](https://betteruptime.com/?utm_source=status_badge)
+# RB Recruiter v 0.8.0 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/9n53.svg)](https://betteruptime.com/?utm_source=status_badge)
 ## The quick and pain-free form management solution for communities
 
 Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
 
 
-Wish you had a better application managemet strategy? Well, then Raspberry Teams is for you! It was originally designed and developed for internal use for a gameserver network, but sharing is caring!
+Wish you had a better application managemet strategy? Well, then RBRecruiter is for you! It was originally designed and developed for internal use for a gameserver network, but sharing is caring!
 
 
 # Features (not exhaustive)
@@ -32,29 +32,28 @@ Wish you had a better application managemet strategy? Well, then Raspberry Teams
 
 Many other features are currently planned for this app, such as:
   - Discord role management (approved applicants)
-  - Luckperms/PEX integration - For now, you'll have to promote users manually in-game
-  - Flexibility - This app is built on a flexible concept! It will be able to be used for other purposes other than MC staff members.
-  - Customisable front page (**priority**)
-  - Auto provisioning - Sign up on a website and get your instance of Raspberry Teams up and running in no time
+  - Flexibility - This app is built on a flexible concept.
+  - Customisable front page
+  - Auto provisioning - Sign up on a website and get your instance of RBRecruiter up and running in no time (SaaS)
+  - 
   - Suggestions accepted!
 
 
 # Technical overview
 
 Tech stack:
- - [Laravel 8](https://laravel.com/)
+ - [Laravel 9](https://laravel.com/)
  - [Eloquent ORM](https://laravel.com/docs/5.0/eloquent)
  - [AdminLTE](https://adminlte.io/) / 
  - [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
  - [jQuery](https://jquery.com/)
- - [Bootstrap 4](https://getbootstrap.com/)
  - [Icons by FontAwesome](https://fontawesome.com/)
  
  # Stability
  
- Currently, the ``master`` branch is highly unstable, since it's under active development. Expect it to break with each commit. Even though I make an effort to make sure each commit is good to go before pushing, things might still break unexpectedly, and you may find a lot of bugs (which you should report).
+ Every released version is currently pre-release. The ``main`` branch is currently stable and ready to use, however, we don't recommend updating your app until a new release comes out.
  
- Every released version is currently pre-release. If you really want to run this before version ``1.0.0`` comes out, always stay on the latest version, as those will always be tested before release, ensuring less chaos.
+ At the moment, each new feature goes into its separate branch so that ``main`` remains stable. When the features being worked on are ready and tested, they are merged onto ``main``, and a new release can be started. The main branch is write-protected.
  
  *Note: This application is NOT production ready! It won't be until the first stable release comes out, which might take a bit longer.
 
@@ -63,18 +62,24 @@ Tech stack:
  Currently, this application is only supported on Linux environments (Ubuntu 20.04 or derivatives are recommended).
 
 # Software Requirements
- - ``composer`` (min version: 1.8.4)
- - ``npm`` (tested w/ v 5.8.0)
- - ``php`` (required PHP 8 or newer - lower versions unsupported!)
+ - ``composer`` (tested w/ v2.1.14)
+ - ``npm`` (tested w/ v 8.1.2)
+ - ``node`` (min version v16.13.2)
+ - ``php`` (required PHP 8.1 or newer - lower versions unsupported!)
 
  # PHP Extension Requirements
 
  - JSON
- - Curl (highly recommended)
+ - xDebug (will be removed in the future as a require-dev only dependency)
+ - Curl
+ - Xml 
+ - MySQL adapter (mysqli extension)
 
  # Installation
 
- Make sure all prerequisites are installed. Afterwards, clone this repository, make ``install.sh``executable and run it.
+ ~~Make sure all prerequisites are installed. Afterwards, clone this repository, make ``install.sh``executable and run it.~~
+ 
+ New instructions WIP.
 
  # Configuration
 Configuration is currently done via the installer. Alternatively, you may also edit the ``.env`` file directly.
