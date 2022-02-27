@@ -47,12 +47,12 @@ class NewUser extends Notification implements ShouldQueue
         $this->user = $user;
     }
 
-    public function channels($notifiable)
+    public function channels()
     {
         return $this->chooseChannelsViaOptions();
     }
 
-    public function optOut($notifiable)
+    public function optOut()
     {
         return Options::getOption('notify_new_user') != 1;
     }
