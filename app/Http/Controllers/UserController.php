@@ -66,7 +66,7 @@ class UserController extends Controller
         $matchingUsers = User::query()
             ->where('name', 'LIKE', "%{$searchTerm}%")
             ->orWhere('email', 'LIKE', "%{$searchTerm}%")
-            ->get();
+            ->paginate(6);
 
         if (! $matchingUsers->isEmpty()) {
             $request->session()->flash('success', __('There were :usersCount user(s) matching your search.', ['usersCount' => $matchingUsers->count()]));
