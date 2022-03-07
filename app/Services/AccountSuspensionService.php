@@ -4,6 +4,8 @@
 namespace App\Services;
 
 use App\Ban;
+use App\Notifications\AccountLocked;
+use App\Notifications\AccountUnlocked;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +83,8 @@ class AccountSuspensionService
         ]);
 
         $user->administratively_locked = 1;
+        $user->notify(new AccountLocked);
+
         return $user->save();
     }
 
@@ -98,6 +102,8 @@ class AccountSuspensionService
         ]);
 
         $user->administratively_locked = 0;
+        $user->notify(new AccountUnlocked);
+
         return $user->save();
     }
 
