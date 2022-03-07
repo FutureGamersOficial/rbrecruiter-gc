@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Notifications\AccountDeleted;
+use App\Notifications\UserDeletedAccount;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -10,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class ProcessAccountDelete implements ShouldQueue
 {
@@ -40,12 +43,20 @@ class ProcessAccountDelete implements ShouldQueue
      */
     public function handle()
     {
-        // It shouldn't need the suspension service, because if it was dispatched, the account was already locked
-
         Log::alert('[Worker] Processing account deletion request', [
             'email' => $this->user->email
         ]);
 
-        $this->user->delete();
+        $email = $this->user->email;
+        $name = $this->user->name;
+
+        if ($this->user->delete()) {
+            Notification::route('mail', [
+                $email => $name
+            ])->notify(new AccountDeleted($name));
+
+            // Notify admins
+            Notification::send(User::role('admin')->get(), new UserDeletedAccount($email));
+        }
     }
 }

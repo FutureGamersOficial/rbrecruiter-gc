@@ -58,7 +58,7 @@ class UserAccountDeleteConfirmation extends Mailable
      */
     public function build()
     {
-        return $this->subject('[ACTION REQUIRED] Please confirm account removal')
+        return $this->subject(config('app.name') . ' - please confirm account removal (action required)')
             ->view('mail.deleted-account');
     }
 }

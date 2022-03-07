@@ -29,7 +29,7 @@ class UserObserver
 {
     public function __construct()
     {
-        Log::debug('User observer has been initialised and ready for use!');
+        //
     }
 
     /**
