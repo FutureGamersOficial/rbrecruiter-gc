@@ -43,7 +43,8 @@ class CreateBansTable extends Migration
 
             $table->foreign('userID')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->cascadeOnDelete();
         });
     }
 

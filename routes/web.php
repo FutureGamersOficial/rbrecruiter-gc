@@ -94,7 +94,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::post('/form/contact', [ContactController::class, 'create'])
         ->name('sendSubmission');
 
-    Route::get('/accounts/danger-zone/{ID}/{action}/{token}', [UserController::class, 'processDeleteConfirmation'])
+    Route::get('/accounts/{accountID}/dg/process-delete/{action}', [UserController::class, 'processDeleteConfirmation'])
         ->name('processDeleteConfirmation');
 
     Route::group(['middleware' => ['auth', 'forcelogout', 'passwordexpiration', '2fa', 'verified']], function () {

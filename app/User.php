@@ -21,6 +21,7 @@
 
 namespace App;
 
+use App\Services\AccountSuspensionService;
 use App\Traits\HandlesAccountTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,7 +32,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use UserHasTeams, Notifiable, HasRoles, SoftDeletes, HandlesAccountTokens;
+    use UserHasTeams, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -101,7 +102,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     // UTILITY LOGIC
 
-    public function isBanned()
+    /**
+     * Checks if a user is banned.
+     *
+     * @deprecated This method is obsolete, as it has been replaced by the suspension service.
+     * @see AccountSuspensionService::isSuspended()
+     *
+     * @return bool Whether the user is banned
+     */
+    public function isBanned(): bool
     {
         return ! $this->bans()->get()->isEmpty();
     }

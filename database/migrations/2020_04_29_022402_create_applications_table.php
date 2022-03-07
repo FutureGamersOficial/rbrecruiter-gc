@@ -53,7 +53,8 @@ class CreateApplicationsTable extends Migration
 
             $table->foreign('applicantUserID')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->cascadeOnDelete();
         });
     }
 

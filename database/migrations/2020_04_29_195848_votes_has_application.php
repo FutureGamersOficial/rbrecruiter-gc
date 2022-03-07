@@ -38,8 +38,8 @@ class VotesHasApplication extends Migration
             $table->bigInteger('application_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('vote_id')->references('id')->on('votes');
-            $table->foreign('application_id')->references('id')->on('applications');
+            $table->foreign('vote_id')->references('id')->on('votes')->cascadeOnDelete();
+            $table->foreign('application_id')->references('id')->on('applications')->cascadeOnDelete();
         });
     }
 

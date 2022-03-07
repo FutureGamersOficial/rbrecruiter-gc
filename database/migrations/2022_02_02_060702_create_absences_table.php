@@ -27,11 +27,13 @@ class CreateAbsencesTable extends Migration
 
             $table->foreign('requesterID')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->foreign('reviewer')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('set null');
         });
     }
 

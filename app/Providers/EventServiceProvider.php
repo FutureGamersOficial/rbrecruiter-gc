@@ -21,9 +21,15 @@
 
 namespace App\Providers;
 
+use App\Application;
 use App\Listeners\LogAuthenticationFailure;
 use App\Listeners\LogAuthenticationSuccess;
 use App\Listeners\OnUserRegistration;
+use App\Observers\ApplicationObserver;
+use App\Observers\UserObserver;
+use App\Observers\VacancyObserver;
+use App\User;
+use App\Vacancy;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
@@ -74,7 +80,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }

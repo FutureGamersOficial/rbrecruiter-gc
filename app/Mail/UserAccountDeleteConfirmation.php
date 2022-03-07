@@ -30,27 +30,23 @@ class UserAccountDeleteConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $deleteToken;
+    public string
+        $approveLink,
+        $cancelLink,
+        $name,
+        $userID;
 
-    public $cancelToken;
-
-    public $originalIP;
-
-    public $name;
-
-    public $userID;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, array $tokens, string $originalIP)
+    public function __construct(User $user, array $links)
     {
-        $this->deleteToken = $tokens['delete'];
-        $this->cancelToken = $tokens['cancel'];
+        $this->approveLink = $links['approveURL'];
+        $this->cancelLink = $links['cancelURL'];
 
-        $this->originalIP = $originalIP;
         $this->name = $user->name;
         $this->userID = $user->id;
     }
@@ -62,6 +58,7 @@ class UserAccountDeleteConfirmation extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.deleted-account');
+        return $this->subject('[ACTION REQUIRED] Please confirm account removal')
+            ->view('mail.deleted-account');
     }
 }

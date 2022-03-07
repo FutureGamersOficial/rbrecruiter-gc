@@ -22,6 +22,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\AccountSuspensionService;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -65,13 +66,16 @@ class LoginController extends Controller
 
     // We can't customise the error message, since that would imply overriding the login method, which is large.
     // Also, the user should never know that they're banned.
-    public function attemptLogin(Request $request)
+    public function attemptLogin(Request $request): bool
     {
+        $service = new AccountSuspensionService;
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
-            $isBanned = $user->isBanned();
-            if ($isBanned) {
+            $isBanned = $service->isSuspended($user);
+            $isLocked = $service->isLocked($user);
+
+            if ($isBanned || $isLocked) {
                 return false;
             } else {
                 return $this->originalAttemptLogin($request);
