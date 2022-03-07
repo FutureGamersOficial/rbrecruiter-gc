@@ -44,7 +44,9 @@ use App\TeamFile;
 use App\User;
 use App\Vacancy;
 use App\Vote;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -77,6 +79,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        //
+
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+
+            return (new MailMessage)
+                ->greeting("Hi {$notifiable->name}! Welcome to " . config('app.name') . ".")
+                ->line('To finish setting up your account, you must verify your email. This is to ensure only real users access our website.')
+                ->line('If you didn\'t sign up for an account, you can safely ignore this email.')
+                ->action('Verify account', $url)
+                ->salutation('The team at ' . config('app.name'));
+
+        });
     }
 }

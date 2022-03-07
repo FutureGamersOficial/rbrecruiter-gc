@@ -4,6 +4,8 @@
 namespace App\Services;
 
 use App\Ban;
+use App\Notifications\AccountLocked;
+use App\Notifications\AccountUnlocked;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +64,51 @@ class AccountSuspensionService
         $user->bans->delete();
     }
 
+
+
+
+    /**
+     * Sets an administrative lock on a user account.
+     * Used to prevent logins after a deletion process is initiated, but may be used for
+     * other things where a suspension is not necessary/warranted, such as a security breach event.
+     * These locks cannot be overridden manually be administrators.
+     *
+     * @param User $user The account to lock
+     * @return bool
+     */
+    public function lockAccount(User $user): bool
+    {
+        Log::alert('User account locked!', [
+            'email' => $user->email
+        ]);
+
+        $user->administratively_locked = 1;
+        $user->notify(new AccountLocked);
+
+        return $user->save();
+    }
+
+
+    /**
+     * Unlocks a user account. Reverse of lockAccount().
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function unlockAccount(User $user): bool
+    {
+        Log::alert('User account unlocked!', [
+            'email' => $user->email
+        ]);
+
+        $user->administratively_locked = 0;
+        $user->notify(new AccountUnlocked);
+
+        return $user->save();
+    }
+
+
+
     /**
      * Checks whether a user is suspended
      *
@@ -72,6 +119,16 @@ class AccountSuspensionService
         return !is_null($user->bans);
     }
 
+
+    /**
+     * Checks whether an account is locked
+     *
+     * @param User $user The user to check
+     * @return bool Whether the mentioned account is locked
+     */
+    public function isLocked(User $user): bool {
+        return $user->administratively_locked == 1;
+    }
 
     /**
      * Takes a suspension directly and makes it permanent.

@@ -47,12 +47,12 @@ class NewUser extends Notification implements ShouldQueue
         $this->user = $user;
     }
 
-    public function channels($notifiable)
+    public function channels()
     {
         return $this->chooseChannelsViaOptions();
     }
 
-    public function optOut($notifiable)
+    public function optOut()
     {
         return Options::getOption('notify_new_user') != 1;
     }
@@ -69,9 +69,10 @@ class NewUser extends Notification implements ShouldQueue
                     ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->subject(config('app.name').' - New user')
-                    ->line($this->user->name.' has just registered to our site.')
-                    ->line('You are receiving this email because you opted to receive new user notifications.')
-                    ->action('View profile', url(route('showSingleProfile', ['user' => $this->user->id])))
+                    ->line($this->user->name.' has created a new account.')
+                    ->line('This request came from the IP address ' . $this->user->originalIP . '.')
+                    ->line('You are receiving this email because you\'re a site admin, and the app is configured to send new user notifications.')
+                    ->action('View user', url(route('showSingleProfile', ['user' => $this->user->id])))
                     ->salutation('The team at ' . config('app.name'));
     }
 

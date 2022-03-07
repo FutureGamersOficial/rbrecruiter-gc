@@ -38,6 +38,7 @@ use Sentry;
 
 class AppServiceProvider extends ServiceProvider
 {
+
     /**
      * Register any application services.
      *
@@ -62,11 +63,6 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
 
-        // Register observers
-        User::observe(UserObserver::class);
-        Application::observe(ApplicationObserver::class);
-        Vacancy::observe(VacancyObserver::class);
-
         $https = ($this->app->environment() != 'local');
         $collect = true;
 
@@ -77,6 +73,10 @@ class AppServiceProvider extends ServiceProvider
         {
             $collect = false;
         }
+
+        // Initialize user observer
+        User::observe(UserObserver::class);
+
 
         $this->app['request']->server->set('HTTPS', $https);
 

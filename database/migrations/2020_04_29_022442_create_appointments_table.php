@@ -54,7 +54,8 @@ class CreateAppointmentsTable extends Migration
 
             $table->foreign('applicationID')
                 ->references('id')
-                ->on('applications');
+                ->on('applications')
+                ->cascadeOnDelete();
         });
     }
 

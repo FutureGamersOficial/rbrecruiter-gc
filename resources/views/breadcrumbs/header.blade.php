@@ -157,7 +157,7 @@
                                         <img class="d-inline mb-4" src="{{ asset('img/403.svg') }}" width="350px" alt="403 illustration">
 
                                         <h1>{{ __('403 - Forbidden') }}</h1>
-                                        <p>{{ __('Hey there :accountName! It looks like you don\'t have permission to access this resource. Believe this is a mistake? Contact us and we\'ll sort it out!', ['accountName' => Auth::user()->name]) }}</p>
+                                        <p>{{ __('Hey there! It looks like you don\'t have permission to access this resource. This may be because you don\'t have the appropriate roles, or because you\'ve been suspended. Believe this is a mistake? Contact us and we\'ll sort it out!') }}</p>
                                         @break;
 
                                     @case(503)

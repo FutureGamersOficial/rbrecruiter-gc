@@ -70,7 +70,7 @@ class UserBanned extends Notification implements ShouldQueue
                     ->greeting('Hi ' . $notifiable->name . ',')
                     ->from(config('notification.sender.address'), config('notification.sender.name'))
                     ->line('Hello, ')
-                    ->line('Moderators have just banned user '.$this->user->name.' for '.$this->ban->reason)
+                    ->line('Moderators have just suspended user '.$this->user->name.' for '.$this->ban->reason)
                     ->line('This ban will remain in effect until '.$this->ban->bannedUntil.'.')
                     ->action('View profile', url(route('showSingleProfile', ['user' => $this->user->id])))
                     ->salutation('The team at ' . config('app.name'));

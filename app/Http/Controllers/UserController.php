@@ -33,6 +33,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Notifications\ChangedPassword;
 use App\Notifications\EmailChanged;
 use App\Traits\DisablesFeatures;
+use App\Traits\HandlesAccountDeletion;
 use App\Traits\ReceivesAccountTokens;
 use App\User;
 use Google2FA;
@@ -44,7 +45,7 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use ReceivesAccountTokens;
+    use HandlesAccountDeletion;
 
     public function showUsers()
     {
@@ -66,7 +67,7 @@ class UserController extends Controller
         $matchingUsers = User::query()
             ->where('name', 'LIKE', "%{$searchTerm}%")
             ->orWhere('email', 'LIKE', "%{$searchTerm}%")
-            ->get();
+            ->paginate(6);
 
         if (! $matchingUsers->isEmpty()) {
             $request->session()->flash('success', __('There were :usersCount user(s) matching your search.', ['usersCount' => $matchingUsers->count()]));

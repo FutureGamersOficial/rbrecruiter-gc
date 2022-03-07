@@ -29,7 +29,7 @@ class UserObserver
 {
     public function __construct()
     {
-        Log::debug('User observer has been initialised and ready for use!');
+        //
     }
 
     /**
@@ -40,6 +40,7 @@ class UserObserver
      */
     public function created(User $user)
     {
+        // TODO: Make sure that the profile is created, throw an exception if otherwise, or try to recreate the profile.
         Profile::create([
 
             'profileShortBio' => 'Write a one-liner about you here!',
@@ -59,29 +60,6 @@ class UserObserver
     public function updated(User $user)
     {
         //
-    }
-
-    public function deleting(User $user)
-    {
-        Log::debug("Deleting observer running");
-        if ($user->isForceDeleting()) {
-            $user->profile->delete();
-            Log::debug('Referential integrity cleanup: Deleted profile!');
-            $applications = $user->applications;
-
-            if (! $applications->isEmpty()) {
-                Log::debug('RIC: Now trying to delete applications and responses...');
-                foreach ($applications as $application) {
-                    // code moved to Application observer, where it gets rid of attached elements individually
-                    Log::debug('RIC: Deleting application '.$application->id);
-                    $application->delete();
-                }
-            }
-        } else {
-            Log::debug('RIC: Not cleaning up soft deleted models!');
-        }
-
-        Log::debug('RIC: Cleanup done!');
     }
 
     /**
