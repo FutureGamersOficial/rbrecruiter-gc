@@ -261,6 +261,7 @@ return [
         \App\Providers\OptionsProvider::class,
         App\Providers\DigitalStorageProvider::class,
         App\Providers\JSONProvider::class,
+        NotificationChannels\Discord\DiscordServiceProvider::class,
 
     ],
 
