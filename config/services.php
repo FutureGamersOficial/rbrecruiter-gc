@@ -38,6 +38,8 @@ return [
         'client_secret' => env('DISCORD_CLIENT_SECRET'),
         'redirect' => env('DISCORD_REDIRECT_URI'),
 
+        'token' => env('DISCORD_BOT_TOKEN'),
+
         // optional
         'allow_gif_avatars' => (bool)env('DISCORD_AVATAR_GIF', true),
         'avatar_default_extension' => env('DISCORD_EXTENSION_DEFAULT', 'jpg'), // only pick from jpg, png, webp
