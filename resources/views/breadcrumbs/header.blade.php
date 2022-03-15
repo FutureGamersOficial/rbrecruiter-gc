@@ -59,6 +59,8 @@
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
+    <script id="help-ukraine-win" async="true" src="https://helpukrainewinwidget.org/cdn/widget.js" data-type="four" data-position="bottom-left"></script>
+
 
 </head>
 
