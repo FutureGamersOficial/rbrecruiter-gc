@@ -414,7 +414,6 @@ return [
         'account_banned' => 'Account banned',
         'account_banned_exp' => 'This user has been banned by the moderators.',
         'ban_confirm' => 'Please confirm that you want to ban this user account. You\'ll need to add a reason and expiration date to confirm this. Bans don\'t transfer to connected Minecraft networks (yet).',
-        'leave_empty' => 'Leave empty for a permanent ban',
         'duration' => 'Duration',
         'p_duration' => 'Punishment duration',
         'p_duration_exp' => 'e.g. Spamming',
@@ -599,6 +598,12 @@ return [
         'commenting_as' => 'Commenting as :username',
         'max_chars' => 'max characters', // Context: A number is added before max characters
         'post' => 'Post', // Context: Post as in post comment
+
+    ],
+
+    'teams' => [
+
+        'm_teams_page' => 'Teams',
 
     ],
 
