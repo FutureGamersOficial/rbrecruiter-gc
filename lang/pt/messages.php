@@ -274,10 +274,10 @@ return [
         'banned' => 'Banido',
         'active' => 'Ativo',
         'no_reg' => 'Não há jogadores inscritos!',
-        'no_reg_exp' => '
+        'no_reg_exp' => "
           Jogadores registados são aqueles que não possuem uma função administrativa no aplicativo de gestão de equipa.
           Pode haver outros utilizadores registados na plataforma, mas eles não serão exibidos aqui.
-',
+",
         'see_staff' => 'Ver Membros da Equipa',
 
     ],
@@ -286,11 +286,11 @@ return [
 
         'application_form' => 'Formulário de Candidatura',
         'select_form' => 'Selecione um formulário...',
-        'no_form_error' => '
+        'no_form_error' => "
            Não pode criar uma vaga sem qualquer formulário cujos quais as pessoas se poderiam candidatar.
            Crie um formulário primeiro, e depois crie uma vaga.
            Um único formulário pode ter várias vagas, para que possa anexar futuras vagas ao mesmo formulário, se quiser.
-',
+",
         'new_pos' => 'NOVA VAGA',
         'empty_pos_warning' => 'Nada para ver aqui! Abra algumas vagas primeiro. Isso fará os candidatos aparecerem! (esperançoso)',
         'manage_forms' => 'GERIR FORMULÁRIOS DE CANDIDATURA',
@@ -414,7 +414,6 @@ return [
         'account_banned' => 'Conta banida',
         'account_banned_exp' => 'Este utilizador foi banido pelos moderadores.',
         'ban_confirm' => 'Por favor, confirme que você deseja banir este utilizador. Você precisará adicionar um motivo e uma data de expiração para confirmar isto. Banimentos não transferem para redes de Minecraft conectadas (ainda).',
-        'leave_empty' => 'Deixe em branco para um banimento permanente',
         'duration' => 'Duração',
         'p_duration' => 'Duração da penalização',
         'p_duration_exp' => 'por exemplo, spam',
@@ -599,6 +598,12 @@ return [
         'commenting_as' => 'Comentando como :username',
         'max_chars' => 'caracteres no máximo', // Context: A number is added before max characters
         'post' => 'Publicar', // Context: Post as in post comment
+
+    ],
+
+    'teams' => [
+
+        'm_teams_page' => 'Teams',
 
     ],
 
