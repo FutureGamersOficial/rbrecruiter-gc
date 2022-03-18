@@ -32,10 +32,10 @@ return [
     |
     */
 
-    'reset' => 'Sua palavra-passe foi redefinida!',
-    'sent' => 'Enviamos um e-mail com um link para redefinir a sua password!',
-    'throttled' => 'Por favor, aguarde antes de tentar novamente.',
-    'token' => 'Token para recuperação de senha inválido.',
-    'user' => "Não foi possível encontrar um utilizador com este e-mail.",
+    'reset' => 'Your password has been reset!',
+    'sent' => 'We have emailed your password reset link!',
+    'throttled' => 'Please wait before retrying.',
+    'token' => 'This password reset token is invalid.',
+    'user' => "We can't find a user with that email address.",
 
 ];
