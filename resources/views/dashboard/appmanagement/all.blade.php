@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('messages.application_m.all_apps'))
+@section('title', config('app.name') . ' | ' . __('All Applications'))
 
 @section('content_header')
 
-    <h4>{{__('messages.application_m.title')}} / {{__('messages.application_m.all_apps')}}</h4>
+    <h4>{{__('Application Management')}} / {{__('All Applications')}}</h4>
 
 @stop
 
@@ -20,20 +20,20 @@
 
   @foreach($applications as $application)
 
-    <x-modal id="deletionConfirmationModal-{{ $application->id }}" modal-label="deletion-{{ $application->id }}" modal-title="{{__('messages.application_m.modal_confirm')}}" include-close-button="true">
+    <x-modal id="deletionConfirmationModal-{{ $application->id }}" modal-label="deletion-{{ $application->id }}" modal-title="{{__('Are you sure?')}}" include-close-button="true">
 
-      <h4><i class="fas fa-exclamation-triangle"></i> {{__('messages.application_m.really_delete')}}</h4>
+      <h4><i class="fas fa-exclamation-triangle"></i> {{__('Really delete this?')}}</h4>
       <p>
-        {{__('messages.application_m.delete_action_warning', ['consequence' => '<b>' . __('messages.application_m.consequence_irreversible') .'</b>'])}}
+        {!! __('This action is :consequence.', ['consequence' => '<b>' . __('IRREVERSIBLE.') .'</b>']) !!}
       </p>
-      <p>{{__('messages.application_m.delete_explainer')}}</p>
+      <p>{{__('Comments, appointments and any votes attached to this application WILL be deleted too. Please make sure this application really needs to be deleted.')}}</p>
 
       <x-slot name="modalFooter">
 
         <form method="POST" action="{{ route('deleteApplication', ['application' => $application->id]) }}">
           @csrf
           @method('DELETE')
-          <button type="submit" class="btn btn-danger"><i class="fas fa-check-double"></i> {{__('messages.reusable.confirm_plain')}}</button>
+          <button type="submit" class="btn btn-danger"><i class="fas fa-check-double"></i> {{__('Confirm')}}</button>
 
         </form>
 
@@ -55,15 +55,15 @@
 
             <div class="col-3">
 
-              <img src="/img/applications_all.svg" alt="Applications illustration" class="img-responsive" width="200px"/>
+              <img src="/img/applications_all.svg" alt="{{ __('Applications illustration') }}" class="img-responsive" width="200px"/>
 
             </div>
 
             <div class="col">
 
-              <h3><i class="fas fa-info-circle"></i> {{__('messages.application_m.all_apps_header')}}</h3>
+              <h3><i class="fas fa-info-circle"></i> {{__("You're looking at all applications ever received")}}</h3>
               <p>
-                {{__('messages.application_m.all_apps_exp')}}
+                {{__('Here, you have quick and easy access to all applications ever received by the system.')}}
               </p>
 
             </div>
@@ -90,7 +90,7 @@
           <div class="row">
 
             <div class="col">
-              <h3>{{__('messages.application_m.all_apps')}}</h3>
+              <h3>{{__('All Applications')}}</h3>
             </div>
 
           </div>
@@ -119,10 +119,10 @@
 
                         <tr>
                           <th>#</th>
-                          <th>{{__('messages.application_m.applicant')}}</th>
-                          <th>{{__('messages.reusable.status')}}</th>
-                          <th>{{__('messages.reusable.date')}}</th>
-                          <th>{{__('messages.reusable.actions')}}</th>
+                          <th>{{__('Applicant')}}</th>
+                          <th>{{__('Status')}}</th>
+                          <th>{{__('Date')}}</th>
+                          <th>{{__('Actions')}}</th>
                         </tr>
 
                       </thead>
@@ -139,48 +139,48 @@
 
                                 @case('STAGE_SUBMITTED')
 
-                                  <span class="badge badge-primary"><i class="far fa-clock"></i> {{__('messages.application_m.outstanding_subm')}}</span>
+                                  <span class="badge badge-primary"><i class="far fa-clock"></i> {{__('Outstanding (Submitted)')}}</span>
                                 @break
 
                                 @case('STAGE_PEERAPPROVAL')
 
-                                  <span class="badge badge-warning"><i class="fas fa-vote-yea"></i> {{__('messages.application_m.p_review')}}</span>
+                                  <span class="badge badge-warning"><i class="fas fa-vote-yea"></i> {{__('Peer Review')}}</span>
                                 @break
 
                                 @case('STAGE_INTERVIEW')
 
-                                  <span class="badge badge-warning"><i class="fas fa-microphone-alt"></i> {{__('messages.application_m.interview_p')}}</span>
+                                  <span class="badge badge-warning"><i class="fas fa-microphone-alt"></i> {{__('Interview')}}</span>
 
                                 @break
 
                                 @case('STAGE_INTERVIEW_SCHEDULED')
 
-                                  <span class="badge badge-warning"><i class="far fa-clock"></i>{{__('messages.application_m.interview_s')}}</span>
+                                  <span class="badge badge-warning"><i class="far fa-clock"></i>{{__('Interview Scheduled')}}</span>
 
                                 @break
 
                                 @case('APPROVED')
 
-                                  <span class="badge badge-success"><i class="fas fa-check"></i> {{__('messages.application_m.approved')}}</span>
+                                  <span class="badge badge-success"><i class="fas fa-check"></i> {{__('Approved')}}</span>
 
                                 @break
 
                                 @case('DENIED')
 
-                                  <span class="badge badge-danger"><i class="fas fa-times"></i> {{__('messages.application_m.denied')}}</span>
+                                  <span class="badge badge-danger"><i class="fas fa-times"></i> {{__('Denied')}}</span>
 
                                 @break;
 
                                 @default
-                                  <span class="badge badge-secondary"><i class="fas fa-question-circle"></i> {{__('messages.application_m.denied')}}</span>
+                                  <span class="badge badge-secondary"><i class="fas fa-question-circle"></i> {{__('Denied')}}</span>
 
 
                               @endswitch
                             </td>
                             <td>{{ $application->created_at }}</td>
                             <td>
-                              <button type="button" class="btn btn-success btn-sm" onclick="window.location.href='{{ route('showUserApp', ['application' => $application->id]) }}'"><i class="fas fa-eye"></i> {{__('messages.reusable.view')}}</button>
-                              <button type="button" class="btn btn-danger btn-sm ml-2" onclick="$('#deletionConfirmationModal-{{ $application->id }}').modal('show')"><i class="fa fa-trash"></i> {{__('messages.reusable.delete')}}</button>
+                              <button type="button" class="btn btn-success btn-sm" onclick="window.location.href='{{ route('showUserApp', ['application' => $application->id]) }}'"><i class="fas fa-eye"></i> {{__('View')}}</button>
+                              <button type="button" class="btn btn-danger btn-sm ml-2" onclick="$('#deletionConfirmationModal-{{ $application->id }}').modal('show')"><i class="fa fa-trash"></i> {{__('Delete')}}</button>
                             </td>
                           </tr>
 
@@ -194,9 +194,9 @@
 
                   <div class="alert alert-warning">
 
-                    <h3><i class="fas fa-question-circle"></i> {{__('messages.application_m.no_apps')}}</h3>
+                    <h3><i class="fas fa-question-circle"></i> {{__('There are no applications here')}}</h3>
                     <p>
-                      {{__('messages.application_m.no_apps_exp')}}
+                      {{__("We couldn't find any applications. Maybe no one has applied yet? Please try again later.")}}
                     </p>
 
                   </div>
