@@ -20,7 +20,7 @@
         <div class="alert alert-info">
             <p class="font-weight-bold"><i class="fas fa-info-circle"></i> {{__('Reminder')}}</p>
             <p>{{__('The application is in demo mode.')}}</p>
-            <p>{{ __('Demo mode disables some app features in order to preserve it\'s integrity for everyone who wants to test it. Here\'s what\'s disabled: ') }}</p>
+            <p>{{ __("Demo mode disables some app features in order to preserve it's integrity for everyone who wants to test it. Here's what's disabled: ") }}</p>
             <ul>
                 <li>{{ __('All user account operations such as: ') }}
                     <ul>
@@ -53,15 +53,15 @@
 
       @foreach($vacancies as $vacancy)
 
-          <x-modal id="{{ $vacancy->vacancySlug . '-details' }}" modal-label="{{ $vacancy->vacancySlug . '-details-label' }}" modal-title="{{__('messages.details_m_title')}}" include-close-button="true">
+          <x-modal id="{{ $vacancy->vacancySlug . '-details' }}" modal-label="{{ $vacancy->vacancySlug . '-details-label' }}" modal-title="{{__('Vacancy details')}}" include-close-button="true">
 
             @if (is_null($vacancy->vacancyFullDescription))
 
               <div class="alert alert-warning">
 
-                <h3><i class="fas fa-question-circle"></i> {{__('messages.opening_nodetails')}}</h3>
+                <h3><i class="fas fa-question-circle"></i> {{__("There don't seem to be any details.")}}</h3>
                 <p>
-                  {{__('messages.opening_nodetails_exp')}}
+                  {{__('This opening does not have any details yet.')}}
                 </p>
 
               </div>
@@ -69,7 +69,7 @@
 
               {!! $vacancy->vacancyFullDescription !!}
               <p class="text-sm text-muted">
-                {{__('messages.last_updated')}} @ {{ $vacancy->updated_at }}
+                {{__('Last updated @ :vacancyUpdatedTimeValue', ['vacancyUpdatedTimeValue' => $vacancy->updated_at]) }}
               </p>
             @endif
 
@@ -108,7 +108,7 @@
                 <div class="inner">
                   <h3>{{ $totalNewSingle ?? 0 }}</h3>
 
-                  <p>{{__('messages.ongoing_apps')}}</p>
+                  <p>{{__('Ongoing apps')}}</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-sync"></i>
@@ -123,12 +123,12 @@
                 <div class="inner">
                   <h3>{{ $totalDeniedSingle ?? 0 }}</h3>
 
-                  <p>{{__('messages.denied_apps')}}</p>
+                  <p>{{__('Denied apps')}}</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-times"></i>
                 </div>
-                <a href="{{ route('showUserApps') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('showUserApps') }}" class="small-box-footer">{{__('Open')}} <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
         </div>
@@ -142,14 +142,14 @@
               <div class="inner">
                 <h3>{{ $totalUserCount }}</h3>
 
-                <p>{{__('messages.users_staff')}}</p>
+                <p>{{__('Total Users + Staff')}}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-users"></i>
               </div>
               @if (Auth::user()->hasRole('admin'))
 
-                <a href="{{ route('registeredPlayerList') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('registeredPlayerList') }}" class="small-box-footer">{{__('Open')}} <i class="fas fa-arrow-circle-right"></i></a>
               @else
               <a class="small-box-footer"><i class="fas"></i></a>
               @endif
@@ -162,14 +162,14 @@
               <div class="inner">
                 <h3>{{ $totalDenied }}</h3>
 
-                <p>{{__('messages.denied_apps')}}</p>
+                <p>{{__('Denied apps')}}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-user-slash"></i>
               </div>
               @if (Auth::user()->hasRole('admin'))
 
-                <a href="{{ route('allApplications') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('allApplications') }}" class="small-box-footer">{{__('Open')}} <i class="fas fa-arrow-circle-right"></i></a>
               @else
               <a class="small-box-footer"><i class="fas"></i></a>
               @endif
@@ -182,14 +182,14 @@
               <div class="inner">
                 <h3>{{ $totalNewApplications }}</h3>
 
-                <p>{{__('messages.new_apps')}}</p>
+                <p>{{__('New applications')}}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-plus"></i>
               </div>
               @if (Auth::user()->hasRole('admin'))
 
-                <a href="{{ route('allApplications') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('allApplications') }}" class="small-box-footer">{{__('Open')}} <i class="fas fa-arrow-circle-right"></i></a>
               @else
               <a class="small-box-footer"><i class="fas"></i></a>
               @endif
@@ -202,7 +202,7 @@
               <div class="inner">
                 <h3>{{ $totalPeerReview }}</h3>
 
-                <p>{{__('messages.v_backlog')}}</p>
+                <p>{{__('Vote backlog')}}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-vote-yea"></i>
@@ -221,7 +221,7 @@
 
             <div class="col text-center">
 
-              <h4>{{__('messages.ranks')}}</h4>
+              <h4>{{__('Available vacancies')}}</h4>
               <hr />
 
             </div>
@@ -257,8 +257,8 @@
 
                 <div class="card-footer text-center">
 
-                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='{{ route('renderApplicationForm', ['vacancySlug' => $vacancy->vacancySlug]) }}'">{{__('messages.txt_apply')}}</button>
-                    <button type="button" class="btn btn-warning btn-sm" onclick="$('#{{ $vacancy->vacancySlug }}-details').modal('show')">{{__('messages.txt_learn_more')}}</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='{{ route('renderApplicationForm', ['vacancySlug' => $vacancy->vacancySlug]) }}'">{{__('Apply')}}</button>
+                    <button type="button" class="btn btn-warning btn-sm" onclick="$('#{{ $vacancy->vacancySlug }}-details').modal('show')">{{__('Learn More')}}</button>
 
                 </div>
               </div>
@@ -281,7 +281,7 @@
                 <div class="card-header">
 
                     <h4>
-                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;{{__('messages.upcoming')}} (<i>{{__('messages.soon')}}</i>)
+                      <i class="fa fa-calendar"></i>&nbsp;&nbsp;{{__('Your upcoming interviews')}} (<i>{{__('Coming soon')}}</i>)
                     </h4>
 
                 </div>
