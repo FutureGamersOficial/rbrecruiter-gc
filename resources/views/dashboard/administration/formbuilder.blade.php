@@ -1,20 +1,14 @@
 @extends('adminlte::page')
 
-@section('title',  config('app.name') . '| ' . __('messages.form_builder.builder_name'))
+@section('title',  config('app.name') . ' | ' . __('Application form management tool'))
 
 @section('content_header')
 
-    <h4>{{__('messages.adm')}} / {{__('messages.form_builder.builder')}}</h4>
+    <h4>{{__('Administration')}} / {{__('Form builder')}}</h4>
 
 @stop
 
 @section('js')
-
-       <script>
-            jQuery(window).bind('beforeunload', function(){
-                return 'Are you sure you want to leave the form builder? You might have unsaved work.';
-            });
-        </script>
 
     @if (session()->has('success'))
 
@@ -40,6 +34,23 @@
         </script>
     @endif
 
+    <script>
+        $(document).ready(function () {
+
+            $("#formName").keyup(function(){
+                if($(this).val().length > 10){
+                    $(window).bind('beforeunload', function(){
+                        return "{{ __('Are you sure you want to leave the form builder? You have unsaved work.') }}";
+                    });
+                }
+            });
+
+            $(document).on("submit", "form", function(event){
+                $(window).off('beforeunload');
+            });
+        })
+    </script>
+
 @stop
 
 @section('content')
@@ -57,9 +68,9 @@
                         @csrf
 
                         <fieldset id="buildyourform">
-                            <legend class="text-center">{{__('messages.form_builder.builder')}}</legend>
+                            <legend class="text-center">{{__('Form builder')}}</legend>
 
-                            <input type="text" name="formName" class="form-control mb-5" placeholder="{{__('messages.form_builder.name_form')}}" required>
+                            <input type="text" name="formName" id="formName" class="form-control mb-5" placeholder="{{__('Name your form...')}}" required>
 
                         </fieldset>
 
@@ -69,8 +80,8 @@
 
                 <div class="card-footer text-center">
 
-                    <button onclick="save()" type="button" class="btn btn-success">{{__('messages.form_builder.save_form')}}</button>
-                    <input type="button" value="{{__('messages.new_field')}}" class="add btn btn-info ml-3" id="add" />
+                    <button onclick="save()" type="button" class="btn btn-success">{{__('Save form')}}</button>
+                    <input type="button" value="{{__('Add field')}}" class="add btn btn-info ml-3" id="add" />
 
 
                 </div>

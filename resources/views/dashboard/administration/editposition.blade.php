@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Edit Positions')
+@section('title', config('app.name') . ' | ' . __('Edit vacancies'))
 
 @section('content_header')
 
-    <h4>{{__('messages.adm')}} / {{__('messages.positions')}} / {{__('messages.edit')}}</h4>
+    <h4>{{__('Administration')}} / {{__('Vacancies')}} / {{__('Edit')}}</h4>
 
 @stop
 
@@ -24,7 +24,7 @@
 
     <div class="col center">
 
-        <h3>{{__('messages.vacancy_edit')}}</h3>
+        <h3>{{__('Vacancy Editor')}}</h3>
 
     </div>
 
@@ -49,7 +49,7 @@
 
         <div class="card-body">
 
-          <p class="text-muted"><i class="fas fa-question-circle"></i> {{__('messages.form_consistency')}}</p>
+          <p class="text-muted"><i class="fas fa-question-circle"></i> {{__('For consistency purposes, grayed out fields can\'t be edited.')}}</p>
 
           <form method="POST" id="editPositionForm" action="{{ route('updatePosition', ['vacancy' => $vacancy->id]) }}">
 
@@ -61,14 +61,14 @@
               <div class="col">
 
 
-                <label for="vacancyName">{{__('messages.vacancy.name')}}</label>
+                <label for="vacancyName">{{__('Vacancy name')}}</label>
                 <input type="text" value="{{ $vacancy->vacancyName }}" class="form-control" disabled />
 
               </div>
 
               <div class="col">
 
-                <label for="vacancyDescription">{{__('messages.vacancy.description')}}</label>
+                <label for="vacancyDescription">{{__('Vacancy description')}}</label>
                 <input type="vacancyDescription" class="form-control" name="vacancyDescription" value="{{ $vacancy->vacancyDescription }}" />
 
 
@@ -81,9 +81,9 @@
               <div class="col">
 
                 <!-- skipping the accessor for obvious reasons -->
-                <label for="vacanyDetails">{{__('messages.vacancy.details')}}</label>
-                <textarea name="vacancyFullDescription" class="form-control" placeholder="{{ (is_null($vacancy->vacancyFullDescription)) ? __('messages.vacancy.no_details') : '' }}" rows="20">{{ $vacancy->getAttributes()['vacancyFullDescription'] }}</textarea>
-                <span class="text-muted"><i class="fab fa-markdown"></i> {{__('messages.vacancy.markdown')}}</span>
+                <label for="vacanyDetails">{{__('Vacancy details')}}</label>
+                <textarea name="vacancyFullDescription" class="form-control" placeholder="{{ (is_null($vacancy->vacancyFullDescription)) ? __('No details yet... Add some!') : '' }}" rows="20">{{ $vacancy->getAttributes()['vacancyFullDescription'] }}</textarea>
+                <span class="text-muted"><i class="fab fa-markdown"></i> {{__('Markdown supported')}}</span>
 
               </div>
 
@@ -93,14 +93,15 @@
 
               <div class="col">
 
-                <label for="permissionGroupName">{{__('messages.vacancy.permission_group')}}</label>
+                  <!-- DEPRECATED! -->
+                <label for="permissionGroupName">{{__('Permission group')}}</label>
                 <input type="text" class="form-control" value="{{ $vacancy->permissionGroupName }}" id="permissionGroupName" disabled />
 
               </div>
 
               <div class="col">
 
-                <label for="discordRoleID">{{__('messages.vacancy.discord_roleid')}}</label>
+                <label for="discordRoleID">{{__('Discord role ID')}}</label>
                 <input type="text" class="form-control" value="{{ $vacancy->discordRoleID }}" id="discordRoleID" disabled />
 
 
@@ -111,10 +112,10 @@
 
               <div class="col">
 
-                <label for="currentForm">{{__('messages.vacancy.current_form')}}</label>
+                <label for="currentForm">{{__('Current from (uneditable)')}}</label>
                 <input type="text" class="form-control" value="{{ $vacancy->forms->formName }}" id="currentForm" disabled />
 
-                <label for="remainingSlots">{{__('messages.vacancy.remaining_slots')}}</label>
+                <label for="remainingSlots">{{__('Remaining slots')}}</label>
                 <input type="text" class="form-control" value="{{ $vacancy->vacancyCount }}" id="remainingSlots" name="vacancyCount" />
 
 
@@ -128,15 +129,15 @@
 
         <div class="card-footer">
 
-          <button type="button" class="btn btn-warning" onclick="$('#editPositionForm').submit()"><i class="fas fa-edit"></i> {{__('messages.vacancy.save')}}</button>
-          <button type="button" class="btn btn-danger" onclick="window.location.href='{{ route('showPositions') }}'"><i class="fas fa-times"></i> {{__('messages.vacancy.cancel')}}</button>
+          <button type="button" class="btn btn-warning" onclick="$('#editPositionForm').submit()"><i class="fas fa-edit"></i> {{__('Save changes')}}</button>
+          <button type="button" class="btn btn-danger" onclick="window.location.href='{{ route('showPositions') }}'"><i class="fas fa-times"></i> {{__('Go back')}}</button>
 
           @if($vacancy->vacancyStatus == 'OPEN')
 
             <form method="POST" action="{{ route('updatePositionAvailability', ['vacancy' => $vacancy->id, 'status' => 'close']) }}" style="display: inline">
               @method('PATCH')
               @csrf
-              <button type="submit" class="ml-4 btn btn-danger"><i class="fas fa-ban"></i> {{__('messages.vacancy.close_vacancy')}}</button>
+              <button type="submit" class="ml-4 btn btn-danger"><i class="fas fa-ban"></i> {{__('Close vacancy')}}</button>
             </form>
 
           @endif

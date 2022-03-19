@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title',  config('app.name') . ' | ' . __('messages.open_positions'))
+@section('title',  config('app.name') . ' | ' . __('Open vacancies'))
 
 @section('content_header')
 
     @if (Auth::user()->hasAnyRole('admin', 'hiringManager'))
-      <h4>{{__('messages.adm')}} / {{__('messages.open_positions')}}</h4>
+      <h4>{{__('Administration')}} / {{__('Open vacancies')}}</h4>
     @else
-      <h4>{{__('messages.reusable.no_access')}}</h4>
+      <h4>{{__('Application access denied')}}</h4>
     @endif
 
 @stop
@@ -29,7 +29,7 @@
     @if($errors->any())
 
         @foreach ($errors->all() as $error)
-            <script>toastr.error('{{$error}}', '{{__('messages.reusable.validation_err')}}')</script>
+            <script>toastr.error('{{$error}}', '{{__('Validation error!')}}')</script>
         @endforeach
 
     @endif
@@ -42,7 +42,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalFormLabel">{{__('messages.new_vacancy')}}</h5>
+                    <h5 class="modal-title" id="modalFormLabel">{{__('New vacancy')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -53,35 +53,35 @@
 
                         <form id="savePositionForm" action="{{route('savePosition')}}" method="POST">
                             @csrf
-                            <label for="vacancyName">{{__('messages.vacancy.name')}}</label>
+                            <label for="vacancyName">{{__('Vacancy name')}}</label>
                             <input type="text" id="vacancyName" name="vacancyName" class="form-control">
 
-                            <label for="vacancyDescription">{{__('messages.vacancy.description')}}</label>
+                            <label for="vacancyDescription">{{__('Vacancy description')}}</label>
                             <input type="text" id="vacancyDescription" name="vacancyDescription" class="form-control">
 
-                            <label for="vacancyFullDescription">{{__('messages.vacancy.description')}}</label>
-                            <textarea name="vacancyFullDescription" class="form-control" rel="txtTooltip" title="{{__('messages.vacancy.description_tooltip')}}" data-toggle="tooltip" data-placement="bottom"></textarea>
-                            <span class="right text-muted"><i class="fab fa-markdown"></i> {{__('messages.vacancy.markdown')}}</span>
+                            <label for="vacancyFullDescription">{{__('Vacancy details')}}</label>
+                            <textarea name="vacancyFullDescription" class="form-control" rel="txtTooltip" title="{{__('Add things like admission requirements, rank resposibilities and roles, and anything else you feel is necessary')}}" data-toggle="tooltip" data-placement="bottom"></textarea>
+                            <span class="right text-muted"><i class="fab fa-markdown"></i> {{__('Markdown supported')}}</span>
                             <div class="row mt-3">
 
                                 <div class="col">
-                                    <label for="pgroup">{{__('messages.vacancy.permission_group')}}</label>
-                                    <input rel="txtTooltip" title="{{__('messages.vacancy.permission_group_tooltip')}}" data-toggle="tooltip" data-placement="bottom" type="text" id="pgroup" name="permissionGroup" class="form-control">
+                                    <label for="pgroup">{{__('Permission group')}}</label>
+                                    <input rel="txtTooltip" title="{{__("The permission group from your server/network's permissions manager. Compatible with Luckperms and PEX (This feature is deprecated and will be removed on a future version).")}}" data-toggle="tooltip" data-placement="bottom" type="text" id="pgroup" name="permissionGroup" class="form-control">
                                 </div>
 
                                 <div class="col">
-                                    <label for="discordrole">{{__('messages.vacancy.discord_roleid')}} (*)</label>
-                                    <input rel="txtTooltip" title="{{__('messages.vacancy.discord_roleid_tooltip')}}" data-toggle="tooltip" data-placement="bottom" type="text" id="discordrole" name="discordRole" class="form-control">
+                                    <label for="discordrole">{{__('Discord Role ID')}} (*)</label>
+                                    <input rel="txtTooltip" title="{{__("Discord Desktop: Go to your Account Settings > Appearance -> Advanced and toggle Developer Mode. On your server's roles tab, right click any role to copy it's ID.")}}" data-toggle="tooltip" data-placement="bottom" type="text" id="discordrole" name="discordRole" class="form-control">
                                 </div>
 
                             </div>
 
                             <div class="form-group mt-4">
 
-                                <label for="associatedForm">{{__('messages.positions_p.application_form')}}</label>
+                                <label for="associatedForm">{{__('Application form')}}</label>
                                 <select class="custom-select" name="vacancyFormID" id="associatedForm">
 
-                                    <option disabled>{{__('messages.positions_p.select_form')}}</option>
+                                    <option disabled>{{__('Select a form...')}}</option>
                                     @foreach($forms as $form)
 
                                         <option value="{{$form->id}}">{{$form->formName}}</option>
@@ -90,8 +90,8 @@
 
                                 </select>
 
-                                <label for="vacancyCount">{{__('messages.vacancy.free_slots')}}</label>
-                                <input rel="txtTooltip" title="{{__('messages.vacancy.free_slots_tooltip')}}" data-toggle="tooltip" data-placement="bottom" type="text" id="vacancyCount" name="vacancyCount" class="form-control">
+                                <label for="vacancyCount">{{__('Free slots')}}</label>
+                                <input rel="txtTooltip" title="{{__('The number of free slots decreases each time an applicant is approved for this vacancy.')}}" data-toggle="tooltip" data-placement="bottom" type="text" id="vacancyCount" name="vacancyCount" class="form-control">
 
 
                             </div>
@@ -102,7 +102,9 @@
                         <div class="alert alert-danger">
 
                             <p>
-                                {{__('messages.positions_p.no_form_error')}}
+                                {{__('You cannot create a vacancy without any forms with which people would apply.')}}
+                                {{ __('Create a form first, then, create a vacancy.') }}
+                                {{ __("A single form is allowed to have multiple vacancies, so you can attach future vacancies to the same form if you'd like.") }}
                             </p>
                         </div>
 
@@ -112,10 +114,10 @@
                 <div class="modal-footer">
 
                     @if(!$forms->isEmpty())
-                        <button type="button" class="btn btn-primary" onclick="document.getElementById('savePositionForm').submit()">{{__('messages.vacancy.add')}}</button>
+                        <button type="button" class="btn btn-primary" onclick="document.getElementById('savePositionForm').submit()">{{__('Add vacancy')}}</button>
                     @endif
 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.modal_close')}}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
                 </div>
             </div>
         </div>
@@ -129,7 +131,7 @@
 
                 <div class="card-body">
 
-                    <button type="button" class="btn btn-primary" onclick="$('#newVacancyForm').modal('show')">{{__('messages.positions_p.new_pos')}}</button>
+                    <button type="button" class="btn btn-primary" onclick="$('#newVacancyForm').modal('show')">{{__('NEW VACANCY')}}</button>
 
                 </div>
 
@@ -146,7 +148,7 @@
             <div class="card bg-gray-dark">
 
                 <div class="card-header bg-indigo">
-                    <div class="card-title"><h4 class="text-bold">{{__('messages.open_positions')}}</h4></div>
+                    <div class="card-title"><h4 class="text-bold">{{__('Open vacancies')}}</h4></div>
                 </div>
 
                 <div class="card-body">
@@ -158,12 +160,12 @@
                             <thead>
 
                             <tr>
-                                <th>{{__('messages.contactlabel_name')}}</th>
-                                <th>{{__('messages.reusable.description')}}</th>
-                                <th>{{__('messages.vacancy.free_slots')}}</th>
-                                <th>{{__('messages.reusable.status')}}</th>
-                                <th>{{__('messages.reusable.created_at')}}</th>
-                                <th>{{__('messages.reusable.actions')}}</th>
+                                <th>{{__('Name')}}</th>
+                                <th>{{__('Description')}}</th>
+                                <th>{{__('Free slots')}}</th>
+                                <th>{{__('Status')}}</th>
+                                <th>{{__('Created at')}}</th>
+                                <th>{{__('Actions')}}</th>
                             </tr>
 
                             </thead>
@@ -177,9 +179,9 @@
                                     <td>{{substr($vacancy->vacancyDescription, 0, 20)}}...</td>
                                     <td>{{$vacancy->vacancyCount}}</td>
                                     @if($vacancy->vacancyStatus == 'OPEN')
-                                        <td><span class="badge badge-success">{{__('messages.open')}}</span></td>
+                                        <td><span class="badge badge-success">{{__('Open')}}</span></td>
                                     @else
-                                        <td><span class="badge badge-danger">{{__('messages.closed')}}</span></td>
+                                        <td><span class="badge badge-danger">{{__('Closed')}}</span></td>
                                     @endif
                                     <td>{{$vacancy->created_at}}</td>
                                     <td>
@@ -223,7 +225,7 @@
                     @else
 
                         <div class="alert alert-warning">
-                            <p>{{__('messages.positions_p.empty_pos_warning')}}</p>
+                            <p>{{__('Nothing to see here! Open some vacancies first. This will get applicants pouring in! (hopefully)')}}</p>
                         </div>
 
                     @endif
@@ -231,7 +233,7 @@
 
                 <div class="card-footer">
 
-                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showForms')}}'">{{__('messages.positions_p.manage_forms')}}</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showForms')}}'">{{__('MANAGE APPLICATION FORMS')}}</button>
 
                 </div>
 

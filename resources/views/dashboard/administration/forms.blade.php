@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('messages.forms_p.available_forms'))
+@section('title', config('app.name') . ' | ' . __('Available forms'))
 
 @section('content_header')
 
-    <h4>{{__('messages.adm')}} / {{__('messages.forms')}}</h4>
+    <h4>{{__('Administration')}} / {{__('Forms')}}</h4>
 
 @stop
 
@@ -23,7 +23,7 @@
             <div class="card bg-gray-dark">
 
                 <div class="card-header bg-indigo">
-                    <div class="card-title"><h4 class="text-bold">{{__('messages.forms_p.available_forms')}}</h4></div>
+                    <div class="card-title"><h4 class="text-bold">{{__('Available forms')}}</h4></div>
                 </div>
 
                 <div class="card-body">
@@ -36,10 +36,10 @@
 
                             <tr>
                                 <th>#</th>
-                                <th>{{__('messages.forms_p.form_title')}}</th>
-                                <th>{{__('messages.reusable.created_at')}}</th>
-                                <th>{{__('messages.reusable.updated_at')}}</th>
-                                <th>{{__('messages.reusable.actions')}}</th>
+                                <th>{{__('Title')}}</th>
+                                <th>{{__('Created at')}}</th>
+                                <th>{{__('Updated at')}}</th>
+                                <th>{{__('Actions')}}</th>
                             </tr>
 
                             </thead>
@@ -59,9 +59,9 @@
                                             @method('DELETE')
                                             @csrf
 
-                                            <button type="submit" class="btn btn-sm btn-danger mr-2"><i class="fa fa-trash"></i> {{__('messages.reusable.delete')}}</button>
+                                            <button type="submit" class="btn btn-sm btn-danger mr-2"><i class="fa fa-trash"></i> {{__('Delete')}}</button>
                                         </form>
-                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{ route('previewForm', ['form' => $form->id]) }}'"><i class="fa fa-eye"></i> {{__('messages.form_preview.preview')}}</button>
+                                        <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{ route('previewForm', ['form' => $form->id]) }}'"><i class="fa fa-eye"></i> {{__('Preview form')}}</button>
                                     </td>
                                 </tr>
 
@@ -75,7 +75,7 @@
 
                         <div class="alert alert-warning">
 
-                            {{__('messages.forms_p.empty_noforms')}}
+                            {{__('Nothing to see here! Please add some forms first.')}}
 
                         </div>
 
@@ -85,7 +85,7 @@
 
                 <div class="card-footer">
 
-                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showFormBuilder')}}'">{{__('messages.forms_p.new_form')}}</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route('showFormBuilder')}}'">{{__('NEW FORM')}}</button>
 
                 </div>
 
