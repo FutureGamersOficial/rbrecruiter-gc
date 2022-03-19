@@ -68,10 +68,12 @@
 
                             <input name="reset" id="reset" class="btn btn-block login-btn mb-4" type="submit" value="{{__('Change password')}}">
                         </form>
-                        <a href="{{ route('login') }}">{{__('Back to login')}}</a>
+                        <a href="{{ route('login') }}">{{__('Back to sign in')}}</a>
                         <nav class="login-card-footer-nav">
-                            <a href="#!">{{__('messages.terms')}}</a>
-                            <a href="#!">{{__('messages.ppolicy')}}</a>
+                            <a href="#!">{{__('Terms of Service')}}</a>
+                            <a href="#!">{{__('Privacy Policy')}}</a>
+                            <a href="#!">{{__('Community Guidelines')}}</a>
+
                         </nav>
                     </div>
                 </div>

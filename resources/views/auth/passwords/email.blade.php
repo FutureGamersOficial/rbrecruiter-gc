@@ -23,16 +23,18 @@
                         <form action="{{ route('password.email') }}" method="POST" id="loginForm">
                             @csrf
                             <div class="form-group">
-                                <label for="email" class="sr-only">{{__('messages.contactlabel_email')}}</label>
-                                <input type="email" name="email" id="email" class="form-control" placeholder="Email address">
+                                <label for="email" class="sr-only">{{__('Email address')}}</label>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('Email address') }}">
                             </div>
                             <input name="reset" id="reset" class="btn btn-block login-btn mb-4" type="submit" value="{{__('Send reset instructions')}}">
                             <a class="text-decoration-none" href="{{ route('login') }}"><button type="button" class="btn btn-outline-info btn-block btn-sm mb-4">{{ __('Nevermind, I remembered my password') }}</button></a>
                         </form>
                         <a href="{{ route('login') }}">{{__('Back to login')}}</a>
                         <nav class="login-card-footer-nav">
-                            <a href="#!">{{__('messages.terms')}}</a>
-                            <a href="#!">{{__('messages.ppolicy')}}</a>
+                            <a href="#!">{{__('Terms of Service')}}</a>
+                            <a href="#!">{{__('Privacy Policy')}}</a>
+                            <a href="#!">{{__('Community Guidelines')}}</a>
+
                         </nav>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 <!doctype HTML>
 
-<html lang="en">
+<html lang="{{ App::getLocale() }}">
 
 <head>
 
@@ -25,8 +25,8 @@
 
 
     <title>{{config('app.name')}} | {{ __('Home') }}</title>
-    <meta name="title" content="Games Club Oficial | Página Inicial">
-    <meta name="description" content="Games Club Oficial - Onde sua diversão acontece!">
+    <meta name="title" content="Games Club Oficial | {{ __('Página Inicial') }}">
+    <meta name="description" content="{{ __('Games Club Oficial - Onde sua diversão acontece!') }}">
 
 
     <!-- Font Awesome -->
@@ -77,23 +77,23 @@
             <ul class="navbar-nav ml-auto float-right">
                 @guest
                     <li class="nav-item">
-                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('login')}}'"><i class="fas fa-sign-in-alt"></i> {{__('messages.login')}}</button>
+                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('login')}}'"><i class="fas fa-sign-in-alt"></i> {{__('Sign in')}}</button>
                     </li>
 
                     <li class="nav-item">
-                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('register')}}'"><i class="fas fa-plus"></i> {{__('messages.register')}}</button>
+                        <button class="btn btn-info" type="button" onclick="window.location.href='{{route('register')}}'"><i class="fas fa-plus"></i> {{__('Register')}}</button>
                     </li>
                 @endguest
 
                 @auth
                     <li class="nav-item">
-                        <button type="button" class="btn btn-info" onclick="window.location.href='{{route('dashboard')}}'">{{__('messages.dashboard')}}</button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href='{{route('dashboard')}}'">{{__('Dashboard')}}</button>
                     </li>
 
                     <li class="nav-item">
                         <form method="POST" action="{{route('logout')}}">
                             @csrf
-                            <button type="submit" class="btn btn-danger"><i class="fa fa-power-off"></i>{{__('messages.logout')}}</button>
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-power-off"></i>{{__('Sign out')}}</button>
                         </form>
                     </li>
                 @endauth
@@ -143,7 +143,7 @@
                                         <img class="d-inline mb-4" src="{{ asset('img/500.svg') }}" width="350px" alt="500 illustration">
 
                                         <h1>{{ __('500 - Internal Server Error') }}</h1>
-                                        <p>{{ __('Whelp! It looks like our servers went up in flames. Don\'t worry, it\'s not your fault. Our developers have been notified & are already extinguishing the flames and repairing the damage. ') }}</p>
+                                        <p>{{ __("Whelp! It looks like our servers went up in flames. Don't worry, it's not your fault. Our developers have been notified & are already extinguishing the flames and repairing the damage. ") }}</p>
                                         @break;
 
                                     @case(401)

@@ -32,6 +32,8 @@
                         <nav class="login-card-footer-nav">
                             <a href="#!">{{__('messages.terms')}}</a>
                             <a href="#!">{{__('messages.ppolicy')}}</a>
+                            <a href="#!">{{__('Community Guidelines')}}</a>
+
                         </nav>
                     </div>
                 </div>

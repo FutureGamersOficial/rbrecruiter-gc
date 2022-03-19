@@ -17,15 +17,15 @@
               <form action="{{ route('verify2FA') }}" method="POST" id="verify">
                   @csrf
                   <div class="form-group">
-                    <label for="name" class="sr-only">{{__('messages.2fa_sronly')}}</label>
-                    <input type="text" name="otp" id="name" class="form-control" placeholder="{{__('messages.profile.2fa_send_code_s')}}">
+                    <label for="name" class="sr-only">{{__('Two-factor secret code (You can find this on Google Authenticator or the app you chose during setup)')}}</label>
+                    <input type="text" name="otp" id="name" class="form-control" placeholder="{{__('2FA Code (ex. 41351)')}}">
                   </div>
-                  <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="{{__('messages.profile.2fa_send_code')}}">
+                  <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="{{__('Send 2FA Code')}}">
                 </form>
-                <p class="login-card-footer-text">{{__('messages.2fa_lostcode')}} <a href="{{ route('logout') }}" class="text-reset">{{__('messages.2fa_cancel_login')}}</a></p>
+                <p class="login-card-footer-text">{{__("Don't know the code?")}} <a href="{{ route('logout') }}" class="text-reset">{{__('Cancel sign in (sign out)')}}</a></p>
                 <nav class="login-card-footer-nav">
-                  <a href="#!">{{__('messages.terms')}}</a>
-                  <a href="#!">{{__('messages.ppolicy')}}</a>
+                  <a href="#!">{{__('Terms of Service')}}</a>
+                  <a href="#!">{{__('Privacy Policy')}}</a>
                 </nav>
             </div>
           </div>
