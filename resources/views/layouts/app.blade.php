@@ -41,15 +41,15 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Application Status</a>
+                            <a class="nav-link" href="#">{{ __('Application Status') }}</a>
                         </li>
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link waves-effect waves-light" href="{{ route('login') }}">Sign-in</a>
+                                <a class="nav-link waves-effect waves-light" href="{{ route('login') }}">{{ __('Sign-in') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">Register</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
