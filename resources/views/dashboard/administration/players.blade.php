@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-    <h4>{{__('messages.adm')}} / {{__('Users')}}</h4>
+    <h4>{{__('Administration')}} / {{__('Users')}}</h4>
 
 @stop
 
@@ -79,9 +79,9 @@
                       <tr>
                           <th>{{__('Name')}}</th>
                           <th>{{ __('Rank') }}</th>
-                          <th>{{__('messages.reusable.status')}}</th>
-                          <th>{{__('messages.players.reg_date')}}</th>
-                          <th>{{__('messages.reusable.actions')}}</th>
+                          <th>{{__('Status')}}</th>
+                          <th>{{__('Registration date')}}</th>
+                          <th>{{__('Actions')}}</th>
                       </tr>
                       </thead>
 
@@ -93,9 +93,9 @@
                                 <td>{{$user->name}}</td>
                                 <td>
                                     @if ($user->hasRole('reviewer'))
-                                        <span class="badge badge-warning"><i class="fas fa-user"></i> Staff</span>
+                                        <span class="badge badge-warning"><i class="fas fa-user"></i> {{ __('Staff') }}</span>
                                     @else
-                                        <span class="badge-warning badge"><i class="fas fa-user"></i> Member</span>
+                                        <span class="badge-warning badge"><i class="fas fa-user"></i> {{ __('Member') }}</span>
                                     @endif
                                 </td>
                                 <td>
@@ -115,9 +115,9 @@
                 @else
                     <div class="alert alert-secondary">
 
-                        <i class="fas fa-question"></i><span> {{__('messages.players.no_reg')}}</span>
+                        <i class="fas fa-question"></i><span> {{__('There are no registered users!')}}</span>
                         <p>
-                            {{__('messages.players.no_reg_exp')}}
+                            {{__('Registered users are those without a staff role in the team management application.')}}
                         </p>
 
                     </div>

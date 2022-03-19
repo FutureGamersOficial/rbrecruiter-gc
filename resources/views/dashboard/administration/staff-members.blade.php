@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('messages.staff.members'))
+@section('title', config('app.name') . ' | ' . __('Staff members'))
 
 @section('content_header')
 
-    <h4>{{__('messages.adm')}} / {{__('messages.staff.members')}}</h4>
+    <h4>{{__('Administration')}} / {{__('Staff members')}}</h4>
 
 @stop
 
@@ -17,7 +17,7 @@
                 <div class="inner">
                     <h3>{{$users->count()}}</h3>
 
-                    <p>{{__('messages.staff.active_sm')}}</p>
+                    <p>{{__('Active Staff Members')}}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-user-tie"></i>
@@ -35,7 +35,7 @@
 
               <div class="card-header bg-indigo">
 
-                  <div class="card-title"><h4 class="text-bold">{{__('messages.staff.m_listing')}}</h4></div>
+                  <div class="card-title"><h4 class="text-bold">{{__('Member listing')}}</h4></div>
 
               </div>
 
@@ -46,12 +46,12 @@
                       <thead>
                       <tr>
                           <th>#</th>
-                          <th>{{__('messages.staff.f_name')}}</th>
-                          <th>{{__('messages.staff.rank')}}</th>
-                          <th>{{__('messages.contactlabel_email')}}</th>
-                          <th>{{__('messages.reusable.status')}}</th>
-                          <th>{{__('messages.reusable.join_date')}}</th>
-                          <th>{{__('messages.reusable.actions')}}</th>
+                          <th>{{__('Full name')}}</th>
+                          <th>{{__('Rank')}}</th>
+                          <th>{{__('Email')}}</th>
+                          <th>{{__('Status')}}</th>
+                          <th>{{__('Join date')}}</th>
+                          <th>{{__('Actions')}}</th>
                       </tr>
                       </thead>
 
@@ -87,7 +87,7 @@
 
               <div class="card-footer">
 
-                  <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route("registeredPlayerList")}}'">{{__('messages.players.reg_players_staff')}}</button>
+                  <button type="button" class="btn btn-outline-primary" onclick="window.location.href='{{route("registeredPlayerList")}}'">{{__('View Registered Users (Applicant Pool)')}}</button>
 
               </div>
 

@@ -27,8 +27,7 @@ return [
     'supportedLocales' => [
         'pt'          => ['name' => 'Portuguese',             'script' => 'Latn', 'native' => 'Português', 'regional' => 'pt_PT'],
         'en'          => ['name' => 'English',                'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB'],
-        'es'          => ['name' => 'Spanish',                'script' => 'Latn', 'native' => 'Español', 'regional' => 'es_ES'],
-        'fr'          => ['name' => 'French',                 'script' => 'Latn', 'native' => 'Français', 'regional' => 'fr_FR'],
+        'pt-br'       => ['name' => 'Brazillian Portuguese',  'script' => 'Latn', 'native' => 'Português do Brasil', 'regional' =>'pt_BR']
     ],
 
     // Requires middleware `LaravelSessionRedirect.php`.
@@ -64,7 +63,7 @@ return [
     // If you want to display the locales in particular order in the language selector you should write the order here.
     //CAUTION: Please consider using the appropriate locale code otherwise it will not work
     //Example: 'localesOrder' => ['es','en'],
-    'localesOrder' => ['pt', 'en', 'fr', 'es'],
+    'localesOrder' => ['pt', 'en', 'pt-br'],
 
     //  If you want to use custom lang url segments like 'at' instead of 'de-AT', you can use the mapping to tallow the LanguageNegotiator to assign the descired locales based on HTTP Accept Language Header. For example you want ot use 'at', so map HTTP Accept Language Header 'de-AT' to 'at' (['de-AT' => 'at']).
     'localesMapping' => [],

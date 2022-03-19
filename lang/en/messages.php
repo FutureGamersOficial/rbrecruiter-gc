@@ -247,7 +247,7 @@ return [
     'form_preview' => [
         'preview' => 'Preview',
         'title' => 'Application Form Preview',
-        'looks' => 'This is how your form looks like to applicants',
+        'looks' => 'This is how your form looks like to applicants.',
         'f_info' => 'You may edit it and add more fields later.',
         '',
     ],

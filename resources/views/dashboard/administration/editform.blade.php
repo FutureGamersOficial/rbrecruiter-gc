@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Raspberry Network | Edit From')
+@section('title', config('app.name') . ' | ' . __('Edit form'))
 
 @section('content_header')
 
-    <h4>{{__('messages.adm')}} / {{__('messages.forms')}} / {{__('messages.edt')}}</h4>
+    <h4>{{__('Administration')}} / {{__('Forms')}} / {{__('Editor')}}</h4>
 
 @stop
 
@@ -61,10 +61,10 @@
 
                     <select class="custom-select" id="{{ $fieldName }}-type" name="{{ $fieldName }}[]">
 
-                        <option value="nil" disabled>{{__('messages.field_type')}}</option>
-                        <option value="textbox" {{ ($field['type'] == 'textbox' ? 'selected' : '') }}>{{__('messages.txtbox')}}</option>
-                        <option value="textarea" {{ ($field['type'] == 'textarea' ? 'selected' : '') }}>{{__('messages.multiline')}}</option>
-                        <option value="checkbox" {{ ($field['type'] == 'checkbox' ? 'selected' : '') }}>{{__('messages.checkbox')}}</option>
+                        <option value="nil" disabled>{{__('Choose a field type')}}</option>
+                        <option value="textbox" {{ ($field['type'] == 'textbox' ? 'selected' : '') }}>{{__('Text box')}}</option>
+                        <option value="textarea" {{ ($field['type'] == 'textarea' ? 'selected' : '') }}>{{__('Text area')}}</option>
+                        <option value="checkbox" {{ ($field['type'] == 'checkbox' ? 'selected' : '') }}>{{__('Checkbox')}}</option>
 
                     </select>
 
@@ -82,8 +82,8 @@
 
             <div class="card-footer text-center">
 
-              <button type="button" class="btn btn-warning ml-2" onclick="$('#editForm').submit()"><i class="fas fa-save"></i> {{__('messages.save_exit')}}</button>
-              <button type="button" class="btn btn-primary ml-2" id="add"><i class="fas fa-plus"></i> {{__('messages.new_field')}}</button>
+              <button type="button" class="btn btn-warning ml-2" onclick="$('#editForm').submit()"><i class="fas fa-save"></i> {{__('Save & Quit')}}</button>
+              <button type="button" class="btn btn-primary ml-2" id="add"><i class="fas fa-plus"></i> {{__('New field')}}</button>
 
             </div>
 

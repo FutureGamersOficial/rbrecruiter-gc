@@ -31,6 +31,7 @@ class Vacancy extends Model
 {
     //use UsedByTeams;
 
+    // VACANCY GROUP NAME: DEPRECATED
     public $fillable = [
 
         'permissionGroupName',

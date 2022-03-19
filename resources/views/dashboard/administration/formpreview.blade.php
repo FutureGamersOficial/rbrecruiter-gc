@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('messages.form_preview.title'))
+@section('title', config('app.name') . ' | ' . __('Previewing application form'))
 
 @section('content_header')
 
-    <h4>{{__('messages.adm')}} / {{__('messages.form_builder.builder')}} / {{__('messages.form_preview.preview')}}</h4>
+    <h4>{{__('Administration')}} / {{__('Form builder')}} / {{__('Preview')}}</h4>
 
 @stop
 
@@ -22,7 +22,7 @@
 
       <div class="col-6 offset-4">
 
-        <img src="/img/preview.svg" width="250px" alt="Form preview illustration" />
+        <img src="/img/preview.svg" width="250px" alt="{{ __('Form preview illustration') }}" />
 
       </div>
 
@@ -33,10 +33,10 @@
     <div class="col">
       <div class="alert alert-success">
 
-        <h5><i class="fas fa-eye"></i> {{__('messages.form_preview.looks')}}</h5>
+        <h5><i class="fas fa-eye"></i> {{__('This is how your form looks like to applicants.')}}</h5>
 
         <p>
-          {{__('messages.form_preview.f_info')}}
+          {{__('You may edit it and add more fields later.')}}
         </p>
 
       </div>
@@ -52,7 +52,7 @@
 
         <div class="card-header">
 
-          <h3>{{ $title }} - {{__('messages.form')}}</h2>
+          <h3>{{ $title }} - {{__('Form')}}</h3>
 
         </div>
 
@@ -66,8 +66,8 @@
 
         <div class="card-footer text-center">
 
-          <button type="button" class="btn btn-success ml-2" onclick="window.location.href='{{ route('showForms') }}'"><i class="fas fa-chevron-left"></i> {{__('messages.back')}}</button>
-          <button type="button" class="btn btn-warning ml-2" onclick="window.location.href='{{ route('editForm', ['form' => $formID]) }}'"><i class="far fa-edit"></i> {{__('messages.edit')}}</button>
+          <button type="button" class="btn btn-success ml-2" onclick="window.location.href='{{ route('showForms') }}'"><i class="fas fa-chevron-left"></i> {{__('Go back')}}</button>
+          <button type="button" class="btn btn-warning ml-2" onclick="window.location.href='{{ route('editForm', ['form' => $formID]) }}'"><i class="far fa-edit"></i> {{__('Edit')}}</button>
         </div>
 
       </div>
