@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('messages.user.directory.title'))
+@section('title', config('app.name') . ' | ' . __('User Directory'))
 
 @section('content_header')
 
-    <h4>{{__('messages.profile.users')}} / {{__('messages.user.directory.directory')}}</h4>
+    <h4>{{__('Users')}} / {{__('Directory')}}</h4>
 
 @stop
 
@@ -29,7 +29,6 @@
 
         @foreach ($users as $user)
               <div class="col-md-4">
-                  <!-- Widget: user widget style 1 -->
                   <div class="card card-widget widget-user">
                     <div class="widget-user-header bg-secondary">
                         <h3 class="widget-user-username">{{ $user->name }}</h3>
@@ -38,9 +37,9 @@
 
                     <div class="widget-user-image">
                       @if($user->profile->avatarPreference == 'gravatar')
-                          <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($user->email)}}" alt="User profile picture">
+                          <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($user->email)}}" alt="{{ __('User profile picture') }}">
                       @else
-                          <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://crafatar.com/avatars/{{$user->uuid}}" alt="User profile picture">
+                          <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://crafatar.com/avatars/{{$user->uuid}}" alt="{{ __('User profile picture') }}">
                       @endif
                     </div>
                     <div class="card-footer text-center">
@@ -49,7 +48,7 @@
 
                         <div class="user-indicator mb-2">
 
-                            <span class="badge badge-success">{{__('messages.user.directory.itsyou')}}</span>
+                            <span class="badge badge-success">{{__("It's you!")}}</span>
 
                         </div>
 
@@ -65,7 +64,7 @@
 
                       </div>
 
-                        <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('showSingleProfile', ['user' => $user->id]) }}'"><i class="fa fa-eye"></i> {{__('messages.profile.profile')}}</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('showSingleProfile', ['user' => $user->id]) }}'"><i class="fa fa-eye"></i> {{__('Profile')}}</button>
 
                     </div>
                   </div>
@@ -99,7 +98,7 @@
       <div class="alert alert-danger">
 
         <p>
-          {{__('messages.component_nopermission')}}
+          {{__("We're sorry, but you do not have permission to access this web page.")}}
         </p>
 
       </div>

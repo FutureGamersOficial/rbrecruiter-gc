@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('messages.application_m.int_applications'))
+@section('title', config('app.name') . ' | ' . __('Applications'))
 
 @section('content_header')
 
-    <h4>{{__('messages.reusable.my_acc')}} / {{__('messages.application_m.int_applications')}}</h4>
+    <h4>{{__('My account')}} / {{__('Applications')}}</h4>
 
 @stop
 
@@ -20,10 +20,10 @@
 
         <div class="col">
             <div class="callout callout-warning">
-                <h5>{{__('messages.user.app_process.title')}}</h5>
+                <h5>{{__('Application Process')}}</h5>
 
-                <p>{{__('messages.user.app_process.line1')}}</p>
-                <p>{{__('messages.user.app_process.line2')}}</p>
+                <p>{{__('Please allow up to three days for your application to be processed. Your application will be reviewed by every team member, and will move up in stages.')}}</p>
+                <p>{{__("If an interview is scheduled, you'll need to open your application here and confirm the time, date, and location assigned for you.")}}</p>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{__('messages.user.my_ongoingapps')}}</h3>
+                    <h3 class="card-title">{{__('My Ongoing Applications')}}</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0"> <!-- move to dedi css -->
@@ -46,11 +46,11 @@
                             <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
-                                <th>{{__('messages.application_m.applicant')}}</th>
-                                <th>{{__('messages.application_m.application_date')}}</th>
-                                <th>{{__('messages.last_updated')}}</th>
-                                <th style="width: 40px">{{__('messages.reusable.status')}}</th>
-                                <th style="width: 40px">{{__('messages.reusable.actions')}}</th>
+                                <th>{{__('Applicant')}}</th>
+                                <th>{{__('Application Date')}}</th>
+                                <th>{{__('Last updated')}}</th>
+                                <th style="width: 40px">{{__('Status')}}</th>
+                                <th style="width: 40px">{{__('Actions')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -66,36 +66,36 @@
                                         @switch($application->applicationStatus)
 
                                             @case('STAGE_SUBMITTED')
-                                            <span class="badge badge-success"><i class="fas fa-paper-plane"></i> {{__('messages.user.submitted')}}</span>
+                                            <span class="badge badge-success"><i class="fas fa-paper-plane"></i> {{__('Submitted')}}</span>
                                             @break
 
                                             @case('STAGE_PEERAPPROVAL')
-                                            <span class="badge badge-warning"><i class="fas fa-users"></i> {{__('messages.user.peer_approval')}}</span>
+                                            <span class="badge badge-warning"><i class="fas fa-users"></i> {{__('Peer Approval')}}</span>
                                             @break
 
                                             @case('STAGE_INTERVIEW')
-                                            <span class="badge badge-info"><i class="fa fa-microphone-alt"></i> {{__('messages.application_m.interview_p')}}</span>
+                                            <span class="badge badge-info"><i class="fa fa-microphone-alt"></i> {{__('Interview')}}</span>
                                             @break
 
                                             @case('STAGE_INTERVIEW_SCHEDULED')
-                                            <span class="badge badge-warning"><i class="fa fa-clock"></i> {{__('messages.application_m.interview_s')}}</span>
+                                            <span class="badge badge-warning"><i class="fa fa-clock"></i> {{__('Interview Scheduled')}}</span>
                                             @break
 
                                             @case('APPROVED')
-                                            <span class="badge badge-success"><i class="fa fa-check-double"></i> {{__('messages.application_m.approved')}}</span>
+                                            <span class="badge badge-success"><i class="fa fa-check-double"></i> {{__('Approved')}}</span>
                                             @break
 
                                             @case('DENIED')
-                                            <span class="badge badge-danger"><i class="fa fa-ban"></i> <b>{{__('messages.application_m.denied')}}</b></span>
+                                            <span class="badge badge-danger"><i class="fa fa-ban"></i> <b>{{__('Denied')}}</b></span>
                                             @break
 
                                             @default
-                                            <span class="badge badge-danger"><i class="fa fa-question"></i> {{__('messages.application_m.unknown_stat')}}</span>
+                                            <span class="badge badge-danger"><i class="fa fa-question"></i> {{__('Unknown')}}</span>
                                         @endswitch
                                     </td>
 
                                     <td>
-                                        <button type="button" class="btn btn-success" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fa fa-eye"></i> {{__('messages.reusable.view')}}</button>
+                                        <button type="button" class="btn btn-success" onclick="window.location.href='{{route('showUserApp', ['application' => $application->id])}}'"><i class="fa fa-eye"></i> {{__('View')}}</button>
                                     </td>
                                 </tr>
 
@@ -107,8 +107,8 @@
                     @else
 
                         <div class="alert alert-warning">
-                            <p><i class="fa fa-info-circle"></i> <b>{{__('messages.user.nothing_to_show')}}</b></p>
-                            <p>{{__('messages.user.nothing_to_show_exp')}}</p>
+                            <p><i class="fa fa-info-circle"></i> <b>{{__('Nothing to show')}}</b></p>
+                            <p>{{__("You currently have no applications to display. If you're eligible, you may apply once every month.")}}</p>
                         </div>
 
                     @endif
@@ -117,7 +117,7 @@
 
                 <div class="card-footer">
 
-                    <button type="button" class="btn btn-default mr-2" onclick="window.location.href='{{route('dashboard')}}'">{{__('messages.back')}}</button>
+                    <button type="button" class="btn btn-default mr-2" onclick="window.location.href='{{route('dashboard')}}'">{{__('Go back')}}</button>
 
                 </div>
             </div>
