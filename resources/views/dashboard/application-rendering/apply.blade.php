@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', config('app.name') . ' | ' . __('messages.txt_apply'))
+@section('title', config('app.name') . ' | ' . __('Apply'))
 
 @section('content_header')
-    <h1>{{__('messages.reusable.my_acc')}} / {{__('messages.txt_apply')}} / {{$vacancy->vacancyName}} {{__('messages.txt_application')}}</h1>
+    <h1>{{__('My account')}} / {{__('Apply')}} / {{$vacancy->vacancyName}} {{__('Application')}}</h1>
 @stop
 
 @section('js')
@@ -24,7 +24,7 @@
 
     @if(!$isEligibleForApplication)
 
-        <script>toastr.error("{{__('messages.reusable.no_access')}}")</script>
+        <script>toastr.error("{{__('Application access denied')}}")</script>
 
     @endif
 
@@ -38,20 +38,20 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalConfirmLabel">{{__('messages.reusable.confirm')}}</h5>
+                        <h5 class="modal-title" id="modalConfirmLabel">{{__('Please confirm')}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
 
-                        <p>{{__('messages.application_r.appl_submit_warn')}}</p>
-                        <p class="text-bold">{{__('messages.application_r.appl_submit_doublewarn')}}</p>
+                        <p>{{__('Are you sure you want to submit your application? Please review each of your answers carefully before doing so.')}}</p>
+                        <p class="text-bold">{{__("Please note: Applications CANNOT be modified once they're submitted!")}}</p>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" onclick="document.getElementById('submitApplicationForm').submit()"><i class="fas fa-check-double"></i> {{__('messages.application_r.acceptsend')}}</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.application_r.review')}}</button>
+                        <button type="button" class="btn btn-success" onclick="document.getElementById('submitApplicationForm').submit()"><i class="fas fa-check-double"></i> {{__('Accept & Send')}}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Review')}}</button>
                     </div>
                 </div>
             </div>
@@ -77,13 +77,13 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <p class="text-bold">{{__('messages.application_r.applying_for', ['name' => $vacancy->vacancyName])}}</p>
+                    <p class="text-bold">{{__('You are applying for: :vacancyNameValue', ['vacancyNameValue' => $vacancy->vacancyName])}}</p>
 
-                    <p>{{__('messages.application_r.welcome.line1')}}</p>
-                    <p>{{__('messages.application_r.welcome.line2', ['agerqr' => '13 ' . __('messages.application_r.welcome.yrs_old')])}}.</p>
-                    <p class="text-bold">{{__('messages.application_r.welcome.line3')}}.</p>
+                    <p>{{__("We're glad you've decided to apply. Generally, applications take 48 hours to be processed and reviewed. Depending on the circumstances and the volume of applications, you may receive an answer in a shorter time.")}}</p>
+                    <p>{{__('Please fill out the form below. Keep all answers concise and complete. Please keep in mind that the age requirement is at least :ageUpperLimitSettingValue years old.', ['ageUpperLimitSettingValue' => '16']) }}.</p>
+                    <p class="text-bold">{{__('Asking about your application will result in instant denial. Everything you need to know is here.')}}.</p>
 
-                    <p><i class="fab fa-markdown"></i> All fields support <a target="_blank" href="https://www.markdownguide.org/cheat-sheet/">Markdown</a></p>
+                    <p><i class="fab fa-markdown"></i> {!! __('All fields support <a target="_blank" href="https://www.markdownguide.org/cheat-sheet/">Markdown</a>') !!}</p>
 
                 </div>
 
@@ -120,7 +120,7 @@
 
                     <div class="card-footer text-center">
 
-                        <button type="button" class="btn btn-success" onclick="$('#confirm').modal('show')"><i class="fas fa-paper-plane"></i> {{__('messages.contactlabel_send')}}</button>
+                        <button type="button" class="btn btn-success" onclick="$('#confirm').modal('show')"><i class="fas fa-paper-plane"></i> {{__('Send')}}</button>
 
                     </div>
 
@@ -134,9 +134,9 @@
 
         <div class="alert alert-danger">
 
-            <p class="text-bold">{{__('messages.reusable.no_access')}}</p>
+            <p class="text-bold">{{__('Access denied')}}</p>
 
-            <p>{{__('messages.application_r.app_timeout', ['days' => $eligibilityDaysRemaining])}}</p>
+            <p>{{__('Your account is not permitted to submit another application. Please wait :applicationThrottleLimitSettingValue more days before trying to submit an application.', [':applicationThrottleLimitSettingValue' => $eligibilityDaysRemaining])}}</p>
         </div>
 
     @endif
