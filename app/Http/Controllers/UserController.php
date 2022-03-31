@@ -132,7 +132,7 @@ class UserController extends Controller
         if (config('demo.is_enabled')) {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
         $user = User::find(Auth::user()->id);
 
@@ -160,7 +160,7 @@ class UserController extends Controller
         if (config('demo.is_enabled')) {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
 
         $user = User::find(Auth::user()->id);
@@ -189,7 +189,7 @@ class UserController extends Controller
         if (config('demo.is_enabled')) {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', _('This feature is disabled'));
         }
 
         $this->authorize('delete', $user);
@@ -209,7 +209,7 @@ class UserController extends Controller
         if (config('demo.is_enabled')) {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
         $this->authorize('adminEdit', $user);
 
@@ -248,7 +248,7 @@ class UserController extends Controller
         if (config('demo.is_enabled')) {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
 
         $currentSecret = $request->session()->get('current2FA');
@@ -306,7 +306,7 @@ class UserController extends Controller
         if (config('demo.is_enabled')) {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
 
         // TODO: move logic to policy

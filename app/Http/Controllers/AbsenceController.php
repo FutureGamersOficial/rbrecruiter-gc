@@ -114,7 +114,7 @@ class AbsenceController extends Controller
 
         return redirect()
             ->to(route('absences.show', ['absence' => $absence->id]))
-            ->with('success', 'Absence request submitted for approval. You will receive email confirmation shortly.');
+            ->with('success', __('Absence request submitted for approval. You will receive email confirmation shortly.'));
     }
 
     /**
