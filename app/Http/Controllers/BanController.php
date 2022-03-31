@@ -45,7 +45,7 @@ class BanController extends Controller
         if (config('demo.is_enabled')) {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
 
         $this->authorize('create', [Ban::class, $user]);
@@ -69,7 +69,7 @@ class BanController extends Controller
         if (config('demo.is_enabled')) {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
 
         $this->authorize('delete', $user->bans);

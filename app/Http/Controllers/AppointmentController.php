@@ -113,7 +113,7 @@ class AppointmentController extends Controller
 
             return redirect()
                 ->back()
-                ->with('success', 'Saved notes.');
+                ->with('success', __('Saved notes.'));
 
         } catch (InvalidAppointmentException $ex) {
             return redirect()

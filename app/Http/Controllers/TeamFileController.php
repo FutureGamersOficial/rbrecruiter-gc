@@ -43,7 +43,7 @@ class TeamFileController extends Controller
 
         if (is_null(Auth::user()->currentTeam))
         {
-            $request->session()->flash('error', 'Please choose a team before viewing it\'s files.');
+            $request->session()->flash('error', __('Please choose a team before viewing it\'s files.'));
             return redirect()->to(route('teams.index'));
         }
 
@@ -66,7 +66,7 @@ class TeamFileController extends Controller
         {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
 
         try {
@@ -100,7 +100,7 @@ class TeamFileController extends Controller
         }
         catch (FileNotFoundException $ex)
         {
-           $request->session()->flash('error', 'Sorry, but the requested file could not be found in storage. Sometimes, files may be physically deleted by admins, but not from the app\'s database.');
+           $request->session()->flash('error', __('Sorry, but the requested file could not be found in storage. Sometimes, files may be physically deleted by admins, but not from the app\'s database.'));
            return redirect()->back();
 
         }
@@ -121,7 +121,7 @@ class TeamFileController extends Controller
         {
             return redirect()
                 ->back()
-                ->with('error', 'This feature is disabled');
+                ->with('error', __('This feature is disabled'));
         }
 
         try

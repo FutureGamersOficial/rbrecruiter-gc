@@ -86,7 +86,7 @@ class DevToolsController extends Controller
 
         return redirect()
             ->back()
-            ->with('success', 'Ran vote evaluation logic, with exit code ' . $code);
+            ->with('success', __('Ran vote evaluation logic, with exit code :exitCode ', ['exitCode' => $code]));
 
     }
 
@@ -97,12 +97,12 @@ class DevToolsController extends Controller
         if ($service->purgeExpired()) {
             return redirect()
                 ->back()
-                ->with('success', 'Force purged all expired suspensions.');
+                ->with('success', __('Force purged all expired suspensions.'));
         }
 
         return redirect()
             ->back()
-            ->with('error', 'There were no expired suspensions (or no suspensions at all) to purge.');
+            ->with('error', __('There were no expired suspensions (or no suspensions at all) to purge.'));
 
     }
 }
