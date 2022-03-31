@@ -113,12 +113,10 @@
                     <div class="container text-center white-text">
                         <div class="white-text text-center wow fadeInUp">
                             <h2>{{config('app.name')}}</h2>
-                            <h5>Seja bem-vindo ao site oficial da Games Club</h5>
+                            <h5>{{ __('Welcome to the Games Club Recruitment Portal!') }}</h5>
                             <br>
-                            <p>A Games Club é uma comunidade brasileira que busca trazer um experiência própria e exclusiva para cada participante, temos o intuito de se tornar uma comunidade forte, grande, bem respeitada e, além disso tudo se tornar uma segunda família para muitas pessoas.</p>
-                            <br>
-                            <p>Aqui você se preocupará apenas nas gameplays e em fazer novas amizades para suas jogatinas, até mesmo para trocar ideias e jogar conversa fora.</p>
-                            <p>Atendemos todos os públicos, somos uma comunidade de jogos mais não se limitamos somente a jogos.</p>
+                            <p>{{ __('We process applications for our Discord server\'s management team here. If you have any questions, don\'t hesistate to contact our support team! Take a look at the open jobs below.') }}</p>
+                            <p>{!! __('If you\'d like to learn more about our community, make sure to visit our <a href=":mainWebsiteUrlConfigValue" target="_blank">main website</a>!', ['mainWebsiteUrlConfigValue' => config('app.sitehomepage')]) !!}</p>
                         </div>
                     </div>
                 </div>

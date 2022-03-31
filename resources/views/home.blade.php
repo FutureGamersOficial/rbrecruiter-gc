@@ -15,9 +15,9 @@
 
 						<div class="alert alert-warning">
 
-							<h3><i class="fas fa-question-circle"></i> {{__('messages.opening_nodetails')}}</h3>
+							<h3><i class="fas fa-question-circle"></i> {{__("There don't seem to be any details.")}}</h3>
 							<p>
-								{{__('messages.opening_nodetails_exp')}}
+								{{__('This vacancy does not have any details yet.')}}
 							</p>
 
 						</div>
@@ -25,7 +25,7 @@
 
 						{!! $position->vacancyFullDescription !!}
 						<p class="text-sm text-muted">
-							{{__('messages.last_updated')}} @ {{ $position->updated_at }}
+							{{__('Last updated @ :lastUpdatedTimeValue', [':lastUpdatedTimeValue' => $position->updated_at])}}
 						</p>
 					@endif
 
@@ -69,10 +69,10 @@
               <div class="row">
                   <div class="col">
                       <div class="alert alert-warning">
-                          <p class="font-weight-bold"><i class="fas fa-exclamation-circle"></i> Attention</p>
-                          <p>Demo mode is active on this instance. The database is refreshed daily and some features are disabled for security reasons.</p>
+                          <p class="font-weight-bold"><i class="fas fa-exclamation-circle"></i> {{ __('Attention') }}</p>
+                          <p>{{ __('Demo mode is active on this instance. The database is refreshed daily and some features are disabled for security reasons.') }}</p>
 
-                          <p>If you're seeing this message in error, please contact your system administrator.</p>
+                          <p>{{ __("If you're seeing this message in error, please contact your system administrator.") }}</p>
                       </div>
                   </div>
               </div>
@@ -133,7 +133,7 @@
                               <div class="card-header text-center">
 
                                   <h4 class="card-title">{{$position->vacancyName}}</h4>
-                                  <p class="card-subtitle">{{trans_choice('messages.open_position_count', $position->vacancyCount)}}</p>
+                                  <p class="card-subtitle">{{trans_choice('{1} There is :count open position!|[2,*] There are :count open positions!', $position->vacancyCount)}}</p>
 
 
                               </div>
@@ -148,16 +148,16 @@
 
                               <div class="card-footer text-center">
                                   @auth
-                                      <button {{($isEligibleForApplication) ? '' : 'disabled'}} type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('messages.txt_apply')}}</button>
+                                      <button {{($isEligibleForApplication) ? '' : 'disabled'}} type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('Apply')}}</button>
                                       @if(!$isEligibleForApplication)
-                                          <span class="badge-warning badge"><i class="fa fa-info"></i> {{__('messages.ineligible_days_remaining', ['days' => $eligibilityDaysRemaining])}}</span>
+                                          <span class="badge-warning badge"><i class="fa fa-info"></i> {{__('Ineligible (:days) day(s) remaining', ['days' => $eligibilityDaysRemaining])}}</span>
                                       @endif
                                   @endauth
 
-                                  <button type="button" class="btn btn-info" onclick="$('#{{ $position->vacancySlug }}-details').modal('show')">{{__('messages.txt_learn_more')}}</button>
+                                  <button type="button" class="btn btn-info" onclick="$('#{{ $position->vacancySlug }}-details').modal('show')">{{__('Learn more')}}</button>
 
                                   @guest
-                                          <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('messages.txt_apply')}}</button>
+                                          <button type="button" class="btn btn-success" onclick="window.location.href='{{route('renderApplicationForm', ['vacancySlug' => $position->vacancySlug])}}'">{{__('Apply')}}</button>
                                   @endguest
 
                               </div>
@@ -176,7 +176,7 @@
 
                           <div class="card-header">
 
-                              <div class="card-title"><h4>{{__('messages.application_closed')}}</h4></div>
+                              <div class="card-title"><h4>{{__('Applications Closed')}}</h4></div>
 
                           </div>
 
@@ -184,9 +184,11 @@
 
                               <div class="alert alert-info">
 
-                                  <p><b>{{__('messages.application_closed_intro')}}</b></p>
+                                  <p><b>{{__('Hello There!')}}</b></p>
                                   <p>
-                                      {{__('messages.application_closed_intro_line2')}}
+                                      {{__('We are currently not hiring any new staff members at the moment. If you\'d like to apply, check out our Discord\'s
+      announcement channel for news when a new position opens.
+      Our application cycle usually lasts two weeks, so if you\'re seeing this, it\'s because it finished, and new one will begin soon.')}}
                                   </p>
 
                               </div>
@@ -200,77 +202,6 @@
               @endif
 
           </div>
-
-          <div class="row mt-5 mb-5">
-
-              <div class="col text-center">
-
-                  <h3>Conheça a Games Club</h3>
-
-              </div>
-
-          </div>
-
-          <div class="row mt-5 mb-5">
-
-              <div id="carouselControls" class="carousel slide w-100" data-ride="carousel">
-                  <div class="carousel-inner">
-                      <div class="carousel-item active">
-                          <img class="d-block w-100" src="/slides/ets2.01.jpg"
-                               alt="Pic from ETS2">
-                      </div>
-                      <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/ets2.02.png"
-                               alt="Pic from ETS2">
-                      </div>
-                      <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/ets2.03.png"
-                               alt="Pic from ETS2">
-                      </div>
-                      <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/fs19.01.png"
-                               alt="Pic from Farming Sim">
-                      </div>
-                      <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/fs19.02.png"
-                               alt="Pic from Farming Sim">
-                      </div>
-                      <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/fs19.03.png"
-                               alt="Pic from Farming Sim">
-                      </div>
-                      <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/gtav.01.png"
-                               alt="Pic from GTAV">
-                      </div>
-                      <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/gtav.02.png"
-                               alt="Pic from GTAV">
-                      </div>
-                      <div class="carousel-item">
-                          <img class="d-block w-100" src="/slides/gtav.03.png"
-                               alt="Pic from GTAV">
-                      </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="sr-only">{{__('pagination.previous')}}</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="sr-only">{{__('pagination.next')}}</span>
-                  </a>
-              </div>
-
-
-          </div>
-
-          <div class="row">
-            <div class="col">
-                <p class="text-muted text-center">Créditos: Ryan Gabriel#8868 (Farming Simulator), BruceThompsonN#4217 (GTA V), CaioSFela2TI#5555 e Oliveira#3800 (ETS2)</p>
-            </div>
-          </div>
-
 
           <div class="row mt-5 mb-5">
 
@@ -297,8 +228,8 @@
 
               <div class="col">
 
-                  <h3>{{__('messages.contact_cta')}}</h3>
-                  <p class="text-muted">{{__('messages.contact_disclaimer')}}</p>
+                  <h3>{{__('Any questions? Leave a message!')}}</h3>
+                  <p class="text-muted">{{__('*This is not an application form. Any applications sent here will be ignored. Additionally, please keep messages on topic (about this site only). For anything else, please use other contact options available.')}}</p>
 
 
               </div>
@@ -323,7 +254,7 @@
                               <div class="md-form">
 
                                   <input type="text" name="name" class="form-control" id="firstName">
-                                  <label for="firstName">{{__('messages.contactlabel_name')}}</label>
+                                  <label for="firstName">{{__('Name')}}</label>
 
                               </div>
                           </div>
@@ -333,7 +264,7 @@
                               <div class="md-form">
 
                                   <input type="email" name="email" class="form-control" id="email">
-                                  <label for="email">{{__('messages.contactlabel_email')}}</label>
+                                  <label for="email">{{__('Email')}}</label>
 
                               </div>
 
@@ -347,7 +278,7 @@
                           <div class="md-form">
 
                               <input type="text" name="subject" id="subject" class="form-control">
-                              <label for="subject">{{__('messages.contactlabel_subject')}}</label>
+                              <label for="subject">{{__('Subject')}}</label>
 
                           </div>
 
@@ -357,7 +288,7 @@
 
                           <div class="md-form">
 
-                              <textarea rows="3" name="msg" id="message" class="md-textarea form-control"></textarea>
+                              <textarea rows="3" name="msg" id="message" class="md-textarea form-control" placeholder="{{ __('Your message') }}"></textarea>
 
                           </div>
 
@@ -383,7 +314,7 @@
                     <!-- align: deprecated cheap hack, but quick -->
                   <div align="center" class="g-recaptcha pb-3" data-callback="gcallback" data-sitekey="{{config('recaptcha.keys.sitekey')}}"></div>
 
-                  <button type="button" class="btn btn-info" onclick="document.getElementById('contactForm').submit()">{{__('messages.contactlabel_send')}}</button>
+                  <button type="button" class="btn btn-info" onclick="document.getElementById('contactForm').submit()">{{__('Send')}}</button>
 
               </div>
 
