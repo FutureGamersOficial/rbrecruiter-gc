@@ -22,6 +22,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\FailedCaptchaException;
+use App\Http\Requests\HomeContactRequest;
 use App\Notifications\NewContact;
 use App\Services\ContactService;
 use App\User;
@@ -40,7 +41,7 @@ class ContactController extends Controller
         $this->users = $users;
     }
 
-    public function create(Request $request)
+    public function create(HomeContactRequest $request)
     {
         try {
 
