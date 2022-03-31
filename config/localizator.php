@@ -27,7 +27,7 @@ return [
         /**
          * Directories which should be looked inside.
          */
-        'dirs'      => ['resources/views'],
+        'dirs'      => ['resources/views', 'app/Http/Controllers'],
 
         /**
          * Patterns by which files should be queried.
