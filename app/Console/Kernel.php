@@ -22,6 +22,7 @@
 namespace App\Console;
 
 use App\Jobs\ProcessDueSuspensions;
+use App\Jobs\ProcessExpiredAbsences;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -51,6 +52,11 @@ class Kernel extends ConsoleKernel
         // Production value: Every day
 
         $schedule->job(new ProcessDueSuspensions)
+            ->daily();
+        // Production value: Every day
+        // Development value: Every minute
+
+        $schedule->job(new ProcessExpiredAbsences)
             ->daily();
         // Production value: Every day
         // Development value: Every minute

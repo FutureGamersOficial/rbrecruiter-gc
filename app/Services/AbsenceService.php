@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Absence;
 use App\Exceptions\AbsenceNotActionableException;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -148,6 +149,15 @@ class AbsenceService
     }
 
 
+    public function endExpired()
+    {
+        foreach (Absence::all() as $absence)
+        {
+            if (!Carbon::parse($absence->predicted_end)->isFuture()) {
+                $absence->setEnded();
+            }
+        }
+    }
 
 
 
