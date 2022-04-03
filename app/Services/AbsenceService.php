@@ -4,12 +4,18 @@ namespace App\Services;
 
 use App\Absence;
 use App\Exceptions\AbsenceNotActionableException;
+use App\Notifications\AbsenceRequestApproved;
+use App\Notifications\AbsenceRequestCancelled;
+use App\Notifications\AbsenceRequestDeclined;
+use App\Notifications\AbsenceRequestEnded;
+use App\Notifications\NewAbsenceRequest;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 
 class AbsenceService
@@ -51,6 +57,10 @@ class AbsenceService
             'status' => 'PENDING',
         ]);
 
+        foreach(User::role('admin')->get() as $admin) {
+            $admin->notify(new NewAbsenceRequest($absence));
+        }
+
         Log::info('Processing new leave of absence request.', [
             'requesting_user' => $user->email,
             'absenceid' => $absence->id,
@@ -76,7 +86,9 @@ class AbsenceService
             'new_status' => 'APPROVED'
         ]);
 
-        return $absence->setApproved();
+        return $absence
+            ->setApproved()
+            ->requester->notify(new AbsenceRequestApproved($absence));
     }
 
 
@@ -95,7 +107,9 @@ class AbsenceService
             'new_status' => 'DECLINED'
         ]);
 
-        return $absence->setDeclined();
+        return $absence
+            ->setDeclined()
+            ->requester->notify(new AbsenceRequestDeclined($absence));
     }
 
 
@@ -113,7 +127,9 @@ class AbsenceService
             'new_status' => 'CANCELLED'
         ]);
 
-        return $absence->setCancelled();
+        return $absence
+            ->setCancelled()
+            ->requester->notify(new AbsenceRequestCancelled($absence));
     }
 
     /**
@@ -129,7 +145,9 @@ class AbsenceService
             'new_status' => 'ENDED'
         ]);
 
-        return $absence->setEnded();
+        return $absence
+            ->setEnded()
+            ->requester->notify(new AbsenceRequestEnded($absence));
     }
 
     /**
@@ -154,7 +172,7 @@ class AbsenceService
         foreach (Absence::all() as $absence)
         {
             if (!Carbon::parse($absence->predicted_end)->isFuture()) {
-                $absence->setEnded();
+                $this->endAbsence($absence);
             }
         }
     }
