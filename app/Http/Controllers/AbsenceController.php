@@ -6,7 +6,9 @@ use App\Absence;
 use App\Exceptions\AbsenceNotActionableException;
 use App\Http\Requests\StoreAbsenceRequest;
 use App\Http\Requests\UpdateAbsenceRequest;
+use App\Services\AbsenceService;
 use App\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
@@ -15,28 +17,12 @@ use Illuminate\Support\Facades\Auth;
 class AbsenceController extends Controller
 {
 
-    /**
-     * Determines whether someone already has an active leave of absence request
-     *
-     * @param User $user The user to check
-     * @return bool Their status
-     */
-    private function hasActiveRequest(Authenticatable $user): bool {
+    private AbsenceService $absenceService;
 
-        $absences = Absence::where('requesterID', $user->id)->get();
+    public function __construct (AbsenceService $absenceService) {
 
-        foreach ($absences as $absence) {
+        $this->absenceService = $absenceService;
 
-            // Or we could adjust the query (using a model scope) to only return valid absences;
-            // If there are any, refuse to store more, but this approach also works
-            // A model scope that only returns cancelled, declined and ended absences could also be implemented for future use
-            if (in_array($absence->getRawOriginal('status'), ['PENDING', 'APPROVED']))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -57,7 +43,7 @@ class AbsenceController extends Controller
      * Display a listing of absences belonging to the current user.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function showUserAbsences()
     {
@@ -76,14 +62,14 @@ class AbsenceController extends Controller
     /**
      * Show the form for creating a new absence request.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
         $this->authorize('create', Absence::class);
 
         return view('dashboard.absences.create')
-            ->with('activeRequest', $this->hasActiveRequest(Auth::user()));
+            ->with('activeRequest', $this->absenceService->hasActiveRequest(Auth::user()));
     }
 
     /**
@@ -102,15 +88,7 @@ class AbsenceController extends Controller
                 ->with('error', __('You already have an active request. Cancel it or let it expire first.'));
         }
 
-
-        $absence = Absence::create([
-            'requesterID' => Auth::user()->id,
-            'start' => $request->start_date,
-            'predicted_end' => $request->predicted_end,
-            'available_assist' => $request->available_assist == "on",
-            'reason' => $request->reason,
-            'status' => 'PENDING',
-        ]);
+        $absence = $this->absenceService->createAbsence(Auth::user(), $request);
 
         return redirect()
             ->to(route('absences.show', ['absence' => $absence->id]))
@@ -120,7 +98,8 @@ class AbsenceController extends Controller
     /**
      * Display the specified absence request.
      *
-     * @param  \App\Absence  $absence
+     * @param \App\Absence $absence
+     * @throws AuthorizationException
      */
     public function show(Absence $absence)
     {
@@ -138,7 +117,7 @@ class AbsenceController extends Controller
      *
      * @param Absence $absence
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function approveAbsence(Absence $absence): RedirectResponse
     {
@@ -146,7 +125,7 @@ class AbsenceController extends Controller
 
         try
         {
-            $absence->setApproved();
+            $this->absenceService->approveAbsence($absence);
         }
         catch (AbsenceNotActionableException $notActionableException)
         {
@@ -166,7 +145,7 @@ class AbsenceController extends Controller
      *
      * @param Absence $absence
      * @return RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function declineAbsence(Absence $absence): RedirectResponse
     {
@@ -174,7 +153,7 @@ class AbsenceController extends Controller
 
         try
         {
-            $absence->setDeclined();
+            $this->absenceService->declineAbsence($absence);
         } catch (AbsenceNotActionableException $notActionableException)
         {
             return redirect()
@@ -193,7 +172,7 @@ class AbsenceController extends Controller
      *
      * @param Absence $absence
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function cancelAbsence(Absence $absence): \Illuminate\Http\RedirectResponse
     {
@@ -201,7 +180,7 @@ class AbsenceController extends Controller
 
         try
         {
-            $absence->setCancelled();
+            $this->absenceService->cancelAbsence($absence);
         }
         catch (AbsenceNotActionableException $notActionableException)
         {
@@ -225,7 +204,7 @@ class AbsenceController extends Controller
     {
         $this->authorize('delete', $absence);
 
-        if ($absence->delete()) {
+        if ($this->absenceService->removeAbsence($absence)) {
             return redirect()
                 ->to(route('absences.index'))
                 ->with('success', __('Absence request deleted.'));
