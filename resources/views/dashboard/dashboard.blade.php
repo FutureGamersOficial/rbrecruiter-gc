@@ -3,7 +3,7 @@
 @section('title', config('app.name'))
 
 @section('content_header')
-    <h1>{{config('app.name')}} / {{__('messages.dashboard')}}</h1>
+    <h1>{{config('app.name')}} / {{__('Dashboard')}}</h1>
 @stop
 
 @section('js')
@@ -113,7 +113,7 @@
                 <div class="icon">
                   <i class="fas fa-sync"></i>
                 </div>
-                <a href="{{ route('showUserApps') }}" class="small-box-footer">{{__('messages.open')}} <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('showUserApps') }}" class="small-box-footer">{{__('Open')}} <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->

@@ -9,13 +9,13 @@
         @if (session()->has('error'))
 
             <script>
-                toastr.error('{{session()->get('error')}}', '{{__('messages.global_error')}}')
+                toastr.error('{{session()->get('error')}}', '{{__('Error')}}')
             </script>
 
         @elseif (session()->has('success'))
 
             <script>
-                toastr.success('{{session()->get('success')}}', '{{__('messages.global_success')}}')
+                toastr.success('{{session()->get('success')}}', '{{__('Success')}}')
             </script>
 
         @endif

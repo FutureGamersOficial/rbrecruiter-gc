@@ -24,7 +24,7 @@
 
           <span><i class="fa fa-ban"></i> <b>{{__('This account has been suspended :suspensionTypeValue', ['suspensionTypeValue' => ($suspensionInfo['isPermanent']) ? __('permanently.') : __('until :date.', ['date' => $suspensionInfo['bannedUntil']])]) }}</b></span>
 
-          <p>{{__('This user has been suspended by the admins. Admins suspend accounts for a variety of reasons, including spam.')}}</p>
+          <p>{{__('This user has been suspended.')}}</p>
 
           <p>
               <i class="fas fa-chevron-right"></i> <b>{{$suspensionInfo['reason']}}</b>
@@ -112,7 +112,7 @@
             </x-modal>
         @endif
 
-        <x-modal id="deleteAccount" modal-label="deleteAccount" modal-title="{{__('messages.reusable.confirm')}}" include-close-button="true">
+        <x-modal id="deleteAccount" modal-label="deleteAccount" modal-title="{{__('Confirm')}}" include-close-button="true">
 
             @if($demoActive)
                 <div class="alert alert-danger">
@@ -225,7 +225,7 @@
             <x-slot name="modalFooter"></x-slot>
         </x-modal>
 
-        <x-modal id="editUser" modal-label="editUser" modal-title="{{__('messages.profile.edituser')}}" include-close-button="true">
+        <x-modal id="editUser" modal-label="editUser" modal-title="{{__('Edit account')}}" include-close-button="true">
 
             @if($demoActive)
                 <div class="alert alert-danger">
@@ -246,7 +246,7 @@
             <label for="uuid">{{ __('Mojang UUID (deprecated)') }}</label>
             <input {{ ($demoActive) ? 'disabled' : '' }} id="uuid" type="text" name="uuid" class="form-control" required value="{{ $profile->user->uuid ?? "disabled" }}" />
             <p class="text-muted text-sm">
-              <i class="fas fa-exclamation-triangle"></i> {{__('messages.profile.edituser_consequence')}}
+              <i class="fas fa-exclamation-triangle"></i> {{__('If the setting "Require Valid Game License" is activated, editing this field may have unintended consequences. Proceed with caution.')}}
             </p>
 
             <div class="form-group mt-3">

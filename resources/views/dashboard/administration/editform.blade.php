@@ -47,7 +47,7 @@
 
             <div class="card-header">
 
-              <h4>{{__('messages.edt_action')}} {{ $title }}...</h4>
+              <h4>{{__('Editing :formTitle...', ['formTitle' => $title])}}</h4>
 
             </div>
 

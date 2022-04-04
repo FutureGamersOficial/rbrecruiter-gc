@@ -109,7 +109,8 @@ class RegisterController extends Controller
             'acceptTerms' => ['required', 'accepted'],
             'password' => $password,
         ], [
-            'uuid.required' => 'Please enter a valid (and Premium) Minecraft username! We do not support cracked users.',
+            'uuid.required' => __('Please enter a valid (and Premium) Minecraft username! We do not support cracked users.'),
+            'acceptTerms.required' => __('Please accept the Community Guidelines, Terms of Service and Privacy Policy to continue.')
         ]);
     }
 

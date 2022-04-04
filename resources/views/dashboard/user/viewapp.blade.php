@@ -65,7 +65,7 @@
                     <form id="updateApplication" action="{{route('updateApplicationStatus', ['application' => $application->id, 'newStatus' => 'deny'])}}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="btn btn-danger">{{__('Confirm: Deny Applicant')}}</button>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-ban"></i> {{__('Confirm')}}</button>
                     </form>
                 </x-slot>
 
@@ -222,7 +222,7 @@
 
 
                                     <div class="col mr-5">
-                                        <button type="button" class="btn btn-danger" onclick="$('#denyApplication').modal('show')" {{($application->applicationStatus == 'DENIED') ? 'disabled' : ''}}><i class="fas fa-arrow-left"></i> {{__('messages.view_app.denyapp')}}</button>
+                                        <button type="button" class="btn btn-danger" onclick="$('#denyApplication').modal('show')" {{($application->applicationStatus == 'DENIED') ? 'disabled' : ''}}><i class="fas fa-arrow-left"></i> {{__('Decline application')}}</button>
                                     </div>
 
                                     <div class="col">

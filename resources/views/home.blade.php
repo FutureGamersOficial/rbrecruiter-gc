@@ -9,7 +9,7 @@
 		<!-- todo: details component -->
 
 		@foreach($positions as $position)
-				<x-modal id="{{ $position->vacancySlug . '-details' }}" modal-label="{{ $position->vacancySlug . '-details-label' }}" modal-title="{{__('messages.details_m_title')}}" include-close-button="true">
+				<x-modal id="{{ $position->vacancySlug . '-details' }}" modal-label="{{ $position->vacancySlug . '-details-label' }}" modal-title="{{__('Vacancy details')}}" include-close-button="true">
 
 					@if (is_null($position->vacancyFullDescription))
 
