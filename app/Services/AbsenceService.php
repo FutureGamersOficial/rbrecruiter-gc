@@ -49,7 +49,7 @@ class AbsenceService
     {
 
         $absence = Absence::create([
-            'requesterID' => $user->id,
+            'requesterID' => $requester->id,
             'start' => $request->start_date,
             'predicted_end' => $request->predicted_end,
             'available_assist' => $request->available_assist == "on",
@@ -62,7 +62,7 @@ class AbsenceService
         }
 
         Log::info('Processing new leave of absence request.', [
-            'requesting_user' => $user->email,
+            'requesting_user' => $requester->email,
             'absenceid' => $absence->id,
             'reason' => $request->reason
         ]);
@@ -78,7 +78,7 @@ class AbsenceService
      * @return Absence The approved absence.
      * @throws AbsenceNotActionableException
      */
-    public function approveAbsence(Absence $absence): Absence
+    public function approveAbsence(Absence $absence)
     {
         Log::info('An absence request has just been approved.', [
             'absenceid' => $absence->id,
@@ -99,7 +99,7 @@ class AbsenceService
      * @return Absence The declined absence.
      * @throws AbsenceNotActionableException
      */
-    public function declineAbsence(Absence $absence): Absence
+    public function declineAbsence(Absence $absence)
     {
         Log::warning('An absence request has just been declined.', [
             'absenceid' => $absence->id,
@@ -138,7 +138,7 @@ class AbsenceService
      * @param Absence $absence
      * @return bool
      */
-    public function endAbsence(Absence $absence): Absence
+    public function endAbsence(Absence $absence)
     {
         Log::info('An absence request has just expired.', [
             'absenceid' => $absence->id,

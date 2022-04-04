@@ -49,7 +49,6 @@ class AbsenceRequestCancelled extends Notification implements ShouldQueue
                 ->subject(config('app.name').' - absence request cancelled')
                 ->line("This notification confirms that your recent Leave of Absence from {$this->absence->created_at} has just been cancelled by you.")
                 ->line('Please note that any inactivity will be counted in our activity metrics. You may also make a new request if you wish.')
-                ->action('View your request', url(route('absences.show', ['absence' => $this->absence->id])))
                 ->action('Send new request', url(route('absences.create')))
                 ->salutation('The team at ' . config('app.name'));
     }

@@ -49,7 +49,6 @@ class AbsenceRequestEnded extends Notification implements ShouldQueue
                 ->subject(config('app.name').' - absence request expired')
                 ->line("Your Leave of Absence request from {$this->absence->created_at} (until {$this->absence->predicted_end}) has expired today.")
                 ->line('Please note that any inactivity will be counted in our activity metrics. You may now make a new request if you still need more time.')
-                ->action('View expired request', url(route('absences.show', ['absence' => $this->absence->id])))
                 ->action('Send new request', url(route('absences.create')))
                 ->salutation('The team at ' . config('app.name'));
     }

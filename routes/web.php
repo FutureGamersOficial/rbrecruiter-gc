@@ -351,7 +351,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                     ->name('devForceEvaluateVotes');
 
                 Route::delete('/suspensions/purge-expired', [DevToolsController::class, 'purgeSuspensions'])
-                    ->name('devPurgeExpired');
+                    ->name('devPurgeExpiredSuspensions');
+
+                Route::delete('/absences/purge-expired', [DevToolsController::class, 'endAbsencesNow'])
+                    ->name('devPurgeExpiredAbsences');
 
             });
 

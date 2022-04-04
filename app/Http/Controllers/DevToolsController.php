@@ -24,10 +24,12 @@ namespace App\Http\Controllers;
 use App\Application;
 use App\Events\ApplicationApprovedEvent;
 use App\Events\ApplicationDeniedEvent;
+use App\Services\AbsenceService;
 use App\Services\AccountSuspensionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DevToolsController extends Controller
 {
@@ -104,5 +106,17 @@ class DevToolsController extends Controller
             ->back()
             ->with('error', __('There were no expired suspensions (or no suspensions at all) to purge.'));
 
+    }
+
+    public function endAbsencesNow(AbsenceService $service)
+    {
+        $this->singleAuthorise();
+
+        $service->endExpired();
+        Log::alert('(absence cleaner) Forcefully started absence expiration check!');
+
+        return redirect()
+            ->back()
+            ->with('success', 'Cleaned up expired absences.');
     }
 }

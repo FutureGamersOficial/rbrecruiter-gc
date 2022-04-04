@@ -14,10 +14,10 @@
             </div>
             <div class="modal-footer">
 
-                {{ $modalFooter }}
+                {{ $modalFooter ?? '' }}
 
                 @if ($includeCloseButton == true)
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.modal_close')}}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
                 @endif
             </div>
         </div>

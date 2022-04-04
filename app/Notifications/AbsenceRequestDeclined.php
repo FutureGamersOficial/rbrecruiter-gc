@@ -49,7 +49,6 @@ class AbsenceRequestDeclined extends Notification implements ShouldQueue
                 ->subject(config('app.name').' - absence request declined')
                 ->line("Your recent Leave of Absence request from {$this->absence->created_at} has just been declined by an admin.")
                 ->line('Please note that any inactivity will be counted in our activity metrics. You may make a new request, but we recommend you ask your team lead regarding your declined request.')
-                ->action('View your request', url(route('absences.show', ['absence' => $this->absence->id])))
                 ->action('Send new request', url(route('absences.create')))
                 ->salutation('The team at ' . config('app.name'));
     }

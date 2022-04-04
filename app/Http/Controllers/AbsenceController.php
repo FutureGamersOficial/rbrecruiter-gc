@@ -82,7 +82,7 @@ class AbsenceController extends Controller
     {
         $this->authorize('create', Absence::class);
 
-        if ($this->hasActiveRequest(Auth::user())) {
+        if ($this->absenceService->hasActiveRequest(Auth::user())) {
             return redirect()
                 ->back()
                 ->with('error', __('You already have an active request. Cancel it or let it expire first.'));
