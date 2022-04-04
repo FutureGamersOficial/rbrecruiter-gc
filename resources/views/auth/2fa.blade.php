@@ -13,7 +13,7 @@
               <div class="brand-wrapper">
                 <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo">{{ config('adminlte.logo') }}
               </div>
-              <p class="login-card-description">{{__('messages.2fa_txt')}}</p>
+              <p class="login-card-description">{{__('Multi-factor authentication is enabled for your account.')}}</p>
               <form action="{{ route('verify2FA') }}" method="POST" id="verify">
                   @csrf
                   <div class="form-group">
@@ -24,8 +24,9 @@
                 </form>
                 <p class="login-card-footer-text">{{__("Don't know the code?")}} <a href="{{ route('logout') }}" class="text-reset">{{__('Cancel sign in (sign out)')}}</a></p>
                 <nav class="login-card-footer-nav">
-                  <a href="#!">{{__('Terms of Service')}}</a>
-                  <a href="#!">{{__('Privacy Policy')}}</a>
+                  <a href="{{ config('app.guidelines_url') }}">{{__('Community Guidelines')}}</a>
+                  <a href="{{ config('app.privacy_url') }}">{{__('Privacy Policy')}}</a>
+                    <a href="{{ config('app.terms_url') }}">{{__('Terms of Service')}}</a>
                 </nav>
             </div>
           </div>

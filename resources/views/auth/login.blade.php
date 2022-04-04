@@ -13,7 +13,7 @@
               <div class="brand-wrapper">
                 <img src="{{ config('adminlte.logo_img') }}" alt="logo" class="logo rounded mr-2">{{ config('adminlte.logo') }}
               </div>
-              <p class="login-card-description">{{__('messages.signin_cta')}}</p>
+              <p class="login-card-description">{{__('Sign in to your account')}}</p>
               <form action="{{ route('login') }}" method="POST" id="loginForm">
                   @csrf
                   @if ($demoActive)
@@ -49,9 +49,9 @@
                 <a href="{{ route('password.request') }}" class="forgot-password-link">{{__('Forgot password?')}}</a>
                 <p class="login-card-footer-text">{{__("Don't have an account?")}} <a href="{{ route('register') }}" class="text-reset">{{__('Sign up here')}}</a></p>
                 <nav class="login-card-footer-nav">
-                  <a href="#!">{{__('Terms of Service')}}</a>
-                  <a href="#!">{{__('Privacy Policy')}}</a>
-                    <a href="#!">{{__('Community Guidelines')}}</a>
+                  <a href="{{ config('app.terms_url') }}">{{__('Terms of Service')}}</a>
+                  <a href="{{ config('app.privacy_url') }}">{{__('Privacy Policy')}}</a>
+                    <a href="{{ config('app.guidelines_url') }}">{{__('Community Guidelines')}}</a>
 
                 </nav>
             </div>

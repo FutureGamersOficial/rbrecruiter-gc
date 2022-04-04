@@ -106,6 +106,7 @@ class RegisterController extends Controller
             'uuid' => (Options::getOption('requireGameLicense') && Options::getOption('currentGame') == 'MINECRAFT') ? ['required', 'string', 'unique:users', 'min:32', 'max:32'] : ['nullable', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'acceptTerms' => ['required', 'accepted'],
             'password' => $password,
         ], [
             'uuid.required' => 'Please enter a valid (and Premium) Minecraft username! We do not support cracked users.',

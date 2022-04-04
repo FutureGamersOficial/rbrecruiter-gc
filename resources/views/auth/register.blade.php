@@ -85,13 +85,17 @@
                       </div>
                   @endif
 
+                  <div class="form-group mt-3">
+                      <label for="legal"><input type="checkbox" name="acceptTerms"> {!! __('I am 13 years of age or older and have read and agree with the <a href=":communityGuidelinesUrlConfigValue" target="_blank">Community Guidelines</a>, <a href=":privacyPolicyUrlConfigValue" target="_blank">Privacy Policy</a> and <a href=":termsUrlConfigValue" target="_blank">Terms of Service</a> set forth.', ['communityGuidelinesUrlConfigValue' => config('app.guidelines_url'), 'privacyPolicyUrlConfigValue' => config('app.privacy_url'), 'termsUrlConfigValue' => config('app.terms_url')]) !!}</label>
+                  </div>
+
                   <input name="register" id="register" class="btn btn-block login-btn mb-4" type="submit" value="{{__('Sign up')}}">
                 </form>
                 <p class="login-card-footer-text">{{__('Have an account with us?')}} <a href="{{ route('login') }}" class="text-reset">{{__('Sign in here')}}</a></p>
                 <nav class="login-card-footer-nav">
-                  <a href="#!">{{__('Terms of Service')}}</a>
-                  <a href="#!">{{__('Privacy Policy')}}</a>
-                    <a href="#!">{{__('Community Guidelines')}}</a>
+                  <a href="{{ config('app.terms_url') }}">{{__('Terms of Service')}}</a>
+                  <a href="{{ config('app.privacy_url') }}">{{__('Privacy Policy')}}</a>
+                    <a href="{{ config('app.guidelines_url') }}">{{__('Community Guidelines')}}</a>
                 </nav>
             </div>
           </div>

@@ -30,9 +30,9 @@
                         </form>
 
                         <nav class="login-card-footer-nav">
-                            <a href="#!">{{__('messages.terms')}}</a>
-                            <a href="#!">{{__('messages.ppolicy')}}</a>
-                            <a href="#!">{{__('Community Guidelines')}}</a>
+                            <a href="{{ config('app.terms_url') }}">{{__('Terms of Service')}}</a>
+                            <a href="{{ config('app.privacy_url') }}">{{__('Privacy Policy')}}</a>
+                            <a href="{{ config('app.guidelines_url') }}">{{__('Community Guidelines')}}</a>
 
                         </nav>
                     </div>

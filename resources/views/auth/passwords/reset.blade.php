@@ -70,9 +70,9 @@
                         </form>
                         <a href="{{ route('login') }}">{{__('Back to sign in')}}</a>
                         <nav class="login-card-footer-nav">
-                            <a href="#!">{{__('Terms of Service')}}</a>
-                            <a href="#!">{{__('Privacy Policy')}}</a>
-                            <a href="#!">{{__('Community Guidelines')}}</a>
+                            <a href="{{ config('app.terms_url') }}">{{__('Terms of Service')}}</a>
+                            <a href="{{ config('app.privacy_url') }}">{{__('Privacy Policy')}}</a>
+                            <a href="{{ config('app.guidelines_url') }}">{{__('Community Guidelines')}}</a>
 
                         </nav>
                     </div>
