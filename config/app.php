@@ -94,6 +94,31 @@ return [
     */
     'hide_ips' => env('HIDE_IPS'),
 
+
+    /*
+   |--------------------------------------------------------------------------
+   | Legal documents
+   |--------------------------------------------------------------------------
+   |
+   | Every website needs a collection of legal documents in order to remain compliant with
+   | international & local privacy laws. These are often best known as:
+   |
+   |  - Privacy Policy, where you outline your data protection practices;
+   |  - Terms of Service, where you outline acceptable usage of your services;
+   |  - Community Guidelines, where you outline acceptable behavior for users on your platforms.
+   |
+   | RBRecruiter will display these URLs at appropriate locations and force users to accept them,
+   | if legally necessary, such as in the registration & application form pages.
+   |
+   | You can leave these URLs empty if your website hasn't entered production yet, but we recommend
+   | you draft these documents as soon as possible.
+   |
+   */
+
+    'terms_url' => env('TERMS_URL', '#'),
+    'privacy_url' => env('PRIVACY_URL', '#'),
+    'guidelines_url' => env('GUIDELINES_URL', '#'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
