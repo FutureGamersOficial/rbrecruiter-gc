@@ -28,6 +28,7 @@ use App\Facades\Options;
 use App\Facades\IP;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -68,6 +69,10 @@ class RegisterController extends Controller
 
         foreach ($users as $user) {
             if ($user && $user->isBanned()) {
+                Log::alert('Suspended user attempting to use registration form', [
+                    'ip' => \request()->ip(),
+                    'email' => $user->email
+                ]);
                 abort(403, 'You do not have permission to access this page.');
             }
         }

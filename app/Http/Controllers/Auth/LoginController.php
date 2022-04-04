@@ -76,6 +76,14 @@ class LoginController extends Controller
             $isLocked = $service->isLocked($user);
 
             if ($isBanned || $isLocked) {
+
+                Log::alert('Restricted user attempting to login.', [
+                    'ip' => $request->ip(),
+                    'email' => $user->email,
+                    'isBanned' => $isBanned,
+                    'isLocked' => $isLocked
+                ]);
+
                 return false;
             } else {
                 return $this->originalAttemptLogin($request);
