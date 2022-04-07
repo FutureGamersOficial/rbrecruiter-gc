@@ -24,6 +24,8 @@ namespace App\Http\Middleware;
 use App\Application;
 use Carbon\Carbon;
 use Closure;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -33,33 +35,39 @@ class ApplicationEligibility
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle($request, Closure $next)
     {
-        $curtime = new Carbon(now());
+        $eligible = false;
+        $daysRemaining = __('N/A');
 
         if (Auth::check()) {
-            $applications = Application::where('applicantUserID', Auth::user()->id)->get();
-            $eligible = true;
 
-            $daysRemaining = 0;
+            $lastApplication = Application::where('applicantUserID', Auth::user()->id)->latest()->first();
 
-            if (! $applications->isEmpty()) {
-                foreach ($applications as $application) {
-                    $appTime = Carbon::parse($application->created_at);
-                    if ($appTime->isSameMonth($curtime)) {
-                        Log::warning('Notice: Application ID '.$application->id.' was found to be in the same month as today\'s time, making the user '.Auth::user()->name.' ineligible for application');
-                        $eligible = false;
-                    }
-                }
+            if (is_null($lastApplication)) {
+                View::share('isEligibleForApplication', true);
+                View::share('eligibilityDaysRemaining', 0);
 
-                $allowedTime = Carbon::parse($applications->last()->created_at)->addMonth();
-                $daysRemaining = $allowedTime->diffInDays(now());
+                return $next($request);
             }
+
+            $daysRemaining = $lastApplication->created_at->addMonth()->diffInDays(now());
+            if ($lastApplication->created_at->diffInMonths(now()) > 1 && in_array($lastApplication->applicationStatus, ['DENIED', 'APPROVED'])) {
+
+                $eligible = true;
+            }
+
+            Log::debug('Perfomed application eligibility check', [
+                'eligible' => $eligible,
+                'daysRemaining' => $daysRemaining,
+                'ipAddress' => Auth::user()->originalIP,
+                'checkUserID' => Auth::user()->id
+            ]);
 
             View::share('isEligibleForApplication', $eligible);
             View::share('eligibilityDaysRemaining', $daysRemaining);
