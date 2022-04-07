@@ -1,5 +1,5 @@
 
-# RB Recruiter v 0.8.0 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/9n53.svg)](https://betteruptime.com/?utm_source=status_badge)
+# RB Recruiter v 0.9.0 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/9n53.svg)](https://betteruptime.com/?utm_source=status_badge)
 ## The quick and pain-free form management solution for communities
 
 Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
@@ -35,7 +35,6 @@ Many other features are currently planned for this app, such as:
   - Flexibility - This app is built on a flexible concept.
   - Customisable front page
   - Auto provisioning - Sign up on a website and get your instance of RBRecruiter up and running in no time (SaaS)
-  - 
   - Suggestions accepted!
 
 
