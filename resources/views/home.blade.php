@@ -90,8 +90,6 @@
           <div class="row mt-5">
 
               <div class="col text-center">
-                  <img src="/community.svg" height="250px" alt="community decorative svg">
-
                   <h3>Confira os cargos disponíveis</h3>
                   <p>Quer colaborar com a equipe da Games Club? Estamos recrutando! Confira um dos nossos cargos abertos. Uma boa equipe é um pilar de uma comunidade bem-sucedida.</p>
               </div>
