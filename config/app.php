@@ -97,7 +97,7 @@ return [
 
     /*
    |--------------------------------------------------------------------------
-   | Legal documents
+   | Legal documents & source code
    |--------------------------------------------------------------------------
    |
    | Every website needs a collection of legal documents in order to remain compliant with
@@ -118,6 +118,7 @@ return [
     'terms_url' => env('TERMS_URL', '#'),
     'privacy_url' => env('PRIVACY_URL', '#'),
     'guidelines_url' => env('GUIDELINES_URL', '#'),
+    'source_repo' => env('SOURCE_REPO', 'https://code.webvokestudio.pt/miguel456/rbrecruiter'),
 
     /*
     |--------------------------------------------------------------------------
