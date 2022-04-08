@@ -21,7 +21,10 @@
 
 namespace App\Observers;
 
+use App\Exceptions\ProfileAlreadyExistsException;
+use App\Exceptions\ProfileCreationFailedException;
 use App\Profile;
+use App\Services\ProfileService;
 use App\User;
 use Illuminate\Support\Facades\Log;
 
@@ -38,17 +41,24 @@ class UserObserver
      * @param  \App\User  $user
      * @return void
      */
-    public function created(User $user)
+    public function created(ProfileService $profileService, User $user)
     {
-        // TODO: Make sure that the profile is created, throw an exception if otherwise, or try to recreate the profile.
-        Profile::create([
-
-            'profileShortBio' => 'Write a one-liner about you here!',
-            'profileAboutMe' => 'Tell us a bit about you.',
-            'socialLinks' => '{}',
-            'userID' => $user->id,
-
-        ]);
+        try
+        {
+            $profileService->createProfile($user);
+        }
+        catch (ProfileAlreadyExistsException $exception)
+        {
+            Log::error('Attempting to create profile that already exists!', [
+                'trace' => $exception->getTrace()
+            ]);
+        }
+        catch (ProfileCreationFailedException $e)
+        {
+            Log::error('Failed creating a new profile!', [
+                'trace' => $e->getTrace()
+            ]);
+        }
     }
 
     /**
