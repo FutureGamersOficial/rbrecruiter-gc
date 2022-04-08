@@ -62,6 +62,15 @@ class ProfileController extends Controller
 
     public function showSingleProfile(User $user)
     {
+
+        if (is_null($user->profile)) {
+
+            return redirect()
+                ->back()
+                ->with('error', "This user doesn't have a profile.");
+
+        }
+
         $socialMediaProfiles = json_decode($user->profile->socialLinks, true);
         $createdDate = Carbon::parse($user->created_at);
 

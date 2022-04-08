@@ -28,48 +28,50 @@
       <div class="row">
 
         @foreach ($users as $user)
-              <div class="col-md-4">
-                  <div class="card card-widget widget-user">
-                    <div class="widget-user-header bg-secondary">
-                        <h3 class="widget-user-username">{{ $user->name }}</h3>
-                      <h5 class="widget-user-desc">{{ $user->profile->profileShortBio }}</h5>
-                    </div>
+              @if (!is_null($user->profile))
+                  <div class="col-md-4">
+                      <div class="card card-widget widget-user">
+                          <div class="widget-user-header bg-secondary">
+                              <h3 class="widget-user-username">{{ $user->name }}</h3>
+                              <h5 class="widget-user-desc">{{ $user->profile->profileShortBio }}</h5>
+                          </div>
 
-                    <div class="widget-user-image">
-                      @if($user->profile->avatarPreference == 'gravatar')
-                          <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($user->email)}}" alt="{{ __('User profile picture') }}">
-                      @else
-                          <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://crafatar.com/avatars/{{$user->uuid}}" alt="{{ __('User profile picture') }}">
-                      @endif
-                    </div>
-                    <div class="card-footer text-center">
+                          <div class="widget-user-image">
+                              @if($user->profile->avatarPreference == 'gravatar')
+                                  <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://gravatar.com/avatar/{{md5($user->email)}}" alt="{{ __('User profile picture') }}">
+                              @else
+                                  <img class="profile-user-img elevation-2 img-fluid img-circle" src="https://crafatar.com/avatars/{{$user->uuid}}" alt="{{ __('User profile picture') }}">
+                              @endif
+                          </div>
+                          <div class="card-footer text-center">
 
-                      @if (Auth::user()->is($user))
+                              @if (Auth::user()->is($user))
 
-                        <div class="user-indicator mb-2">
+                                  <div class="user-indicator mb-2">
 
-                            <span class="badge badge-success">{{__("It's you!")}}</span>
+                                      <span class="badge badge-success">{{__("It's you!")}}</span>
 
-                        </div>
+                                  </div>
 
-                      @endif
+                              @endif
 
-                      <div class="roles mb-2">
+                              <div class="roles mb-2">
 
-                        @foreach ($user->roles as $role)
+                                  @foreach ($user->roles as $role)
 
-                            <span class="badge badge-secondary mr-2">{{ucfirst($role->name)}}</span>
+                                      <span class="badge badge-secondary mr-2">{{ucfirst($role->name)}}</span>
 
-                        @endforeach
+                                  @endforeach
 
+                              </div>
+
+                              <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('showSingleProfile', ['user' => $user->id]) }}'"><i class="fa fa-eye"></i> {{__('Profile')}}</button>
+
+                          </div>
                       </div>
-
-                        <button type="button" class="btn btn-sm btn-primary" onclick="window.location.href='{{ route('showSingleProfile', ['user' => $user->id]) }}'"><i class="fa fa-eye"></i> {{__('Profile')}}</button>
-
-                    </div>
+                      <!-- /.widget-user -->
                   </div>
-                  <!-- /.widget-user -->
-                </div>
+              @endif
         @endforeach
 
       </div>
