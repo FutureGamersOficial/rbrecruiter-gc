@@ -34,6 +34,6 @@
         "chart.js": "^2.9.3",
         "flatpickr": "^4.6.3",
         "locale-js": "^1.1.1",
-        "moment": "^2.25.0"
+        "moment": "^2.29.2"
     }
 }
