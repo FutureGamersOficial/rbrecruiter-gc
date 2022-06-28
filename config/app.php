@@ -110,6 +110,8 @@ return [
    | RBRecruiter will display these URLs at appropriate locations and force users to accept them,
    | if legally necessary, such as in the registration & application form pages.
    |
+   | Additionally, you can also specify a support email and URL where your users/customers can send inquiries if necessary.
+   |
    | You can leave these URLs empty if your website hasn't entered production yet, but we recommend
    | you draft these documents as soon as possible.
    |
@@ -118,6 +120,8 @@ return [
     'terms_url' => env('TERMS_URL', '#'),
     'privacy_url' => env('PRIVACY_URL', '#'),
     'guidelines_url' => env('GUIDELINES_URL', '#'),
+    'support_url' => env('SUPPORT_URL', 'https://support.example.com'),
+    'support_email' => env('SUPPORT_EMAIL', 'support@example.com'),
     'source_repo' => env('SOURCE_REPO', 'https://code.webvokestudio.pt/miguel456/rbrecruiter'),
 
     /*

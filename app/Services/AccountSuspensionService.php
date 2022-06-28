@@ -121,6 +121,17 @@ class AccountSuspensionService
 
 
     /**
+     * Retrieves the reason for the user's suspension.
+     *
+     * @param User $user The user account to check
+     * @return string|bool Reason for the suspension, false if not suspended
+     */
+    public function getSuspensionReason(User $user): string|bool {
+        return ($this->isSuspended($user)) ? $user->bans->reason : false;
+    }
+
+
+    /**
      * Checks whether an account is locked
      *
      * @param User $user The user to check

@@ -291,17 +291,21 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::patch('settings/game/update', [OptionsController::class, 'saveGameIntegration'])
                 ->name('saveGameIntegration');
 
-            Route::post('players/ban/{user}', [BanController::class, 'insert'])
+
+            Route::post('accounts/suspend/{user}', [UserController::class, 'suspend'])
                 ->name('banUser');
 
-            Route::delete('players/unban/{user}', [BanController::class, 'delete'])
+            Route::delete('accounts/unsuspend/{user}', [UserController::class, 'unsuspend'])
                 ->name('unbanUser');
 
-            Route::delete('players/delete/{user}', [UserController::class, 'delete'])
+            Route::delete('accounts/delete/{user}', [UserController::class, 'delete'])
                 ->name('deleteUser');
 
-            Route::patch('players/update/{user}', [UserController::class, 'update'])
+            Route::patch('accounts/update/{user}', [UserController::class, 'update'])
                 ->name('updateUser');
+
+            Route::get('accounts/manage/{user}', [UserController::class, 'showAcocuntManagement'])
+                ->name('manageUser');
 
             Route::get('positions', [VacancyController::class, 'index'])
                 ->name('showPositions');

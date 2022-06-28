@@ -103,7 +103,8 @@
                                 </td>
                                 <td>{{$user->created_at}}</td>
                                 <td>
-                                  <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showSingleProfile', ['user' => $user->id])}}'"><i class="fa fa-eye"></i></button>
+                                  <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='{{route('showSingleProfile', ['user' => $user->id])}}'"><i class="fa fa-eye"></i> {{ __('View') }}</button>
+                                  <a class="ml-2 btn btn-sm btn-warning" href="{{ route('manageUser', ['user' => $user->id]) }}"><i class="fas fa-wrench"></i> {{ __('Manage') }}</a>
                               </td>
                             </tr>
 

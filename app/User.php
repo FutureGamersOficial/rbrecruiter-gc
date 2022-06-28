@@ -71,6 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function votes()
     {
         return $this->hasMany('App\Vote', 'userID', 'id');
+
     }
 
     public function profile()

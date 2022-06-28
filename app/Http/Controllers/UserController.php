@@ -22,7 +22,9 @@
 namespace App\Http\Controllers;
 
 use App\Ban;
+use App\Facades\IP;
 use App\Http\Requests\Add2FASecretRequest;
+use App\Http\Requests\BanUserRequest;
 use App\Http\Requests\ChangeEmailRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\DeleteUserRequest;
@@ -32,6 +34,7 @@ use App\Http\Requests\SearchPlayerRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Notifications\ChangedPassword;
 use App\Notifications\EmailChanged;
+use App\Services\AccountSuspensionService;
 use App\Traits\DisablesFeatures;
 use App\Traits\HandlesAccountDeletion;
 use App\Traits\ReceivesAccountTokens;
@@ -45,8 +48,15 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use HandlesAccountDeletion;
+    use HandlesAccountDeletion, DisablesFeatures;
 
+
+    /**
+     * Shows list of users
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function showUsers()
     {
         $this->authorize('viewPlayers', User::class);
@@ -59,6 +69,15 @@ class UserController extends Controller
             ]);
     }
 
+
+    /**
+     * Searches for a player with the given search query.
+     *
+     * @deprecated Until Algolia implementation
+     * @param SearchPlayerRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function showPlayersLike(SearchPlayerRequest $request)
     {
         $this->authorize('viewPlayers', User::class);
@@ -85,6 +104,16 @@ class UserController extends Controller
         }
     }
 
+
+    /**
+     * Shows the user account's settings page
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException
+     * @throws \PragmaRX\Google2FA\Exceptions\InvalidCharactersException
+     * @throws \PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException
+     */
     public function showAccount(Request $request)
     {
         $QRCode = null;
@@ -109,6 +138,49 @@ class UserController extends Controller
             ->with('twofaQRCode', $QRCode);
     }
 
+
+    /**
+     * Show account management screen
+     *
+     * @param AccountSuspensionService $suspensionService
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function showAcocuntManagement(AccountSuspensionService $suspensionService, Request $request, User $user)
+    {
+
+        $this->authorize('adminEdit', $user);
+
+        $systemRoles = Role::all()->pluck('name')->all();
+        $userRoles = $user->roles->pluck('name')->all();
+
+        $roleList = [];
+
+        foreach ($systemRoles as $role) {
+            if (in_array($role, $userRoles)) {
+                $roleList[$role] = true;
+            } else {
+                $roleList[$role] = false;
+            }
+        }
+
+        return view('dashboard.user.manage')
+            ->with([
+               'user' =>  $user,
+                'roles' => $roleList,
+                'ipInfo' => IP::lookup($request->ip())
+            ]);
+    }
+
+    /**
+     * Log out other sessions for the current user
+     *
+     * @param FlushSessionsRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\AuthenticationException
+     */
     public function flushSessions(FlushSessionsRequest $request)
     {
         // TODO: Move all log calls to a listener, which binds to an event fired by each significant event, such as this one
@@ -127,6 +199,14 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
+
+    /**
+     * Change the current user's password
+     *
+     * @param ChangePasswordRequest $request
+     * @return \Illuminate\Http\RedirectResponse|void
+     */
     public function changePassword(ChangePasswordRequest $request)
     {
         if (config('demo.is_enabled')) {
@@ -155,13 +235,17 @@ class UserController extends Controller
         }
     }
 
+
+
+    /**
+     * Change the current user's email address
+     *
+     * @param ChangeEmailRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function changeEmail(ChangeEmailRequest $request)
     {
-        if (config('demo.is_enabled')) {
-            return redirect()
-                ->back()
-                ->with('error', __('This feature is disabled'));
-        }
+       $this->disable();
 
         $user = User::find(Auth::user()->id);
 
@@ -184,13 +268,18 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
+    /**
+     * Delete the given user's account
+     *
+     * @param DeleteUserRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function delete(DeleteUserRequest $request, User $user)
     {
-        if (config('demo.is_enabled')) {
-            return redirect()
-                ->back()
-                ->with('error', _('This feature is disabled'));
-        }
+        $this->disable();
 
         $this->authorize('delete', $user);
 
@@ -204,14 +293,19 @@ class UserController extends Controller
         return redirect()->route('registeredPlayerList');
     }
 
+
+    /**
+     * Update a given user's details
+     *
+     * @param UpdateUserRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(UpdateUserRequest $request, User $user)
     {
-        if (config('demo.is_enabled')) {
-            return redirect()
-                ->back()
-                ->with('error', __('This feature is disabled'));
-        }
         $this->authorize('adminEdit', $user);
+        $this->disable();
 
         // Mass update would not be possible here without extra code, making route model binding useless
         $user->email = $request->email;
@@ -243,6 +337,16 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
+    /**
+     * Generate and add a 2FA secret for the current user
+     *
+     * @param Add2FASecretRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException
+     * @throws \PragmaRX\Google2FA\Exceptions\InvalidCharactersException
+     * @throws \PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException
+     */
     public function add2FASecret(Add2FASecretRequest $request)
     {
         if (config('demo.is_enabled')) {
@@ -285,6 +389,13 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
+    /**
+     * Remove the current user's two factor secret key
+     *
+     * @param Remove2FASecretRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function remove2FASecret(Remove2FASecretRequest $request)
     {
         Log::warning('SECURITY: Disabling two factor authentication (user initiated)', [
@@ -300,6 +411,15 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
+    /**
+     * Demote the given user's privileges
+     *
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function terminate(Request $request, User $user)
     {
         $this->authorize('terminate', User::class);
@@ -330,4 +450,58 @@ class UserController extends Controller
         //TODO: Dispatch event
         return redirect()->back();
     }
+
+    /**
+     * Suspend the given user
+     *
+     * @param AccountSuspensionService $suspensionService
+     * @param BanUserRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function suspend(AccountSuspensionService $suspensionService, BanUserRequest $request, User $user)
+    {
+        $this->authorize('create', [Ban::class, $user]);
+        $this->disable();
+
+        if (!$suspensionService->isSuspended($user)) {
+
+            $suspensionService->suspend($request->reason, $request->duration, $user, $request->suspensionType);
+            $request->session()->flash('success', __('Account suspended.'));
+
+        } else {
+
+            $request->session()->flash('error', __('Account already suspended!'));
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Unsuspend the given user
+     *
+     * @param AccountSuspensionService $suspensionService
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function unsuspend(AccountSuspensionService $suspensionService, Request $request, User $user)
+    {
+        $this->authorize('delete', $user->bans);
+        $this->disable();
+
+        if ($suspensionService->isSuspended($user)) {
+
+            $suspensionService->unsuspend($user);
+            $request->session()->flash('success', __('Account unsuspended successfully!'));
+
+        } else {
+            $request->session()->flash('error', __('This account isn\'t suspended!'));
+        }
+
+        return redirect()->back();
+    }
+
 }

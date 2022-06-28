@@ -26,6 +26,7 @@ use App\Exceptions\ProfileCreationFailedException;
 use App\Exceptions\ProfileNotFoundException;
 use App\Facades\IP;
 use App\Http\Requests\ProfileSave;
+use App\Services\AccountSuspensionService;
 use App\Services\ProfileService;
 use App\User;
 use Carbon\Carbon;
@@ -35,7 +36,7 @@ use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
-    private $profileService;
+    private ProfileService $profileService;
 
     public function __construct(ProfileService $profileService) {
         $this->profileService = $profileService;
@@ -63,7 +64,7 @@ class ProfileController extends Controller
             ]);
     }
 
-    public function showSingleProfile(User $user)
+    public function showSingleProfile(AccountSuspensionService $accountSuspensionService, User $user)
     {
 
         if (is_null($user->profile)) {
@@ -77,21 +78,10 @@ class ProfileController extends Controller
         $socialMediaProfiles = json_decode($user->profile->socialLinks, true);
         $createdDate = Carbon::parse($user->created_at);
 
-        $systemRoles = Role::all()->pluck('name')->all();
-        $userRoles = $user->roles->pluck('name')->all();
 
-        $roleList = [];
-
-        foreach ($systemRoles as $role) {
-            if (in_array($role, $userRoles)) {
-                $roleList[$role] = true;
-            } else {
-                $roleList[$role] = false;
-            }
-        }
 
         $suspensionInfo = null;
-        if ($user->isBanned())
+        if ($accountSuspensionService->isSuspended($user))
         {
             $suspensionInfo = [
 
