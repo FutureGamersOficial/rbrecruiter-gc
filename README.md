@@ -1,3 +1,13 @@
+# Archival notice
+
+This repository is now archived! RBRecruiter has moved from one version control system to the next, from Gitea to BitBucket and now GitHub, but RBRecruiter now has a more or less permanent home in a privately-owned GitLab EE instance. RBRecruiter also changed its name to something else.
+
+**Does this mean the project is dead?**
+
+No, not at all! This project is still being actively updated in the other repo. In fact, version 1 is already out as well. When I'm ready to share it, I'll update the link here and officially archive the repo (adding that yellow banner). This is because I'm still decoupling the repo from my community; It's been heavily modified and hard-coded to be used in one of my Discord communities, and so I'm now removing all those references and moving it to its own organization in GitLab. This should have been a fork from the start and not a major modification to the software itself, considering it would probably be used by a lot of other people.
+
+Once this is done, the link will be posted here. Also, if you want to take a look at the demo [one is available here](https://demo.athenahr.io), which is pulling from the latest changes.
+
 
 # RB Recruiter v 0.8.0 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/9n53.svg)](https://betteruptime.com/?utm_source=status_badge)
 ## The quick and pain-free form management solution for communities
@@ -5,12 +15,12 @@
 Have you ever gotten tired of managing your Minecraft server/network's applications through Discord (or anything else) and having to scroll through hundreds of new messages just to find that one applicant's username?
 
 
-Wish you had a better application managemet strategy? Well, then RBRecruiter is for you! It was originally designed and developed for internal use for a gameserver network, but sharing is caring!
+Wish you had a better application management strategy? Well, then RBRecruiter is for you! It was originally designed and developed for internal use for a gameserver network, but sharing is caring!
 
 
 # Features (not exhaustive)
- - Beautiful (customizable in future releases) landing page for your application management center; It displays all available staff ranks
- - Contact form on landing page for those un-registerd users
+ - Beautiful (customizable in future releases) landing page for your application management centre; It displays all available staff ranks
+ - Contact form on the landing page for those un-registered users
  - User registration/authentication system; Users will be sent to the authentication flow to complete their application, if not logged in
  - Candidate tracking system - Applicants will be tracked from start to finish.
  - Peer approval system - Have all your staff members vote on applications and decide whether they should be accepted (this is overridable)
@@ -24,7 +34,7 @@ Wish you had a better application managemet strategy? Well, then RBRecruiter is 
  - Termination - Has a staff member met their untimely demise? Terminate them. This will strip their permissions and roles.
  - Controllable permissions - Every user has permissions! Control who has access to what (You can skip the application process and add staff members directly here).
  - Ban system - Having trouble with pesky spammers? Ban them! This will publicly shame their profile and keep them from signing up or logging in.
- - Notifications: Notifies slack and email primarily (Slack notifications currently broken)
+ - Notifications: Notifies Slack and email primarily (Slack notifications are currently broken)
 
  And many more features!
 
@@ -34,7 +44,7 @@ Many other features are currently planned for this app, such as:
   - Discord role management (approved applicants)
   - Flexibility - This app is built on a flexible concept.
   - Customisable front page
-  - Auto provisioning - Sign up on a website and get your instance of RBRecruiter up and running in no time (SaaS)
+  - Auto-provisioning - Sign up on a website and get your instance of RBRecruiter up and running in no time (SaaS)
   - 
   - Suggestions accepted!
 
@@ -70,7 +80,7 @@ Tech stack:
  # PHP Extension Requirements
 
  - JSON
- - xDebug (will be removed in the future as a require-dev only dependency)
+ - xDebug (will be removed in the future as a require-dev-only dependency)
  - Curl
  - Xml 
  - MySQL adapter (mysqli extension)
