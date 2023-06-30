@@ -1,13 +1,14 @@
 # Archival notice
 
-This repository is now archived! RBRecruiter has moved from one version control system to the next, from Gitea to BitBucket and now GitHub, but RBRecruiter now has a more or less permanent home in a privately-owned GitLab EE instance. RBRecruiter also changed its name to something else.
+**RBRecruiter is now AthenaHR** and the source code is available over at GitLab [here](https://gitlab.futuregamers.co/webvokestudio/athenahr). This is the same repo, only with the recent updates.
+
+Try a [bleeding edge demo](https://demo.athenahr.io), which is pulling from the latest changes.
+
+This repository is now archived! Over the years, RBRecruiter has moved from one version control system to the next, from Gitea to BitBucket and now GitHub, but RBRecruiter now has a more or less permanent home in a privately-owned GitLab EE instance. RBRecruiter also changed its name to something else.
 
 **Does this mean the project is dead?**
 
-No, not at all! This project is still being actively updated in the other repo. In fact, version 1 is already out as well. When I'm ready to share it, I'll update the link here and officially archive the repo (adding that yellow banner). This is because I'm still decoupling the repo from my community; It's been heavily modified and hard-coded to be used in one of my Discord communities, and so I'm now removing all those references and moving it to its own organization in GitLab. This should have been a fork from the start and not a major modification to the software itself, considering it would probably be used by a lot of other people.
-
-Once this is done, the link will be posted here. Also, if you want to take a look at the demo [one is available here](https://demo.athenahr.io), which is pulling from the latest changes.
-
+No, not at all! This project is still being actively updated in the other repo. In fact, version 1 is already out as well. This is because I'm still decoupling the repo from my community; It's been heavily modified and hard-coded to be used in one of my Discord communities, and so I'm now removing all those references and moving it to its own organization in GitLab. This should have been a fork from the start and not a major modification to the software itself, considering it would probably be used by a lot of other people.
 
 # RB Recruiter v 0.8.0 [![Crowdin](https://badges.crowdin.net/raspberry-staff-manager/localized.svg)](https://crowdin.com/project/raspberry-staff-manager) [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/9n53.svg)](https://betteruptime.com/?utm_source=status_badge)
 ## The quick and pain-free form management solution for communities
